@@ -1,0 +1,112 @@
+body{
+    
+    background-image: url(https://media.licdn.com/dms/image/D4E1BAQHnFsO18EgOeg/company-background_10000/0/1657275889104/gate_gourmet_cover?e=2147483647&v=beta&t=914UlZ3EOM60SgzIJrLgkT9D5wjknxkJVFVE104AFGk);
+    background-size: 100%;
+    margin: 0;
+    /*
+    background: linear-gradient(to left, rgb(52, 240, 83), rgb(14, 163, 126));
+    padding-bottom: 700px;
+    margin: 0;
+    /*
+    background-repeat: no-repeat;
+    background-size: 2000PX;
+    */
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.logo_gg {
+    background: radial-gradient(#666b,#222a);
+    margin-top: 0px; 
+    margin-left: 0px;
+    width: 100%;
+    height: 150px;
+}
+
+.img_gg{
+width: 450px;
+height: 80px;
+margin-left: 750px;
+margin-top: 30px;
+}
+
+.logo_inicio{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-top: -80px;
+    margin-left: 180px;
+    position: absolute;
+}
+.container_principal {
+    width: 500px;
+    height: 420px;
+    background: radial-gradient(#666b,#222a);
+    margin-top: 100px;
+    margin-left:750px ;
+    border-radius: 50px;
+    position: absolute;
+
+}
+
+h2{
+    margin-top: 100px;
+}
+.input{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.campo_nombre, .input{
+
+    width: 300px;
+    height: 35px;
+    margin-top: 25px;
+    margin-left: 100px;
+    border-radius: 30px;
+    font-size: 20px;
+    text-align: center;
+    
+}
+.campo_contrasena, .input{
+    width: 300px;
+    height: 35px;
+    margin-top: 20px;
+    margin-left: 100px;
+    text-align: center;
+    border-radius: 30px;
+    font-size: 20px;
+}
+
+
+.inicio{
+    width: 200px;
+    height: 30px;
+    margin-top: 25px;
+    margin-left: 50px;
+    border-radius: 30px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.registro{
+    width: 200px;
+    height: 30px;
+    margin-top: -30px;
+    margin-left: 260px;
+    border-radius: 30px;
+    display: block;
+    font-size: 16px;
+    text-decoration: none;
+    position: relative;
+}
+
+.link__registro{
+    text-decoration: none;
+}
+
+.cuadro_parte_inferior{
+    background: radial-gradient(#666b,#222a);
+    max-width:200%;
+    height: 200px;
+    margin-top: 608px;
+    margin-left: -800px;
+}
