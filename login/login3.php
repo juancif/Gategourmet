@@ -4,7 +4,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "prueba";
+$database = "gategoumet";
 
 $connect = new mysqli($servername, $username, $password, $database);
 
