@@ -1,0 +1,269 @@
+body{
+    background-image: url("../../imagenes/fondo2.jpg") ;
+    margin: 0;
+    background-size:2700px ;
+
+    /*
+    background-position: -500px;
+    background-repeat: no-repeat;
+    box-sizing: border-box
+    */
+    margin: 0;
+}
+
+.logoindex{
+    width: 600px;
+    height: 100px;
+    margin: 50px 50px;
+}
+
+.logo__menu{
+    width: 180px;
+    height: 35px;
+    margin-left: -180px;
+    margin-top: 28px;
+    position: absolute;
+}
+.img1__menu{
+    width: 20px;
+    height: 20px;
+}
+
+.imgs__menu{
+    width: 20px;
+    height: 20px;
+    padding-right:10px ;
+}
+
+.img__usuario{
+    width: 60px;
+    height: 50px;
+    margin-left: 100px;
+    margin-top: 0px;
+    position:relative;
+    background-color: transparent;
+}
+.nav__principal{
+    background-color: #1117;
+}
+
+.nav__list{ 
+    margin: 0;
+    text-align: center;
+    font-size: 20px;
+}
+
+.nav__item{
+    display: inline-block;
+    margin: auto;
+    margin-left: 50px;
+    margin-right: 170px;
+}
+
+.nav__item__user{
+    background-color: transparent;
+    position: absolute;
+    display: inline-block;
+    margin: auto;
+    margin-left: -140px;
+    margin-top: 5px;
+}
+
+.cerrar__sesion__link{
+    margin: 0;
+    text-decoration: none;
+    text-decoration: black;
+    color:black ;
+}
+
+.cerrar__sesion{
+    margin-left: 100px;
+}
+.img__usuario:hover{
+    background: rgb(82, 82, 82);
+}
+
+.nav__link:hover{
+    /*
+    background-color: rgb(82, 82, 82);
+    */
+    background-color: #1117;
+}
+
+.nav__link{
+    border: none;
+    text-decoration: none;
+    font-family: sans-serif;
+    background-color: transparent;
+    color: black;
+    padding: initial;
+    padding: 30px;
+    display: inline-block;
+}
+
+.triangulo{
+    width: 650px;
+    height: 180px;
+    margin-bottom: 20px;   
+    margin-left: 450px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+.recuadroimagen{
+    width: 98%;
+    height: 180px;
+    background: linear-gradient(to left,transparent, rgb(10, 192, 146), rgb(67, 153, 82),transparent);
+    margin-left: 40px;
+    border-radius: 50px;
+    margin-top: 20px;
+
+}
+
+.cuadro1, .cuadro2, .cuadro3{
+    width: 98.5%;
+    height: 220px;
+    /*background:linear-gradient(#9997, #9997);*/
+    margin-left: 10px ;
+    margin-right: 10px;
+    position: relative;
+    border-radius: 50px;
+}
+
+.cuadro1{
+    margin-top: 40px;
+    /*background:linear-gradient(#9999, #9999);*/
+    background-color: #066a;
+    border: 2px solid transparent;
+}
+
+.cuadro2{
+    background-color: rgba(38, 62, 128, 0.521);
+}
+
+.cuadro3{
+    height: 500px;
+    height: 380px;
+    margin-bottom: 20px;
+    /*background:linear-gradient(#999b, #999b);*/
+    background-color: rgba(94, 119, 64, 0.418);
+    border: 2px solid transparent;
+    /*background:linear-gradient(#999b, #999b);*/
+    /*background-color: rgba(94, 119, 64, 0.993);*/
+}
+
+.recuadro1, .recuadro2, .recuadro3{
+    font-family: Arial, Helvetica, sans-serif;
+    width: 300px;
+    height: 100%;
+    background-color: #1117;
+    margin: auto;
+    margin-left: 0px;
+    margin-top: 0px;
+    position: absolute;
+    border-radius: 50px;
+}
+
+
+
+.recuadro3{
+    margin-top: 0px;
+}
+
+.title, .title__3{
+    text-align: center;
+    font-size: 30px;
+    color: white;
+    margin-top: 70px;
+}
+
+.title__3{
+    margin-top: 150px;
+    font-size:40px;
+}
+
+
+
+.circulo {
+    font-family:Arial, Helvetica, sans-serif ;
+    width: 250px;
+    height: 150px;
+    background-color: #111b;
+    margin-left: 200px;
+    margin-top: 20px;
+    border-radius: 50px; /* Crea un círculo perfecto */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Añade una sombra suave */
+    transition: all 0.3s ease; /* Agrega una transición suave */
+    position: absolute;
+}
+
+.circulo1, .circulo3, .circulo8, .circulo13 {
+    margin-left: 350px;
+}
+
+.circulo:hover {
+    background-color: transparent;
+    /*background:linear-gradient(#9997, #9997);*//* Cambia el color de fondo al pasar el ratón sobre el círculo */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el ratón sobre el círculo */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2); /* Aumenta la intensidad de la sombra */
+}
+
+.circulo:hover a{
+
+    background-color: transparent;
+}
+.circulo2, .circulo4, .circulo9, .circulo14{
+    margin-left: 650px;
+}
+
+
+
+.circulo5, .circulo10, .circulo15{
+    margin-left: 950px;
+
+}
+
+.circulo6, .circulo11{
+    margin-left: 1250px;
+}
+
+.circulo7, .circulo12{
+    margin-left: 1540px;
+}
+.circulo13{
+    margin-top: 200px;
+}
+
+.circulo14{
+    margin-top: 200px;
+}
+
+.circulo15{
+    margin-top: 200px;
+}
+
+.link1{
+
+    text-decoration: none;
+    text-align: center
+}
+
+h3{
+    margin-top: -20px;
+    margin-left: -20px;
+    font-size: 25px;
+    padding-bottom: 85px;
+    padding-top: 80px;
+    padding-left: 60px;
+    padding-right: 60px;
+    color: white;
+}
+
+.h3__2{
+    margin-top: 0px;
+    padding-bottom:80px ;
+    padding-top: 40px;
+}
+
+.h3__3{
+    margin-left: -30px
+}
