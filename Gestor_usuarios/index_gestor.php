@@ -45,7 +45,7 @@ onClick=\"return confirm('Esta seguro de elimar el registro?')\">Eliminar</a></t
 ?>
 </table>
 </div>
-<a href="http://localhost/Pagina_Prueba/index/Prueba_index/Gestor_usuarios/add_gestor.php" class="boton_adicionar">Adicionar usuario</a><br/><br/>
+<a href="http://localhost/GateGourmet/Gestor_usuarios/add_gestor.php" class="boton_adicionar">Adicionar usuario</a><br/><br/>
 <a href="http://localhost/Pagina_Prueba/index/Prueba_index/login_register/login/login_admin.php" class="boton_volver">Volver</a>
 <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
