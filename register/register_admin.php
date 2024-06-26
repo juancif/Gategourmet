@@ -1,6 +1,6 @@
 
 <?php
-include_once("config3.php");
+include_once("config_register.php3.php");
 if(isset($_POST['Submit'])) {
 $nombre_usuario = $_POST['nombre_usuario'];
 $contrasena = $_POST['contrasena'];
@@ -73,13 +73,13 @@ $query->rowCount()."";
 </head>
 <body>
     <header class="header">
-        <img src="../register/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
+        <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
     </header>
     <main class="main-content">
         <div class="register-container">
             <div class="register-box">
                 <h2>Registro de Usuarios</h2>
-                <form method="post" action="http://localhost/Pagina_Prueba/index/Prueba_index/login_register/register/register_admin.php">
+                <form method="post" action="http://localhost/GateGourmet/register/register_admin.php">
                     <div class="input-group">
                         <label for="nombre_usuario">Nombre de Usuario</label>
                         <input type="text" id="nombre_usuario" name="nombre_usuario" required>
@@ -125,7 +125,7 @@ $query->rowCount()."";
                     </div>
                     <div class="buttons">
                     <input type="Submit" name="Submit" value="Registrarse" class="Registrarse"></input>
-                        <a href="http://localhost/Pagina_Prueba/index/Prueba_index/login_register/login/login_admin.php" class="button">Regresar</a>
+                        <a href="http://localhost/GateGourmet/login/login_admin.php" class="button">Regresar</a>
                     </div>
                 </form>
             </div>

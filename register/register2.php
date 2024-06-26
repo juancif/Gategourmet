@@ -1,6 +1,6 @@
 
 <?php
-include_once("config.php");
+include_once("config_register.php");
 if(isset($_POST['Submit'])) {
 $nombre_completo = $_POST['nombre_completo'];
 $area = $_POST['area'];
@@ -44,7 +44,7 @@ $query->rowCount()."";
     <title>Registro</title>
 </head>
 <body>
-    <div class="fondo_logo_gg"><img src="logo_oficial_color.png" class="img_gg"></div> 
+    <div class="fondo_logo_gg"><img src="../Imagenes/logo_oficial_color.png" class="img_gg"></div> 
 <form action="register2.php" method="post" name="form1">
     <div class="container_logo"></div>
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSg-Y6zO0GHiVVhuh875DsMBM85kQNmQKWMqAPcYWHXst4xpGLa6DCCLUcwyVdJRvF1WkE&usqp=CAU" alt="imagen de registro" class="logo_registro">

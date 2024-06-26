@@ -1,6 +1,6 @@
 
 <?php
-include_once("config.php");
+include_once("config_register.php");
 if(isset($_POST['Submit'])) {
 $nombre_completo = $_POST['nombre_completo'];
 $area = $_POST['area'];
@@ -50,7 +50,7 @@ echo "<br/><a href='login.php'>Ver Todos los Registros</a>";
     <div class="container_logo"></div>
       <div class="container_principal">
         <form>
-          <img src="logo_oficial_color.png" class="logo">
+          <img src="../Imagenes/logo_oficial_color.png" class="logo">
             <center><h2>REGISTRO</h2></center>
               <input type="text" id="nombre_completo" name="nombre_completo" required placeholder="Nombre Completo" class="campo_nombre_completo">
             <br>
@@ -68,7 +68,7 @@ echo "<br/><a href='login.php'>Ver Todos los Registros</a>";
               <input type="Submit" name="Submit" value="Registrar" class="link_registro"></input>
             </form>
               <script src="register.js"></script>
-            <div><a href="http://localhost/Pagina_Prueba/index/Prueba_index/login_register/login/login.php" class="link_login">Volver al inicio</a></div>
+            <div><a href="http://localhost/GateGourmet/login/login.php" class="link_login">Volver al inicio</a></div>
         </div>
       </tr>
     </form>

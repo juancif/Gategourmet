@@ -1,9 +1,10 @@
 links GateGourmet:
 
-http://localhost/GateGourmet/GDG/login/login1.php
-http://localhost/GateGourmet/GDG/login/login2.php
-http://localhost/GateGourmet/GDG/login/login3.php
-http://localhost/GateGourmet/GDG/login/login_admin.php
-http://localhost/GateGourmet/GDG/Gestor_usuarios/index_gestor.php
-http://localhost/GateGourmet/GDG/Gestor_usuarios/add_gestor.php
-http://localhost/GateGourmet/GDG/Gestor_usuarios/edit_gestor.php
+http://localhost/GateGourmet/login/login1.php
+http://localhost/GateGourmet/login/login2.php
+http://localhost/GateGourmet/login/login3.php
+http://localhost/GateGourmet/login/login_admin.php
+http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php
+http://localhost/GateGourmet/Gestor_usuarios/add_gestor.php
+http://localhost/GateGourmet/Gestor_usuarios/edit_gestor.php
+http://localhost/GateGourmet/register/register_admin.php
