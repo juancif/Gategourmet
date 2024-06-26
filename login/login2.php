@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verificar si se encontraron resultados
         if ($result->num_rows > 0) {
             // Las credenciales son correctas, redirigir al usuario a la página principal
-            header("Location: http://localhost/Pagina_Prueba/index/Prueba_Index/index2.html");
+            header("Location: http://localhost/GateGourmet/Index/index2.html");
             exit(); // Terminar el script después de la redirección
         } 
     } else {
@@ -65,7 +65,7 @@ $connect->close();
               <input type="password" name="contrasena" required placeholder="Contraseña" value="<?php if(isset($_POST['contrasena'])) echo $_POST['contrasena'] ?>" class="campo_contrasena" /><br/><br/>
               <input type="submit" name='login' value="Ingresar" class='inicio'>
           </form>
-          <a href="http://localhost/Pagina_Prueba/index/Prueba_index/login_register/register/register2.php" class="link__registro"><input type="submit" name='registro' value="Registrarse" class='registro'></a> 
+          <a href="http://localhost/GateGourmet/register/register2.php" class="link__registro"><input type="submit" name='registro' value="Registrarse" class='registro'></a> 
           
           <script src="script.js"></script>
 </div>

@@ -4,7 +4,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "gategoumet";
+$database = "gategourmet";
 
 $connect = new mysqli($servername, $username, $password, $database);
 
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verificar si se encontraron resultados
         if ($result->num_rows > 0) {
             // Las credenciales son correctas, redirigir al usuario a la página principal
-            header("Location: http://localhost/Pagina_Prueba/index/Prueba_Index/index5.html");
+            header("Location: http://localhost/GateGourmet/Index/index5.html");
             exit(); // Terminar el script después de la redirección
         } 
     } else {
@@ -56,12 +56,12 @@ $connect->close();
 </head>
 <body>
     <header class="header">
-        <img src="logo_oficial_color.png" alt="Gate Gourmet Logo" class="logo">
+        <img src="../Imagenes/logo_oficial_color.png" alt="Gate Gourmet Logo" class="logo">
     </header>
     <main class="main-content">
         <div class="login-container">
             <div class="login-box">
-                <img src="../../../../imagenes/user.png" alt="User Icon" class="user-icon">
+                <img src="../Imagenes/image.png" alt="User Icon" class="user-icon">
                 <h2>INGRESO</h2>
                 <form method="post" action="">
                     <div class="input-group">
@@ -80,7 +80,7 @@ $connect->close();
                     </div>
                     <div class="buttons">
                         <input type="submit" value="Ingresar">
-                        <a href="http://localhost/Pagina_Prueba/index/Prueba_index/login_register/register/register3.php" class="button">Registrarse</a>
+                        <a href="http://localhost/GateGourmet/register/register3.php" class="button">Registrarse</a>
                     </div>
                 </form>
             </div>

@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verificar si se encontraron resultados
         if ($result->num_rows > 0) {
             // Las credenciales son correctas, redirigir al usuario a la página principal
-            header("Location: http://localhost/Pagina_Prueba/index/Prueba_Index/index1.html");
+            header("Location: http://localhost/GateGourmet/Index/index1.html");
             exit(); // Terminar el script después de la redirección
         } 
     } else {
