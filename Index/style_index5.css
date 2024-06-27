@@ -1,7 +1,7 @@
 body{
-    background-image: url("../Imagenes/fondo_register.jpeg") ;
+    background-image: url("../Imagenes/fondo3.jpg") ;
     margin: 0;
-    background-size:2700px ;
+    background-size:1900px ;
 
     /*
     background-position: -500px;
@@ -44,7 +44,7 @@ body{
     background-color: transparent;
 }
 .nav__principal{
-    background-color: rgb(94, 204, 72);
+    background-color: #1117;
 }
 
 .nav__list{ 
@@ -72,7 +72,7 @@ body{
 .cerrar__sesion__link{
     margin: 0;
     text-decoration: none;
-    text-decoration: rgb(109, 180, 76);
+    text-decoration:#1117;
     color:black ;
 }
 
@@ -80,18 +80,18 @@ body{
     margin-left: 100px;
 }
 .img__usuario:hover{
-    background-color: rgb(94, 204, 72);
+    background-color:#1111;
 }
 
 .nav__link:hover{
-    background-color: rgb(94, 204, 72);
+    background-color:#1112;
 }
 
 .nav__link{
     border: none;
     text-decoration: none;
     font-family: sans-serif;
-    background-color: rgb(94, 204, 72);
+    background-color:#1110;
     color: rgb(243, 238, 238);
     padding: initial;
     padding: 30px;
@@ -129,12 +129,12 @@ body{
 .cuadro1{
     margin-top: 5px;
     /*background:linear-gradient(#9999, #9999);*/
-    background-color: rgba(39, 238, 178, 0.667);
+    background-color:#1117;
     border: 2px solid transparent;
 }
 
 .cuadro2{
-    background-color: rgba(138, 238, 216, 0.521);
+    background-color:#1117;
 }
 
 .cuadro3{
@@ -142,7 +142,7 @@ body{
     height: 380px;
     margin-bottom: 20px;
     /*background:linear-gradient(#999b, #999b);*/
-    background-color: rgba(125, 223, 112, 0.418);
+    background-color:#1117;
     border: 2px solid transparent;
     /*background:linear-gradient(#999b, #999b);*/
     /*background-color: rgba(94, 119, 64, 0.993);*/
