@@ -2,7 +2,6 @@ body{
     background-image: url("../Imagenes/fondo3.jpg") ;
     margin: 0;
     background-size:1900px ;
-
     /*
     background-position: -500px;
     background-repeat: no-repeat;
@@ -10,6 +9,7 @@ body{
     */
     margin: 0;
 }
+
 
 .logoindex{
     width: 600px;
@@ -43,8 +43,14 @@ body{
     position:relative;
     background-color: transparent;
 }
+
+.img__usuario:hover{
+    background-color:#1111;
+}
+
 .nav__principal{
     background-color: #1117;
+    backdrop-filter: blur(10px);
 }
 
 .nav__list{ 
@@ -79,9 +85,7 @@ body{
 .cerrar__sesion{
     margin-left: 100px;
 }
-.img__usuario:hover{
-    background-color:#1111;
-}
+
 
 .nav__link:hover{
     background-color:#1112;
@@ -107,12 +111,13 @@ body{
     border-bottom-right-radius: 50px;
 }
 .recuadroimagen{
-    width: 98%;
+    width: 95%;
     height: 180px;
     background: linear-gradient(to left,transparent, rgb(10, 192, 146), rgb(67, 153, 82),transparent);
+    backdrop-filter: blur(10px);
     margin-left: 40px;
     border-radius: 50px;
-    margin-top: 5px;
+    margin-top: 30px;
 
 }
 
@@ -127,14 +132,15 @@ body{
 }
 
 .cuadro1{
-    margin-top: 5px;
+    margin-top: 45px;
     /*background:linear-gradient(#9999, #9999);*/
-    background-color:#1117;
+
     border: 2px solid transparent;
 }
 
 .cuadro2{
-    background-color:#1117;
+    margin-top: 5px;
+
 }
 
 .cuadro3{
@@ -142,7 +148,7 @@ body{
     height: 380px;
     margin-bottom: 20px;
     /*background:linear-gradient(#999b, #999b);*/
-    background-color:#1117;
+    margin-top: 5px;
     border: 2px solid transparent;
     /*background:linear-gradient(#999b, #999b);*/
     /*background-color: rgba(94, 119, 64, 0.993);*/
@@ -152,7 +158,8 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     width: 380px;
     height: 100%;
-    background-color: rgba(43, 61, 48, 0.467);
+    background: linear-gradient(to left, rgba(10, 192, 147, 0.50), rgb(67, 153, 82, 0.50));
+    backdrop-filter: blur(10px);
     margin: auto;
     margin-left: 0px;
     margin-top: 0px;
@@ -192,7 +199,8 @@ body{
     font-family:Arial, Helvetica, sans-serif ;
     width: 250px;
     height: 150px;
-    background-color: rgba(96, 204, 53, 0.733);
+    background-color: #1117;
+    backdrop-filter: blur(10px);
     margin-left: 200px;
     margin-top: 20px;
     border-radius: 50px; /* Crea un círculo perfecto */
@@ -210,7 +218,8 @@ p{
 }
 
 .parrafo_estrategicos{
-    word-wrap:break-word;
+    white-space:initial;
+    word-break: break-all;
     color: white;
 }
 .parrafo_misionales{
@@ -244,7 +253,7 @@ p{
     margin-left: 70px;
     font-size: 30px;
     position: absolute;
-    color: white;
+    color: black;
 }
 .circulo1, .circulo3, .circulo8, .circulo13 {
     margin-left: 400px;
