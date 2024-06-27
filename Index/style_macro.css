@@ -94,22 +94,12 @@ body{
     display: inline-block;
 }
 .triangulo{
-    width: 0px;
-    height: 0px;
-    border-left: 150px solid transparent;
-    border-right: 150px solid transparent;
-    background-size: 600px; /* Ajusta el tamaño de la imagen para cubrir el elemento */
-    background-position: center; /* Centra la imagen */
-}
-
-.triangulo1{
-    border-left: 150px solid transparent;
-    border-right: 150px solid transparent;
-    border-bottom: 200px solid  rgb(131, 131, 131); /* Cambia el color para ajustar */
-    margin-left: 1140px;
-    margin-top: -205px; 
-    z-index: 20;
-    position: absolute;
+    width: 650px;
+    height: 200px;
+    margin-bottom: 20px;   
+    margin-left: 553px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
 }
 
 /*.img__tri--1{
@@ -120,23 +110,6 @@ body{
     position: relative;
 }*/
 
-.triangulo2 {
-border-top: 200px solid rgb(131, 131, 131); /* Cambia el color para ajustar */
-margin-left: 1305px;
-margin-top: -204px;
-}
-
-.triangulo3 {
-border-left: 150px solid transparent;
-border-right: 150px solid rgb(131, 131, 131);
-border-bottom: 200px solid rgb(131, 131, 131); /* Cambia el color para ajustar */
-margin-left: 1465px;
-margin-top: -199px;
-border-top-right-radius:50px ;
-border-bottom-right-radius:50px ;
-position: absolute;
-
-}
 
 .recuadroimagen{
     width: 95%;
