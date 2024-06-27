@@ -1,27 +1,24 @@
 body{
-    background-image: url("../Imagenes/fondo2.jpg") ;
+    background-image: url("../imagenes/fondo2.jpg") ;
     margin: 0;
-    background-size:2700px ;
-
-    /*
+    background-size:2400px ;
+    
     background-position: -500px;
     background-repeat: no-repeat;
     box-sizing: border-box
-    */
-    margin: 0;
 }
 
 .logoindex{
-    width: 600px;
+    width: 500px;
     height: 100px;
     margin: 50px 50px;
 }
 
 .logo__menu{
-    width: 180px;
-    height: 35px;
-    margin-left: -180px;
-    margin-top: 28px;
+    width: 120px;
+    height: 30px;
+    margin-left: -140px;
+    margin-top: 15px;
     position: absolute;
 }
 .img1__menu{
@@ -37,14 +34,15 @@ body{
 
 .img__usuario{
     width: 60px;
-    height: 50px;
-    margin-left: 100px;
-    margin-top: 0px;
+    height: 60px;
+    margin-left: 80px;
+    margin-top: -20px;
     position:relative;
     background-color: transparent;
+    text-transform: uppercase;
 }
 .nav__principal{
-    background-color: #1117;
+    background-color: #999f;
 }
 
 .nav__list{ 
@@ -65,57 +63,76 @@ body{
     position: absolute;
     display: inline-block;
     margin: auto;
-    margin-left: -140px;
-    margin-top: 5px;
-}
-
-.cerrar__sesion__link{
-    margin: 0;
-    text-decoration: none;
-    text-decoration: black;
-    color:black ;
-}
-
-.cerrar__sesion{
-    margin-left: 100px;
-}
-.img__usuario:hover{
-    background: rgb(82, 82, 82);
+    margin-left: -120px;
+    margin-top: 20px;
 }
 
 .nav__link:hover{
-    /*
     background-color: rgb(82, 82, 82);
-    */
-    background-color: #1117;
 }
 
 .nav__link{
     border: none;
     text-decoration: none;
     font-family: sans-serif;
-    background-color: transparent;
+    background-color: #999f;
     color: black;
     padding: initial;
-    padding: 30px;
+    padding: 20px;
     display: inline-block;
 }
-
 .triangulo{
-    width: 650px;
-    height: 180px;
-    margin-bottom: 20px;   
-    margin-left: 450px;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
+    width: 0px;
+    height: 0px;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    background-size: 600px; /* Ajusta el tamaño de la imagen para cubrir el elemento */
+    background-position: center; /* Centra la imagen */
 }
+
+.triangulo1{
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-bottom: 200px solid  rgb(131, 131, 131); /* Cambia el color para ajustar */
+    margin-left: 1140px;
+    margin-top: -205px; 
+    z-index: 20;
+    position: absolute;
+}
+
+/*.img__tri--1{
+    width: 100%;
+    height: 100%;
+    background-color: #000a;
+    z-index: 10;
+    position: relative;
+}*/
+
+.triangulo2 {
+border-top: 200px solid rgb(131, 131, 131); /* Cambia el color para ajustar */
+margin-left: 1305px;
+margin-top: -204px;
+}
+
+.triangulo3 {
+border-left: 150px solid transparent;
+border-right: 150px solid rgb(131, 131, 131);
+border-bottom: 200px solid rgb(131, 131, 131); /* Cambia el color para ajustar */
+margin-left: 1465px;
+margin-top: -199px;
+border-top-right-radius:50px ;
+border-bottom-right-radius:50px ;
+position: absolute;
+
+}
+
 .recuadroimagen{
-    width: 98%;
-    height: 180px;
-    background: linear-gradient(to left,transparent, rgb(10, 192, 146), rgb(67, 153, 82),transparent);
+    width: 95%;
+    height: 200px;
+    background: linear-gradient(to left, #892,#066 );
     margin-left: 40px;
     border-radius: 50px;
-    margin-top: 20px;
+    margin-top: 50px;
 
 }
 
@@ -126,70 +143,70 @@ body{
     margin-left: 10px ;
     margin-right: 10px;
     position: relative;
-    border-radius: 50px;
+    border-radius: 10px;
 }
 
 .cuadro1{
-    margin-top: 40px;
-    /*background:linear-gradient(#9999, #9999);*/
-    background-color: #066a;
-    border: 2px solid transparent;
+    margin-top: 100px;
+    background-color: #066;
+    padding: 50px 0px;
+    border: 2px solid #067;
 }
 
 .cuadro2{
-    background-color: rgba(38, 62, 128, 0.521);
+    padding: 50px 0;
+    /*background:linear-gradient(#9999, #9999);*/
+    background-color: rgb(0, 117, 138);
+    border: 2px solid transparent;
 }
 
 .cuadro3{
     height: 500px;
-    height: 380px;
     margin-bottom: 20px;
     /*background:linear-gradient(#999b, #999b);*/
-    background-color: rgba(94, 119, 64, 0.418);
+    background-color: rgba(94, 119, 64, 0.993);
     border: 2px solid transparent;
-    /*background:linear-gradient(#999b, #999b);*/
-    /*background-color: rgba(94, 119, 64, 0.993);*/
 }
 
 .recuadro1, .recuadro2, .recuadro3{
-    font-family: Arial, Helvetica, sans-serif;
     width: 300px;
-    height: 100%;
-    background-color: #1117;
+    height: 200px;
+    background-color: #111b;
     margin: auto;
-    margin-left: 0px;
-    margin-top: 0px;
+    margin-left: 10px;
+    margin-top: 10px;
     position: absolute;
     border-radius: 50px;
 }
 
-
+.recuadro2{
+    width: 300px;
+    height: 200px;
+}
 
 .recuadro3{
-    margin-top: 0px;
+    width: 300px;
+    height: 480px;
 }
 
 .title, .title__3{
     text-align: center;
-    font-size: 30px;
+    font-size: 40px;
     color: white;
     margin-top: 70px;
 }
 
 .title__3{
-    margin-top: 150px;
-    font-size:40px;
+    margin-top: 200px;
+    font-size:60px;
 }
 
-
-
 .circulo {
-    font-family:Arial, Helvetica, sans-serif ;
-    width: 250px;
-    height: 150px;
+    width: 200px;
+    height: 190px;
     background-color: #111b;
-    margin-left: 200px;
-    margin-top: 20px;
+    margin-left: 500px;
+    margin-top: 15px;
     border-radius: 50px; /* Crea un círculo perfecto */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Añade una sombra suave */
     transition: all 0.3s ease; /* Agrega una transición suave */
@@ -197,7 +214,7 @@ body{
 }
 
 .circulo1, .circulo3, .circulo8, .circulo13 {
-    margin-left: 350px;
+    margin-left: 400px;
 }
 
 .circulo:hover {
@@ -218,52 +235,35 @@ body{
 
 
 .circulo5, .circulo10, .circulo15{
-    margin-left: 950px;
+    margin-left: 900px;
 
 }
 
 .circulo6, .circulo11{
-    margin-left: 1250px;
+    margin-left: 1150px;
 }
 
 .circulo7, .circulo12{
-    margin-left: 1540px;
+    margin-left: 1400px;
 }
 .circulo13{
-    margin-top: 200px;
+    margin-top: 250px;
 }
 
 .circulo14{
-    margin-top: 200px;
+    margin-top: 250px;
 }
 
 .circulo15{
-    margin-top: 200px;
+    margin-top: 250px;
 }
 
 .link1{
-
-    text-decoration: none;
-    text-align: center
-}
-
-h3{
-    margin-top: -20px;
-    margin-left: -20px;
-    font-size: 25px;
-    padding-bottom: 85px;
-    padding-top: 80px;
+    margin-top: -50;
+    margin-left: 0px;
+    font-size: 40px;
+    padding-bottom: 145px;
     padding-left: 60px;
     padding-right: 60px;
-    color: white;
 }
 
-.h3__2{
-    margin-top: 0px;
-    padding-bottom:80px ;
-    padding-top: 40px;
-}
-
-.h3__3{
-    margin-left: -30px
-}
