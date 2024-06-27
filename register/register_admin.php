@@ -1,6 +1,6 @@
 
 <?php
-include_once("config_register.php3.php");
+include_once("config_register.php");
 if(isset($_POST['Submit'])) {
 $nombre_usuario = $_POST['nombre_usuario'];
 $contrasena = $_POST['contrasena'];
