@@ -11,7 +11,9 @@ body {
 }
 
 .header {
-    background: rgba(58, 202, 58, 0.212);
+    background: #1117;
+    backdrop-filter: blur(10px);
+    text-align: center;
     padding: 20px 40px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
@@ -30,7 +32,9 @@ body {
 }
 
 .login-container {
-    background: rgba(94, 194, 118, 0.295);
+    background: #1117;
+    backdrop-filter: blur(10px);
+    text-align: center;
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
@@ -145,7 +149,8 @@ input[type="submit"]:active, .button:active {
 }
 
 .footer {
-    background: rgba(58, 202, 58, 0.212);
+    background: #1117;
+    backdrop-filter: blur(10px);
     text-align: center;
     padding: 10px;
     color: #fff;

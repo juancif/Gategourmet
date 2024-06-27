@@ -62,7 +62,7 @@ $connect->close();
         <div class="login-container">
             <div class="login-box">
                 <img src="../Imagenes/image.png" alt="User Icon" class="user-icon">
-                <h2>INGRESO</h2>
+                <h2>BIENVENIDO</h2>
                 <form method="post" action="">
                     <div class="input-group">
                         <label for="nombre_usuario">Nombres y apellidos</label>
