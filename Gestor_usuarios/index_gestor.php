@@ -10,7 +10,7 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
 </head>
 <body>
     <div class="cuadro_logo">
-        <img src="../logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
+        <img src="../Imagenes/logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
     </div>
 
 <div>

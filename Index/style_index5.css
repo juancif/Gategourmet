@@ -134,13 +134,13 @@ body{
 .cuadro1{
     margin-top: 45px;
     /*background:linear-gradient(#9999, #9999);*/
-    background-color: rgba(39, 238, 178, 0.667);
+    background-color:transparent;
     border: 2px solid transparent;
 }
 
 .cuadro2{
     margin-top: 5px;
-    background-color: rgba(138, 238, 216, 0.521);
+    background-color:transparent;
 
 }
 
@@ -149,8 +149,7 @@ body{
     height: 380px;
     margin-bottom: 20px;
     /*background:linear-gradient(#999b, #999b);*/
-    background-color: rgba(125, 223, 112, 0.418);
-
+    background-color:transparent;
     margin-top: 5px;
     border: 2px solid transparent;
     /*background:linear-gradient(#999b, #999b);*/
