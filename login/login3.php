@@ -56,7 +56,7 @@ $connect->close();
 </head>
 <body>
     <header class="header">
-        <img src="../Imagenes/logo_oficial_color.png" alt="Gate Gourmet Logo" class="logo">
+        <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
     </header>
     <main class="main-content">
         <div class="login-container">
