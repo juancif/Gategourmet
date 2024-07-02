@@ -1,9 +1,6 @@
 body{
     background-image: url("../Imagenes/fondogg6.jpg") ;
     margin: 0;
-    background-image: linear-gradient(to top, rgb(150, 251, 196) 0%, #f9f586 100%), url(../Imagenes/fondo1.jpeg);
-    background-attachment: fixed;
-    
     /*
     background-position: -500px;
     background-repeat: no-repeat;
