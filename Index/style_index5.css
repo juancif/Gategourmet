@@ -1,7 +1,9 @@
 body{
     background-image: url("../Imagenes/fondogg6.jpg") ;
     margin: 0;
-    background-size:2100px ;
+    background-image: linear-gradient(to top, rgb(150, 251, 196) 0%, #f9f586 100%), url(../Imagenes/fondo1.jpeg);
+    background-attachment: fixed;
+    
     /*
     background-position: -500px;
     background-repeat: no-repeat;
@@ -134,12 +136,13 @@ body{
 .cuadro1{
     margin-top: 45px;
     /*background:linear-gradient(#9999, #9999);*/
-
+    background-color:transparent;
     border: 2px solid transparent;
 }
 
 .cuadro2{
     margin-top: 5px;
+    background-color:transparent;
 
 }
 
@@ -148,6 +151,7 @@ body{
     height: 380px;
     margin-bottom: 20px;
     /*background:linear-gradient(#999b, #999b);*/
+    background-color:transparent;
     margin-top: 5px;
     border: 2px solid transparent;
     /*background:linear-gradient(#999b, #999b);*/

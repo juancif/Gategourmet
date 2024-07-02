@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    background: url('https://beatofhawaii.com/wp-content/uploads/2023/11/PSX_20231105_210157.jpg');
+    background-image: url("../Imagenes/fondogg3.webp") ;
     background-size: cover;
 }
 

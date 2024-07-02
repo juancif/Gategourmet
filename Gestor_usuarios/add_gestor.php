@@ -72,13 +72,13 @@ $query->rowCount()."";
 </head>
 <body>
     <header class="header">
-        <img src="../login_register/login/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
+        <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
     </header>
     <main class="main-content">
         <div class="register-container">
             <div class="register-box">
                 <h2>Registro de Usuarios</h2>
-                <form method="post" action="http://localhost/Pagina_Prueba/index/Prueba_index/login_register/register/register_admin.php">
+                <form method="post" action="http://localhost/GateGourmet/register/register_admin.php">
                     <div class="input-group">
                         <label for="nombre_usuario">Nombre de Usuario</label>
                         <input type="text" id="nombre_usuario" name="nombre_usuario" required>
@@ -124,7 +124,7 @@ $query->rowCount()."";
                     </div>
                     <div class="buttons">
                     <input type="Submit" name="Submit" value="Registrarse" class="Registrarse"></input>
-                        <a href="http://localhost/Pagina_Prueba/index/Prueba_index/Gestor_usuarios/index_gestor.php" class="button">Regresar</a>
+                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="button">Regresar</a>
                     </div>
                 </form>
             </div>
