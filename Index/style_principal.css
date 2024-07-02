@@ -1,7 +1,7 @@
 body{
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background-image: url("../Imagenes/fondogg3.webp");
+    background-image: linear-gradient(to top, #aaf986 30%, rgb(150, 251, 196) 80%), url(../Imagenes/fondo1.jpeg);
     
 }
 
@@ -33,7 +33,7 @@ body{
 }
 
 .nav__principal{
-    background-color: #1117;
+    background-color: #111d;
     backdrop-filter: blur(10px);
     height: 100px;
 }
@@ -66,8 +66,24 @@ body{
     margin-left: 100px;
 }
 
+.contenedor_info{
+    background-color: transparent;
+    border: 5px solid black;
+    max-width: 100%;
+    min-width: 20%;
+    height: 600px;
+    margin-top: 100px;
+    margin-left: 20px;
+    margin-right: 20px;
+    position: relative;
+}
+
+.fondo2{
+    background-color: red;
+}
+
 .footer {
-    background: #1117;
+    background: #111d;
     backdrop-filter: blur(10px);
     text-align: center;
     padding: 10px;
