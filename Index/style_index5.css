@@ -98,7 +98,7 @@ body{
     text-decoration: none;
     font-family: sans-serif;
     background-color:#1110;
-    color: rgb(243, 238, 238);
+    color: #000;
     padding: initial;
     padding: 30px;
     display: inline-block;
@@ -188,7 +188,7 @@ body{
 .title, .title__3{
     text-align: center;
     font-size: 30px;
-    color: rgb(255, 255, 255);
+    color: black;
     margin-top: 70px;
 }
 
@@ -218,20 +218,20 @@ p{
     margin-left: 50px;
     font-size: 20px;
     position: absolute;
-    color: white;
+    color: black;
 }
 
 .parrafo_estrategicos{
     white-space:initial;
     word-break: break-all;
-    color: white;
+    color: black;
 }
 .parrafo_misionales{
     margin-top: 60px;
     margin-left: 50px;
     font-size: 20px;
     position: absolute;
-    color: white;
+    color: black;
     
 }
 
@@ -241,7 +241,8 @@ p{
     margin-left: 50px;
     font-size: 22px;
     position: absolute;
-    color: white;
+    color: black
+    ;
 }
 
 .title__3{
@@ -249,7 +250,7 @@ p{
     margin-left: 70px;
     font-size: 30px;
     position: absolute;
-    color: white;
+    color: black;
 }
 
 .title_misionales {
@@ -319,7 +320,7 @@ h3{
     padding-top: 80px;
     padding-left: 60px;
     padding-right: 60px;
-    color: white;
+    color: black;
 }
 
 .h3__2{
