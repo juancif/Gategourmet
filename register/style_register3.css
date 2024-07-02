@@ -7,11 +7,11 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    color: #fff;
+    color: black;
 }
 
 .header {
-    background: rgba(19, 158, 19, 0.467);
+    background: rgba(3, 121, 3, 0.658);
     backdrop-filter: blur(10px);
     padding: 20px 40px;
     text-align: center;
@@ -31,7 +31,7 @@ body {
 }
 
 .register-container {
-    background: rgba(19, 158, 19, 0.467);
+    background: rgba(3, 121, 3, 0.658);
     backdrop-filter: blur(10px);
     padding: 40px;
     border-radius: 15px;
@@ -45,7 +45,7 @@ body {
 
 .register-box h2 {
     margin: 0 0 20px;
-    color: #fff;
+    color: #000000;
     font-weight: 700;
     letter-spacing: 1.2px;
     font-family: 'Roboto', sans-serif;
@@ -60,7 +60,7 @@ body {
 .input-group label {
     display: block;
     margin-bottom: 5px;
-    color: #fff;
+    color: #000000;
     font-weight: 500;
 }
 
@@ -92,8 +92,8 @@ body {
 }
 
 input[type="submit"], .button {
-    background: #3d9970; /* Verde oliva */
-    color: white;
+    background: rgba(255, 255, 255, 0.8); 
+    color: black;
     font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
     font-size: 16px; /* Asegurando el mismo tamaño de letra */
     padding: 12px 20px;
@@ -107,8 +107,9 @@ input[type="submit"], .button {
 }
 
 input[type="submit"]:hover, .button:hover {
-    background: #2d6e50; /* Verde oliva más oscuro */
+    background: transparent; /* Verde oliva más oscuro */
     transform: scale(1.05);
+    border: 1px solid  rgba(3, 121, 3, 0.658);
 }
 
 input[type="submit"]:active, .button:active {
@@ -116,16 +117,16 @@ input[type="submit"]:active, .button:active {
 }
 
 .footer {
-    background: rgba(19, 158, 19, 0.467);
+    background: rgba(3, 121, 3, 0.658);
     backdrop-filter: blur(10px);
     text-align: center;
     text-align: center;
     padding: 10px;
-    color: #fff;
+    color: #000000;
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
 .footer a {
-    color: #fff;
+    color: #000000;
     text-decoration: none;
     margin: 0 10px;
 }
