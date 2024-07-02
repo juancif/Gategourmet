@@ -80,6 +80,8 @@ body{
 
 .fondo2{
     background-color: red;
+    min-width: 100%;
+    
 }
 
 .footer {
