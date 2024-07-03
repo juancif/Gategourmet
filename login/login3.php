@@ -65,7 +65,7 @@ $connect->close();
                 <h2>BIENVENIDO</h2>
                 <form method="post" action="">
                     <div class="input-group">
-                        <label for="nombre_usuario">Nombres y apellidos</label>
+                        <label for="nombre_usuario">Nombre de usuario</label>
                         <div class="input-icon">
                             <i class="fas fa-user"></i>
                             <input type="text" id="nombre_usuario" name="nombre_usuario" required placeholder="Nombres de usuario" value="<?php if(isset($_POST['nombre_usuario'])) echo $_POST['nombre_usuario'] ?>"/>

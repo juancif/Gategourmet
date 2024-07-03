@@ -8,3 +8,9 @@ create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25
     correo varchar (25)not null,nombres varchar(25)not null, apellidos varchar(25)not null, 
     tipo_documento varchar(25)not null,documento varchar(25)not null primary key, area varchar (25)not null,
     tipo_usuario varchar(25)not null);
+
+
+create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
+    varchar(25)not null primary key, area varchar (25)not null,
+    cargo varchar(25)not null);
