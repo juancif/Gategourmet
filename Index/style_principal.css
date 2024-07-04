@@ -81,7 +81,8 @@ body{
     color: #fff;
     margin-top: 180px;
     position: absolute;
-    justify-content: center;
+    white-space: wrap;
+
 }
 .contenedor_info{
     background-image:linear-gradient(to top, rgba(170, 249, 133, 0.725) 30%, rgba(150, 251, 195, 0.692) 80%);

@@ -103,12 +103,13 @@ body{
 }
 
 .triangulo{
-    width: 650px;
+    max-width: 650px;
     height: 180px;
     margin-bottom: 20px;   
-    margin-left: 450px;
+    margin-left: 550px;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
+    position: absolute;
 }
 .recuadroimagen{
     width: 95%;
