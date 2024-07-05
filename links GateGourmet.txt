@@ -13,6 +13,8 @@ http://localhost/GateGourmet/register/register.php
 http://localhost/GateGourmet/register/register1.php
 http://localhost/GateGourmet/register/register2.php
 http://localhost/GateGourmet/register/register3.php
+http://localhost/GateGourmet/register/registro_exitoso.php
+http://localhost/GateGourmet/register/registro_exitoso_admin.php
 http://localhost/GateGourmet/Index/index1.html
 http://localhost/GateGourmet/Index/index2.html
 http://localhost/GateGourmet/Index/index3.html
