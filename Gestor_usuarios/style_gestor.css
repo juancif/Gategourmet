@@ -1,115 +1,172 @@
+/* Estilos generales */
 body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    background-image: url("../Imagenes/fondogg3.webp") ;
+    background-image: url("../Imagenes/fondogg3.webp");
     background-size: cover;
+    background-attachment: fixed;
+    color: #333;
+    line-height: 1.6;
 }
 
-
-.cuadro_logo{
-    background: #76d4eb77;
-    padding: 20px 50% ;
+/* Cuadro del logo */
+.cuadro_logo {
+    background: rgba(118, 212, 235, 0.9);
+    padding: 20px 0;
+    text-align: center;
+    border-bottom: 3px solid #54b8d1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.logo{
-    width: 600px;
-    height: 100px;
-    margin-left: -280px;
+.logo {
+    width: 500px;
+    height: auto;
 }
 
-
-.title_listados{
-    margin-left: 800px;
+/* Título */
+.title_listados {
+    text-align: center;
+    font-size: 2.5em;
+    margin-top: 20px;
+    color: #074352;
+    font-weight: bold;
 }
 
-.tabla_principal{
-    background: #76d4eb79;
-    width: 100%;
-    border: 2px solid black;
-    position: relative ;
-    margin-top: 50px;
+/* Tabla principal */
+.tabla_principal {
+    background: rgba(255, 255, 255, 0.95);
+    width: 90%;
+    margin: 50px auto;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.tabla_secundaria{
-    background: #76d4eb79;
-    font-size: 25px;
+.tabla_principal th,
+.tabla_principal td {
+    border: 1px solid #070101;
+    padding: 15px;
+    text-align: center;
 }
 
-td{
-  text-decoration: dotted;
+.tabla_principal th {
+    background-color: #54b8d1;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 1.1em;
+    font-weight: bold;
 }
 
-.boton_adicionar{
-    background: #074352fb; /* Cambiado a verde oliva */
+.tabla_principal td {
+    background-color: #f0f8fa;
+    font-size: 1em;
+}
+
+/* Botones */
+.boton_adicionar,
+.boton_volver {
+    background: #54b8d1;
     color: white;
-    font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
-    font-size: 16px; /* Asegurando el mismo tamaño de letra */
-    padding: 12px 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    padding: 12px 30px;
     border: none;
-    border-radius: 50px;
+    border-radius: 25px;
     text-decoration: none;
     text-align: center;
-    width: 150px;
+    display: inline-block;
+    margin: 20px 10px;
     transition: background 0.3s ease, transform 0.3s ease;
-    margin-left: 1450px;
-    margin-top:30px;
-    position: absolute;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.39);
+    width: 200px;
+    margin-left: 1650px;
+    margin-top: -40px;
 }
 
-a:hover, .boton_adicionar:hover {
-    background: #074352d5; 
+.boton_adicionar:hover,
+.boton_volver:hover {
+    background: #bfd4d39c;
     transform: scale(1.05);
 }
 
-a:active, .boton_adicionar:active {
+.boton_adicionar:active,
+.boton_volver:active {
     transform: scale(1);
 }
 
-
-.boton_volver{
-        background: #074352fb;/* Cambiado a verde oliva */
-        color: white;
-        font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
-        font-size: 16px; /* Asegurando el mismo tamaño de letra */
-        padding: 12px 20px;
-        border: none;
-        border-radius: 50px;
-        text-decoration: none;
-        text-align: center;
-        width: 150px;
-        transition: background 0.3s ease, transform 0.3s ease;
-        margin-left: 1650px;
-        margin-top: -7px;
-        position: absolute;
-    }
-
-    a:hover, .boton_volver:hover {
-        background: #074352d5; 
-        transform: scale(1.05);
-    }
-    
-    a:active, .boton_volver:active {
-        transform: scale(1);
-    }
-
+/* Footer */
 .footer {
-    background: #76d4eb77;
+    background: rgba(118, 212, 235, 0.9);
     text-align: center;
-    padding: 10px;
-    color: #fff;
-    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 28.6%;
-    height:70px;
+    padding: 20px 0;
+    color: #ffffff;
+    position: relative;
+    width: 100%;
+    box-shadow: 0 -2px 4px rgba(255, 255, 255, 0.1);
+    margin-top: 20px;
+    font-size: 0.9em;
 }
 
 .footer a {
-    color: #fff;
+    color: #f7f7f7;
     text-decoration: none;
     margin: 0 10px;
+    font-weight: bold;
 }
 
 .footer a:hover {
     text-decoration: underline;
 }
 
+/* Media queries para responsividad */
+@media screen and (max-width: 768px) {
+    .tabla_principal {
+        width: 100%;
+        margin: 20px 0;
+    }
+
+    .boton_adicionar,
+    .boton_volver {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .footer {
+        padding: 15px;
+    }
+}
+
+.acciones {
+    text-align: center;
+}
+
+.acciones a {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: background-color 0.3s, transform 0.3s;
+    color: #000000;
+}
+
+.acciones a.editar {
+    background-color: #000000;
+    color: #000000;
+}
+
+.acciones a.eliminar {
+    background-color: #000000;
+    color: #000000;
+}
+
+.acciones a:hover {
+    transform: translateY(-3px);
+}
+
+.acciones a:active {
+    transform: translateY(1px);
+}
