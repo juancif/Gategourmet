@@ -31,7 +31,7 @@ echo "<tr>";
 echo "<td>".$row['nombre_usuario']."</td>";
 echo "<td>".$row['contrasena']."</td>";
 echo "<td>".$row['correo']."</td>";
-echo "<td>".$row['nombres']."</td>";
+echo "<td>".$row['nombres_apellidos']."</td>";
 echo "<td>".$row['documento']."</td>";
 echo "<td>".$row['area']."</td>";
 echo "<td>".$row['cargo']."</td>";

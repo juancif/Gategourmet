@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Preparar la consulta para verificar las credenciales
         $stmt = $connect->prepare("SELECT * FROM usuarios WHERE nombre_usuario = ? AND contrasena = ?");
         $stmt->bind_param("ss", $nombre_usuario, $contrasena);
-        $stmt->execute();
+        $stmt->execute(); 
         $result = $stmt->get_result();
 
         // Verificar si se encontraron resultados
@@ -33,6 +33,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: http://localhost/GateGourmet/Index/index5.html");
             exit(); // Terminar el script después de la redirección
         } 
+    }
+}
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Verificar si los campos del formulario fueron enviados
+            if (isset($_POST['nombre_usuario']) && isset($_POST['contrasena'])) {
+                // Recuperar los datos del formulario
+                $nombre_usuario = $_POST['nombre_usuario'];
+                $contrasena = $_POST['contrasena'];
+        
+                // Preparar la consulta para verificar las credenciales
+                $stmt = $connect->prepare("SELECT * FROM administradores WHERE nombre_usuario = ? AND contrasena = ?");
+                $stmt->bind_param("ss", $nombre_usuario, $contrasena);
+                $stmt->execute(); 
+                $result = $stmt->get_result();
+        
+                // Verificar si se encontraron resultados
+                if ($result->num_rows > 0) {
+                    // Las credenciales son correctas, redirigir al usuario a la página principal
+                    header("Location: http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php");
+                    exit(); // Terminar el script después de la redirección
+                } 
     } else {
         // Si no se enviaron los campos del formulario, mostrar un mensaje de error
         echo "Por favor, ingrese nombre de usuario y contrasena.";
