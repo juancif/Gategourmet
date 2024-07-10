@@ -20,11 +20,9 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
 <td>Contraseña</td>
 <td>Correo Electronico</td>
 <td>Nombres</td>
-<td>Apellidos</td>
-<td>Tipo de documento</td>
 <td>Documento</td>
 <td>Area</td>
-<td>Tipo de usuario</td>
+<td>Cargo</td>
 <td>Acción</td>
 </tr>
 <?php
@@ -33,12 +31,10 @@ echo "<tr>";
 echo "<td>".$row['nombre_usuario']."</td>";
 echo "<td>".$row['contrasena']."</td>";
 echo "<td>".$row['correo']."</td>";
-echo "<td>".$row['nombres']."</td>";
-echo "<td>".$row['apellidos']."</td>";
-echo "<td>".$row['tipo_documento']."</td>";
+echo "<td>".$row['nombres_apellidos']."</td>";
 echo "<td>".$row['documento']."</td>";
 echo "<td>".$row['area']."</td>";
-echo "<td>".$row['tipo_usuario']."</td>";
+echo "<td>".$row['cargo']."</td>";
 echo "<td><a href=\"edit_gestor.php?documento=$row[documento]\">Editar</a> | <a href=\"delete_gestor.php?documento=$row[documento]\"
 onClick=\"return confirm('Esta seguro de elimar el registro?')\">Eliminar</a></td>";
 }

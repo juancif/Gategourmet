@@ -1,63 +1,62 @@
 <?php
 include_once("config_register.php");
-if(isset($_POST['Submit'])) {
-$nombre_usuario = $_POST['nombre_usuario'];
-$contrasena = $_POST['contrasena'];
-$correo = $_POST['correo'];
-$nombres = $_POST['nombres'];
-$apellidos = $_POST['apellidos'];
-$tipo_documento = $_POST['tipo_documento'];
-$documento = $_POST['documento'];
-$area = $_POST['area'];
-$tipo_usuario = $_POST['tipo_usuario'];
-if( empty($nombre_usuario) ||  empty($contrasena) || empty($correo) || empty($nombres) || empty($apellidos) 
-||  empty($tipo_documento) || empty($documento) || empty($area) || empty($tipo_usuario)) {
 
-if(empty($nombre_usuario)) {
-echo "<font color='red'>Campo: nombre_usuario esta vacio.</font><br/>";
-}
-if(empty($contrasena)) {
-    echo "<font color='red'>Campo: contrasena esta vacio.</font><br/>";
-}
-    if(empty($correo)) {
-echo "<font color='red'>Campo: correo esta vacio.</font><br/>";
-}
-if(empty($nombres)) {
-echo "<font color='red'>Campo: nombres esta vacio.</font><br/>";
-}
-if(empty($apellidos)) {
-echo "<font color='red'>Campo: apellidos esta vacio.</font><br/>";
-}
-if(empty($tipo_documento)) {
-    echo "<font color='red'>Campo: tipo_documento esta vacio.</font><br/>";
-}
-    if(empty($documento)) {
-echo "<font color='red'>Campo: documento esta vacio.</font><br/>";
-}
-if(empty($area)) {
-echo "<font color='red'>Campo: area esta vacio.</font><br/>";
-}
-if(empty($tipo_usuario)) {
-echo "<font color='red'>Campo: tipo_usuario esta vacio.</font><br/>";
-}
-echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
-} else {
-$sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres, apellidos, tipo_documento, documento, area, tipo_usuario) 
-VALUES(:nombre_usuario, :contrasena, :correo, :nombres, :apellidos, :tipo_documento, :documento, :area, :tipo_usuario)";
-$query = $dbConn->prepare($sql);
+if (isset($_POST['Submit'])) {
+    $nombre_usuario = $_POST['nombre_usuario'];
+    $contrasena = $_POST['contrasena'];
+    $correo = $_POST['correo'];
+    $nombres_apellidos = $_POST['nombres_apellidos'];
+    $documento = $_POST['documento'];
+    $area = $_POST['area'];
+    $cargo = $_POST['cargo'];
 
-$query->bindparam(':nombre_usuario', $nombre_usuario);
-$query->bindparam(':contrasena', $contrasena);
-$query->bindparam(':correo', $correo);
-$query->bindparam(':nombres', $nombres);
-$query->bindparam(':apellidos', $apellidos);
-$query->bindparam(':tipo_documento', $tipo_documento);
-$query->bindparam(':documento', $documento);
-$query->bindparam(':area', $area);
-$query->bindparam(':tipo_usuario', $tipo_usuario);
-$query->execute();
-$query->rowCount()."";
-}
+    // Verificar si algún campo está vacío
+    if (empty($nombre_usuario) || empty($contrasena) || empty($correo) || empty($nombres_apellidos) || empty($documento) || empty($area) || empty($cargo)) {
+        if (empty($nombre_usuario)) {
+            echo "<font color='red'>Campo: nombre_usuario está vacío.</font><br/>";
+        }
+        if (empty($contrasena)) {
+            echo "<font color='red'>Campo: contrasena está vacío.</font><br/>";
+        }
+        if (empty($correo)) {
+            echo "<font color='red'>Campo: correo está vacío.</font><br/>";
+        }
+        if (empty($nombres_apellidos)) {
+            echo "<font color='red'>Campo: nombres_apellidos está vacío.</font><br/>";
+        }
+        if (empty($documento)) {
+            echo "<font color='red'>Campo: documento está vacío.</font><br/>";
+        }
+        if (empty($area)) {
+            echo "<font color='red'>Campo: área está vacío.</font><br/>";
+        }
+        if (empty($cargo)) {
+            echo "<font color='red'>Campo: cargo está vacío.</font><br/>";
+        }
+        echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
+    } else {
+        // Insertar datos en la base de datos
+        $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo) 
+                VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo)";
+        $query = $dbConn->prepare($sql);
+
+        $query->bindparam(':nombre_usuario', $nombre_usuario);
+        $query->bindparam(':contrasena', $contrasena);
+        $query->bindparam(':correo', $correo);
+        $query->bindparam(':nombres_apellidos', $nombres_apellidos);
+        $query->bindparam(':documento', $documento);
+        $query->bindparam(':area', $area);
+        $query->bindparam(':cargo', $cargo);
+        $query->execute();
+
+        if ($query->rowCount() > 0) {
+            // Redirigir a la página deseada después del registro exitoso
+            header("Location: http://localhost/GateGourmet/register/registro_exitoso.php");
+            exit();
+        } else {
+            echo "<font color='red'>Error al registrar el usuario.</font><br/>";
+        }
+    }
 }
 ?>
 
@@ -79,52 +78,37 @@ $query->rowCount()."";
         <div class="register-container">
             <div class="register-box">
                 <h2>Registro de Usuarios</h2>
-                <form method="post" action="http://localhost/GateGourmet/register/register3.php">
+                <form method="post" action="">
                     <div class="input-group">
                         <label for="nombre_usuario">Nombre de Usuario</label>
                         <input type="text" id="nombre_usuario" name="nombre_usuario" required>
                     </div>
                     <div class="input-group">
                         <label for="contrasena">Contraseña</label>
-                        <input type="contrasena" id="contrasena" name="contrasena" required>
+                        <input type="password" id="contrasena" name="contrasena" required>
                     </div>
                     <div class="input-group">
                         <label for="correo">Correo Electrónico</label>
                         <input type="email" id="correo" name="correo" required>
                     </div>
                     <div class="input-group">
-                        <label for="first_name">Nombres</label>
-                        <input type="text" id="nombres" name="nombres" required>
+                        <label for="nombres_apellidos">Nombres y Apellidos</label>
+                        <input type="text" id="nombres_apellidos" name="nombres_apellidos" required>
                     </div>
                     <div class="input-group">
-                        <label for="last_name">Apellidos</label>
-                        <input type="text" id="apellidos" name="apellidos" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="document_type">Tipo de Documento</label>
-                        <select id="tipo_documento" name="tipo_documento" required>
-                            <option value="cc">Cédula de Ciudadanía</option>
-                            <option value="ce">Cédula de Extranjería</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="document">Documento</label>
+                        <label for="documento">Documento</label>
                         <input type="text" id="documento" name="documento" required>
                     </div>
                     <div class="input-group">
-                        <label for="nombres">Área Pertenece</label>
-                        <input type="text" id="area" name="area">
+                        <label for="area">Área</label>
+                        <input type="text" id="area" name="area" required>
                     </div>
                     <div class="input-group">
-                        <label for="user_type">Tipo de Usuario</label>
-                        <select id="tipo_usuario" name="tipo_usuario" required>
-                            <option value="administrativo">Administrativo</option>
-                            <option value="operativo">Operativo</option>
-                            <option value="jefe_de_nombres">Jefe De nombres</option>
-                        </select>
+                        <label for="cargo">Cargo</label>
+                        <input type="text" id="cargo" name="cargo" required>
                     </div>
                     <div class="buttons">
-                    <input type="Submit" name="Submit" value="Registrarse" class="Registrarse"></input>
+                        <input type="submit" name="Submit" value="Registrarse" class="Registrarse">
                         <a href="http://localhost/GateGourmet/login/login3.php" class="button">Regresar</a>
                     </div>
                 </form>
