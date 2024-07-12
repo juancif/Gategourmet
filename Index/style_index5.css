@@ -20,13 +20,14 @@ body{
 .logo__menu{
     width: 180px;
     height: 35px;
-    margin-left: -180px;
+    margin-left: -160px;
     margin-top: 28px;
     position: absolute;
 }
 .img1__menu{
     width: 20px;
     height: 20px;
+    
 }
 
 .imgs__menu{
@@ -63,7 +64,7 @@ body{
     display: inline-block;
     margin: auto;
     margin-left: 50px;
-    margin-right: 170px;
+    margin-right: 100px;
 }
 
 .nav__item__user{
@@ -106,7 +107,7 @@ body{
     max-width: 650px;
     height: 180px;
     margin-bottom: 20px;   
-    margin-left: 550px;
+    margin-left: 14cqmax;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
     position: absolute;
@@ -124,7 +125,7 @@ body{
 
 .cuadro1, .cuadro2, .cuadro3{
     width: 98.5%;
-    height: 200px;
+    height: 180px;
     /*background:linear-gradient(#9997, #9997);*/
     margin-left: 10px ;
     margin-right: 10px;
@@ -146,8 +147,7 @@ body{
 }
 
 .cuadro3{
-    height: 500px;
-    height: 380px;
+    height: 280px;
     margin-bottom: 20px;
     /*background:linear-gradient(#999b, #999b);*/
     background-color:transparent;
@@ -159,7 +159,7 @@ body{
 
 .recuadro1, .recuadro2, .recuadro3{
     font-family: Arial, Helvetica, sans-serif;
-    width: 380px;
+    width: 320px;
     height: 100%;
     background: linear-gradient(to left, rgba(10, 192, 147, 0.50), rgb(67, 153, 82, 0.50));
     backdrop-filter: blur(10px);
@@ -200,8 +200,8 @@ body{
 
 .circulo {
     font-family:Arial, Helvetica, sans-serif ;
-    width: 250px;
-    height: 150px;
+    width: 200px;
+    height: 120px;
     background-color: #1117;
     backdrop-filter: blur(10px);
     margin-left: 200px;
@@ -275,33 +275,33 @@ p{
     background-color: transparent;
 }
 .circulo2, .circulo4, .circulo9, .circulo14{
-    margin-left: 680px;
+    margin-left: 620px;
 }
 
 
 
 .circulo5, .circulo10, .circulo15{
-    margin-left: 950px;
+    margin-left: 850px;
 
 }
 
 .circulo6, .circulo11{
-    margin-left: 1230px;
+    margin-left: 1080px;
 }
 
 .circulo7, .circulo12{
-    margin-left: 1510px;
+    margin-left: 1300px;
 }
 .circulo13{
-    margin-top: 200px;
+    margin-top: 150px;
 }
 
 .circulo14{
-    margin-top: 200px;
+    margin-top: 150px;
 }
 
 .circulo15{
-    margin-top: 200px;
+    margin-top: 150px;
 }
 
 .link1{
@@ -311,19 +311,19 @@ p{
 }
 
 h3{
-    margin-top: -20px;
-    margin-left: -20px;
-    font-size: 25px;
-    padding-bottom: 85px;
-    padding-top: 80px;
-    padding-left: 60px;
-    padding-right: 60px;
+    margin-top: -5px;
+    margin-left: -5px;
+    font-size: 20px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    padding-left: 40px;
+    padding-right: 40px;
     color: white;
 }
 
 .h3__2{
     margin-top: 0px;
-    padding-bottom:80px ;
+    padding-bottom:35px ;
     padding-top: 40px;
 }
 
