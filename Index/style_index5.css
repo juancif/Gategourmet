@@ -1,15 +1,15 @@
 body{
-    background-image: url("../Imagenes/fondogg3.webp") ;
+    background-image: url("../Imagenes/fondo2.jpg") ;
     margin: 0;
-    background-size: 2200px;
+    background-size:2700px ;
+
     /*
     background-position: -500px;
     background-repeat: no-repeat;
-    box-sizing: border-box,
+    box-sizing: border-box
     */
-
+    margin: 0;
 }
-
 
 .logoindex{
     width: 600px;
@@ -43,14 +43,8 @@ body{
     position:relative;
     background-color: transparent;
 }
-
-.img__usuario:hover{
-    background-color:#1111;
-}
-
 .nav__principal{
-    background: rgba(3, 121, 3, 0.658);
-    backdrop-filter: blur(10px);
+    background-color: #1117;
 }
 
 .nav__list{ 
@@ -78,24 +72,29 @@ body{
 .cerrar__sesion__link{
     margin: 0;
     text-decoration: none;
-    text-decoration:#1117;
+    text-decoration: black;
     color:black ;
 }
 
 .cerrar__sesion{
     margin-left: 100px;
 }
-
+.img__usuario:hover{
+    background: rgb(82, 82, 82);
+}
 
 .nav__link:hover{
-    background-color:#1112;
+    /*
+    background-color: rgb(82, 82, 82);
+    */
+    background-color: #1117;
 }
 
 .nav__link{
     border: none;
     text-decoration: none;
     font-family: sans-serif;
-    background-color:#1110;
+    background-color: transparent;
     color: black;
     padding: initial;
     padding: 30px;
@@ -103,28 +102,26 @@ body{
 }
 
 .triangulo{
-    max-width: 650px;
+    width: 650px;
     height: 180px;
     margin-bottom: 20px;   
-    margin-left: 550px;
+    margin-left: 450px;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
-    position: absolute;
 }
 .recuadroimagen{
-    width: 95%;
+    width: 98%;
     height: 180px;
     background: linear-gradient(to left,transparent, rgb(10, 192, 146), rgb(67, 153, 82),transparent);
-    backdrop-filter: blur(10px);
     margin-left: 40px;
     border-radius: 50px;
-    margin-top: 30px;
+    margin-top: 20px;
 
 }
 
 .cuadro1, .cuadro2, .cuadro3{
     width: 98.5%;
-    height: 200px;
+    height: 220px;
     /*background:linear-gradient(#9997, #9997);*/
     margin-left: 10px ;
     margin-right: 10px;
@@ -133,16 +130,14 @@ body{
 }
 
 .cuadro1{
-    margin-top: 45px;
+    margin-top: 40px;
     /*background:linear-gradient(#9999, #9999);*/
-    background-color:transparent;
+    background-color: #066a;
     border: 2px solid transparent;
 }
 
 .cuadro2{
-    margin-top: 5px;
-    background-color:transparent;
-
+    background-color: rgba(38, 62, 128, 0.521);
 }
 
 .cuadro3{
@@ -150,8 +145,7 @@ body{
     height: 380px;
     margin-bottom: 20px;
     /*background:linear-gradient(#999b, #999b);*/
-    background-color:transparent;
-    margin-top: 5px;
+    background-color: rgba(140, 255, 0, 0.418);
     border: 2px solid transparent;
     /*background:linear-gradient(#999b, #999b);*/
     /*background-color: rgba(94, 119, 64, 0.993);*/
@@ -159,10 +153,9 @@ body{
 
 .recuadro1, .recuadro2, .recuadro3{
     font-family: Arial, Helvetica, sans-serif;
-    width: 380px;
+    width: 300px;
     height: 100%;
-    background: linear-gradient(to left, rgba(10, 192, 147, 0.50), rgb(67, 153, 82, 0.50));
-    backdrop-filter: blur(10px);
+    background-color: #1117;
     margin: auto;
     margin-left: 0px;
     margin-top: 0px;
@@ -176,18 +169,10 @@ body{
     margin-top: 0px;
 }
 
-.title{
-    margin-top: -20px;
-}
-
-.title__estrag{
-    margin-top: -110px;
-    position: relative;
-}
 .title, .title__3{
     text-align: center;
     font-size: 30px;
-    color: black;
+    color: white;
     margin-top: 70px;
 }
 
@@ -202,66 +187,17 @@ body{
     font-family:Arial, Helvetica, sans-serif ;
     width: 250px;
     height: 150px;
-    /*background-color: #1117;*/
-    background: rgba(3, 121, 3, 0.658);
-    backdrop-filter: blur(10px);
+    background-color: #111b;
     margin-left: 200px;
     margin-top: 20px;
     border-radius: 50px; /* Crea un círculo perfecto */
-    box-shadow: 0 8px 16px rgba(136, 42, 42, 0.1); /* Añade una sombra suave */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Añade una sombra suave */
     transition: all 0.3s ease; /* Agrega una transición suave */
     position: absolute;
 }
 
-p{
-    margin-top: -100px;
-    margin-left: 50px;
-    font-size: 20px;
-    position: absolute;
-    color: black;
-}
-
-.parrafo_estrategicos{
-    white-space:initial;
-    word-break: break-all;
-    color: black;
-}
-.parrafo_misionales{
-    margin-top: 60px;
-    margin-left: 50px;
-    font-size: 20px;
-    position: absolute;
-    color: black;
-    
-}
-
-
-.parrafo_soporte{
-    margin-top: 100px;
-    margin-left: 50px;
-    font-size: 22px;
-    position: absolute;
-    color: black;
-}
-
-.title__3{
-    margin-top: -10px;
-    margin-left: 70px;
-    font-size: 30px;
-    position: absolute;
-    color: black;
-}
-
-.title_misionales {
-    margin-top: -40px;
-    margin-left: 70px;
-    font-size: 30px;
-    position: absolute;
-    color: black;
-}
 .circulo1, .circulo3, .circulo8, .circulo13 {
-    margin-left: 400px;
-    
+    margin-left: 350px;
 }
 
 .circulo:hover {
@@ -276,7 +212,7 @@ p{
     background-color: transparent;
 }
 .circulo2, .circulo4, .circulo9, .circulo14{
-    margin-left: 680px;
+    margin-left: 650px;
 }
 
 
@@ -287,11 +223,11 @@ p{
 }
 
 .circulo6, .circulo11{
-    margin-left: 1230px;
+    margin-left: 1250px;
 }
 
 .circulo7, .circulo12{
-    margin-left: 1510px;
+    margin-left: 1540px;
 }
 .circulo13{
     margin-top: 200px;
@@ -319,7 +255,7 @@ h3{
     padding-top: 80px;
     padding-left: 60px;
     padding-right: 60px;
-    color: black;
+    color: white;
 }
 
 .h3__2{

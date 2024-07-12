@@ -22,9 +22,9 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
                 <th>CONTRASEÑA</th>
                 <th>CORREO ELECTRONICO</th>
                 <th>NOMBRES Y APELLIDOS</th>
-                <th>DOCUMENTO</th>
-                <th>AREA PERTENECE</th>
-                <th>CARGO</th>
+                <th>documento</th>
+                <th>area</th>
+                <th>cargo</th>
                 <th>EDICIÓN</th>
             </tr>
             <?php
