@@ -50,7 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
                 // Verificar si se encontraron resultados
                 if ($result->num_rows > 0) {
-                    A
                     // Las credenciales son correctas, redirigir al usuario a la página principal
                     header("Location: http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php");
                     exit(); // Terminar el script después de la redirección

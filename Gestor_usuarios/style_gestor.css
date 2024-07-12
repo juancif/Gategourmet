@@ -102,10 +102,11 @@ body {
     text-align: center;
     padding: 20px 0;
     color: #ffffff;
-    position: relative;
+    position: absolute;
     width: 100%;
     box-shadow: 0 -2px 4px rgba(255, 255, 255, 0.1);
-    margin-top: 20px;
+    margin-top: 23.4cqmax;
+    margin-top: 33.3cqmin;
     font-size: 0.9em;
 }
 
