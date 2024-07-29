@@ -35,30 +35,56 @@ if (isset($_POST['Submit'])) {
         }
         echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
     } else {
-        // Insertar datos en la base de datos
-        $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo) 
-                VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo)";
-        $query = $dbConn->prepare($sql);
+        try {
+            $dbConn->beginTransaction();
 
-        $query->bindparam(':nombre_usuario', $nombre_usuario);
-        $query->bindparam(':contrasena', $contrasena);
-        $query->bindparam(':correo', $correo);
-        $query->bindparam(':nombres_apellidos', $nombres_apellidos);
-        $query->bindparam(':documento', $documento);
-        $query->bindparam(':area', $area);
-        $query->bindparam(':cargo', $cargo);
-        $query->execute();
+            // Insertar datos en la tabla usuarios
+            $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo) 
+                    VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo)";
+            $query = $dbConn->prepare($sql);
 
-        if ($query->rowCount() > 0) {
-            // Redirigir a la página deseada después del registro exitoso
-            header("Location: http://localhost/GateGourmet/register/registro_exitoso.php");
-            exit();
-        } else {
-            echo "<font color='red'>Error al registrar el usuario.</font><br/>";
+            $query->bindparam(':nombre_usuario', $nombre_usuario);
+            $query->bindparam(':contrasena', $contrasena);
+            $query->bindparam(':correo', $correo);
+            $query->bindparam(':nombres_apellidos', $nombres_apellidos);
+            $query->bindparam(':documento', $documento);
+            $query->bindparam(':area', $area);
+            $query->bindparam(':cargo', $cargo);
+            $query->execute();
+
+            // Verificar si el campo cargo es el especificado para los administradores
+            if ($cargo === 'Administrador') {
+                $sql_admin = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo) 
+                              VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo)";
+                $query_admin = $dbConn->prepare($sql_admin);
+
+                $query_admin->bindparam(':nombre_usuario', $nombre_usuario);
+                $query_admin->bindparam(':contrasena', $contrasena);
+                $query_admin->bindparam(':correo', $correo);
+                $query_admin->bindparam(':nombres_apellidos', $nombres_apellidos);
+                $query_admin->bindparam(':documento', $documento);
+                $query_admin->bindparam(':area', $area);
+                $query_admin->bindparam(':cargo', $cargo);
+                $query_admin->execute();
+            }
+
+            $dbConn->commit();
+
+            if ($query->rowCount() > 0) {
+                // Redirigir a la página deseada después del registro exitoso
+                header("Location: http://localhost/GateGourmet/register/registro_exitoso.php");
+                exit();
+            } else {
+                echo "<font color='red'>Error al registrar el usuario.</font><br/>";
+            }
+        } catch (Exception $e) {
+            $dbConn->rollBack();
+            echo "<font color='red'>Error: " . $e->getMessage() . "</font><br/>";
         }
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -85,8 +111,8 @@ if (isset($_POST['Submit'])) {
                     </div>
                     <div class="input-group">
                         <label for="contrasena">Contraseña</label>
-                        <input type="password" id="contrasena" name="contrasena" required>
-                    </div>
+                        <input type="password" id="contrasena" name="contrasena" 
+                        required onclick="mouseover('ejemplo')">
                     <div class="input-group">
                         <label for="correo">Correo Electrónico</label>
                         <input type="email" id="correo" name="correo" required>
@@ -117,6 +143,7 @@ if (isset($_POST['Submit'])) {
     </main>
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
+        <script src="script.js"></script>
     </footer>
 </body>
 </html>
