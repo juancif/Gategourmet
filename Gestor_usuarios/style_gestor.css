@@ -22,8 +22,17 @@ body {
 .logo {
     width: 500px;
     height: auto;
+    margin-left: -850px;
 }
 
+
+.img_usuario{
+    width: 60px;
+    height: 50px;
+    margin-left: 100px;
+    margin-top: 0px;
+    position:relative;
+}
 /* Título */
 .title_listados {
     text-align: center;
