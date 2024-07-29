@@ -38,21 +38,7 @@ if (isset($_POST['Submit'])) {
         try {
             $dbConn->beginTransaction();
 
-            // Insertar datos en la tabla usuarios
-            $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo) 
-                    VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo)";
-            $query = $dbConn->prepare($sql);
-
-            $query->bindparam(':nombre_usuario', $nombre_usuario);
-            $query->bindparam(':contrasena', $contrasena);
-            $query->bindparam(':correo', $correo);
-            $query->bindparam(':nombres_apellidos', $nombres_apellidos);
-            $query->bindparam(':documento', $documento);
-            $query->bindparam(':area', $area);
-            $query->bindparam(':cargo', $cargo);
-            $query->execute();
-
-            // Verificar si el campo cargo es el especificado para los administradores
+            // Insertar datos en la tabla administradores si el cargo es 'Administrador'
             if ($cargo === 'Administrador') {
                 $sql_admin = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo) 
                               VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo)";
@@ -66,16 +52,18 @@ if (isset($_POST['Submit'])) {
                 $query_admin->bindparam(':area', $area);
                 $query_admin->bindparam(':cargo', $cargo);
                 $query_admin->execute();
-            }
 
-            $dbConn->commit();
+                $dbConn->commit();
 
-            if ($query->rowCount() > 0) {
-                // Redirigir a la página deseada después del registro exitoso
-                header("Location: http://localhost/GateGourmet/register/registro_exitoso.php");
-                exit();
+                if ($query_admin->rowCount() > 0) {
+                    // Redirigir a la página deseada después del registro exitoso
+                    header("Location: http://localhost/GateGourmet/register/registro_exitoso.php");
+                    exit();
+                } else {
+                    echo "<font color='red'>Error al registrar el administrador.</font><br/>";
+                }
             } else {
-                echo "<font color='red'>Error al registrar el usuario.</font><br/>";
+                echo "<font color='red'>Solo se pueden registrar administradores.</font><br/>";
             }
         } catch (Exception $e) {
             $dbConn->rollBack();
@@ -84,6 +72,7 @@ if (isset($_POST['Submit'])) {
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -131,7 +120,12 @@ if (isset($_POST['Submit'])) {
                     </div>
                     <div class="input-group">
                         <label for="cargo">Cargo</label>
-                        <input type="text" id="cargo" name="cargo" required>
+                        <select name="cargo" id="cargo">
+                            <option value="">Seleccione una opción</option>
+                            <option value="Administrador">Administrador</option>
+                            <option value="Supervisor">Supervisor</option>
+                            <option value="Empleado">Empleado</option>
+                        </select>                    
                     </div>
                     <div class="buttons">
                         <input type="submit" name="Submit" value="Registrarse" class="Registrarse">
