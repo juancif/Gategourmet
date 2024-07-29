@@ -14,7 +14,7 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
     <div class="cuadro_logo">
         <img src="../Imagenes/logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
         <li class="nav__item__user">
-                <a href="http://localhost/GateGourmet/login/login3.php" class="cerrar__sesion__link"><img src="../Imagenes/image.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Cerrar sesión</div></a>
+                <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link"><img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
             </li>
     </div>
 

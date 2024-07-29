@@ -25,14 +25,45 @@ body {
     margin-left: -850px;
 }
 
-
-.img_usuario{
+.img__usuario{
     width: 60px;
     height: 50px;
     margin-left: 100px;
     margin-top: 0px;
     position:relative;
+    background-color: transparent;
+    list-style-type: none;
 }
+
+.img__usuario:hover{
+    background-color:#1111;
+    text-decoration: none;
+}
+
+.cerrar__sesion__link{
+    margin: 0;
+    text-decoration: none;
+    text-decoration:#1117;
+    color:black ;
+    list-style-type: none;
+}
+
+.cerrar__sesion{
+    margin-left: 100px;
+    list-style-type: none;
+}
+
+
+.nav__item__user{
+    background-color: transparent;
+    position: absolute;
+    display: inline-block;
+    margin: auto;
+    margin-left: 700px;
+    margin-top: 5px;
+}
+
+
 /* Título */
 .title_listados {
     text-align: center;
