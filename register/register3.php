@@ -38,32 +38,33 @@ if (isset($_POST['Submit'])) {
         try {
             $dbConn->beginTransaction();
 
-            // Insertar datos en la tabla administradores si el cargo es 'Administrador'
+            // Verificar el campo cargo y definir la tabla correspondiente
             if ($cargo === 'Administrador') {
-                $sql_admin = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo) 
-                              VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo)";
-                $query_admin = $dbConn->prepare($sql_admin);
-
-                $query_admin->bindparam(':nombre_usuario', $nombre_usuario);
-                $query_admin->bindparam(':contrasena', $contrasena);
-                $query_admin->bindparam(':correo', $correo);
-                $query_admin->bindparam(':nombres_apellidos', $nombres_apellidos);
-                $query_admin->bindparam(':documento', $documento);
-                $query_admin->bindparam(':area', $area);
-                $query_admin->bindparam(':cargo', $cargo);
-                $query_admin->execute();
-
-                $dbConn->commit();
-
-                if ($query_admin->rowCount() > 0) {
-                    // Redirigir a la página deseada después del registro exitoso
-                    header("Location: http://localhost/GateGourmet/register/registro_exitoso.php");
-                    exit();
-                } else {
-                    echo "<font color='red'>Error al registrar el administrador.</font><br/>";
-                }
+                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo) 
+                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo)";
             } else {
-                echo "<font color='red'>Solo se pueden registrar administradores.</font><br/>";
+                $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo) 
+                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo)";
+            }
+
+            $query = $dbConn->prepare($sql);
+            $query->bindparam(':nombre_usuario', $nombre_usuario);
+            $query->bindparam(':contrasena', $contrasena);
+            $query->bindparam(':correo', $correo);
+            $query->bindparam(':nombres_apellidos', $nombres_apellidos);
+            $query->bindparam(':documento', $documento);
+            $query->bindparam(':area', $area);
+            $query->bindparam(':cargo', $cargo);
+            $query->execute();
+
+            $dbConn->commit();
+
+            if ($query->rowCount() > 0) {
+                // Redirigir a la página deseada después del registro exitoso
+                header("Location: http://localhost/GateGourmet/register/registro_exitoso.php");
+                exit();
+            } else {
+                echo "<font color='red'>Error al registrar el usuario o administrador.</font><br/>";
             }
         } catch (Exception $e) {
             $dbConn->rollBack();
@@ -72,7 +73,6 @@ if (isset($_POST['Submit'])) {
     }
 }
 ?>
-
 
 
 <!DOCTYPE html>
