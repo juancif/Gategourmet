@@ -10,6 +10,31 @@ create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25
     tipo_usuario varchar(25)not null);
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
     correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
     varchar(25)not null primary key, area varchar (25)not null,
@@ -19,3 +44,21 @@ create table administradores (nombre_usuario varchar(50)not null, contrasena var
     correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
     varchar(25)not null primary key, area varchar (25)not null,
     cargo varchar(25)not null);
+
+    INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo)
+ VALUES
+ ('juan_perez', 'password1', 'juan.perez@example.com', 'Juan_Pérez', '1234567890', 'IT', 'Desarrollador'),
+ ('maria_gomez', 'password456', 'maria.gomez@example.com', 'María Gómez', '2345678901', 'HR', 'Recruiter'),
+ ('luis_ramirez', 'password789', 'luis.ramirez@example.com', 'Luis Ramírez', '3456789012', 'Marketing', 'Analista'),
+ ('ana_lopez', 'password321', 'ana.lopez@example.com', 'Ana López', '4567890123', 'Finance', 'Contador'),
+ ('pedro_sanchez', 'password654', 'pedro.sanchez@example.com', 'Pedro Sánchez', '5678901234', 'Sales', 'Ejecutivo de ventas'),
+ ('claudia_martinez', 'password987', 'claudia.martinez@example.com', 'Claudia Martínez', '6789012345', 'Logística', 'Coordinadora'),
+ ('joseph_diaz', 'password654', 'joseph.diaz@example.com', 'Joseph Díaz', '7890123456', 'IT', 'Soporte Técnico'),
+ ('laura_rivera', 'password432', 'laura.rivera@example.com', 'Laura Rivera', '8901234567', 'Legal', 'Abogada'),
+
+
+     INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo)
+ VALUES
+
+ ('manuel_cordova', 'password567', 'manuel.cordova@example.com', 'Manuel Cordova', '9012345678', 'Recursos Humanos', 'administrador'),
+ ('valeria_benitez', 'password876', 'valeria.benitez@example.com', 'Valeria Benítez', '0123456789', 'Ventas', 'administrador');
