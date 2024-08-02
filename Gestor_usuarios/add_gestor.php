@@ -68,7 +68,7 @@ $query->rowCount()."";
         <div class="register-container">
             <div class="register-box">
                 <h2>Registro de Usuarios</h2>
-                <form method="post" action="http://localhost/GateGourmet/register/register_admin.php">
+                <form method="post" action="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php">
                     <div class="input-group">
                         <label for="nombre_usuario">Nombre de Usuario</label>
                         <input type="text" id="nombre_usuario" name="nombre_usuario" required>

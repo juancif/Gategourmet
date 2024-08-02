@@ -47,7 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->bind_param("ss", $nombre_usuario, $contrasena);
                 $stmt->execute(); 
                 $result = $stmt->get_result();
-        
                 // Verificar si se encontraron resultados
                 if ($result->num_rows > 0) {
                     // Las credenciales son correctas, redirigir al usuario a la página principal
@@ -58,6 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Si no se enviaron los campos del formulario, mostrar un mensaje de error
         echo "Por favor, ingrese nombre de usuario y contrasena.";
     }
+    
 }
 
 // Cerrar la conexión
