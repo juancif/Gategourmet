@@ -109,12 +109,16 @@ $cargo = $row['cargo'];
                         <input type="text" id="area" name="area" value="<?php echo $area;?>">
                     </div>
                     <div class="input-group">
-                        <label for="user_type">Tipo de Usuario</label>
-                        <input type="tex" id="cargo" name="cargo" value="<?php echo $cargo;?>">
+                    <select name="cargo" id="cargo">
+                            <option value="">Seleccione una opción</option>
+                            <option value="Administrador">Administrador</option>
+                            <option value="Supervisor">Supervisor</option>
+                            <option value="Empleado">Empleado</option>
+                        </select> 
                     </div>
                     <div class="buttons">
                     <input type="Submit" name="update" value="Editar" class="Registrarse"></input>
-                        <a href="http://localhost/Pagina_Prueba/index/Prueba_index/Gestor_usuarios/index_gestor.php" class="button">Volver</a>
+                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="button">Volver</a>
                     </div>
                 </form>
             </div>

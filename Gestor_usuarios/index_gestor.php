@@ -51,9 +51,7 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
         </table>
     </div>
     
-    <a href="http://localhost/GateGourmet/Gestor_usuarios/add_gestor.php" class="boton_adicionar">Adicionar usuario</a><br/><br/>
-    <a href="http://localhost/Gategourmet/login/login_admin.php" class="boton_volver">Volver</a>
-    
+    <a href="http://localhost/GateGourmet/Gestor_usuarios/add_gestor.php" class="boton_adicionar">Adicionar usuario</a><br/><br/>    
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
     </footer>
