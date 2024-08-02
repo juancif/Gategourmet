@@ -35,7 +35,7 @@ if(isset($_POST['update']))
             echo "<font color='red'>Campo: cargo está vacío.</font><br/>";
         }
     } else {
-        $sql = "UPDATE usuarios SET nombre_usuario=:nombre_usuario, contrasena=:contrasena, correo=:correo, nombres_apellidos=:nombres_apellidos, 
+        $sql = "UPDATE administradores SET nombre_usuario=:nombre_usuario, contrasena=:contrasena, correo=:correo, nombres_apellidos=:nombres_apellidos, 
        documento=:documento, area=:area, cargo=:cargo 
         WHERE documento=:documento";
         $query = $dbConn->prepare($sql);
@@ -47,14 +47,14 @@ if(isset($_POST['update']))
         $query->bindParam(':area', $area);
         $query->bindParam(':cargo', $cargo);
         $query->execute();
-        header("Location: index_gestor.php");
+        header("Location: index_gestor_admin.php");
     }
 }
 ?>
 
 <?php
 $documento = $_GET['documento'];
-$sql = "SELECT * FROM usuarios WHERE documento=:documento";
+$sql = "SELECT * FROM administradores WHERE documento=:documento";
 $query = $dbConn->prepare($sql);
 $query->execute(array(':documento' => $documento));
 $row = $query->fetch(PDO::FETCH_ASSOC);
@@ -66,16 +66,15 @@ $documento = $row['documento'];
 $area = $row['area'];
 $cargo = $row['cargo'];
 ?>
-
 <html>
 <head>
     <title>Editar Datos</title>
     <link rel="stylesheet" href="style_edit_gestor.css">
 </head>
 <body>
-<a href="index_gestor.php">Inicio</a>
+<a href="index_gestor_admin.php">Inicio</a>
 <br/><br/>
-<form name="form1" method="post" action="edit_gestor.php">
+<form name="form1" method="post" action="edit_gestor_admin.php">
     <header class="header">
         <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
     </header>
@@ -83,7 +82,7 @@ $cargo = $row['cargo'];
         <div class="register-container">
             <div class="register-box">
                 <h2>Registro de Usuarios</h2>
-                <form method="post" action="index_gestor.php">
+                <form method="post" action="index_gestor_admin.php">
                     <div class="input-group">
                         <label for="nombre_usuario">Nombre de Usuario</label>
                         <input type="text" id="nombre_usuario" name="nombre_usuario" required value="<?php echo $nombre_usuario;?>">
@@ -130,6 +129,3 @@ $cargo = $row['cargo'];
     </footer>
 </body>
 </html>
-
-
-

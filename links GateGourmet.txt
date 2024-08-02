@@ -12,6 +12,7 @@ Gestor de usuarios:
 http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php
 http://localhost/GateGourmet/Gestor_usuarios/add_gestor.php
 http://localhost/GateGourmet/Gestor_usuarios/edit_gestor.php
+http://localhost/GateGourmet/Gestor_usuarios/add_gestor_admin.php
 
 Register:
 http://localhost/GateGourmet/register/register_admin.php
