@@ -44,3 +44,145 @@ create table administradores (nombre_usuario varchar(50)not null, contrasena var
     correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
     varchar(25)not null primary key, area varchar (25)not null,
     cargo varchar(25)not null);
+
+
+
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_usuario VARCHAR(50) NOT NULL UNIQUE,
+    contrasena VARCHAR(255) NOT NULL, -- Asegúrate de usar un hash seguro para almacenar contraseñas
+    correo VARCHAR(100) NOT NULL UNIQUE,
+    nombres_apellidos VARCHAR(100) NOT NULL,
+    documento VARCHAR(50) NOT NULL UNIQUE,
+    area ENUM(
+        'Gestion_corporativa', 
+        'Compliance', 
+        'Supply_chain', 
+        'Culinary Excellence', 
+        'Service Delivery', 
+        'Assembly', 
+        'Servicios institucionales', 
+        'Financiera', 
+        'Costos', 
+        'Comunicaciones', 
+        'Tecnologia de la información', 
+        'Talento Humano', 
+        'Mateninimiento', 
+        'Servicio al cliente', 
+        'Security'
+    ) NOT NULL,
+    cargo ENUM(
+        'Auxiliar_Contable', 
+        'Continuous_Improvement_Manager', 
+        'Coordinador_de_mejoramiento_Continuo', 
+        'Country_Manager', 
+        'CPC_Champion', 
+        'Director_Comercial', 
+        'EHS_Manager', 
+        'Especialista_de_Seguridad_en_Rampa', 
+        'Especialista_en_Mantenimiento', 
+        'Executive_Sous_Chef', 
+        'Jefe_Control_de_Riesgos_Fisicos', 
+        'Jefe_de_Costos', 
+        'Junior_Section_Manager_OP&D', 
+        'Junior_Key_Account_Officer', 
+        'Manager_HR', 
+        'Manager_Ordering', 
+        'Manager_Transport', 
+        'Manager_New_Operations', 
+        'Manager_Finance', 
+        'Process_Owner_Assembly', 
+        'Process_Owner_Planning_&_Supply_Chain', 
+        'Process_Owner_Service_Delivery', 
+        'Section_Manager_Pick_&_Pack', 
+        'Section_Manager_Wash_&_Pack', 
+        'Section_Manager_Laundry', 
+        'Section_Manager_Make_&_Pack', 
+        'Section_Manager_IDS', 
+        'Sous_Chef', 
+        'Senior_Manager_Facility_Services', 
+        'Superintendent_HR', 
+        'Superintendent_Development_And_Communications', 
+        'VIP Lounges Junior Section Manager'
+    ) NOT NULL,
+    rol ENUM('Administrador', 'Aprobador', 'Digitador', 'Observador') NOT NULL
+);
+
+
+
+
+CREATE TABLE administradores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_usuario VARCHAR(50) NOT NULL UNIQUE,
+    contrasena VARCHAR(255) NOT NULL, -- Asegúrate de usar un hash seguro para almacenar contraseñas
+    correo VARCHAR(100) NOT NULL UNIQUE,
+    nombres_apellidos VARCHAR(100) NOT NULL,
+    documento VARCHAR(50) NOT NULL UNIQUE,
+    area ENUM(
+        'Gestion_corporativa', 
+        'Compliance', 
+        'Supply_chain', 
+        'Culinary Excellence', 
+        'Service Delivery', 
+        'Assembly', 
+        'Servicios institucionales', 
+        'Financiera', 
+        'Costos', 
+        'Comunicaciones', 
+        'Tecnologia de la información', 
+        'Talento Humano', 
+        'Mateninimiento', 
+        'Servicio al cliente', 
+        'Security'
+    ) NOT NULL,
+    cargo ENUM(
+        'Auxiliar_Contable', 
+        'Continuous_Improvement_Manager', 
+        'Coordinador_de_mejoramiento_Continuo', 
+        'Country_Manager', 
+        'CPC_Champion', 
+        'Director_Comercial', 
+        'EHS_Manager', 
+        'Especialista_de_Seguridad_en_Rampa', 
+        'Especialista_en_Mantenimiento', 
+        'Executive_Sous_Chef', 
+        'Jefe_Control_de_Riesgos_Fisicos', 
+        'Jefe_de_Costos', 
+        'Junior_Section_Manager_OP&D', 
+        'Junior_Key_Account_Officer', 
+        'Manager_HR', 
+        'Manager_Ordering', 
+        'Manager_Transport', 
+        'Manager_New_Operations', 
+        'Manager_Finance', 
+        'Process_Owner_Assembly', 
+        'Process_Owner_Planning_&_Supply_Chain', 
+        'Process_Owner_Service_Delivery', 
+        'Section_Manager_Pick_&_Pack', 
+        'Section_Manager_Wash_&_Pack', 
+        'Section_Manager_Laundry', 
+        'Section_Manager_Make_&_Pack', 
+        'Section_Manager_IDS', 
+        'Sous_Chef', 
+        'Senior_Manager_Facility_Services', 
+        'Superintendent_HR', 
+        'Superintendent_Development_And_Communications', 
+        'VIP Lounges Junior Section Manager'
+    ) NOT NULL,
+    rol ENUM('Administrador', 'Aprobador', 'Digitador', 'Observador') NOT NULL,
+    -- Otros campos específicos para administradores si son necesarios
+    UNIQUE (correo)
+);
+
+CREATE TABLE documentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo VARCHAR(50) NOT NULL UNIQUE,
+    tipo_documento ENUM('Word', 'Excel', 'PDF', 'PowerPoint', 'Texto', 'Otro') NOT NULL,
+    estado ENUM('Activo', 'Inactivo', 'Pendiente', 'Archivado') NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    usuario_id INT, -- Relación opcional con usuarios
+    administrador_id INT, -- Relación opcional con administradores
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (administrador_id) REFERENCES administradores(id)
+);
