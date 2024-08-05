@@ -20,13 +20,14 @@ body{
 .logo__menu{
     width: 180px;
     height: 35px;
-    margin-left: -180px;
+    margin-left: -160px;
     margin-top: 28px;
     position: absolute;
 }
 .img1__menu{
     width: 20px;
     height: 20px;
+    
 }
 
 .imgs__menu{
@@ -34,6 +35,56 @@ body{
     height: 20px;
     padding-right:10px ;
 }
+
+/* Estilo del menú lateral */
+.menu-lateral {
+    height: 400px;
+    width: 300px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    z-index: 30;
+}
+
+.menu-lateral a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.menu-lateral a:hover {
+    color: #f1f1f1;
+}
+
+.menu-lateral .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Botón para abrir el menú lateral */
+span[style*="font-size:30px;cursor:pointer"] {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    margin-left: 20px;
+}
+
 
 .img__usuario{
     width: 60px;
@@ -45,6 +96,11 @@ body{
 }
 .nav__principal{
     background-color: #1117;
+<<<<<<< HEAD
+=======
+    backdrop-filter: blur(10px);
+    z-index: 10;
+>>>>>>> b1e7425bb03d492ac1789b91f2c99578874cec6e
 }
 
 .nav__list{ 
@@ -57,7 +113,7 @@ body{
     display: inline-block;
     margin: auto;
     margin-left: 50px;
-    margin-right: 170px;
+    margin-right: 100px;
 }
 
 .nav__item__user{
@@ -105,7 +161,11 @@ body{
     width: 650px;
     height: 180px;
     margin-bottom: 20px;   
+<<<<<<< HEAD
     margin-left: 450px;
+=======
+    margin-left: 14cqmax;
+>>>>>>> b1e7425bb03d492ac1789b91f2c99578874cec6e
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
 }
@@ -115,13 +175,22 @@ body{
     background: linear-gradient(to left,transparent, rgb(10, 192, 146), rgb(67, 153, 82),transparent);
     margin-left: 40px;
     border-radius: 50px;
+<<<<<<< HEAD
     margin-top: 20px;
 
+=======
+    margin-top: 30px;
+    z-index: 30;
+>>>>>>> b1e7425bb03d492ac1789b91f2c99578874cec6e
 }
 
 .cuadro1, .cuadro2, .cuadro3{
     width: 98.5%;
+<<<<<<< HEAD
     height: 220px;
+=======
+    height: 180px;
+>>>>>>> b1e7425bb03d492ac1789b91f2c99578874cec6e
     /*background:linear-gradient(#9997, #9997);*/
     margin-left: 10px ;
     margin-right: 10px;
@@ -141,8 +210,7 @@ body{
 }
 
 .cuadro3{
-    height: 500px;
-    height: 380px;
+    height: 280px;
     margin-bottom: 20px;
     /*background:linear-gradient(#999b, #999b);*/
     background-color: rgba(140, 255, 0, 0.418);
@@ -153,7 +221,11 @@ body{
 
 .recuadro1, .recuadro2, .recuadro3{
     font-family: Arial, Helvetica, sans-serif;
+<<<<<<< HEAD
     width: 300px;
+=======
+    width: 320px;
+>>>>>>> b1e7425bb03d492ac1789b91f2c99578874cec6e
     height: 100%;
     background-color: #1117;
     margin: auto;
@@ -169,6 +241,7 @@ body{
     margin-top: 0px;
 }
 
+<<<<<<< HEAD
 .title, .title__3{
     text-align: center;
     font-size: 30px;
@@ -188,6 +261,15 @@ body{
     width: 250px;
     height: 150px;
     background-color: #111b;
+=======
+
+.circulo {
+    font-family:Arial, Helvetica, sans-serif ;
+    width: 200px;
+    height: 120px;
+    background-color: #1117;
+    backdrop-filter: blur(10px);
+>>>>>>> b1e7425bb03d492ac1789b91f2c99578874cec6e
     margin-left: 200px;
     margin-top: 20px;
     border-radius: 50px; /* Crea un círculo perfecto */
@@ -196,6 +278,68 @@ body{
     position: absolute;
 }
 
+<<<<<<< HEAD
+=======
+p{
+    margin-top: -100px;
+    margin-left: 50px;
+    font-size: 20px;
+    position: absolute;
+    color: white;
+}
+
+.title__estrag{
+    color: rgb(255, 255, 255);
+    margin-left: 30px;
+    margin-top: -40px;
+    position: relative;
+    font-size: 35px;
+}
+
+.parrafo_estrategicos{
+    white-space:initial;
+    word-break: break-all;
+    color: white;
+    margin-top: -70px;
+    margin-left: 35px;
+}
+
+.title_misionales {
+    margin-top: -40px;
+    margin-left: 50px;
+    font-size: 30px;
+    position: absolute;
+    color: #fff;
+}
+
+.parrafo_misionales{
+    margin-top: 60px;
+    margin-left: 40px;
+    font-size: 20px;
+    position: absolute;
+    color: white;
+    
+}
+
+.title_soporte{
+    color: rgb(255, 255, 255);
+    margin-top: -20px;
+    margin-left: 60px;
+    font-size:35px;
+}
+
+
+.parrafo_soporte{
+    margin-top: -60px;
+    margin-left: 50px;
+    font-size: 22px;
+    position: absolute;
+    color: white;
+}
+
+
+
+>>>>>>> b1e7425bb03d492ac1789b91f2c99578874cec6e
 .circulo1, .circulo3, .circulo8, .circulo13 {
     margin-left: 350px;
 }
@@ -212,33 +356,45 @@ body{
     background-color: transparent;
 }
 .circulo2, .circulo4, .circulo9, .circulo14{
+<<<<<<< HEAD
     margin-left: 650px;
+=======
+    margin-left: 620px;
+>>>>>>> b1e7425bb03d492ac1789b91f2c99578874cec6e
 }
 
 
 
 .circulo5, .circulo10, .circulo15{
-    margin-left: 950px;
+    margin-left: 850px;
 
 }
 
 .circulo6, .circulo11{
+<<<<<<< HEAD
     margin-left: 1250px;
 }
 
 .circulo7, .circulo12{
     margin-left: 1540px;
+=======
+    margin-left: 1080px;
+}
+
+.circulo7, .circulo12{
+    margin-left: 1300px;
+>>>>>>> b1e7425bb03d492ac1789b91f2c99578874cec6e
 }
 .circulo13{
-    margin-top: 200px;
+    margin-top: 150px;
 }
 
 .circulo14{
-    margin-top: 200px;
+    margin-top: 150px;
 }
 
 .circulo15{
-    margin-top: 200px;
+    margin-top: 150px;
 }
 
 .link1{
@@ -248,22 +404,22 @@ body{
 }
 
 h3{
-    margin-top: -20px;
-    margin-left: -20px;
-    font-size: 25px;
-    padding-bottom: 85px;
-    padding-top: 80px;
-    padding-left: 60px;
-    padding-right: 60px;
+    margin-top: -5px;
+    margin-left: -5px;
+    font-size: z0px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    padding-left: 40px;
+    padding-right: 40px;
     color: white;
 }
 
 .h3__2{
     margin-top: 0px;
-    padding-bottom:80px ;
-    padding-top: 40px;
+    padding-bottom:35px ;
+    padding-top: 38px;
 }
 
 .h3__3{
-    margin-left: -30px
+    margin-left: -20px
 }

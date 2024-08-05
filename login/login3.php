@@ -47,18 +47,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->bind_param("ss", $nombre_usuario, $contrasena);
                 $stmt->execute(); 
                 $result = $stmt->get_result();
-        
                 // Verificar si se encontraron resultados
                 if ($result->num_rows > 0) {
-                    A
                     // Las credenciales son correctas, redirigir al usuario a la página principal
-                    header("Location: http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php");
+                    header("Location: http://localhost/GateGourmet/Index/index_admin.html");
                     exit(); // Terminar el script después de la redirección
                 } 
     } else {
         // Si no se enviaron los campos del formulario, mostrar un mensaje de error
         echo "Por favor, ingrese nombre de usuario y contrasena.";
     }
+    
 }
 
 // Cerrar la conexión

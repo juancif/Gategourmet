@@ -22,7 +22,47 @@ body {
 .logo {
     width: 500px;
     height: auto;
+    margin-left: -850px;
 }
+
+.img__usuario{
+    width: 60px;
+    height: 50px;
+    margin-left: 100px;
+    margin-top: 0px;
+    position:relative;
+    background-color: transparent;
+    list-style-type: none;
+}
+
+.img__usuario:hover{
+    background-color:#1111;
+    text-decoration: none;
+}
+
+.cerrar__sesion__link{
+    margin: 0;
+    text-decoration: none;
+    text-decoration:#1117;
+    color:black ;
+    list-style-type: none;
+}
+
+.cerrar__sesion{
+    margin-left: 100px;
+    list-style-type: none;
+}
+
+
+.nav__item__user{
+    background-color: transparent;
+    position: absolute;
+    display: inline-block;
+    margin: auto;
+    margin-left: 700px;
+    margin-top: 5px;
+}
+
 
 /* Título */
 .title_listados {
@@ -81,7 +121,7 @@ body {
     transition: background 0.3s ease, transform 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.39);
     width: 200px;
-    margin-left: 1650px;
+    margin-left: 1250px;
     margin-top: -40px;
 }
 
@@ -102,10 +142,12 @@ body {
     text-align: center;
     padding: 20px 0;
     color: #ffffff;
-    position: relative;
+    position: absolute;
     width: 100%;
     box-shadow: 0 -2px 4px rgba(255, 255, 255, 0.1);
-    margin-top: 20px;
+    margin-top: 25%;
+    margin-top: 38.2vmax;
+    margin-top: 59.2vmin;
     font-size: 0.9em;
 }
 

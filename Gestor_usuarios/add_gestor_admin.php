@@ -34,7 +34,7 @@ echo "<font color='red'>Campo: cargo esta vacio.</font><br/>";
 }
 echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
 } else {
-$sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo) 
+$sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo) 
 VALUES(:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo)";
 $query = $dbConn->prepare($sql);
 $query->bindparam(':nombre_usuario', $nombre_usuario);
@@ -55,7 +55,7 @@ $query->rowCount()."";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Registro de Usuarios</title>
+    <title>Registro de administradores</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style_add_gestor.css">
@@ -67,8 +67,8 @@ $query->rowCount()."";
     <main class="main-content">
         <div class="register-container">
             <div class="register-box">
-                <h2>Registro de Usuarios</h2>
-                <form method="post" action="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php">
+                <h2>Registro de administradores</h2>
+                <form method="post" action="http://localhost/GateGourmet/Gestor_administradores/index_gestor_admin.php">
                     <div class="input-group">
                         <label for="nombre_usuario">Nombre de Usuario</label>
                         <input type="text" id="nombre_usuario" name="nombre_usuario" required>
@@ -82,7 +82,7 @@ $query->rowCount()."";
                         <input type="email" id="correo" name="correo" required>
                     </div>
                     <div class="input-group">
-                        <label for="first_name">Nombr y apellidos</label>
+                        <label for="first_name">Nombre y apellidos</label>
                         <input type="text" id="nombres_apellidos" name="nombres_apellidos" required>
                     </div>
                     <div class="input-group">
@@ -104,7 +104,7 @@ $query->rowCount()."";
                     </div>
                     <div class="buttons">
                     <input type="Submit" name="Submit" value="Registrarse" class="Registrarse"></input>
-                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="button">Regresar</a>
+                        <a href="http://localhost/GateGourmet/Gestor_administradores/index_gestor.php" class="button">Regresar</a>
                     </div>
                 </form>
             </div>

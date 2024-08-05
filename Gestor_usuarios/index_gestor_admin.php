@@ -2,7 +2,7 @@
 include_once("config_gestor.php");
 
 // Consulta a la base de datos
-$result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
+$result = $dbConn->query("SELECT * FROM administradores ORDER BY documento ASC");
 ?>
 <html>
 <head>
@@ -25,9 +25,9 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
                 <th>CONTRASEÑA</th>
                 <th>CORREO ELECTRONICO</th>
                 <th>NOMBRES Y APELLIDOS</th>
-                <th>documento</th>
-                <th>area</th>
-                <th>cargo</th>
+                <th>DOCUMENTO</th>
+                <th>AREA PERTENECE</th>
+                <th>CARGO</th>
                 <th>EDICIÓN</th>
             </tr>
             <?php
@@ -41,7 +41,7 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
                 echo "<td>" . htmlspecialchars($row['area']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['cargo']) . "</td>";
                 echo "<td class='acciones'>
-                        <a href='edit_gestor.php?documento=" . htmlspecialchars($row['documento']) . "'>Editar</a> | 
+                        <a href='edit_gestor_admin.php?documento=" . htmlspecialchars($row['documento']) . "'>Editar</a> | 
                         <a href='delete_gestor.php?documento=" . htmlspecialchars($row['documento']) . "' 
                            onclick=\"return confirm('¿Está seguro de eliminar este registro?')\">Eliminar</a>
                       </td>";
@@ -50,8 +50,8 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
             ?>
         </table>
     </div>
-    <a href="http://localhost/GateGourmet/Gestor_usuarios/add_gestor.php" class="boton_adicionar">Adicionar usuario</a><br/><br/>
-    <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor_admin.php" class="boton_adicionar">Ver administradores</a><br/><br/>    
+    <a href="http://localhost/GateGourmet/Gestor_usuarios/add_gestor_admin.php" class="boton_adicionar">Adicionar administradores</a><br/><br/>
+    <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="boton_adicionar">Volver</a><br/><br/>    
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
     </footer>

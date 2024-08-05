@@ -60,8 +60,13 @@ body {
 .input-group label {
     display: block;
     margin-bottom: 5px;
+<<<<<<< HEAD
     color: #000000;
     font-weight: 500;
+=======
+    color: #fff;
+    font-weight: 500px;
+>>>>>>> b1e7425bb03d492ac1789b91f2c99578874cec6e
 }
 
 .input-group input,
@@ -85,6 +90,31 @@ body {
     outline: none;
 }
 
+.regresar{
+    background: #3d9970; /* Verde oliva */
+    color: white;
+    font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
+    font-size: 16px; /* Asegurando el mismo tamaño de letra */
+    padding: 15px 15px 1px 20px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    width: 44%;
+    height: 45px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.input[type="submit"]:hover, .regresar:hover {
+    background: #2d6e50; /* Verde oliva más oscuro */
+    transform: scale(1.05);
+}
+
+input[type="submit"]:active, .regresar:active {
+    transform: scale(1);
+}
+
 .buttons {
     display: flex;
     justify-content: space-between;
@@ -103,6 +133,7 @@ input[type="submit"], .button {
     text-decoration: none;
     text-align: center;
     width: 44%;
+    height: 60px;
     transition: background 0.3s ease, transform 0.3s ease;
 }
 
