@@ -10,10 +10,9 @@
 <body>
     <nav class="nav__principal">
         <ul class="nav__list">
-            <li class="nav__item"><img src="../Imagenes/Logo_oficial_B-N.png" alt="logo GateGourmet" class="logo__menu">
-                <a href="#" class="nav__link">
-                    <img src="../imagenes/simbol.png" alt="Mas Opciones" class="img1__menu"></a>
-            </li>
+
+
+
             <li class="nav__item">
                 <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="nav__link"><img src="../imagenes/security.png" alt="Seguridad" class="imgs__menu">Seguridad</a>
             </li>
@@ -64,5 +63,21 @@
             <div class="circulo circulo14"><a href="https://show.zoho.com/show/open/hpbd733318fd8b4834fcebcbc508ace6b9c64" class="link1"><h3 class="h3__2">Facilty service</h3></a></div>
             <div class="circulo circulo15"><a href="https://show.zoho.com/show/open/hpbd733318fd8b4834fcebcbc508ace6b9c64" class="link1"><h3 class="h3__2">Talento humano</h3></a></div>
         </div>
+        <div id="menu-lateral" class="menu-lateral">
+            <span class="closebtn" onclick="closeMenu()">&times;</span>
+            <h2>Notificaciones</h2>
+            <ul>
+                <li><a href="#">Notificación 1</a></li>
+                <li><a href="#">Notificación 2</a></li>
+                <li><a href="#">Notificación 3</a></li>
+            </ul>
+        </div>
+        
+        <!-- Botón para abrir el menú lateral -->
+        <span style="font-size:30px;cursor:pointer" onclick="openMenu()">&#9776;</span>
+    </li>
+    <!-- Menú Lateral -->
+
+        <script src="menu.js"></script>
 </body>
 </html>
