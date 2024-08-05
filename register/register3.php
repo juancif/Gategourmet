@@ -180,7 +180,7 @@ if (isset($_POST['Submit'])) {
                         </select>
                     </div>
                     <div class="input-group">
-                        <label for="rol">Rol</label>
+                        <label for="rol">Roles</label>
                         <select name="rol" id="rol">
                             <option value="">Seleccione una opción</option>
                             <option value="Administrador">Administrador</option>
