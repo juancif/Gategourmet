@@ -2,16 +2,16 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    background: url('../Imagenes/fondogg6.jpg') no-repeat center center fixed;
+    background: url('../Imagenes/fondogg3.webp') no-repeat center center fixed;
     background-size: cover;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    color: black;
+    color: #fff;
 }
 
 .header {
-    background: rgba(3, 121, 3, 0.658);
+    background: #1117;
     backdrop-filter: blur(10px);
     padding: 20px 40px;
     text-align: center;
@@ -31,7 +31,7 @@ body {
 }
 
 .register-container {
-    background: rgba(3, 121, 3, 0.658);
+    background: #1117;
     backdrop-filter: blur(10px);
     padding: 40px;
     border-radius: 15px;
@@ -45,7 +45,7 @@ body {
 
 .register-box h2 {
     margin: 0 0 20px;
-    color: #000000;
+    color: #fff;
     font-weight: 700;
     letter-spacing: 1.2px;
     font-family: 'Roboto', sans-serif;
@@ -60,13 +60,8 @@ body {
 .input-group label {
     display: block;
     margin-bottom: 5px;
-<<<<<<< HEAD
-    color: #000000;
-    font-weight: 500;
-=======
     color: #fff;
     font-weight: 500px;
->>>>>>> b1e7425bb03d492ac1789b91f2c99578874cec6e
 }
 
 .input-group input,
@@ -122,8 +117,8 @@ input[type="submit"]:active, .regresar:active {
 }
 
 input[type="submit"], .button {
-    background: rgba(255, 255, 255, 0.8); 
-    color: black;
+    background: #3d9970; /* Verde oliva */
+    color: white;
     font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
     font-size: 16px; /* Asegurando el mismo tamaño de letra */
     padding: 12px 20px;
@@ -138,9 +133,8 @@ input[type="submit"], .button {
 }
 
 input[type="submit"]:hover, .button:hover {
-    background: transparent; /* Verde oliva más oscuro */
+    background: #2d6e50; /* Verde oliva más oscuro */
     transform: scale(1.05);
-    border: 1px solid  rgba(3, 121, 3, 0.658);
 }
 
 input[type="submit"]:active, .button:active {
@@ -148,16 +142,16 @@ input[type="submit"]:active, .button:active {
 }
 
 .footer {
-    background: rgba(3, 121, 3, 0.658);
+    background: #1117;
     backdrop-filter: blur(10px);
     text-align: center;
     text-align: center;
     padding: 10px;
-    color: #000000;
+    color: #fff;
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
 .footer a {
-    color: #000000;
+    color: #fff;
     text-decoration: none;
     margin: 0 10px;
 }
