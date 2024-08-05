@@ -9,9 +9,10 @@ if (isset($_POST['Submit'])) {
     $documento = $_POST['documento'];
     $area = $_POST['area'];
     $cargo = $_POST['cargo'];
+    $rol = $_POST['rol'];
 
     // Verificar si algún campo está vacío
-    if (empty($nombre_usuario) || empty($contrasena) || empty($correo) || empty($nombres_apellidos) || empty($documento) || empty($area) || empty($cargo)) {
+    if (empty($nombre_usuario) || empty($contrasena) || empty($correo) || empty($nombres_apellidos) || empty($documento) || empty($area) || empty($cargo) || empty($rol)) {
         if (empty($nombre_usuario)) {
             echo "<font color='red'>Campo: nombre_usuario está vacío.</font><br/>";
         }
@@ -34,17 +35,21 @@ if (isset($_POST['Submit'])) {
             echo "<font color='red'>Campo: cargo está vacío.</font><br/>";
         }
         echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
+        if (empty($rol)) {
+            echo "<font color='red'>Campo: rol está vacío.</font><br/>";
+        }
+        echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
     } else {
         try {
             $dbConn->beginTransaction();
 
             // Verificar el campo cargo y definir la tabla correspondiente
-            if ($cargo === 'Administrador') {
-                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo) 
-                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo)";
+            if ($rol === 'Administrador') {
+                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol ) 
+                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
             } else {
-                $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo) 
-                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo)";
+                $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
+                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
             }
 
             $query = $dbConn->prepare($sql);
@@ -55,6 +60,7 @@ if (isset($_POST['Submit'])) {
             $query->bindparam(':documento', $documento);
             $query->bindparam(':area', $area);
             $query->bindparam(':cargo', $cargo);
+            $query->bindparam(':rol', $rol);
             $query->execute();
 
             $dbConn->commit();
@@ -116,12 +122,12 @@ if (isset($_POST['Submit'])) {
                     </div>
                     <div class="input-group">
                         <label for="area">Área</label>
-                        <select name="cargo" id="cargo">
+                        <select name="area" id="area">
                             <option value="">Seleccione una opción</option>
                             <option value="Gestion_corporativa">Gestión corporativa</option>
                             <option value="Compliance">Compliance</option>
                             <option value="Supply_chain">Supply Chain</option>
-                            <option value="Culinary Excellence">Culinary Excellence</option>
+                            <option value="Culinary_Excellence">Culinary Excellence</option>
                             <option value="Supervisor"  >Service Delivery</option>
                             <option value="Assembly">Assembly</option>
                             <option value="Servicios_institucionales">Servicios institucionales</option>
@@ -136,7 +142,7 @@ if (isset($_POST['Submit'])) {
                         </select>
                     </div>
                     <div class="input-group">
-                        <label for="area">Cargo</label>
+                        <label for="cargo">Cargo</label>
                         <select name="cargo" id="cargo">
                             <option value="">Seleccione una opción</option>
                             <option value="Auxiliar_Contable">Auxiliar Contable</option>
@@ -174,8 +180,8 @@ if (isset($_POST['Submit'])) {
                         </select>
                     </div>
                     <div class="input-group">
-                        <label for="cargo">Rol</label>
-                        <select name="cargo" id="cargo">
+                        <label for="rol">Rol</label>
+                        <select name="rol" id="rol">
                             <option value="">Seleccione una opción</option>
                             <option value="Administrador">Administrador</option>
                             <option value="Supervisor">Aprobador</option>
