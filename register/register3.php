@@ -40,12 +40,7 @@ if (isset($_POST['Submit'])) {
         echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
     } else {
         try {
-            $dbConn->beginTransaction();
 
-            // Hash de la contraseña
-            $hashedPassword = password_hash($contrasena, PASSWORD_DEFAULT);
-
-            // Verificar el campo rol y definir la tabla correspondiente
             if ($rol === 'Administrador') {
                 $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
                         VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
@@ -56,7 +51,7 @@ if (isset($_POST['Submit'])) {
 
             $query = $dbConn->prepare($sql);
             $query->bindparam(':nombre_usuario', $nombre_usuario);
-            $query->bindparam(':contrasena', $hashedPassword); // Guardar el hash de la contraseña
+            $query->bindparam(':******', $contrasena); // Guardar el hash de la contraseña
             $query->bindparam(':correo', $correo);
             $query->bindparam(':nombres_apellidos', $nombres_apellidos);
             $query->bindparam(':documento', $documento);

@@ -118,7 +118,7 @@ $cargo = $row['cargo'];
                     </div>
                     <div class="buttons">
                     <input type="Submit" name="update" value="Editar" class="Registrarse"></input>
-                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="button">Volver</a>
+                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor_admin.php" class="button">Volver</a>
                     </div>
                 </form>
             </div>

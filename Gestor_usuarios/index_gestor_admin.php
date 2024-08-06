@@ -17,9 +17,9 @@ $result = $dbConn->query("SELECT * FROM administradores ORDER BY documento ASC")
                 <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link"><img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
             </li>
     </div>
-
     <div>
         <table class="tabla_principal">
+        <th class="cuadro_titulo">Administradores</th>
             <tr class="tabla_secundaria">
                 <th>NOMBRE DE USUARIO</th>
                 <th>CONTRASEÑA</th>
@@ -51,7 +51,7 @@ $result = $dbConn->query("SELECT * FROM administradores ORDER BY documento ASC")
         </table>
     </div>
     <a href="http://localhost/GateGourmet/Gestor_usuarios/add_gestor_admin.php" class="boton_adicionar">Adicionar administradores</a><br/><br/>
-    <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="boton_adicionar">Volver</a><br/><br/>    
+    <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="boton_volver">Volver</a><br/><br/>    
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
     </footer>

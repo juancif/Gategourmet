@@ -12,17 +12,18 @@ body {
 
 /* Cuadro del logo */
 .cuadro_logo {
-    background: rgba(118, 212, 235, 0.9);
+    background-color:#111b;
     padding: 20px 0;
     text-align: center;
-    border-bottom: 3px solid #54b8d1;
+    border-bottom: 3px solid #222;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding-bottom: 40px;
 }
 
 .logo {
     width: 500px;
     height: auto;
-    margin-left: -850px;
+    margin-left: -1050px;
 }
 
 .img__usuario{
@@ -42,14 +43,15 @@ body {
 
 .cerrar__sesion__link{
     margin: 0;
+    margin-left: 150px;
     text-decoration: none;
     text-decoration:#1117;
-    color:black ;
+    color:white ;
     list-style-type: none;
 }
 
 .cerrar__sesion{
-    margin-left: 100px;
+    margin-left: 250px;
     list-style-type: none;
 }
 
@@ -62,6 +64,9 @@ body {
     margin-left: 700px;
     margin-top: 5px;
 }
+
+
+
 
 
 /* Título */
@@ -77,11 +82,25 @@ body {
 .tabla_principal {
     background: rgba(255, 255, 255, 0.95);
     width: 90%;
-    margin: 50px auto;
+    margin: 150px auto;
     border-collapse: collapse;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     overflow: hidden;
+}
+
+
+.cuadro_titulo{
+    min-width: 88%;
+    background: #111b;
+    color: white;
+    margin-top: -52px;
+    margin-left: -1px;
+    font-size: 60px;
+    position:absolute;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .tabla_principal th,
@@ -92,7 +111,7 @@ body {
 }
 
 .tabla_principal th {
-    background-color: #54b8d1;
+    background-color: #111b;
     color: #fff;
     text-transform: uppercase;
     font-size: 1.1em;
@@ -105,9 +124,8 @@ body {
 }
 
 /* Botones */
-.boton_adicionar,
-.boton_volver {
-    background: #54b8d1;
+.boton_adicionar {
+    background: #111b;
     color: white;
     font-family: 'Poppins', sans-serif;
     font-size: 1em;
@@ -122,12 +140,30 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.39);
     width: 200px;
     margin-left: 1250px;
-    margin-top: -40px;
+    margin-top: -120px;
 }
 
+.boton_volver {
+    background: #111b;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    margin: 20px 10px;
+    transition: background 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.39);
+    width: 200px;
+    margin-left: 1250px;
+    margin-top: -80px;
+}
 .boton_adicionar:hover,
 .boton_volver:hover {
-    background: #bfd4d39c;
+    background: #111;
     transform: scale(1.05);
 }
 
@@ -138,7 +174,7 @@ body {
 
 /* Footer */
 .footer {
-    background: rgba(118, 212, 235, 0.9);
+    background: #111b;
     text-align: center;
     padding: 20px 0;
     color: #ffffff;
