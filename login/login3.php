@@ -1,6 +1,4 @@
 <?php
-
-// Establecer la conexión a la base de datos
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -47,17 +45,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->bind_param("ss", $nombre_usuario, $contrasena);
                 $stmt->execute(); 
                 $result = $stmt->get_result();
-        
                 // Verificar si se encontraron resultados
                 if ($result->num_rows > 0) {
                     // Las credenciales son correctas, redirigir al usuario a la página principal
-                    header("Location: http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php");
+                    header("Location: http://localhost/GateGourmet/Index/index_admin.html");
                     exit(); // Terminar el script después de la redirección
                 } 
     } else {
         // Si no se enviaron los campos del formulario, mostrar un mensaje de error
         echo "Por favor, ingrese nombre de usuario y contrasena.";
     }
+    
 }
 
 // Cerrar la conexión
@@ -70,7 +68,7 @@ $connect->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Inicio Sesión Gateourmet</title>
+    <title>Inicio Sesión Gategourmet</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style_login3.css">
@@ -102,6 +100,7 @@ $connect->close();
                     <div class="buttons">
                         <input type="submit" value="Ingresar">
                         <a href="http://localhost/GateGourmet/register/register3.php" class="button">Registrarse</a>
+                        <a href="restablecer.php" class="button-small">Restablecer Contraseña</a> <!-- Botón pequeño y sutil -->
                     </div>
                 </form>
             </div>

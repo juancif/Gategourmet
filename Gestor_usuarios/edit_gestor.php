@@ -70,14 +70,14 @@ $cargo = $row['cargo'];
 <html>
 <head>
     <title>Editar Datos</title>
-    <link rel="stylesheet" href="style_add_gestor.css">
+    <link rel="stylesheet" href="style_edit_gestor.css">
 </head>
 <body>
 <a href="index_gestor.php">Inicio</a>
 <br/><br/>
 <form name="form1" method="post" action="edit_gestor.php">
     <header class="header">
-        <img src="../login_register/register/logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
+        <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
     </header>
     <main class="main-content">
         <div class="register-container">
@@ -109,12 +109,17 @@ $cargo = $row['cargo'];
                         <input type="text" id="area" name="area" value="<?php echo $area;?>">
                     </div>
                     <div class="input-group">
-                        <label for="user_type">Tipo de Usuario</label>
-                        <input type="tex" id="cargo" name="cargo" value="<?php echo $cargo;?>">
+                    <select name="cargo" id="cargo">
+                        <label for="cargo">Cargo</label>
+                            <option value="">Seleccione una opción</option>
+                            <option value="Administrador">Administrador</option>
+                            <option value="Supervisor">Supervisor</option>
+                            <option value="Empleado">Empleado</option>
+                        </select> 
                     </div>
                     <div class="buttons">
                     <input type="Submit" name="update" value="Editar" class="Registrarse"></input>
-                        <a href="http://localhost/Pagina_Prueba/index/Prueba_index/Gestor_usuarios/index_gestor.php" class="button">Volver</a>
+                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="button">Volver</a>
                     </div>
                 </form>
             </div>

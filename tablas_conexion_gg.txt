@@ -10,6 +10,8 @@ create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25
     tipo_usuario varchar(25)not null);
 
 
+
+
 create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
     correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
     varchar(25)not null primary key, area varchar (25)not null,
@@ -17,5 +19,413 @@ create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25
 
 create table administradores (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
     correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
+    int()not null primary key, area varchar (25)not null,
+    cargo varchar(25)not null rol varchar(25)not null);
+
+
+
+CREATE TABLE documentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo VARCHAR(50) NOT NULL UNIQUE,
+    tipo_documento ENUM('Word', 'Excel', 'PDF', 'PowerPoint', 'Texto', 'Otro') NOT NULL,
+    estado ENUM('Activo', 'Inactivo', 'Pendiente', 'Archivado') NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    usuario_id INT, -- Relación opcional con usuarios
+    administrador_id INT, -- Relación opcional con administradores
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (administrador_id) REFERENCES administradores(id)
+);
+create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    -> correo varchar (25)not null,nombres varchar(25), apellidos varchar(25), tipo_documento varchar(25),
+    -> documento varchar(25)not null primary key, area varchar (25)not null,tipo_usuario varchar(25)not null);
+
+
+
+create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    correo varchar (25)not null,nombres varchar(25)not null, apellidos varchar(25)not null, 
+    tipo_documento varchar(25)not null,documento varchar(25)not null primary key, area varchar (25)not null,
+    tipo_usuario varchar(25)not null);
+
+
+
+create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
+    int not null primary key, area varchar (25)not null,
+    cargo varchar(25)not null ,rol varchar(25)not null);
+
+
+create table administradores (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
+    int not null primary key, area varchar (25)not null,
+    cargo varchar(25)not null ,rol varchar(25)not null);
+
+
+
+CREATE TABLE documentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo VARCHAR(50) NOT NULL UNIQUE,
+    tipo_documento ENUM('Word', 'Excel', 'PDF', 'PowerPoint', 'Texto', 'Otro') NOT NULL,
+    estado ENUM('Activo', 'Inactivo', 'Pendiente', 'Archivado') NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    usuario_id INT, -- Relación opcional con usuarios
+    administrador_id INT, -- Relación opcional con administradores
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (administrador_id) REFERENCES administradores(id)
+);
+create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    -> correo varchar (25)not null,nombres varchar(25), apellidos varchar(25), tipo_documento varchar(25),
+    -> documento varchar(25)not null primary key, area varchar (25)not null,tipo_usuario varchar(25)not null);
+
+
+
+create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    correo varchar (25)not null,nombres varchar(25)not null, apellidos varchar(25)not null, 
+    tipo_documento varchar(25)not null,documento varchar(25)not null primary key, area varchar (25)not null,
+    tipo_usuario varchar(25)not null);
+
+
+create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
     varchar(25)not null primary key, area varchar (25)not null,
     cargo varchar(25)not null);
+
+create table administradores (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
+    int()not null primary key, area varchar (25)not null,
+    cargo varchar(25)not null rol varchar(25)not null);
+
+
+
+CREATE TABLE documentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo VARCHAR(50) NOT NULL UNIQUE,
+    tipo_documento ENUM('Word', 'Excel', 'PDF', 'PowerPoint', 'Texto', 'Otro') NOT NULL,
+    estado ENUM('Activo', 'Inactivo', 'Pendiente', 'Archivado') NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    usuario_id INT, -- Relación opcional con usuarios
+    administrador_id INT, -- Relación opcional con administradores
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (administrador_id) REFERENCES administradores(id)
+);
+create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    -> correo varchar (25)not null,nombres varchar(25), apellidos varchar(25), tipo_documento varchar(25),
+    -> documento varchar(25)not null primary key, area varchar (25)not null,tipo_usuario varchar(25)not null);
+
+
+
+create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    correo varchar (25)not null,nombres varchar(25)not null, apellidos varchar(25)not null, 
+    tipo_documento varchar(25)not null,documento varchar(25)not null primary key, area varchar (25)not null,
+    tipo_usuario varchar(25)not null);
+
+
+create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
+    varchar(25)not null primary key, area varchar (25)not null,
+    cargo varchar(25)not null);
+
+create table administradores (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
+    int()not null primary key, area varchar (25)not null,
+    cargo varchar(25)not null rol varchar(25)not null);
+
+
+
+CREATE TABLE documentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo VARCHAR(50) NOT NULL UNIQUE,
+    tipo_documento ENUM('Word', 'Excel', 'PDF', 'PowerPoint', 'Texto', 'Otro') NOT NULL,
+    estado ENUM('Activo', 'Inactivo', 'Pendiente', 'Archivado') NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    usuario_id INT, -- Relación opcional con usuarios
+    administrador_id INT, -- Relación opcional con administradores
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (administrador_id) REFERENCES administradores(id)
+);
+create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    -> correo varchar (25)not null,nombres varchar(25), apellidos varchar(25), tipo_documento varchar(25),
+    -> documento varchar(25)not null primary key, area varchar (25)not null,tipo_usuario varchar(25)not null);
+
+
+
+create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    correo varchar (25)not null,nombres varchar(25)not null, apellidos varchar(25)not null, 
+    tipo_documento varchar(25)not null,documento varchar(25)not null primary key, area varchar (25)not null,
+    tipo_usuario varchar(25)not null);
+
+
+create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
+    varchar(25)not null primary key, area varchar (25)not null,
+    cargo varchar(25)not null);
+
+create table administradores (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
+    int()not null primary key, area varchar (25)not null,
+    cargo varchar(25)not null rol varchar(25)not null);
+
+
+
+CREATE TABLE documentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo VARCHAR(50) NOT NULL UNIQUE,
+    tipo_documento ENUM('Word', 'Excel', 'PDF', 'PowerPoint', 'Texto', 'Otro') NOT NULL,
+    estado ENUM('Activo', 'Inactivo', 'Pendiente', 'Archivado') NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    usuario_id INT, -- Relación opcional con usuarios
+    administrador_id INT, -- Relación opcional con administradores
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (administrador_id) REFERENCES administradores(id)
+);
+create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    -> correo varchar (25)not null,nombres varchar(25), apellidos varchar(25), tipo_documento varchar(25),
+    -> documento varchar(25)not null primary key, area varchar (25)not null,tipo_usuario varchar(25)not null);
+
+
+
+create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    correo varchar (25)not null,nombres varchar(25)not null, apellidos varchar(25)not null, 
+    tipo_documento varchar(25)not null,documento varchar(25)not null primary key, area varchar (25)not null,
+    tipo_usuario varchar(25)not null);
+
+
+
+
+create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
+    varchar(25)not null primary key, area varchar (25)not null,
+    cargo varchar(25)not null);
+
+create table administradores (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
+    correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
+    int()not null primary key, area varchar (25)not null,
+    cargo varchar(25)not null rol varchar(25)not null);
+
+
+
+CREATE TABLE documentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo VARCHAR(50) NOT NULL UNIQUE,
+    tipo_documento ENUM('Word', 'Excel', 'PDF', 'PowerPoint', 'Texto', 'Otro') NOT NULL,
+    estado ENUM('Activo', 'Inactivo', 'Pendiente', 'Archivado') NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    usuario_id INT, -- Relación opcional con usuarios
+    administrador_id INT, -- Relación opcional con administradores
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (administrador_id) REFERENCES administradores(id)
+);
+
+-- Crear la tabla listado_maestro
+CREATE TABLE listado_maestro (
+    cod INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(255) NOT NULL,
+    fecha DATE NOT NULL,
+    estado VARCHAR(50) NOT NULL,
+    url VARCHAR(255) NOT NULL
+);
+
+-- Crear la tabla log_eventos
+CREATE TABLE log_eventos (
+    id_usuario INT NOT NULL,
+    evento VARCHAR(255) NOT NULL,
+    fecha DATETIME NOT NULL,
+    PRIMARY KEY (id_usuario, fecha)
+);
+
+-- Crear la tabla alarmas
+CREATE TABLE alarmas (
+    id_usuario INT NOT NULL,
+    evento VARCHAR(255) NOT NULL,
+    fecha DATETIME NOT NULL,
+    estado VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id_usuario, fecha)
+);
+
+-- Crear la tabla usuarios
+CREATE TABLE usuarios (
+    nombre_usuario VARCHAR(50) NOT NULL,
+    contrasena VARCHAR(25) NOT NULL,
+    correo VARCHAR(25) NOT NULL,
+    nombres_apellidos VARCHAR(50) NOT NULL,
+    documento VARCHAR(25) NOT NULL PRIMARY KEY,
+    area VARCHAR(25) NOT NULL,
+    cargo VARCHAR(25) NOT NULL,
+    estado VARCHAR(50) NOT NULL
+);
+
+-- Crear la tabla areas
+CREATE TABLE areas (
+    gestion_corporativa VARCHAR(255) NOT NULL,
+    compliance VARCHAR(255) NOT NULL,
+    supply_chain VARCHAR(255) NOT NULL,
+    culinary_excellence VARCHAR(255) NOT NULL,
+    service_delivery VARCHAR(255) NOT NULL,
+    assembly VARCHAR(255) NOT NULL,
+    servicios_institucionales VARCHAR(255) NOT NULL,
+    financiera VARCHAR(255) NOT NULL,
+    costos VARCHAR(255) NOT NULL,
+    comunicaciones VARCHAR(255) NOT NULL,
+    tecnologia_informacion VARCHAR(255) NOT NULL,
+    talento_humano VARCHAR(255) NOT NULL,
+    mantenimiento VARCHAR(255) NOT NULL,
+    servicio_cliente VARCHAR(255) NOT NULL,
+    security VARCHAR(255) NOT NULL
+);
+
+-- Crear la tabla cargos
+CREATE TABLE cargos (
+    auxiliar_contable VARCHAR(255) NOT NULL,
+    continuous_improvement_manager VARCHAR(255) NOT NULL,
+    coordinador_de_mejoramiento_continuo VARCHAR(255) NOT NULL,
+    country_manager VARCHAR(255) NOT NULL,
+    cpc_champion VARCHAR(255) NOT NULL,
+    director_comercial VARCHAR(255) NOT NULL,
+    ehs_manager VARCHAR(255) NOT NULL,
+    especialista_de_seguridad_en_rampa VARCHAR(255) NOT NULL,
+    especialista_en_mantenimiento VARCHAR(255) NOT NULL,
+    executive_sous_chef VARCHAR(255) NOT NULL,
+    jefe_control_de_riesgos_fisicos VARCHAR(255) NOT NULL,
+    jefe_de_costos VARCHAR(255) NOT NULL,
+    junior_section_manager_opd VARCHAR(255) NOT NULL,
+    junior_key_account_officer VARCHAR(255) NOT NULL,
+    manager_hr VARCHAR(255) NOT NULL,
+    manager_ordering VARCHAR(255) NOT NULL,
+    manager_transport VARCHAR(255) NOT NULL,
+    manager_new_operations VARCHAR(255) NOT NULL,
+    manager_finance VARCHAR(255) NOT NULL,
+    process_owner_assembly VARCHAR(255) NOT NULL,
+    process_owner_planning_supply_chain VARCHAR(255) NOT NULL,
+    process_owner_service_delivery VARCHAR(255) NOT NULL,
+    section_manager_pick_pack VARCHAR(255) NOT NULL,
+    section_manager_wash_pack VARCHAR(255) NOT NULL,
+    section_manager_laundry VARCHAR(255) NOT NULL,
+    section_manager_make_pack VARCHAR(255) NOT NULL,
+    section_manager_ids VARCHAR(255) NOT NULL,
+    sous_chef VARCHAR(255) NOT NULL,
+    senior_manager_facility_services VARCHAR(255) NOT NULL,
+    superintendent_hr VARCHAR(255) NOT NULL,
+    superintendent_development_and_communications VARCHAR(255) NOT NULL,
+    vip_lounges_junior_section_manager VARCHAR(255) NOT NULL
+);
+
+-- Crear la tabla roles
+CREATE TABLE roles (
+    country_manager VARCHAR(255) NOT NULL,
+    manager_hr VARCHAR(255) NOT NULL,
+    superintendent_hr VARCHAR(255) NOT NULL,
+    superintendent_development_and_communications VARCHAR(255) NOT NULL,
+    continuous_improvement_manager VARCHAR(255) NOT NULL,
+    coordinador_de_mejoramiento_continuo VARCHAR(255) NOT NULL,
+    supervisor_de_calidad_y_gestion_ambiental VARCHAR(255) NOT NULL,
+    ehs_manager VARCHAR(255) NOT NULL,
+    process_owner_assembly VARCHAR(255) NOT NULL,
+    section_manager_pick_pack VARCHAR(255) NOT NULL,
+    section_manager_wash_pack VARCHAR(255) NOT NULL,
+    section_manager_laundry VARCHAR(255) NOT NULL,
+    section_manager_make_pack VARCHAR(255) NOT NULL,
+    process_owner_planning_supply_chain VARCHAR(255) NOT NULL,
+    section_manager_ids VARCHAR(255) NOT NULL,
+    manager_ordering VARCHAR(255) NOT NULL,
+    executive_sous_chef VARCHAR(255) NOT NULL,
+    sous_chef VARCHAR(255) NOT NULL,
+    process_owner_service_delivery VARCHAR(255) NOT NULL,
+    manager_transport VARCHAR(255) NOT NULL,
+    junior_section_manager_opd VARCHAR(255) NOT NULL,
+    especialista_de_seguridad_en_rampa VARCHAR(255) NOT NULL,
+    director_comercial VARCHAR(255) NOT NULL,
+    junior_key_account_officer VARCHAR(255) NOT NULL,
+    senior_manager_facility_services VARCHAR(255) NOT NULL,
+    especialista_en_mantenimiento VARCHAR(255) NOT NULL,
+    jefe_control_de_riesgos_fisicos VARCHAR(255) NOT NULL,
+    jefe_de_costos VARCHAR(255) NOT NULL,
+    cpc_champion VARCHAR(255) NOT NULL,
+    manager_new_operations VARCHAR(255) NOT NULL,
+    vip_lounges_junior_section_manager VARCHAR(255) NOT NULL,
+    manager_finance VARCHAR(255) NOT NULL,
+    auxiliar_contable VARCHAR(255) NOT NULL
+);
+
+-- Crear la tabla procesos
+CREATE TABLE procesos (
+    proceso VARCHAR(255) NOT NULL,
+    des_direccionamiento_estrategico VARCHAR(255) NOT NULL,
+    gmc_gestion_de_mejora_continua VARCHAR(255) NOT NULL,
+    ind_induccion_organizacional VARCHAR(255) NOT NULL,
+    eys_evaluacion_y_seguimiento VARCHAR(255) NOT NULL,
+    ger_gestionar_las_relaciones VARCHAR(255) NOT NULL,
+    enp_evaluar_nuevos_proyectos_de_inversion_y_operacionales VARCHAR(255) NOT NULL,
+    alm_seguridad_alimentaria VARCHAR(255) NOT NULL,
+    amb_medio_ambiente VARCHAR(255) NOT NULL,
+    seo_seguridad_operacional_ramp_safety VARCHAR(255) NOT NULL,
+    sfi_seguridad_fisica VARCHAR(255) NOT NULL,
+    sst_seguridad_y_salud_en_el_trabajo VARCHAR(255) NOT NULL,
+    sag_sagrilaft VARCHAR(255) NOT NULL,
+    pte_politica_y_etica_empresarial VARCHAR(255) NOT NULL,
+    com_compras VARCHAR(255) NOT NULL,
+    abs_abastecimiento VARCHAR(255) NOT NULL,
+    ids_sistemas_internos_de_entrega VARCHAR(255) NOT NULL,
+    sim_solicitud_interna_de_materiales VARCHAR(255) NOT NULL,
+    pdp_planeacion_de_la_produccion VARCHAR(255) NOT NULL,
+    cro_control_de_recursos_operativos VARCHAR(255) NOT NULL,
+    cdm_control_de_materiales VARCHAR(255) NOT NULL,
+    pca_carniceria VARCHAR(255) NOT NULL,
+    pde_desinfeccion VARCHAR(255) NOT NULL,
+    pfv_frutas_y_verduras VARCHAR(255) NOT NULL,
+    coc_cocina_caliente VARCHAR(255) NOT NULL,
+    cof_cocina_fria VARCHAR(255) NOT NULL,
+    pyp_panaderia_y_pasteleria VARCHAR(255) NOT NULL,
+    cap_cuarto_de_almacenamiento_de_produccion VARCHAR(255) NOT NULL,
+    car_central_de_armado_de_recetas VARCHAR(255) NOT NULL,
+    ddp_desarrollo_de_productos VARCHAR(255) NOT NULL,
+    cuk_culinary_kitting VARCHAR(255) NOT NULL,
+    ade_abordamiento_desabordamiento_y_entregas VARCHAR(255) NOT NULL,
+    cec_centro_de_control VARCHAR(255) NOT NULL,
+    tra_transporte VARCHAR(255) NOT NULL,
+    hfr_holding_frio VARCHAR(255) NOT NULL,
+    hsc_holding_seco VARCHAR(255) NOT NULL,
+    hel_higienizar_equipo_primario_y_secundario VARCHAR(255) NOT NULL,
+    aud_audifonos VARCHAR(255) NOT NULL,
+    lav_lavanderia VARCHAR(255) NOT NULL,
+    abl_armado_bares_y_licores VARCHAR(255) NOT NULL,
+    cdd_centro_de_distribucion VARCHAR(255) NOT NULL,
+    adc_armado_de_cubiertos_y_cristales VARCHAR(255) NOT NULL,
+    myp_make_pack VARCHAR(255) NOT NULL,
+    cas_casino VARCHAR(255) NOT NULL,
+    tes_tesoreria VARCHAR(255) NOT NULL,
+    pre_presupuesto VARCHAR(255) NOT NULL,
+    nmn_nomina VARCHAR(255) NOT NULL,
+    inv_inventarios VARCHAR(255) NOT NULL,
+    inf_informes VARCHAR(255) NOT NULL,
+    imp_impuestos VARCHAR(255) NOT NULL,
+    fac_facturacion VARCHAR(255) NOT NULL,
+    acf_activos_fijos VARCHAR(255) NOT NULL,
+    con_contabilidad VARCHAR(255) NOT NULL,
+    cos_costos VARCHAR(255) NOT NULL,
+    coi_comunicaciones_internas VARCHAR(255) NOT NULL,
+    arc_correspondencia_y_archivo VARCHAR(255) NOT NULL,
+    dpa_desarrollar_proyectos_y_aplicaciones VARCHAR(255) NOT NULL,
+    mre_mantenimiento_de_redes_y_equipos VARCHAR(255) NOT NULL,
+    prd_planes_de_contingencia_y_recuperacion_ante_desastres VARCHAR(255) NOT NULL,
+    ise_instalar_software_y_equipos VARCHAR(255) NOT NULL,
+    mse_manejo_de_software_y_equipos VARCHAR(255) NOT NULL,
+    syc_seleccion_y_contratacion VARCHAR(255) NOT NULL,
+    dth_desarrollar_el_talento_humano VARCHAR(255) NOT NULL,
+    nom_nomina VARCHAR(255) NOT NULL,
+    bie_bienestar VARCHAR(255) NOT NULL,
+    ape_administracion_de_personal VARCHAR(255) NOT NULL,
+    mpl_mantenimiento_de_planta VARCHAR(255) NOT NULL,
+    meq_mantenimiento_de_equipos VARCHAR(255) NOT NULL,
+    mav_mantenimiento_de_vehiculos VARCHAR(255) NOT NULL,
+    ase_aseo VARCHAR(255) NOT NULL,
+    dnn_desarrollo_nuevos_negocios VARCHAR(255) NOT NULL,
+    get_gestion_tenders VARCHAR(255) NOT NULL,
+    cli_servicio_al_cliente VARCHAR(255) NOT NULL,
+    gdp_gestion_de_presentaciones VARCHAR(255) NOT NULL,
+    crf_control_de_riesgos_fisicos VARCHAR(255) NOT NULL
+);
