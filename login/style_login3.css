@@ -122,7 +122,7 @@ input[type="text"]:focus, input[type="password"]:focus {
     margin-top: 20px;
 }
 
-input[type="submit"], .button {
+input[type="submit"], .button, .button-small {
     background: #3d9970; /* Cambiado a verde oliva */
     color: white;
     font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
@@ -138,12 +138,12 @@ input[type="submit"], .button {
 }
 
 
-input[type="submit"]:hover, .button:hover {
+input[type="submit"]:hover, .button-small, .button:hover {
     background: #2d6e50; /* Verde oliva más oscuro */
     transform: scale(1.05);
 }
 
-input[type="submit"]:active, .button:active {
+input[type="submit"]:active, .button-small, .button:active {
     transform: scale(1);
 }
 
@@ -180,3 +180,4 @@ input[type="submit"]:active, .button:active {
         margin-bottom: 10px;
     }
 }
+

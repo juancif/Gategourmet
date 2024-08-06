@@ -1,6 +1,4 @@
 <?php
-
-// Establecer la conexión a la base de datos
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -70,14 +68,14 @@ $connect->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Inicio Sesión Gateourmet</title>
+    <title>Inicio Sesión Gategourmet</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style_login3.css">
 </head>
 <body>
     <header class="header">
-        <img src="../Imagenes/logo_oficial_color.png" alt="Gate Gourmet Logo" class="logo">
+        <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
     </header>
     <main class="main-content">
         <div class="login-container">
@@ -102,6 +100,7 @@ $connect->close();
                     <div class="buttons">
                         <input type="submit" value="Ingresar">
                         <a href="http://localhost/GateGourmet/register/register3.php" class="button">Registrarse</a>
+                        <a href="restablecer.php" class="button-small">Restablecer Contraseña</a> <!-- Botón pequeño y sutil -->
                     </div>
                 </form>
             </div>
