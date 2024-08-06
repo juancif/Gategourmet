@@ -1,3 +1,12 @@
+/* style_login3.css */
+
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -14,7 +23,6 @@ body {
     backdrop-filter: blur(10px);
     text-align: center;
     padding: 20px 40px;
-    text-align: center;
     box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
 }
 
@@ -35,13 +43,11 @@ body {
     backdrop-filter: blur(10px);
     text-align: center;
     padding: 40px;
-    padding-bottom: 120px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
     max-width: 400px;
     width: 100%;
     text-align: center;
-    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -118,33 +124,57 @@ input[type="text"]:focus, input[type="password"]:focus {
 
 .buttons {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
     width: 100%;
     margin-top: 20px;
 }
 
-input[type="submit"], .button_registrarse {
-    background: #3d9970; /* Cambiado a verde oliva */
+input[type="submit"], .button {
+    background: #3d9970; /* Verde oliva */
     color: white;
-    font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
-    font-size: 16px; /* Asegurando el mismo tamaño de letra */
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
     padding: 12px 20px;
     border: none;
     border-radius: 50px;
     cursor: pointer;
     text-decoration: none;
     text-align: center;
-    width: 44%;
+    width: 100%;
+    max-width: 200px;
     transition: background 0.3s ease, transform 0.3s ease;
 }
 
-
-input[type="submit"]:hover, .button_registrarse:hover {
+input[type="submit"]:hover, .button:hover {
     background: #2d6e50; /* Verde oliva más oscuro */
     transform: scale(1.05);
 }
 
-input[type="submit"]:active, .button_registrarse:active {
+input[type="submit"]:active, .button:active {
+    transform: scale(1);
+}
+
+.button-small {
+    background: #6c757d; /* Gris */
+    color: white;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
+    max-width: 150px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.button-small:hover {
+    background: #5a6268; /* Gris más oscuro */
+    transform: scale(1.05);
+}
+
+.button-small:active {
     transform: scale(1);
 }
 
@@ -180,29 +210,4 @@ input[type="submit"]:active, .button_registrarse:active {
         width: 100%;
         margin-bottom: 10px;
     }
-}
-
-.button, .button-small {
-    background: #3d9970; /* Gris */
-    color: white;
-    font-size: 14px;
-    padding: 8px 16px;
-    border-radius: 50px;
-    text-decoration: none;
-    text-align: center;
-    width: 180px;
-    max-width: 150px;
-    transition: background 0.3s ease, transform 0.3s ease;
-    margin-top:20px ;
-    margin-left: -100px;
-    position: absolute;
-}
-
-.button, .button-small:hover {
-    background: #2d6e50; /* Gris más oscuro */
-    transform: scale(1.05);
-}
-
-.button, .button-small:active {
-    transform: scale(1);
 }

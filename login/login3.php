@@ -1,4 +1,4 @@
-// Establecer la conexión a la base de datos
+<?php
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -100,6 +100,7 @@ $connect->close();
                     <div class="buttons">
                         <input type="submit" value="Ingresar">
                         <a href="http://localhost/GateGourmet/register/register3.php" class="button">Registrarse</a>
+                        <a href="restablecer.php" class="button-small">Restablecer Contraseña</a> <!-- Botón pequeño y sutil -->
                     </div>
                 </form>
             </div>
