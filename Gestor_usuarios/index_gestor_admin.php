@@ -34,7 +34,7 @@ $result = $dbConn->query("SELECT * FROM administradores ORDER BY documento ASC")
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                 echo "<tr>";
                 echo "<td>" . htmlspecialchars($row['nombre_usuario']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['contrasena']) . "</td>";
+                echo "<td>" . str_repeat('*', strlen($row['contrasena']));
                 echo "<td>" . htmlspecialchars($row['correo']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['nombres_apellidos']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['documento']) . "</td>";

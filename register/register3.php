@@ -34,7 +34,6 @@ if (isset($_POST['Submit'])) {
         if (empty($cargo)) {
             echo "<font color='red'>Campo: cargo está vacío.</font><br/>";
         }
-        echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
         if (empty($rol)) {
             echo "<font color='red'>Campo: rol está vacío.</font><br/>";
         }
@@ -43,9 +42,12 @@ if (isset($_POST['Submit'])) {
         try {
             $dbConn->beginTransaction();
 
-            // Verificar el campo cargo y definir la tabla correspondiente
+            // Hash de la contraseña
+            $hashedPassword = password_hash($contrasena, PASSWORD_DEFAULT);
+
+            // Verificar el campo rol y definir la tabla correspondiente
             if ($rol === 'Administrador') {
-                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol ) 
+                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
                         VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
             } else {
                 $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
@@ -54,7 +56,7 @@ if (isset($_POST['Submit'])) {
 
             $query = $dbConn->prepare($sql);
             $query->bindparam(':nombre_usuario', $nombre_usuario);
-            $query->bindparam(':contrasena', $contrasena);
+            $query->bindparam(':contrasena', $hashedPassword); // Guardar el hash de la contraseña
             $query->bindparam(':correo', $correo);
             $query->bindparam(':nombres_apellidos', $nombres_apellidos);
             $query->bindparam(':documento', $documento);
@@ -79,7 +81,6 @@ if (isset($_POST['Submit'])) {
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
