@@ -158,7 +158,19 @@ span[style*="font-size:30px;cursor:pointer"] {
     max-width: 650px;
     height: 180px;
     margin-bottom: 20px;   
+<<<<<<< HEAD
+<<<<<<< HEAD
+    margin-left: 12cqmax;
+=======
+<<<<<<< HEAD
+    margin-left: 450px;
+=======
     margin-left: 14cqmax;
+>>>>>>> b1e7425bb03d492ac1789b91f2c99578874cec6e
+>>>>>>> 33fd5794a2f7238e26eb1f3a2602e2b0742a9869
+=======
+    margin-left: 14cqmax;
+>>>>>>> a57ce0f619b61332102cb9a47112a2cabeb2a891
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
     position: absolute;
