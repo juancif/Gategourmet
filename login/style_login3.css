@@ -1,10 +1,3 @@
-/* Reset CSS */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     margin: 0;
     padding: 0;
@@ -21,6 +14,7 @@ body {
     backdrop-filter: blur(10px);
     text-align: center;
     padding: 20px 40px;
+    text-align: center;
     box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
 }
 
@@ -36,7 +30,7 @@ body {
     padding: 20px;
 }
 
-.reset-container {
+.login-container {
     background: #1117;
     backdrop-filter: blur(10px);
     text-align: center;
@@ -45,7 +39,21 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
     max-width: 400px;
     width: 100%;
+    text-align: center;
+    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.user-icon {
+    width: 80px;
+    margin-bottom: 20px;
+    background: rgb(165, 209, 168);
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 h2 {
@@ -76,10 +84,15 @@ h2 {
     color: #999;
 }
 
-input[type="email"] {
-    width: calc(100% - 20px);
+.password-group i.toggle-password {
+    left: auto;
+    right: 10px;
+}
+
+input[type="text"], input[type="password"] {
+    width: calc(100% - 40px);
     padding: 12px 10px 12px 35px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 15px;
@@ -87,39 +100,50 @@ input[type="email"] {
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-input[type="email"]:focus {
+input[type="text"]:focus, input[type="password"]:focus {
     border-color: #007bff;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
     outline: none;
 }
 
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #999;
+}
+
 .buttons {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
     margin-top: 20px;
 }
 
-input[type="submit"] {
-    background: #3d9970; /* Verde oliva */
+input[type="submit"], .button, .button-small {
+    background: #3d9970; /* Cambiado a verde oliva */
     color: white;
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
+    font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
+    font-size: 16px; /* Asegurando el mismo tamaño de letra */
     padding: 12px 20px;
     border: none;
     border-radius: 50px;
     cursor: pointer;
     text-decoration: none;
     text-align: center;
+    width: 44%;
     transition: background 0.3s ease, transform 0.3s ease;
 }
 
-input[type="submit"]:hover {
+
+input[type="submit"]:hover, .button-small, .button:hover {
     background: #2d6e50; /* Verde oliva más oscuro */
     transform: scale(1.05);
 }
 
-input[type="submit"]:active {
+input[type="submit"]:active, .button-small, .button:active {
     transform: scale(1);
 }
 
@@ -143,7 +167,7 @@ input[type="submit"]:active {
 }
 
 @media (max-width: 600px) {
-    .reset-container {
+    .login-container {
         padding: 20px;
     }
 
@@ -151,8 +175,9 @@ input[type="submit"]:active {
         flex-direction: column;
     }
 
-    .buttons input[type="submit"] {
+    .buttons .button, .buttons input[type="submit"] {
         width: 100%;
         margin-bottom: 10px;
     }
 }
+
