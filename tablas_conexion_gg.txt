@@ -351,81 +351,41 @@ CREATE TABLE roles (
     auxiliar_contable VARCHAR(255) NOT NULL
 );
 
--- Crear la tabla procesos
-CREATE TABLE procesos (
-    proceso VARCHAR(255) NOT NULL,
-    des_direccionamiento_estrategico VARCHAR(255) NOT NULL,
-    gmc_gestion_de_mejora_continua VARCHAR(255) NOT NULL,
-    ind_induccion_organizacional VARCHAR(255) NOT NULL,
-    eys_evaluacion_y_seguimiento VARCHAR(255) NOT NULL,
-    ger_gestionar_las_relaciones VARCHAR(255) NOT NULL,
-    enp_evaluar_nuevos_proyectos_de_inversion_y_operacionales VARCHAR(255) NOT NULL,
-    alm_seguridad_alimentaria VARCHAR(255) NOT NULL,
-    amb_medio_ambiente VARCHAR(255) NOT NULL,
-    seo_seguridad_operacional_ramp_safety VARCHAR(255) NOT NULL,
-    sfi_seguridad_fisica VARCHAR(255) NOT NULL,
-    sst_seguridad_y_salud_en_el_trabajo VARCHAR(255) NOT NULL,
-    sag_sagrilaft VARCHAR(255) NOT NULL,
-    pte_politica_y_etica_empresarial VARCHAR(255) NOT NULL,
-    com_compras VARCHAR(255) NOT NULL,
-    abs_abastecimiento VARCHAR(255) NOT NULL,
-    ids_sistemas_internos_de_entrega VARCHAR(255) NOT NULL,
-    sim_solicitud_interna_de_materiales VARCHAR(255) NOT NULL,
-    pdp_planeacion_de_la_produccion VARCHAR(255) NOT NULL,
-    cro_control_de_recursos_operativos VARCHAR(255) NOT NULL,
-    cdm_control_de_materiales VARCHAR(255) NOT NULL,
-    pca_carniceria VARCHAR(255) NOT NULL,
-    pde_desinfeccion VARCHAR(255) NOT NULL,
-    pfv_frutas_y_verduras VARCHAR(255) NOT NULL,
-    coc_cocina_caliente VARCHAR(255) NOT NULL,
-    cof_cocina_fria VARCHAR(255) NOT NULL,
-    pyp_panaderia_y_pasteleria VARCHAR(255) NOT NULL,
-    cap_cuarto_de_almacenamiento_de_produccion VARCHAR(255) NOT NULL,
-    car_central_de_armado_de_recetas VARCHAR(255) NOT NULL,
-    ddp_desarrollo_de_productos VARCHAR(255) NOT NULL,
-    cuk_culinary_kitting VARCHAR(255) NOT NULL,
-    ade_abordamiento_desabordamiento_y_entregas VARCHAR(255) NOT NULL,
-    cec_centro_de_control VARCHAR(255) NOT NULL,
-    tra_transporte VARCHAR(255) NOT NULL,
-    hfr_holding_frio VARCHAR(255) NOT NULL,
-    hsc_holding_seco VARCHAR(255) NOT NULL,
-    hel_higienizar_equipo_primario_y_secundario VARCHAR(255) NOT NULL,
-    aud_audifonos VARCHAR(255) NOT NULL,
-    lav_lavanderia VARCHAR(255) NOT NULL,
-    abl_armado_bares_y_licores VARCHAR(255) NOT NULL,
-    cdd_centro_de_distribucion VARCHAR(255) NOT NULL,
-    adc_armado_de_cubiertos_y_cristales VARCHAR(255) NOT NULL,
-    myp_make_pack VARCHAR(255) NOT NULL,
-    cas_casino VARCHAR(255) NOT NULL,
-    tes_tesoreria VARCHAR(255) NOT NULL,
-    pre_presupuesto VARCHAR(255) NOT NULL,
-    nmn_nomina VARCHAR(255) NOT NULL,
-    inv_inventarios VARCHAR(255) NOT NULL,
-    inf_informes VARCHAR(255) NOT NULL,
-    imp_impuestos VARCHAR(255) NOT NULL,
-    fac_facturacion VARCHAR(255) NOT NULL,
-    acf_activos_fijos VARCHAR(255) NOT NULL,
-    con_contabilidad VARCHAR(255) NOT NULL,
-    cos_costos VARCHAR(255) NOT NULL,
-    coi_comunicaciones_internas VARCHAR(255) NOT NULL,
-    arc_correspondencia_y_archivo VARCHAR(255) NOT NULL,
-    dpa_desarrollar_proyectos_y_aplicaciones VARCHAR(255) NOT NULL,
-    mre_mantenimiento_de_redes_y_equipos VARCHAR(255) NOT NULL,
-    prd_planes_de_contingencia_y_recuperacion_ante_desastres VARCHAR(255) NOT NULL,
-    ise_instalar_software_y_equipos VARCHAR(255) NOT NULL,
-    mse_manejo_de_software_y_equipos VARCHAR(255) NOT NULL,
-    syc_seleccion_y_contratacion VARCHAR(255) NOT NULL,
-    dth_desarrollar_el_talento_humano VARCHAR(255) NOT NULL,
-    nom_nomina VARCHAR(255) NOT NULL,
-    bie_bienestar VARCHAR(255) NOT NULL,
-    ape_administracion_de_personal VARCHAR(255) NOT NULL,
-    mpl_mantenimiento_de_planta VARCHAR(255) NOT NULL,
-    meq_mantenimiento_de_equipos VARCHAR(255) NOT NULL,
-    mav_mantenimiento_de_vehiculos VARCHAR(255) NOT NULL,
-    ase_aseo VARCHAR(255) NOT NULL,
-    dnn_desarrollo_nuevos_negocios VARCHAR(255) NOT NULL,
-    get_gestion_tenders VARCHAR(255) NOT NULL,
-    cli_servicio_al_cliente VARCHAR(255) NOT NULL,
-    gdp_gestion_de_presentaciones VARCHAR(255) NOT NULL,
-    crf_control_de_riesgos_fisicos VARCHAR(255) NOT NULL
+CREATE TABLE password_resets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    token VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE procesos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    macroproceso VARCHAR(255),
+    proceso VARCHAR(255),
+    usuarios VARCHAR(255),
+    cargos VARCHAR(255),
+    email VARCHAR(255),
+    rol VARCHAR(50)
+);
+
+INSERT INTO procesos (macroproceso, proceso, usuarios, cargos, email, rol) VALUES
+-- Estrategicos - Gestion Corporativa
+('GESTION CORPORATIVA', 'DES - Direccionamiento Estratégico', 'Sanchez Fernandez Antonio', 'Country Manager', 'asanchez@gategroup.com', 'Observador'),
+('GESTION CORPORATIVA', 'GMC - Gestión de Mejora Continua', 'Camacho Salcedo Vanessa', 'Manager HR', 'VaCamacho@gategroup.com', 'Aprueba'),
+('GESTION CORPORATIVA', 'IND - Inducción Organizacional', 'Rodríguez Camacho Magda', 'Superintendent HR', 'MagRodriguez@gategroup.com', 'Digita'),
+('GESTION CORPORATIVA', 'IND - Inducción Organizacional', 'Huertas Carmona Catalina', 'Superintendent Development And Communications', 'chuertascarmona@gategroup.com', 'Digita'),
+('GESTION CORPORATIVA', 'EYS - Evaluación y Seguimiento', 'Ramírez Domínguez Diana', 'Continuous Improvement Manager', 'DRamirez@gategroup.com', 'Administrador'),
+('GESTION CORPORATIVA', 'EYS - Evaluación y Seguimiento', 'Jaimes Puertas Diego', 'Coordinador de mejoramiento Continuo', 'DJaimes@gategroup.com', 'Administrador'),
+-- Estrategicos - Compliance
+('COMPLIANCE', 'SEO - Seguridad Operacional - Ramp Safety', 'Dominguez Posada Natalia', 'Process Owner Assembly', 'NDominguezPosada@gategroup.com', 'Observador'),
+-- Misionales Operativos - Supply Chain
+('SUPPLY CHAIN', 'COM - Compras', 'Suarez Ortiz William', 'Section Manager Pick & Pack', 'WSuarez@gategroup.com', 'Digita'),
+('SUPPLY CHAIN', 'ABS - Abastecimiento', 'Sanabria Rodríguez Edwin', 'Section Manager Wash & Pack', 'ESanabria@gategroup.com', 'Digita'),
+('SUPPLY CHAIN', 'IDS - Sistemas Internos de Entrega', 'Ordonez Rodríguez Michael', 'Section Manager Laundry', 'miordonez@gategroup.com', 'Digita'),
+('SUPPLY CHAIN', 'SIM - Solicitud Interna de Materiales', 'Roa Pinzon Edwin', 'Section Manager Make & Pack', 'ERoa@gategroup.com', 'Digita'),
+-- Misionales Operativos - Culinary Excellence
+('CULINARY EXCELLENCE', 'COF - Cocina Fría', 'Escobar Nancy', 'Director Comercial', 'nescobar@gategroup.com', 'Aprueba'),
+-- Misionales Operativos - Service Delivery
+('SERVICE DELIVERY', 'TRA - Transporte', 'Medellin Carmen', 'Manager Finance', 'CMedellin@gategroup.com', 'Aprueba'),
+-- Assembly
+('ASSEMBLY', 'HFR - Holding Frío', 'Carabante Nelson', 'Auxiliar Contable', 'NCarabante@gategroup.com', 'Digita');
