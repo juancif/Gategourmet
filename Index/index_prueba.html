@@ -36,6 +36,48 @@
 
 <iframe title="Gestion.Corporativa" src="https://app.powerbi.com/reportEmbed?reportId=8257ece8-18e7-401f-a927-672e493bddf6&autoAuth=true&ctid=c0e017e8-740f-4b42-aae5-0b63598c7942" frameborder="0" allowFullScreen="true" class="diagramas"></iframe>
 
-<!--<div>
+<div>
     <iframe title="Gestion.Corporativa" width="1140" height="541.25" src="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Documentos__prueba?csf=1&web=1&e=R85bkb" frameborder="0" allowFullScreen="true"></iframe>
 </div>-->
+
+
+
+
+CREATE TABLE password_resets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    token VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE procesos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    macroproceso VARCHAR(255),
+    proceso VARCHAR(255),
+    usuarios VARCHAR(255),
+    cargos VARCHAR(255),
+    email VARCHAR(255),
+    rol VARCHAR(50)
+);
+
+INSERT INTO procesos (macroproceso, proceso, usuarios, cargos, email, rol) VALUES
+-- Estrategicos - Gestion Corporativa
+('GESTION CORPORATIVA', 'DES - Direccionamiento Estratégico', 'Sanchez Fernandez Antonio', 'Country Manager', 'asanchez@gategroup.com', 'Observador'),
+('GESTION CORPORATIVA', 'GMC - Gestión de Mejora Continua', 'Camacho Salcedo Vanessa', 'Manager HR', 'VaCamacho@gategroup.com', 'Aprueba'),
+('GESTION CORPORATIVA', 'IND - Inducción Organizacional', 'Rodríguez Camacho Magda', 'Superintendent HR', 'MagRodriguez@gategroup.com', 'Digita'),
+('GESTION CORPORATIVA', 'IND - Inducción Organizacional', 'Huertas Carmona Catalina', 'Superintendent Development And Communications', 'chuertascarmona@gategroup.com', 'Digita'),
+('GESTION CORPORATIVA', 'EYS - Evaluación y Seguimiento', 'Ramírez Domínguez Diana', 'Continuous Improvement Manager', 'DRamirez@gategroup.com', 'Administrador'),
+('GESTION CORPORATIVA', 'EYS - Evaluación y Seguimiento', 'Jaimes Puertas Diego', 'Coordinador de mejoramiento Continuo', 'DJaimes@gategroup.com', 'Administrador'),
+-- Estrategicos - Compliance
+('COMPLIANCE', 'SEO - Seguridad Operacional - Ramp Safety', 'Dominguez Posada Natalia', 'Process Owner Assembly', 'NDominguezPosada@gategroup.com', 'Observador'),
+-- Misionales Operativos - Supply Chain
+('SUPPLY CHAIN', 'COM - Compras', 'Suarez Ortiz William', 'Section Manager Pick & Pack', 'WSuarez@gategroup.com', 'Digita'),
+('SUPPLY CHAIN', 'ABS - Abastecimiento', 'Sanabria Rodríguez Edwin', 'Section Manager Wash & Pack', 'ESanabria@gategroup.com', 'Digita'),
+('SUPPLY CHAIN', 'IDS - Sistemas Internos de Entrega', 'Ordonez Rodríguez Michael', 'Section Manager Laundry', 'miordonez@gategroup.com', 'Digita'),
+('SUPPLY CHAIN', 'SIM - Solicitud Interna de Materiales', 'Roa Pinzon Edwin', 'Section Manager Make & Pack', 'ERoa@gategroup.com', 'Digita'),
+-- Misionales Operativos - Culinary Excellence
+('CULINARY EXCELLENCE', 'COF - Cocina Fría', 'Escobar Nancy', 'Director Comercial', 'nescobar@gategroup.com', 'Aprueba'),
+-- Misionales Operativos - Service Delivery
+('SERVICE DELIVERY', 'TRA - Transporte', 'Medellin Carmen', 'Manager Finance', 'CMedellin@gategroup.com', 'Aprueba'),
+-- Assembly
+('ASSEMBLY', 'HFR - Holding Frío', 'Carabante Nelson', 'Auxiliar Contable', 'NCarabante@gategroup.com', 'Digita');
