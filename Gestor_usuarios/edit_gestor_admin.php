@@ -84,7 +84,7 @@ $cargo = $row['cargo'];
     <main class="main-content">
         <div class="register-container">
             <div class="register-box">
-                <h2>Registro de Usuarios</h2>
+                <h2>Registro de Administradores</h2>
                 <form method="post" action="index_gestor_admin.php">
                     <div class="input-group">
                         <label for="nombre_usuario">Nombre de Usuario</label>
@@ -177,7 +177,7 @@ $cargo = $row['cargo'];
                     </div>
                     <div class="buttons">
                     <input type="Submit" name="update" value="Editar" class="Registrarse"></input>
-                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor_admin.php" class="button">Volver</a>
+                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor_admin.php" class="regresar">Volver</a>
                     </div>
                 </form>
             </div>

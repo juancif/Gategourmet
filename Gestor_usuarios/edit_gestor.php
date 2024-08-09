@@ -19,7 +19,6 @@ if(isset($_POST['update']))
         }
         if(empty($contrasena)) {
             echo "<font color='red'>Campo: contrasena está vacío.</font><br/>";
-        }
         if(empty($correo)) {
             echo "<font color='red'>Campo: correo está vacío.</font><br/>";
         }
@@ -40,9 +39,6 @@ if(isset($_POST['update']))
         }
     } else {
         $sql = "UPDATE usuarios SET nombre_usuario=:nombre_usuario, contrasena=:contrasena, correo=:correo, nombres_apellidos=:nombres_apellidos, 
-        documento=:documento, area=:area, cargo=:cargo, rol=:rol
-        WHERE documento=:documento";
-        $sql = "UPDATE administradores SET nombre_usuario=:nombre_usuario, contrasena=:contrasena, correo=:correo, nombres_apellidos=:nombres_apellidos, 
         documento=:documento, area=:area, cargo=:cargo, rol=:rol
         WHERE documento=:documento";
         $query = $dbConn->prepare($sql);
@@ -73,6 +69,7 @@ $nombres_apellidos = $row['nombres_apellidos'];
 $documento = $row['documento'];
 $area = $row['area'];
 $cargo = $row['cargo'];
+$rol = $row['rol'];
 ?>
 <html>
 <head>
@@ -80,7 +77,7 @@ $cargo = $row['cargo'];
     <link rel="stylesheet" href="style_edit_gestor.css">
 </head>
 <body>
-<form name="form1" method="post" action="edit_gestor_admin.php">
+<form name="form1" method="post" action="edit_gestor.php">
     <header class="header">
         <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
     </header>
@@ -88,7 +85,7 @@ $cargo = $row['cargo'];
         <div class="register-container">
             <div class="register-box">
                 <h2>Registro de Usuarios</h2>
-                <form method="post" action="index_gestor_admin.php">
+                <form method="post" action="index_gestor.php">
                     <div class="input-group">
                         <label for="nombre_usuario">Nombre de Usuario</label>
                         <input type="text" id="nombre_usuario" name="nombre_usuario" required value="<?php echo $nombre_usuario;?>">
@@ -173,14 +170,14 @@ $cargo = $row['cargo'];
                         <select name="rol" id="rol" value="<?php echo $rol;?>">
                             <option value="">Seleccione una opción</option>
                             <option value="Administrador">Administrador</option>
-                            <option value="Supervisor">Aprobador</option>
-                            <option value="Empleado">Digitador</option>
+                            <option value="Aprobador">Aprobador</option>
+                            <option value="Digitador">Digitador</option>
                             <option value="Observador">Observador</option>
                         </select>                    
                     </div>
                     <div class="buttons">
                     <input type="Submit" name="update" value="Editar" class="Registrarse"></input>
-                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor_admin.php" class="button">Volver</a>
+                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="regresar">Volver</a>
                     </div>
                 </form>
             </div>

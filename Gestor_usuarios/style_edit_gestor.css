@@ -90,15 +90,15 @@ body {
     color: white;
     font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
     font-size: 16px; /* Asegurando el mismo tamaño de letra */
-    padding: 15px 15px 1px 20px;
     border: none;
     border-radius: 50px;
     cursor: pointer;
     text-decoration: none;
     text-align: center;
     width: 44%;
-    height: 45px;
-    transition: background 0.3s ease, transform 0.3s ease;
+    height: 40px;
+    transition: background 0.3s ease, transform 0.3s;
+    padding-top: 20px;
 }
 
 .input[type="submit"]:hover, .regresar:hover {
@@ -112,11 +112,12 @@ input[type="submit"]:active, .regresar:active {
 
 .buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content:space-around;
     margin-top: 20px;
+    margin-left: -10px;
 }
 
-input[type="submit"], .button {
+input[type="submit"] {
     background: #3d9970; /* Verde oliva */
     color: white;
     font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
