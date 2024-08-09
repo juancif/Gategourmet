@@ -70,7 +70,7 @@ if (isset($_POST['Submit'])) {
 
             if ($query->rowCount() > 0) {
                 // Redirigir a la página deseada después del registro exitoso
-                header("Location: http://localhost/GateGourmet/register/registro_exitoso.php");
+                header("Location: http://localhost/GateGourmet/Gestor_usuarios/registro_exitoso.php");
                 exit();
             } else {
                 echo "<font color='red'>Error al registrar el usuario o administrador.</font><br/>";
@@ -92,7 +92,7 @@ if (isset($_POST['Submit'])) {
     <title>Registro de Usuarios</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="style_register3.css">
+    <link rel="stylesheet" href="style_add_gestor.css">
 </head>
 <body>
     <header class="header">
@@ -121,7 +121,7 @@ if (isset($_POST['Submit'])) {
                     </div>
                     <div class="input-group">
                         <label for="documento">Documento</label>
-                        <input type="text" id="documento" name="documento" required>
+                        <input type="number" id="documento" name="documento" required>
                     </div>
                     <div class="input-group">
                         <label for="area">Área</label>

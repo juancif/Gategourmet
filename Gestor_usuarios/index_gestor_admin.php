@@ -44,7 +44,7 @@ $result = $dbConn->query("SELECT * FROM administradores ORDER BY documento ASC")
                 echo "<td>" . htmlspecialchars($row['rol']) . "</td>";
                 echo "<td class='acciones'>
                         <a href='edit_gestor_admin.php?documento=" . htmlspecialchars($row['documento']) . "'>Editar</a> | 
-                        <a href='delete_gestor.php?documento=" . htmlspecialchars($row['documento']) . "' 
+                        <a href='delete_gestor_admin.php?documento=" . htmlspecialchars($row['documento']) . "' 
                            onclick=\"return confirm('¿Está seguro de eliminar este registro?')\">Eliminar</a>
                       </td>";
                 echo "</tr>";
