@@ -94,24 +94,6 @@ CREATE TABLE password_resets (
     FOREIGN KEY (email) REFERENCES usuarios(correo)
 );
 
-
-DROP TABLE IF EXISTS procesos;
-
-CREATE TABLE procesos (
-    id int(11) NOT NULL AUTO_INCREMENT,
-    macroproceso varchar(255) NOT NULL,
-    proceso varchar(255) NOT NULL,
-    usuarios varchar(25) NOT NULL,  -- Asegúrate de que el tamaño coincida
-    cargos varchar(255) NOT NULL,
-    rol varchar(255) NOT NULL,       -- Asegúrate de que el tamaño coincida
-    email varchar(50) NOT NULL,      -- Asegúrate de que el tamaño coincida
-    PRIMARY KEY (id),
-    FOREIGN KEY (rol) REFERENCES roles(nombre_rol),
-    FOREIGN KEY (cargos) REFERENCES cargos(nombre_cargo),
-    FOREIGN KEY (email) REFERENCES usuarios(correo)
-);
-
-
 LOAD DATA INFILE 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro6.csv'
 INTO TABLE listado_maestro
 FIELDS TERMINATED BY ';'
@@ -119,3 +101,29 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (proceso, codigo, titulo_documento, tipo, version, estado, fecha_aprobacion, areas, motivo_del_cambio, tiempo_de_retencion, responsable_de_retencion, lugar_de_almacenamiento_fisico, lugar_de_almacenamiento_magnetico, conservacion, disposicion_final, copias_controladas, fecha_de_vigencia, dias, senal_alerta, obsoleto, anulado, en_actualizacion);
+
+CREATE TABLE procesos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    macroproceso VARCHAR(255),
+    proceso VARCHAR(255),
+    usuario VARCHAR(255),
+    cargo VARCHAR(255),
+    email VARCHAR(255),
+    rol VARCHAR(255)
+);
+
+
+LOAD DATA LOCAL INFILE 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro1.csv'
+INTO TABLE procesos
+FIELDS TERMINATED BY ';'
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(@macroproceso, @proceso, @usuario, @cargo, @email, @rol)
+SET 
+    macroproceso = TRIM(BOTH FROM @macroproceso),
+    proceso = TRIM(BOTH FROM @proceso),
+    usuario = TRIM(BOTH FROM @usuario),
+    cargo = TRIM(BOTH FROM @cargo),
+    email = TRIM(BOTH FROM @email),
+    rol = TRIM(BOTH FROM @rol);
