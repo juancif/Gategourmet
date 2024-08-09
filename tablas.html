@@ -103,9 +103,8 @@ CREATE TABLE procesos (
     proceso varchar(255) NOT NULL,
     usuarios varchar(25) NOT NULL,  -- Asegúrate de que el tamaño coincida
     cargos varchar(255) NOT NULL,
-    email varchar(50) NOT NULL,      -- Asegúrate de que el tamaño coincida
     rol varchar(255) NOT NULL,       -- Asegúrate de que el tamaño coincida
-   
+    email varchar(50) NOT NULL,      -- Asegúrate de que el tamaño coincida
     PRIMARY KEY (id),
     FOREIGN KEY (rol) REFERENCES roles(nombre_rol),
     FOREIGN KEY (cargos) REFERENCES cargos(nombre_cargo),
