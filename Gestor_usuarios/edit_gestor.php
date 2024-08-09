@@ -42,7 +42,7 @@ if(isset($_POST['update']))
         $sql = "UPDATE usuarios SET nombre_usuario=:nombre_usuario, contrasena=:contrasena, correo=:correo, nombres_apellidos=:nombres_apellidos, 
         documento=:documento, area=:area, cargo=:cargo, rol=:rol
         WHERE documento=:documento";
-        $sql = "UPDATE usuarios SET nombre_usuario=:nombre_usuario, contrasena=:contrasena, correo=:correo, nombres_apellidos=:nombres_apellidos, 
+        $sql = "UPDATE administradores SET nombre_usuario=:nombre_usuario, contrasena=:contrasena, correo=:correo, nombres_apellidos=:nombres_apellidos, 
         documento=:documento, area=:area, cargo=:cargo, rol=:rol
         WHERE documento=:documento";
         $query = $dbConn->prepare($sql);
@@ -63,21 +63,6 @@ if(isset($_POST['update']))
 <?php
 $documento = $_GET['documento'];
 $sql = "SELECT * FROM usuarios WHERE documento=:documento";
-$query = $dbConn->prepare($sql);
-$query->execute(array(':documento' => $documento));
-$row = $query->fetch(PDO::FETCH_ASSOC);
-$nombre_usuario = $row['nombre_usuario'];
-$contrasena = $row['contrasena'];
-$correo = $row['correo'];
-$nombres_apellidos = $row['nombres_apellidos'];
-$documento = $row['documento'];
-$area = $row['area'];
-$cargo = $row['cargo'];
-?>
-
-<?php
-$documento = $_GET['documento'];
-$sql = "SELECT * FROM administrador WHERE documento=:documento";
 $query = $dbConn->prepare($sql);
 $query->execute(array(':documento' => $documento));
 $row = $query->fetch(PDO::FETCH_ASSOC);
