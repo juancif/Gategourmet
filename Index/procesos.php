@@ -24,65 +24,54 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado de Procesos</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <link rel="stylesheet" href="procesos.css">
 </head>
 <body>
+    <header>
+        <h1>MAPEO DE PROCESOS</h1>
+    </header>
 
-<h2>Listado de Procesos y Usuarios</h2>
+    <main>
+        <section class="container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Macroproceso</th>
+                        <th>Proceso</th>
+                        <th>Usuario</th>
+                        <th>Cargo</th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
+                            echo "<td>" . htmlspecialchars($row["macroproceso"]) . "</td>";
+                            echo "<td>" . htmlspecialchars($row["proceso"]) . "</td>";
+                            echo "<td>" . htmlspecialchars($row["usuario"]) . "</td>";
+                            echo "<td>" . htmlspecialchars($row["cargo"]) . "</td>";
+                            echo "<td>" . htmlspecialchars($row["email"]) . "</td>";
+                            echo "<td>" . htmlspecialchars($row["rol"]) . "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='7'>No hay datos disponibles</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </section>
+    </main>
 
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Macroproceso</th>
-            <th>Proceso</th>
-            <th>Usuario</th>
-            <th>Cargo</th>
-            <th>Email</th>
-            <th>Rol</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        if ($result->num_rows > 0) {
-            // Output de cada fila
-            while($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>" . $row["id"] . "</td>";
-                echo "<td>" . $row["macroproceso"] . "</td>";
-                echo "<td>" . $row["proceso"] . "</td>";
-                echo "<td>" . $row["usuario"] . "</td>";
-                echo "<td>" . $row["cargo"] . "</td>";
-                echo "<td>" . $row["email"] . "</td>";
-                echo "<td>" . $row["rol"] . "</td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='7'>No hay datos disponibles</td></tr>";
-        }
-        ?>
-    </tbody>
-</table>
+    <?php
+    // Cerrar conexión
+    $conn->close();
+    ?>
 
 </body>
 </html>
-
-<?php
-// Cerrar conexión
-$conn->close();
-?>

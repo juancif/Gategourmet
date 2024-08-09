@@ -48,13 +48,15 @@ echo '<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado Maestro</title>
-    <link rel="stylesheet" href="listado_maestro.css">
+    <link rel="stylesheet" href="listado_maestro.css"> <!-- Enlaza un archivo CSS externo -->
 </head>
-<body>';
+<body>
+    <header class="header">
+        <h1>LISTADO MAESTRO</h1>
+    </header>';
 
 if ($result->num_rows > 0) {
     echo '<div class="container">
-            <h1>Listado Maestro</h1>
             <div class="table-wrapper">
                 <table>
                     <thead>
