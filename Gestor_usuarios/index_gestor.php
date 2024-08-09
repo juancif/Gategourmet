@@ -29,6 +29,7 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
                 <th>DOCUMENTO</th>
                 <th>AREA PERTENECE</th>
                 <th>CARGO</th>
+                <th>ROL</th>
                 <th>EDICIÓN</th>
             </tr>
             <?php
@@ -41,6 +42,7 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
                 echo "<td>" . htmlspecialchars($row['documento']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['area']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['cargo']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['rol']) . "</td>";
                 echo "<td class='acciones'>
                         <a href='edit_gestor.php?documento=" . htmlspecialchars($row['documento']) . "'>Editar</a> | 
                         <a href='delete_gestor.php?documento=" . htmlspecialchars($row['documento']) . "' 

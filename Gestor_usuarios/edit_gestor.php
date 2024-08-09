@@ -10,9 +10,10 @@ if(isset($_POST['update']))
     $documento = $_POST['documento'];
     $area = $_POST['area'];
     $cargo = $_POST['cargo'];
+    $rol = $_POST['rol'];
 
     if(empty($nombre_usuario) || empty($contrasena) || empty($correo) || empty($nombres_apellidos) || 
-    empty($documento) || empty($area) || empty($cargo)) {
+    empty($documento) || empty($area) || empty($cargo) || empty($rol)) {
         if(empty($nombre_usuario)) {
             echo "<font color='red'>Campo: nombre_usuario está vacío.</font><br/>";
         }
@@ -34,9 +35,15 @@ if(isset($_POST['update']))
         if(empty($cargo)) {
             echo "<font color='red'>Campo: cargo está vacío.</font><br/>";
         }
+        if(empty($rol)) {
+            echo "<font color='red'>Campo: rol está vacío.</font><br/>";
+        }
     } else {
         $sql = "UPDATE usuarios SET nombre_usuario=:nombre_usuario, contrasena=:contrasena, correo=:correo, nombres_apellidos=:nombres_apellidos, 
-       documento=:documento, area=:area, cargo=:cargo 
+        documento=:documento, area=:area, cargo=:cargo, rol=:rol
+        WHERE documento=:documento";
+        $sql = "UPDATE usuarios SET nombre_usuario=:nombre_usuario, contrasena=:contrasena, correo=:correo, nombres_apellidos=:nombres_apellidos, 
+        documento=:documento, area=:area, cargo=:cargo, rol=:rol
         WHERE documento=:documento";
         $query = $dbConn->prepare($sql);
         $query->bindParam(':nombre_usuario', $nombre_usuario);
@@ -46,6 +53,7 @@ if(isset($_POST['update']))
         $query->bindParam(':documento', $documento);
         $query->bindParam(':area', $area);
         $query->bindParam(':cargo', $cargo);
+        $query->bindParam(':rol', $rol); 
         $query->execute();
         header("Location: index_gestor.php");
     }
@@ -67,14 +75,27 @@ $area = $row['area'];
 $cargo = $row['cargo'];
 ?>
 
+<?php
+$documento = $_GET['documento'];
+$sql = "SELECT * FROM administrador WHERE documento=:documento";
+$query = $dbConn->prepare($sql);
+$query->execute(array(':documento' => $documento));
+$row = $query->fetch(PDO::FETCH_ASSOC);
+$nombre_usuario = $row['nombre_usuario'];
+$contrasena = $row['contrasena'];
+$correo = $row['correo'];
+$nombres_apellidos = $row['nombres_apellidos'];
+$documento = $row['documento'];
+$area = $row['area'];
+$cargo = $row['cargo'];
+?>
 <html>
 <head>
     <title>Editar Datos</title>
     <link rel="stylesheet" href="style_edit_gestor.css">
 </head>
 <body>
-<br/><br/>
-<form name="form1" method="post" action="edit_gestor.php">
+<form name="form1" method="post" action="edit_gestor_admin.php">
     <header class="header">
         <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
     </header>
@@ -82,7 +103,7 @@ $cargo = $row['cargo'];
         <div class="register-container">
             <div class="register-box">
                 <h2>Registro de Usuarios</h2>
-                <form method="post" action="index_gestor.php">
+                <form method="post" action="index_gestor_admin.php">
                     <div class="input-group">
                         <label for="nombre_usuario">Nombre de Usuario</label>
                         <input type="text" id="nombre_usuario" name="nombre_usuario" required value="<?php echo $nombre_usuario;?>">
@@ -105,7 +126,7 @@ $cargo = $row['cargo'];
                     </div>
                     <div class="input-group">
                         <label for="area">Área</label>
-                        <select name="area" id="area" value="<?php echo $area;?>">>
+                        <select name="area" id="area" value="<?php echo $area;?>">
                             <option value="">Seleccione una opción</option>
                             <option value="Gestion_corporativa">Gestión corporativa</option>
                             <option value="Compliance">Compliance</option>
@@ -126,7 +147,7 @@ $cargo = $row['cargo'];
                     </div>
                     <div class="input-group">
                         <label for="cargo">Cargo</label>
-                        <select name="cargo" id="cargo">
+                        <select name="cargo" id="cargo" value="<?php echo $cargo;?>">
                             <option value="">Seleccione una opción</option>
                             <option value="Auxiliar_Contable">Auxiliar Contable</option>
                             <option value="Continuous_Improvement_Manager">Continuous Improvement Manager</option>
@@ -164,7 +185,7 @@ $cargo = $row['cargo'];
                     </div>
                     <div class="input-group">
                         <label for="rol">Rol</label>
-                        <select name="rol" id="rol">
+                        <select name="rol" id="rol" value="<?php echo $rol;?>">
                             <option value="">Seleccione una opción</option>
                             <option value="Administrador">Administrador</option>
                             <option value="Supervisor">Aprobador</option>
@@ -174,7 +195,7 @@ $cargo = $row['cargo'];
                     </div>
                     <div class="buttons">
                     <input type="Submit" name="update" value="Editar" class="Registrarse"></input>
-                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="button">Volver</a>
+                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor_admin.php" class="button">Volver</a>
                     </div>
                 </form>
             </div>
@@ -185,4 +206,3 @@ $cargo = $row['cargo'];
     </footer>
 </body>
 </html>
-

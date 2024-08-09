@@ -40,8 +40,7 @@ if (isset($_POST['Submit'])) {
         echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
     } else {
         try {
-            // Comenzar la transacción
-            $dbConn->beginTransaction();
+            $dbConn->beginTransaction(); // Iniciar transacción
 
             if ($rol === 'Administrador') {
                 $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
@@ -52,34 +51,38 @@ if (isset($_POST['Submit'])) {
             }
 
             $query = $dbConn->prepare($sql);
+
+            // Crear hash de la contraseña
+            $contrasena_hash = password_hash($contrasena, PASSWORD_DEFAULT);
+
             $query->bindparam(':nombre_usuario', $nombre_usuario);
-            $query->bindparam(':contrasena', password_hash($contrasena, PASSWORD_DEFAULT)); // Guardar el hash de la contraseña
+            $query->bindparam(':contrasena', $contrasena_hash);
             $query->bindparam(':correo', $correo);
             $query->bindparam(':nombres_apellidos', $nombres_apellidos);
             $query->bindparam(':documento', $documento);
             $query->bindparam(':area', $area);
             $query->bindparam(':cargo', $cargo);
             $query->bindparam(':rol', $rol);
+
             $query->execute();
 
-            // Confirmar la transacción
             $dbConn->commit();
 
             if ($query->rowCount() > 0) {
                 // Redirigir a la página deseada después del registro exitoso
-                header("Location: http://localhost/GateGourmet/Gestor_usuarios/registro_exitoso.php");
+                header("Location: http://localhost/GateGourmet/register/registro_exitoso.php");
                 exit();
             } else {
                 echo "<font color='red'>Error al registrar el usuario o administrador.</font><br/>";
             }
         } catch (Exception $e) {
-            // Revertir la transacción en caso de error
             $dbConn->rollBack();
             echo "<font color='red'>Error: " . $e->getMessage() . "</font><br/>";
         }
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -89,7 +92,7 @@ if (isset($_POST['Submit'])) {
     <title>Registro de Usuarios</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="style_add_gestor.css">
+    <link rel="stylesheet" href="style_register3.css">
 </head>
 <body>
     <header class="header">
@@ -106,8 +109,8 @@ if (isset($_POST['Submit'])) {
                     </div>
                     <div class="input-group">
                         <label for="contrasena">Contraseña</label>
-                        <input type="password" id="contrasena" name="contrasena" required>
-                    </div>
+                        <input type="password" id="contrasena" name="contrasena" 
+                        required onclick="mouseover('ejemplo')">
                     <div class="input-group">
                         <label for="correo">Correo Electrónico</label>
                         <input type="email" id="correo" name="correo" required>
@@ -128,7 +131,7 @@ if (isset($_POST['Submit'])) {
                             <option value="Compliance">Compliance</option>
                             <option value="Supply_chain">Supply Chain</option>
                             <option value="Culinary_Excellence">Culinary Excellence</option>
-                            <option value="Supervisor">Service Delivery</option>
+                            <option value="Supervisor"  >Service Delivery</option>
                             <option value="Assembly">Assembly</option>
                             <option value="Servicios_institucionales">Servicios institucionales</option>
                             <option value="Financiera">Financiera</option>
@@ -184,14 +187,14 @@ if (isset($_POST['Submit'])) {
                         <select name="rol" id="rol">
                             <option value="">Seleccione una opción</option>
                             <option value="Administrador">Administrador</option>
-                            <option value="Supervisor">Aprobador</option>
-                            <option value="Empleado">Digitador</option>
+                            <option value="Aprobador">Aprobador</option>
+                            <option value="Digitador">Digitador</option>
                             <option value="Observador">Observador</option>
-                        </select>                    
+                         </select>                    
                     </div>
                     <div class="buttons">
                         <input type="submit" name="Submit" value="Registrarse" class="Registrarse">
-                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="regresar">Regresar</a>
+                        <a href="http://localhost/GateGourmet/login/login3.php" class="regresar">Regresar</a>
                     </div>
                 </form>
             </div>

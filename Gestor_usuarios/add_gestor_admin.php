@@ -40,6 +40,7 @@ if (isset($_POST['Submit'])) {
         echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
     } else {
         try {
+            $dbConn->beginTransaction(); // Iniciar transacción
 
             if ($rol === 'Administrador') {
                 $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
@@ -50,14 +51,19 @@ if (isset($_POST['Submit'])) {
             }
 
             $query = $dbConn->prepare($sql);
+
+            // Crear hash de la contraseña
+            $contrasena_hash = password_hash($contrasena, PASSWORD_DEFAULT);
+
             $query->bindparam(':nombre_usuario', $nombre_usuario);
-            $query->bindparam(':******', $contrasena); // Guardar el hash de la contraseña
+            $query->bindparam(':contrasena', $contrasena_hash);
             $query->bindparam(':correo', $correo);
             $query->bindparam(':nombres_apellidos', $nombres_apellidos);
             $query->bindparam(':documento', $documento);
             $query->bindparam(':area', $area);
             $query->bindparam(':cargo', $cargo);
             $query->bindparam(':rol', $rol);
+
             $query->execute();
 
             $dbConn->commit();
@@ -76,6 +82,7 @@ if (isset($_POST['Submit'])) {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -180,14 +187,14 @@ if (isset($_POST['Submit'])) {
                         <select name="rol" id="rol">
                             <option value="">Seleccione una opción</option>
                             <option value="Administrador">Administrador</option>
-                            <option value="Supervisor">Aprobador</option>
-                            <option value="Empleado">Digitador</option>
-                            <option value="Administrador">Observador</option>
+                            <option value="Aprobador">Aprobador</option>
+                            <option value="Digitador">Digitador</option>
+                            <option value="Observador">Observador</option>
                          </select>                    
                     </div>
                     <div class="buttons">
                         <input type="submit" name="Submit" value="Registrarse" class="Registrarse">
-                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor_admin.php" class="regresar">Regresar</a>
+                        <a href="http://localhost/GateGourmet/login/login3.php" class="regresar">Regresar</a>
                     </div>
                 </form>
             </div>
