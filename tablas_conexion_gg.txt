@@ -1,3 +1,6 @@
+CREATE DATABASE gategourmet;
+use gategourmet;
+
 CREATE TABLE usuarios (
     documento varchar(25) NOT NULL,
     nombre_usuario varchar(50) NOT NULL,
@@ -84,21 +87,24 @@ CREATE TABLE log_eventos (
 
 CREATE TABLE password_resets (
     id int(11) NOT NULL AUTO_INCREMENT,
-    email varchar(255) NOT NULL,
+    email varchar(50) NOT NULL,
     token varchar(100) NOT NULL,
     created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (email) REFERENCES usuarios(correo)
 );
 
+
+DROP TABLE IF EXISTS procesos;
+
 CREATE TABLE procesos (
     id int(11) NOT NULL AUTO_INCREMENT,
     macroproceso varchar(255) NOT NULL,
     proceso varchar(255) NOT NULL,
-    usuarios varchar(255) NOT NULL,
+    usuarios varchar(25) NOT NULL,  -- Asegúrate de que el tamaño coincida
     cargos varchar(255) NOT NULL,
-    rol varchar(50) NOT NULL,
-    email varchar(255) NOT NULL,
+    rol varchar(255) NOT NULL,       -- Asegúrate de que el tamaño coincida
+    email varchar(50) NOT NULL,      -- Asegúrate de que el tamaño coincida
     PRIMARY KEY (id),
     FOREIGN KEY (rol) REFERENCES roles(nombre_rol),
     FOREIGN KEY (cargos) REFERENCES cargos(nombre_cargo),
