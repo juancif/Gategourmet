@@ -1,20 +1,20 @@
 <?php
-// Conexión a la base de datos
+// Conexión a la base de datos MySQL
 $servername = "localhost";
-$username = "tu_usuario";
-$password = "tu_contraseña";
-$dbname = "gategourmet";
+$username = "root";
+$password = "";
+$database = "gategourmet";
 
 // Crear conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $database);
 
 // Verificar conexión
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Consulta para obtener los datos de la tabla "procesos"
-$sql = "SELECT id, macroproceso, proceso, usuarios, cargos, email, rol FROM procesos";
+// Consulta SQL para obtener los datos
+$sql = "SELECT id, macroproceso, proceso, usuario, cargo, email, rol FROM procesos";
 $result = $conn->query($sql);
 ?>
 
@@ -23,7 +23,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datos de Procesos</title>
+    <title>Listado de Procesos</title>
     <style>
         table {
             width: 100%;
@@ -33,7 +33,7 @@ $result = $conn->query($sql);
             border: 1px solid black;
         }
         th, td {
-            padding: 10px;
+            padding: 8px;
             text-align: left;
         }
         th {
@@ -42,39 +42,47 @@ $result = $conn->query($sql);
     </style>
 </head>
 <body>
-    <h1>Datos de la Tabla Procesos</h1>
 
-    <table>
+<h2>Listado de Procesos y Usuarios</h2>
+
+<table>
+    <thead>
         <tr>
             <th>ID</th>
             <th>Macroproceso</th>
             <th>Proceso</th>
-            <th>Usuarios</th>
-            <th>Cargos</th>
+            <th>Usuario</th>
+            <th>Cargo</th>
             <th>Email</th>
             <th>Rol</th>
         </tr>
-
+    </thead>
+    <tbody>
         <?php
         if ($result->num_rows > 0) {
-            // Salida de datos para cada fila
+            // Output de cada fila
             while($row = $result->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>" . $row["id"] . "</td>";
                 echo "<td>" . $row["macroproceso"] . "</td>";
                 echo "<td>" . $row["proceso"] . "</td>";
-                echo "<td>" . $row["usuarios"] . "</td>";
-                echo "<td>" . $row["cargos"] . "</td>";
+                echo "<td>" . $row["usuario"] . "</td>";
+                echo "<td>" . $row["cargo"] . "</td>";
                 echo "<td>" . $row["email"] . "</td>";
                 echo "<td>" . $row["rol"] . "</td>";
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='7'>No se encontraron resultados</td></tr>";
+            echo "<tr><td colspan='7'>No hay datos disponibles</td></tr>";
         }
-        $conn->close();
         ?>
+    </tbody>
+</table>
 
-    </table>
 </body>
 </html>
+
+<?php
+// Cerrar conexión
+$conn->close();
+?>
