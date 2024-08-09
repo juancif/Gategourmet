@@ -8,6 +8,9 @@ http://localhost/GateGourmet/login_prueba/login/login2.php
 http://localhost/GateGourmet/login/login3.php
 http://localhost/GateGourmet/login_prueba/login/login_admin.php
 
+reestablecer:
+http://localhost/GateGourmet/restablecer/restablecer.php
+
 Gestor de usuarios:
 http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php
 http://localhost/GateGourmet/Gestor_usuarios/add_gestor.php

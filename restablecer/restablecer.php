@@ -86,7 +86,7 @@ if (isset($_POST['token']) && isset($_POST['password'])) {
                 <h2>Restablecer Contraseña</h2>
                 <form method="post" action="">
                     <div class="input-group">
-                        <label for="email">Correo Electrónico</label>
+                        <label for="email" class="texto_correo">Correo Electrónico</label>
                         <div class="input-icon">
                             <i class="fas fa-envelope"></i>
                             <input type="email" id="email" name="email" required placeholder="Correo Electrónico"/>
@@ -94,6 +94,7 @@ if (isset($_POST['token']) && isset($_POST['password'])) {
                     </div>
                     <div class="buttons">
                         <input type="submit" value="Enviar Enlace de Restablecimiento">
+                        <a href="http://localhost/GateGourmet/login/login3.php" class="link_volver"><button class="boton_volver">Volver</a></button>
                     </div>
                 </form>
             </div>

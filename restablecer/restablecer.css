@@ -43,7 +43,8 @@ body {
     background: #1117;
     backdrop-filter: blur(10px);
     text-align: center;
-    padding: 40px;
+    padding: 50px;
+    padding-bottom: 90px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
     max-width: 400px;
@@ -74,8 +75,8 @@ h2 {
 
 .input-icon i {
     position: absolute;
-    left: 10px;
-    top: 50%;
+    left: 20px;
+    top: 45%;
     transform: translateY(-50%);
     color: #999;
 }
@@ -84,6 +85,7 @@ input[type="email"] {
     width: calc(100% - 20px);
     padding: 12px 10px 12px 35px;
     margin-bottom: 5px;
+    margin-left: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 15px;
@@ -97,6 +99,10 @@ input[type="email"]:focus {
     outline: none;
 }
 
+.texto_correo{
+    margin-left: 10px;
+}
+
 .buttons {
     display: flex;
     justify-content: center;
@@ -104,7 +110,7 @@ input[type="email"]:focus {
     margin-top: 20px;
 }
 
-input[type="submit"] {
+input[type="submit"], .boton_volver{
     background: #3d9970; /* Verde oliva */
     color: white;
     font-family: 'Poppins', sans-serif;
@@ -115,17 +121,30 @@ input[type="submit"] {
     cursor: pointer;
     text-decoration: none;
     text-align: center;
-    margin-left: -21px;
+    margin-left: -5px;
     transition: background 0.3s ease, transform 0.3s ease;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover, .boton_volver:hover  {
     background: #2d6e50; /* Verde oliva más oscuro */
     transform: scale(1.05);
 }
 
-input[type="submit"]:active {
+input[type="submit"]:active, .boton_volver:active {
     transform: scale(1);
+}
+
+.boton_volver {
+    position: absolute;
+    margin-top: 70px;
+}
+
+.link_volver{
+    text-decoration: none;
+    color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+
 }
 
 .footer {
@@ -133,6 +152,8 @@ input[type="submit"]:active {
     backdrop-filter: blur(10px);
     text-align: center;
     padding: 10px;
+    padding-bottom: 30px;
+    padding-top: 30px;
     color: #fff;
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -140,7 +161,8 @@ input[type="submit"]:active {
 .footer a {
     color: #fff;
     text-decoration: none;
-    margin: 0 10px;
+    margin: 0px 10px;
+    margin-top: -50px;
 }
 
 .footer a:hover {
