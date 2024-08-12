@@ -108,3 +108,23 @@ tr:hover td {
         color: #333; /* Color del texto en dispositivos móviles */
     }
 }
+
+/* Asegura que todas las letras sean negras */
+table, th, td {
+    color: #000000; /* Negro para todo el texto */
+}
+
+/* Color para documentos desactualizados */
+tr.desactualizado td {
+    background-color: #d13a3a; /* Rojo claro */
+}
+
+/* Color para documentos próximos a ser desactualizados */
+tr.proximo-desactualizar td {
+    background-color: #e7bd32; /* Amarillo claro */
+}
+
+/* Color para documentos vigentes */
+tr.vigente td {
+    background-color: #32db5a; /* Verde claro */
+}

@@ -49,6 +49,12 @@ echo '<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado Maestro</title>
     <link rel="stylesheet" href="listado_maestro.css"> <!-- Enlaza un archivo CSS externo -->
+    <style>
+        /* Estilos para los diferentes estados */
+        .vigente { background-color: green; color: white; }
+        .proximo-desactualizar { background-color: yellow; color: black; }
+        .desactualizado { background-color: red; color: white; }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -88,7 +94,23 @@ if ($result->num_rows > 0) {
                     <tbody>';
 
     while($row = $result->fetch_assoc()) {
-        echo '<tr>
+        // Convertir la fecha de vigencia a un objeto DateTime
+        $fecha_vigencia = new DateTime($row["fecha_de_vigencia"]);
+        $fecha_actual = new DateTime();
+
+        // Calcular la diferencia en días
+        $diferencia = $fecha_actual->diff($fecha_vigencia)->days;
+
+        // Determinar la clase CSS basada en la comparación de fechas
+        if ($fecha_actual > $fecha_vigencia) {
+            $clase = 'desactualizado'; // Documento desactualizado (rojo)
+        } elseif ($diferencia <= 30) {
+            $clase = 'proximo-desactualizar'; // Próximo a ser desactualizado (amarillo)
+        } else {
+            $clase = 'vigente'; // Documento vigente (verde)
+        }
+
+        echo '<tr class="' . $clase . '">
                 <td>' . htmlspecialchars($row["proceso"]) . '</td>
                 <td>' . htmlspecialchars($row["codigo"]) . '</td>
                 <td>' . htmlspecialchars($row["titulo_documento"]) . '</td>
