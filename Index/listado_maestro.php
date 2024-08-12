@@ -51,9 +51,9 @@ echo '<!DOCTYPE html>
     <link rel="stylesheet" href="listado_maestro.css"> <!-- Enlaza un archivo CSS externo -->
     <style>
         /* Estilos para los diferentes estados */
-        .vigente { background-color: green; color: white; }
-        .proximo-desactualizar { background-color: yellow; color: black; }
-        .desactualizado { background-color: red; color: white; }
+        .vigente { background-color: #32db5a; color: white; } /* Verde claro */
+        .proximo-desactualizar { background-color: #e7bd32; color: black; } /* Amarillo claro */
+        .desactualizado { background-color: #d13a3a; color: white; } /* Rojo claro */
     </style>
 </head>
 <body>
@@ -101,10 +101,10 @@ if ($result->num_rows > 0) {
         // Calcular la diferencia en días
         $diferencia = $fecha_actual->diff($fecha_vigencia)->days;
 
-        // Determinar la clase CSS basada en la comparación de fechas
-        if ($fecha_actual > $fecha_vigencia) {
+        // Determinar la clase CSS basada en la comparación de fechas y estado del documento
+        if ($fecha_actual > $fecha_vigencia || strtolower($row["estado"]) == 'obsoleto') {
             $clase = 'desactualizado'; // Documento desactualizado (rojo)
-        } elseif ($diferencia <= 30) {
+        } elseif ($diferencia <= 10) {
             $clase = 'proximo-desactualizar'; // Próximo a ser desactualizado (amarillo)
         } else {
             $clase = 'vigente'; // Documento vigente (verde)
