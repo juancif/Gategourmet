@@ -13,7 +13,13 @@ if ($conn->connect_error) {
     die("La conexión falló: " . $conn->connect_error);
 }
 
-// Consultar datos
+// Procesar la barra de búsqueda
+$searchTerm = '';
+if (isset($_POST['search'])) {
+    $searchTerm = $_POST['search'];
+}
+
+// Consultar datos con filtro de búsqueda
 $sql = "SELECT 
             proceso, 
             codigo, 
@@ -39,6 +45,32 @@ $sql = "SELECT
             en_actualizacion 
         FROM listado_maestro";
 
+if (!empty($searchTerm)) {
+    $sql .= " WHERE 
+                proceso LIKE '%$searchTerm%' OR 
+                codigo LIKE '%$searchTerm%' OR 
+                titulo_documento LIKE '%$searchTerm%' OR 
+                tipo LIKE '%$searchTerm%' OR 
+                version LIKE '%$searchTerm%' OR 
+                estado LIKE '%$searchTerm%' OR 
+                fecha_aprobacion LIKE '%$searchTerm%' OR 
+                areas LIKE '%$searchTerm%' OR 
+                motivo_del_cambio LIKE '%$searchTerm%' OR 
+                tiempo_de_retencion LIKE '%$searchTerm%' OR 
+                responsable_de_retencion LIKE '%$searchTerm%' OR 
+                lugar_de_almacenamiento_fisico LIKE '%$searchTerm%' OR 
+                lugar_de_almacenamiento_magnetico LIKE '%$searchTerm%' OR 
+                conservacion LIKE '%$searchTerm%' OR 
+                disposicion_final LIKE '%$searchTerm%' OR 
+                copias_controladas LIKE '%$searchTerm%' OR 
+                fecha_de_vigencia LIKE '%$searchTerm%' OR 
+                dias LIKE '%$searchTerm%' OR 
+                senal_alerta LIKE '%$searchTerm%' OR 
+                obsoleto LIKE '%$searchTerm%' OR 
+                anulado LIKE '%$searchTerm%' OR 
+                en_actualizacion LIKE '%$searchTerm%'";
+}
+
 $result = $conn->query($sql);
 
 // Iniciar salida de HTML
@@ -54,12 +86,43 @@ echo '<!DOCTYPE html>
         .vigente { background-color: #32db5a; color: white; } /* Verde claro */
         .proximo-desactualizar { background-color: #e7bd32; color: black; } /* Amarillo claro */
         .desactualizado { background-color: #d13a3a; color: white; } /* Rojo claro */
+        .search-bar {
+            margin: 20px auto;
+            max-width: 600px;
+            display: flex;
+            justify-content: center;
+
+        }
+        .search-bar input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+        .search-bar input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #0b8b0f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <header class="header">
         <h1>LISTADO MAESTRO</h1>
-    </header>';
+    </header>
+
+    <div class="search-bar">
+        <form method="post" action="">
+            <input type="text" name="search" placeholder="Buscar..." value="' . htmlspecialchars($searchTerm) . '">
+            <input type="submit" value="Buscar">
+        </form>
+    </div>';
 
 if ($result->num_rows > 0) {
     echo '<div class="container">
@@ -110,6 +173,7 @@ if ($result->num_rows > 0) {
             $clase = 'vigente'; // Documento vigente (verde)
         }
 
+        // Imprimir cada fila de la tabla con su clase CSS correspondiente
         echo '<tr class="' . $clase . '">
                 <td>' . htmlspecialchars($row["proceso"]) . '</td>
                 <td>' . htmlspecialchars($row["codigo"]) . '</td>
@@ -130,9 +194,9 @@ if ($result->num_rows > 0) {
                 <td>' . htmlspecialchars($row["fecha_de_vigencia"]) . '</td>
                 <td>' . htmlspecialchars($row["dias"]) . '</td>
                 <td>' . htmlspecialchars($row["senal_alerta"]) . '</td>
-                <td>' . ($row["obsoleto"] ? 'Sí' : 'No') . '</td>
-                <td>' . ($row["anulado"] ? 'Sí' : 'No') . '</td>
-                <td>' . ($row["en_actualizacion"] ? 'Sí' : 'No') . '</td>
+                <td>' . ($row["obsoleto"] ? "Sí" : "No") . '</td>
+                <td>' . ($row["anulado"] ? "Sí" : "No") . '</td>
+                <td>' . ($row["en_actualizacion"] ? "Sí" : "No") . '</td>
               </tr>';
     }
 
