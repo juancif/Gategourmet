@@ -47,31 +47,46 @@ $sql = "SELECT
 
 if (!empty($searchTerm)) {
     $sql .= " WHERE 
-                proceso LIKE '%$searchTerm%' OR 
-                codigo LIKE '%$searchTerm%' OR 
-                titulo_documento LIKE '%$searchTerm%' OR 
-                tipo LIKE '%$searchTerm%' OR 
-                version LIKE '%$searchTerm%' OR 
-                estado LIKE '%$searchTerm%' OR 
-                fecha_aprobacion LIKE '%$searchTerm%' OR 
-                areas LIKE '%$searchTerm%' OR 
-                motivo_del_cambio LIKE '%$searchTerm%' OR 
-                tiempo_de_retencion LIKE '%$searchTerm%' OR 
-                responsable_de_retencion LIKE '%$searchTerm%' OR 
-                lugar_de_almacenamiento_fisico LIKE '%$searchTerm%' OR 
-                lugar_de_almacenamiento_magnetico LIKE '%$searchTerm%' OR 
-                conservacion LIKE '%$searchTerm%' OR 
-                disposicion_final LIKE '%$searchTerm%' OR 
-                copias_controladas LIKE '%$searchTerm%' OR 
-                fecha_de_vigencia LIKE '%$searchTerm%' OR 
-                dias LIKE '%$searchTerm%' OR 
-                senal_alerta LIKE '%$searchTerm%' OR 
-                obsoleto LIKE '%$searchTerm%' OR 
-                anulado LIKE '%$searchTerm%' OR 
-                en_actualizacion LIKE '%$searchTerm%'";
+                proceso LIKE ? OR 
+                codigo LIKE ? OR 
+                titulo_documento LIKE ? OR 
+                tipo LIKE ? OR 
+                version LIKE ? OR 
+                estado LIKE ? OR 
+                fecha_aprobacion LIKE ? OR 
+                areas LIKE ? OR 
+                motivo_del_cambio LIKE ? OR 
+                tiempo_de_retencion LIKE ? OR 
+                responsable_de_retencion LIKE ? OR 
+                lugar_de_almacenamiento_fisico LIKE ? OR 
+                lugar_de_almacenamiento_magnetico LIKE ? OR 
+                conservacion LIKE ? OR 
+                disposicion_final LIKE ? OR 
+                copias_controladas LIKE ? OR 
+                fecha_de_vigencia LIKE ? OR 
+                dias LIKE ? OR 
+                senal_alerta LIKE ? OR 
+                obsoleto LIKE ? OR 
+                anulado LIKE ? OR 
+                en_actualizacion LIKE ?";
 }
 
-$result = $conn->query($sql);
+$stmt = $conn->prepare($sql);
+
+if (!empty($searchTerm)) {
+    $searchTerm = "%$searchTerm%";
+    $stmt->bind_param(
+        'ssssssssssssssssssssss', 
+        $searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm, 
+        $searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm, 
+        $searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm, 
+        $searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm, 
+        $searchTerm, $searchTerm
+    );
+}
+
+$stmt->execute();
+$result = $stmt->get_result();
 
 // Iniciar salida de HTML
 echo '<!DOCTYPE html>
@@ -81,36 +96,6 @@ echo '<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado Maestro</title>
     <link rel="stylesheet" href="listado_maestro.css"> <!-- Enlaza un archivo CSS externo -->
-    <style>
-        /* Estilos para los diferentes estados */
-        .vigente { background-color: #32db5a; color: white; } /* Verde claro */
-        .proximo-desactualizar { background-color: #e7bd32; color: black; } /* Amarillo claro */
-        .desactualizado { background-color: #d13a3a; color: white; } /* Rojo claro */
-        .search-bar {
-            margin: 20px auto;
-            max-width: 600px;
-            display: flex;
-            justify-content: center;
-
-        }
-        .search-bar input[type="text"] {
-            width: 80%;
-            padding: 10px;
-            font-size: 16px;
-            border: 2px solid #ccc;
-            border-radius: 4px;
-        }
-        .search-bar input[type="submit"] {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #0b8b0f;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            margin-left: 10px;
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body>
     <header class="header">
@@ -118,10 +103,7 @@ echo '<!DOCTYPE html>
     </header>
 
     <div class="search-bar">
-        <form method="post" action="">
-            <input type="text" name="search" placeholder="Buscar..." value="' . htmlspecialchars($searchTerm) . '">
-            <input type="submit" value="Buscar">
-        </form>
+   
     </div>';
 
 if ($result->num_rows > 0) {
@@ -156,7 +138,7 @@ if ($result->num_rows > 0) {
                     </thead>
                     <tbody>';
 
-    while($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch_assoc()) {
         // Convertir la fecha de vigencia a un objeto DateTime
         $fecha_vigencia = new DateTime($row["fecha_de_vigencia"]);
         $fecha_actual = new DateTime();
@@ -164,13 +146,13 @@ if ($result->num_rows > 0) {
         // Calcular la diferencia en días
         $diferencia = $fecha_actual->diff($fecha_vigencia)->days;
 
-        // Determinar la clase CSS basada en la comparación de fechas y estado del documento
+        // Asignar la clase CSS según la fecha de vigencia y el estado
         if ($fecha_actual > $fecha_vigencia || strtolower($row["estado"]) == 'obsoleto') {
-            $clase = 'desactualizado'; // Documento desactualizado (rojo)
+            $clase = 'obsoleto'; // Documento obsoleto (gris)
         } elseif ($diferencia <= 10) {
-            $clase = 'proximo-desactualizar'; // Próximo a ser desactualizado (amarillo)
+            $clase = 'desactualizado'; // Documento desactualizado (rojo)
         } else {
-            $clase = 'vigente'; // Documento vigente (verde)
+            $clase = 'vigente'; // Documento vigente (azul)
         }
 
         // Imprimir cada fila de la tabla con su clase CSS correspondiente

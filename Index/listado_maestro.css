@@ -110,3 +110,19 @@ tr:hover td {
     }
 }
 
+/* Estilos corregidos y específicos para filas con clases especiales */
+tr.vigente td {
+    background-color: blue; /* Color azul para vigente */
+    color: white; /* Texto blanco para contraste */
+}
+
+tr.desactualizado td {
+    background-color: red; /* Color rojo para desactualizado */
+    color: white; /* Texto blanco para contraste */
+}
+
+tr.obsoleto td {
+    background-color: gray; /* Color gris para obsoleto */
+    color: white; /* Texto blanco para contraste */
+}
+
