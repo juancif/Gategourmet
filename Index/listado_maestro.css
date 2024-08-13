@@ -37,7 +37,7 @@ body {
     border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más prominente */
     position: relative;
-    margin-top: -50px;
+    margin-top: -30px;
 }
 
 .table-wrapper {
@@ -124,4 +124,45 @@ tr.desactualizado td {
 tr.obsoleto td {
     background-color: gray; /* Color gris para obsoleto */
     color: white; /* Texto blanco para contraste */
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem; /* Añadir margen inferior para espacio entre la barra y la tabla */
+}
+
+.search-bar form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.8); /* Fondo translúcido para la barra de búsqueda */
+    padding: 0.5rem 1rem; /* Espacio alrededor de la barra */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para destacar */
+    margin-top: -50px;
+}
+
+.search-bar input[type="text"] {
+    width: 300px; /* Ancho fijo para el campo de búsqueda */
+    padding: 0.5rem;
+    border: 2px solid #0b8b0f; /* Borde verde oscuro */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 1rem;
+    margin-right: 0.5rem; /* Espacio entre el campo de texto y el botón */
+}
+
+.search-bar button {
+    padding: 0.5rem 1rem;
+    background-color: #0b8b0f; /* Color de fondo verde oscuro para el botón */
+    color: white; /* Texto blanco para contraste */
+    border: none;
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transición suave al hacer hover */
+}
+
+.search-bar button:hover {
+    background-color: #09700b; /* Color de fondo más oscuro al pasar el ratón */
 }

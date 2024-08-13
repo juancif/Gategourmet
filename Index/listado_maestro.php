@@ -104,7 +104,7 @@ $result = $stmt->get_result();
 
     <div class="search-bar">
         <form method="post">
-            <input type="text" name="search" placeholder="Buscar..." value="<?php echo htmlspecialchars($searchTerm); ?>">
+            <input type="text" name="search" placeholder="Buscar documentos..." value="<?php echo htmlspecialchars($searchTerm); ?>">
             <button type="submit">Buscar</button>
         </form>
     </div>
