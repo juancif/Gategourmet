@@ -71,9 +71,9 @@ CREATE TABLE listado_maestro (
     fecha_de_vigencia DATE,
     dias INT,
     senal_alerta VARCHAR(50),
-    obsoleto TINYINT(1),
-    anulado TINYINT(1),
-    en_actualizacion TINYINT(1)
+    obsoleto VARCHAR(50),
+    anulado VARCHAR(50),
+    en_actualizacion VARCHAR(50)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 
@@ -113,7 +113,7 @@ CREATE TABLE procesos (
 );
 
 
-LOAD DATA LOCAL INFILE 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro1.csv'
+LOAD DATA LOCAL INFILE 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro4.csv'
 INTO TABLE procesos
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'

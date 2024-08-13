@@ -63,6 +63,7 @@ th, td {
     padding: 12px; /* Espacio interior aumentado */
     text-align: left;
     font-size: 14px; /* Tamaño de fuente ajustado */
+    color: #000;
 }
 
 th {
@@ -108,3 +109,20 @@ tr:hover td {
         color: #333; /* Color del texto en dispositivos móviles */
     }
 }
+
+/* Estilos corregidos y específicos para filas con clases especiales */
+tr.vigente td {
+    background-color: blue; /* Color azul para vigente */
+    color: white; /* Texto blanco para contraste */
+}
+
+tr.desactualizado td {
+    background-color: red; /* Color rojo para desactualizado */
+    color: white; /* Texto blanco para contraste */
+}
+
+tr.obsoleto td {
+    background-color: gray; /* Color gris para obsoleto */
+    color: white; /* Texto blanco para contraste */
+}
+
