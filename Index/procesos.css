@@ -15,34 +15,34 @@ header {
 }
 
 header h1 {
-    font-size: 2.5rem; /* Tamaño de fuente ajustado */
-    color: #0b8b0f; /* Color verde oscuro para el título */
-    background: rgba(255, 249, 249, 0.9); /* Fondo ligeramente translúcido */
+    font-size: 2.5rem;
+    color: #0b8b0f;
+    background: rgba(255, 249, 249, 0.9);
     display: inline-block;
-    padding: 1rem 2rem; /* Espacio alrededor del título */
+    padding: 1rem 2rem;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más prominente */
-    margin: 0; /* Elimina el margen adicional */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 0;
 }
 
 .container {
     width: 90%;
-    max-width: 1800px; /* Ancho máximo del contenedor */
+    max-width: 1800px;
     margin: 0 auto;
     background: rgba(255, 249, 249, 0.8);
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
-    position: relative; /* Necesario para el contenedor de la tabla */
+    position: relative;
     margin-top: -20px;
 }
 
 .table-wrapper {
     overflow-x: auto;
-    overflow-y: auto; /* Asegura el desplazamiento vertical */
-    max-height: calc(100vh - 6rem); /* Ajusta la altura del contenedor para dejar espacio para el título y márgenes */
-    border: 2px solid #000; /* Borde alrededor del contenedor de la tabla */
-    padding-bottom: 1rem; /* Espacio para la barra de desplazamiento horizontal */
+    overflow-y: auto;
+    max-height: calc(100vh - 6rem);
+    border: 2px solid #000;
+    padding-bottom: 1rem;
 }
 
 table {
@@ -52,7 +52,7 @@ table {
 }
 
 table, th, td {
-    border: 2px solid #000; /* Borde oscuro para destacar las cuadrículas */
+    border: 2px solid #000;
     background: rgba(255, 249, 249, 0.8);
 }
 
@@ -62,16 +62,28 @@ th, td {
 }
 
 th {
-    background-color: #0b8b0f; /* Color de fondo del encabezado */
+    background-color: #0b8b0f;
     color: white;
 }
 
 tr:nth-child(even) {
-    background: rgba(255, 249, 249, 0.9); /* Color de fondo más claro para filas pares */
+    background: rgba(255, 249, 249, 0.9);
 }
 
 tr:hover td {
-    background-color: rgba(0, 0, 0, 0.1); /* Fondo más oscuro en hover */
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.yellow-background td:nth-child(2), .yellow-background td:nth-child(3) {
+    background-color: #ffff00; /* Amarillo */
+}
+
+.red-background td:nth-child(2), .red-background td:nth-child(3) {
+    background-color: #ff0000; /* Rojo */
+}
+
+.green-background td:nth-child(2), .green-background td:nth-child(3) {
+    background-color: #00ff00; /* Verde */
 }
 
 @media (max-width: 768px) {

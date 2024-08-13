@@ -87,9 +87,9 @@ if (!empty($searchTerm)) {
 
 $stmt->execute();
 $result = $stmt->get_result();
+?>
 
-// Iniciar salida de HTML
-echo '<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -103,11 +103,14 @@ echo '<!DOCTYPE html>
     </header>
 
     <div class="search-bar">
-   
-    </div>';
+        <form method="post">
+            <input type="text" name="search" placeholder="Buscar..." value="<?php echo htmlspecialchars($searchTerm); ?>">
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
 
-if ($result->num_rows > 0) {
-    echo '<div class="container">
+    <?php if ($result->num_rows > 0): ?>
+        <div class="container">
             <div class="table-wrapper">
                 <table>
                     <thead>
@@ -136,63 +139,59 @@ if ($result->num_rows > 0) {
                             <th>En Actualización</th>
                         </tr>
                     </thead>
-                    <tbody>';
+                    <tbody>
+                        <?php while ($row = $result->fetch_assoc()): ?>
+                            <?php
+                            // Convertir la fecha de vigencia a un objeto DateTime
+                            $fecha_vigencia = new DateTime($row["fecha_de_vigencia"]);
+                            $fecha_actual = new DateTime();
 
-    while ($row = $result->fetch_assoc()) {
-        // Convertir la fecha de vigencia a un objeto DateTime
-        $fecha_vigencia = new DateTime($row["fecha_de_vigencia"]);
-        $fecha_actual = new DateTime();
+                            // Calcular la diferencia en días
+                            $diferencia = $fecha_actual->diff($fecha_vigencia)->days;
 
-        // Calcular la diferencia en días
-        $diferencia = $fecha_actual->diff($fecha_vigencia)->days;
+                            // Asignar la clase CSS según la fecha de vigencia y el estado
+                            if ($fecha_actual > $fecha_vigencia || strtolower($row["estado"]) == 'obsoleto') {
+                                $clase = 'obsoleto'; // Documento obsoleto (gris)
+                            } elseif ($diferencia <= 10) {
+                                $clase = 'desactualizado'; // Documento desactualizado (rojo)
+                            } else {
+                                $clase = 'vigente'; // Documento vigente (azul)
+                            }
+                            ?>
+                            <tr class="<?php echo $clase; ?>">
+                                <td><?php echo htmlspecialchars($row["proceso"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["codigo"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["titulo_documento"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["tipo"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["version"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["estado"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["fecha_aprobacion"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["areas"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["motivo_del_cambio"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["tiempo_de_retencion"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["responsable_de_retencion"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["lugar_de_almacenamiento_fisico"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["lugar_de_almacenamiento_magnetico"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["conservacion"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["disposicion_final"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["copias_controladas"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["fecha_de_vigencia"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["dias"]); ?></td>
+                                <td><?php echo htmlspecialchars($row["senal_alerta"]); ?></td>
+                                <td><?php echo ($row["obsoleto"] ? "Sí" : "No"); ?></td>
+                                <td><?php echo ($row["anulado"] ? "Sí" : "No"); ?></td>
+                                <td><?php echo ($row["en_actualizacion"] ? "Sí" : "No"); ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <?php else: ?>
+        <div class="container"><p>No se encontraron resultados.</p></div>
+    <?php endif; ?>
 
-        // Asignar la clase CSS según la fecha de vigencia y el estado
-        if ($fecha_actual > $fecha_vigencia || strtolower($row["estado"]) == 'obsoleto') {
-            $clase = 'obsoleto'; // Documento obsoleto (gris)
-        } elseif ($diferencia <= 10) {
-            $clase = 'desactualizado'; // Documento desactualizado (rojo)
-        } else {
-            $clase = 'vigente'; // Documento vigente (azul)
-        }
+    <?php $conn->close(); ?>
 
-        // Imprimir cada fila de la tabla con su clase CSS correspondiente
-        echo '<tr class="' . $clase . '">
-                <td>' . htmlspecialchars($row["proceso"]) . '</td>
-                <td>' . htmlspecialchars($row["codigo"]) . '</td>
-                <td>' . htmlspecialchars($row["titulo_documento"]) . '</td>
-                <td>' . htmlspecialchars($row["tipo"]) . '</td>
-                <td>' . htmlspecialchars($row["version"]) . '</td>
-                <td>' . htmlspecialchars($row["estado"]) . '</td>
-                <td>' . htmlspecialchars($row["fecha_aprobacion"]) . '</td>
-                <td>' . htmlspecialchars($row["areas"]) . '</td>
-                <td>' . htmlspecialchars($row["motivo_del_cambio"]) . '</td>
-                <td>' . htmlspecialchars($row["tiempo_de_retencion"]) . '</td>
-                <td>' . htmlspecialchars($row["responsable_de_retencion"]) . '</td>
-                <td>' . htmlspecialchars($row["lugar_de_almacenamiento_fisico"]) . '</td>
-                <td>' . htmlspecialchars($row["lugar_de_almacenamiento_magnetico"]) . '</td>
-                <td>' . htmlspecialchars($row["conservacion"]) . '</td>
-                <td>' . htmlspecialchars($row["disposicion_final"]) . '</td>
-                <td>' . htmlspecialchars($row["copias_controladas"]) . '</td>
-                <td>' . htmlspecialchars($row["fecha_de_vigencia"]) . '</td>
-                <td>' . htmlspecialchars($row["dias"]) . '</td>
-                <td>' . htmlspecialchars($row["senal_alerta"]) . '</td>
-                <td>' . ($row["obsoleto"] ? "Sí" : "No") . '</td>
-                <td>' . ($row["anulado"] ? "Sí" : "No") . '</td>
-                <td>' . ($row["en_actualizacion"] ? "Sí" : "No") . '</td>
-              </tr>';
-    }
-
-    echo '</tbody>
-        </table>
-    </div>
-</div>';
-} else {
-    echo '<div class="container"><p>No se encontraron resultados.</p></div>';
-}
-
-// Cerrar conexión
-$conn->close();
-
-echo '</body>
-</html>';
-?>
+</body>
+</html>

@@ -16,6 +16,32 @@ if ($conn->connect_error) {
 // Consulta SQL para obtener los datos
 $sql = "SELECT id, macroproceso, proceso, usuario, cargo, email, rol FROM procesos";
 $result = $conn->query($sql);
+
+// Obtener el color según el macroproceso
+function obtenerColor($macroproceso) {
+    switch ($macroproceso) {
+        case 'GESTION CORPORATIVA':
+        case 'COMPLIANCE':
+            return 'yellow-background';
+        case 'SUPPLY CHAIN':
+        case 'CULINARY EXCELLENCE':
+        case 'SERVICE DELIVERY':
+        case 'ASSEMBLY':
+        case 'SERVICIOS INSTITUCIONALES':
+            return 'red-background';
+        case 'FINANCIERA':
+        case 'COSTOS':
+        case 'COMUNICACIONES':
+        case 'TECNOLOGÍA DE LA INFORMACIÓN':
+        case 'TALENTO HUMANO':
+        case 'MANTENIMIENTO':
+        case 'SERVICIO AL CLIENTE':
+        case 'SECURITY':
+            return 'green-background';
+        default:
+            return '';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +75,9 @@ $result = $conn->query($sql);
                     <?php
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            echo "<tr>";
+                            // Obtener la clase de color según el macroproceso
+                            $colorClass = obtenerColor($row['macroproceso']);
+                            echo "<tr class='$colorClass'>"; // Agregamos la clase de color a la etiqueta <tr>
                             echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
                             echo "<td>" . htmlspecialchars($row["macroproceso"]) . "</td>";
                             echo "<td>" . htmlspecialchars($row["proceso"]) . "</td>";
@@ -68,10 +96,9 @@ $result = $conn->query($sql);
         </section>
     </main>
 
-    <?php
-    // Cerrar conexión
-    $conn->close();
-    ?>
-
+<?php
+// Cerrar conexión
+$conn->close();
+?>
 </body>
 </html>
