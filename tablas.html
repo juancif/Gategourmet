@@ -94,7 +94,10 @@ CREATE TABLE password_resets (
     FOREIGN KEY (email) REFERENCES usuarios(correo)
 );
 
-LOAD DATA INFILE 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro6.csv'
+
+<!-- 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro6.csv' -->
+
+LOAD DATA INFILE 'C:/xampp/htdocs/Gategourmet/documentos/Libro6.csv'
 INTO TABLE listado_maestro
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
@@ -112,8 +115,9 @@ CREATE TABLE procesos (
     rol VARCHAR(255)
 );
 
+<!-- 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro4.csv' -->
 
-LOAD DATA LOCAL INFILE 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro4.csv'
+LOAD DATA LOCAL INFILE 'C:/xampp/htdocs/Gategourmet/documentos/Libro1.csv'
 INTO TABLE procesos
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
