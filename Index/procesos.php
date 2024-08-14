@@ -22,13 +22,13 @@ function obtenerColor($macroproceso) {
     switch ($macroproceso) {
         case 'GESTION CORPORATIVA':
         case 'COMPLIANCE':
-            return 'yellow-background';
+            return 'yellow-background'; // Clase CSS para amarillo
         case 'SUPPLY CHAIN':
         case 'CULINARY EXCELLENCE':
         case 'SERVICE DELIVERY':
         case 'ASSEMBLY':
         case 'SERVICIOS INSTITUCIONALES':
-            return 'red-background';
+            return 'red-background'; // Clase CSS para rojo
         case 'FINANCIERA':
         case 'COSTOS':
         case 'COMUNICACIONES':
@@ -37,9 +37,9 @@ function obtenerColor($macroproceso) {
         case 'MANTENIMIENTO':
         case 'SERVICIO AL CLIENTE':
         case 'SECURITY':
-            return 'green-background';
+            return 'green-background'; // Clase CSS para verde
         default:
-            return '';
+            return ''; // Sin color
     }
 }
 ?>
@@ -51,6 +51,8 @@ function obtenerColor($macroproceso) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado de Procesos</title>
     <link rel="stylesheet" href="procesos.css">
+    <link rel="icon" href="/ruta/al/favicon.ico" type="image/x-icon">
+
 </head>
 <body>
     <header>
@@ -59,40 +61,43 @@ function obtenerColor($macroproceso) {
 
     <main>
         <section class="container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Macroproceso</th>
-                        <th>Proceso</th>
-                        <th>Usuario</th>
-                        <th>Cargo</th>
-                        <th>Email</th>
-                        <th>Rol</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            // Obtener la clase de color según el macroproceso
-                            $colorClass = obtenerColor($row['macroproceso']);
-                            echo "<tr class='$colorClass'>"; // Agregamos la clase de color a la etiqueta <tr>
-                            echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
-                            echo "<td>" . htmlspecialchars($row["macroproceso"]) . "</td>";
-                            echo "<td>" . htmlspecialchars($row["proceso"]) . "</td>";
-                            echo "<td>" . htmlspecialchars($row["usuario"]) . "</td>";
-                            echo "<td>" . htmlspecialchars($row["cargo"]) . "</td>";
-                            echo "<td>" . htmlspecialchars($row["email"]) . "</td>";
-                            echo "<td>" . htmlspecialchars($row["rol"]) . "</td>";
-                            echo "</tr>";
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Macroproceso</th>
+                            <th>Proceso</th>
+                            <th>Usuario</th>
+                            <th>Cargo</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                // Obtener la clase de color según el macroproceso
+                                $colorClass = obtenerColor($row['macroproceso']);
+                                echo "<tr>";
+                                echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
+                                // Solo colorear las celdas de Macroproceso y Proceso usando la clase CSS
+                                echo "<td class='$colorClass'>" . htmlspecialchars($row["macroproceso"]) . "</td>";
+                                echo "<td class='$colorClass'>" . htmlspecialchars($row["proceso"]) . "</td>";
+                                echo "<td>" . htmlspecialchars($row["usuario"]) . "</td>";
+                                echo "<td>" . htmlspecialchars($row["cargo"]) . "</td>";
+                                echo "<td>" . htmlspecialchars($row["email"]) . "</td>";
+                                echo "<td>" . htmlspecialchars($row["rol"]) . "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='7'>No hay datos disponibles</td></tr>";
                         }
-                    } else {
-                        echo "<tr><td colspan='7'>No hay datos disponibles</td></tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </section>
     </main>
 

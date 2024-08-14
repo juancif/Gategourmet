@@ -74,17 +74,18 @@ tr:hover td {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-.yellow-background td:nth-child(2), .yellow-background td:nth-child(3) {
+.yellow-background {
     background-color: #ffff00; /* Amarillo */
 }
 
-.red-background td:nth-child(2), .red-background td:nth-child(3) {
+.red-background {
     background-color: #ff0000; /* Rojo */
 }
 
-.green-background td:nth-child(2), .green-background td:nth-child(3) {
+.green-background {
     background-color: #00ff00; /* Verde */
 }
+
 
 @media (max-width: 768px) {
     table, th, td {
