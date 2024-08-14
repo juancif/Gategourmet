@@ -182,22 +182,20 @@ $result = $stmt->get_result();
         }
 
         /* Estilos para filas con clases especiales */
-        /* Estilos para filas con clases especiales */
         tr.vigente td {
-    background-color: rgba(51, 187, 255, 0.4); /* Azul claro con transparencia */
-    color: #000; /* Texto negro para contraste */
-}
+            background-color: rgba(51, 187, 255, 0.4); /* Azul claro con transparencia */
+            color: #000; /* Texto negro para contraste */
+        }
 
-tr.desactualizado td {
-    background-color: rgba(247, 86, 86, 0.4); /* Rojo claro con transparencia */
-    color: #000; /* Texto negro para contraste */
-}
+        tr.desactualizado td {
+            background-color: rgba(247, 86, 86, 0.4); /* Rojo claro con transparencia */
+            color: #000; /* Texto negro para contraste */
+        }
 
-tr.obsoleto td {
-    background-color: rgba(151, 151, 151, 0.4); /* Gris claro con transparencia */
-    color: #000; /* Texto negro para contraste */
-}
-
+        tr.obsoleto td {
+            background-color: rgba(151, 151, 151, 0.4); /* Gris claro con transparencia */
+            color: #000; /* Texto negro para contraste */
+        }
 
         .search-bar {
             display: flex;
@@ -312,7 +310,6 @@ tr.obsoleto td {
                             $fecha_vigencia = strtotime($row['fecha_de_vigencia']);
                             $hoy = strtotime(date('Y-m-d'));
 
-                            
                             if (strtolower($row['estado']) == 'vigente') {
                                 $rowClass = 'vigente';
                             } elseif (strtolower($row['estado']) == 'desactualizado') {
@@ -320,34 +317,35 @@ tr.obsoleto td {
                             } elseif (strtolower($row['estado']) == 'obsoleto') {
                                 $rowClass = 'obsoleto';
                             }
-                            
-                        ?>
 
- <tr class="<?php echo $rowClass; ?>">
-                        <td><?php echo htmlspecialchars($row['proceso']); ?></td>
-                        <td><?php echo htmlspecialchars($row['codigo']); ?></td>
-                        <td><?php echo htmlspecialchars($row['titulo_documento']); ?></td>
-                        <td><?php echo htmlspecialchars($row['tipo']); ?></td>
-                        <td><?php echo htmlspecialchars($row['version']); ?></td>
-                        <td><?php echo htmlspecialchars($row['estado']); ?></td>
-                        <td><?php echo htmlspecialchars($row['fecha_aprobacion']); ?></td>
-                        <td><?php echo htmlspecialchars($row['areas']); ?></td>
-                        <td><?php echo htmlspecialchars($row['motivo_del_cambio']); ?></td>
-                        <td><?php echo htmlspecialchars($row['tiempo_de_retencion']); ?></td>
-                        <td><?php echo htmlspecialchars($row['responsable_de_retencion']); ?></td>
-                        <td><?php echo htmlspecialchars($row['lugar_de_almacenamiento_fisico']); ?></td>
-                        <td><?php echo htmlspecialchars($row['lugar_de_almacenamiento_magnetico']); ?></td>
-                        <td><?php echo htmlspecialchars($row['conservacion']); ?></td>
-                        <td><?php echo htmlspecialchars($row['disposicion_final']); ?></td>
-                        <td><?php echo htmlspecialchars($row['copias_controladas']); ?></td>
-                        <td><?php echo htmlspecialchars($row['fecha_de_vigencia']); ?></td>
-                        <td><?php echo htmlspecialchars($row['dias']); ?></td>
-                        <td><?php echo htmlspecialchars($row['senal_alerta']); ?></td>
-                        <td><?php echo htmlspecialchars($row['obsoleto']); ?></td>
-                        <td><?php echo htmlspecialchars($row['anulado']); ?></td>
-                        <td><?php echo htmlspecialchars($row['en_actualizacion']); ?></td>
-</tr>
-<?php endwhile; ?>
+                            // Aquí podrías agregar lógica adicional para sincronizar con SharePoint
+                            // y actualizar el estado del documento según la respuesta de SharePoint
+                            ?>
+                            <tr class="<?php echo $rowClass; ?>">
+                                <td data-label="Proceso"><?php echo htmlspecialchars($row['proceso']); ?></td>
+                                <td data-label="Código"><?php echo htmlspecialchars($row['codigo']); ?></td>
+                                <td data-label="Título Documento"><?php echo htmlspecialchars($row['titulo_documento']); ?></td>
+                                <td data-label="Tipo"><?php echo htmlspecialchars($row['tipo']); ?></td>
+                                <td data-label="Versión"><?php echo htmlspecialchars($row['version']); ?></td>
+                                <td data-label="Estado"><?php echo htmlspecialchars($row['estado']); ?></td>
+                                <td data-label="Fecha Aprobación"><?php echo htmlspecialchars($row['fecha_aprobacion']); ?></td>
+                                <td data-label="Áreas"><?php echo htmlspecialchars($row['areas']); ?></td>
+                                <td data-label="Motivo del Cambio"><?php echo htmlspecialchars($row['motivo_del_cambio']); ?></td>
+                                <td data-label="Tiempo de Retención"><?php echo htmlspecialchars($row['tiempo_de_retencion']); ?></td>
+                                <td data-label="Responsable de Retención"><?php echo htmlspecialchars($row['responsable_de_retencion']); ?></td>
+                                <td data-label="Lugar de Almacenamiento Físico"><?php echo htmlspecialchars($row['lugar_de_almacenamiento_fisico']); ?></td>
+                                <td data-label="Lugar de Almacenamiento Magnético"><?php echo htmlspecialchars($row['lugar_de_almacenamiento_magnetico']); ?></td>
+                                <td data-label="Conservación"><?php echo htmlspecialchars($row['conservacion']); ?></td>
+                                <td data-label="Disposición Final"><?php echo htmlspecialchars($row['disposicion_final']); ?></td>
+                                <td data-label="Copias Controladas"><?php echo htmlspecialchars($row['copias_controladas']); ?></td>
+                                <td data-label="Fecha de Vigencia"><?php echo htmlspecialchars($row['fecha_de_vigencia']); ?></td>
+                                <td data-label="Días"><?php echo htmlspecialchars($row['dias']); ?></td>
+                                <td data-label="Señal Alerta"><?php echo htmlspecialchars($row['senal_alerta']); ?></td>
+                                <td data-label="Obsoleto"><?php echo htmlspecialchars($row['obsoleto']); ?></td>
+                                <td data-label="Anulado"><?php echo htmlspecialchars($row['anulado']); ?></td>
+                                <td data-label="En Actualización"><?php echo htmlspecialchars($row['en_actualizacion']); ?></td>
+                            </tr>
+                        <?php endwhile; ?>
                     </tbody>
                 </table>
             </div>
