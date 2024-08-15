@@ -2,7 +2,7 @@ CREATE DATABASE gategourmet;
 use gategourmet;
 
 CREATE TABLE usuarios (
-    documento varchar(25) NOT NULL,
+    documento int (11) NOT NULL,
     nombre_usuario varchar(50) NOT NULL,
     contrasena varchar(25) NOT NULL,
     correo varchar(50) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE usuarios (
 );
 
 CREATE TABLE administradores (
-    documento varchar(25) NOT NULL,
+    documento int(11) NOT NULL,
     nombre_usuario varchar(50) NOT NULL,
     contrasena varchar(25) NOT NULL,
     correo varchar(50) NOT NULL,
@@ -86,12 +86,12 @@ CREATE TABLE log_eventos (
 );
 
 CREATE TABLE password_resets (
-    id int(11) NOT NULL AUTO_INCREMENT,
-    email varchar(50) NOT NULL,
+    id int NOT NULL AUTO_INCREMENT,
+    correo varchar(50) NOT NULL,
     token varchar(100) NOT NULL,
     created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    FOREIGN KEY (email) REFERENCES usuarios(correo)
+    FOREIGN KEY (correo) REFERENCES usuarios(correo)
 );
 
 
