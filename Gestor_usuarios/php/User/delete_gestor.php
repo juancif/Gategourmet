@@ -1,5 +1,5 @@
 <?php
-include("/Gestor_usuarios/config/config_gestor.php");
+include("/config/config_gestor.php");
 $documento = $_GET['documento'];
 $sql = "DELETE FROM usuarios WHERE documento=:documento"; // Aquí podrías necesitar cambiar ':documento' a ':id' dependiendo del nombre real del parámetro en tu base de datos
 $query = $dbConn->prepare($sql);

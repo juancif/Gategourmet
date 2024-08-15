@@ -1,5 +1,5 @@
 <?php
-include_once("/Gestor_usuarios/config/config_gestor.php");
+include_once("/config/config_gestor.php");
 
 if(isset($_POST['update']))
 
@@ -74,7 +74,7 @@ $rol = $row['rol'];
 <html>
 <head>
     <title>Editar Datos</title>
-    <link rel="stylesheet" href="style_edit_gestor.css">
+    <link rel="stylesheet" href="/Gestor_usuarios/css/style_edit_gestor.css">
 </head>
 <body>
 <form name="form1" method="post" action="edit_gestor.php">
@@ -177,7 +177,7 @@ $rol = $row['rol'];
                     </div>
                     <div class="buttons">
                     <input type="Submit" name="update" value="Editar" class="Registrarse"></input>
-                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="regresar">Volver</a>
+                        <a href="http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor.php" class="regresar">Volver</a>
                     </div>
                 </form>
             </div>

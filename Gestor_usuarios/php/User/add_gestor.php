@@ -1,5 +1,5 @@
 <?php
-include_once("/Gestor_usuarios/config/config_gestor.php");
+include_once("/config/config_gestor.php");
 
 if (isset($_POST['Submit'])) {
     $nombre_usuario = $_POST['nombre_usuario'];
@@ -92,7 +92,7 @@ if (isset($_POST['Submit'])) {
     <title>Registro de Usuarios</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="style_add_gestor.css">
+    <link rel="stylesheet" href="/Gestor_usuarios/css/style_add_gestor.css">
 </head>
 <body>
     <header class="header">
@@ -194,7 +194,7 @@ if (isset($_POST['Submit'])) {
                     </div>
                     <div class="buttons">
                         <input type="submit" name="Submit" value="Registrarse" class="Registrarse">
-                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="regresar">Regresar</a>
+                        <a href="http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor.php" class="regresar">Regresar</a>
                     </div>
                 </form>
             </div>
@@ -202,7 +202,7 @@ if (isset($_POST['Submit'])) {
     </main>
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
-        <script src="script.js"></script>
+        <script src="/script_prueba/script.js"></script>
     </footer>
 </body>
 </html>

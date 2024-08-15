@@ -1,5 +1,5 @@
 <?php
-include_once("/Gestor_usuarios/config/config_gestor.php");
+include_once("/config/config_gestor.php");
 
 // Consulta a la base de datos
 $result = $dbConn->query("SELECT * FROM administradores ORDER BY documento ASC");
@@ -8,7 +8,7 @@ $result = $dbConn->query("SELECT * FROM administradores ORDER BY documento ASC")
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de usuarios</title>
-    <link rel="stylesheet" href="style_gestor.css">
+    <link rel="stylesheet" href="/Gestor_usuarios/css/style_gestor.css">
 </head>
 <body>
     <div class="cuadro_logo">
@@ -52,8 +52,8 @@ $result = $dbConn->query("SELECT * FROM administradores ORDER BY documento ASC")
             ?>
         </table>
     </div>
-    <a href="http://localhost/GateGourmet/Gestor_usuarios/add_gestor_admin.php" class="boton_adicionar">Adicionar administradores</a><br/><br/>
-    <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="boton_volver">Volver</a><br/><br/>    
+    <a href="add_gestor_admin.php" class="boton_adicionar">Adicionar administradores</a><br/><br/>
+    <a href="http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor.php" class="boton_volver">Volver</a><br/><br/>    
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
     </footer>
