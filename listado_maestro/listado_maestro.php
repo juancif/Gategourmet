@@ -74,7 +74,7 @@ if (!empty($searchTerm)) {
 $stmt = $conn->prepare($sql);
 
 if (!empty($searchTerm)) {
-    $searchTerm = "$searchTerm";
+    $searchTerm = "%$searchTerm%";
     $stmt->bind_param(
         'ssssssssssssssssssssss', 
         $searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm, 

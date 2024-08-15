@@ -8,21 +8,18 @@ http://localhost/GateGourmet/login_prueba/login/login2.php
 http://localhost/GateGourmet/login/login3.php
 http://localhost/GateGourmet/login_prueba/login/login_admin.php
 
-reestablecer:
-http://localhost/GateGourmet/restablecer/restablecer.php
 
 Gestor de usuarios:
-http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php
-http://localhost/GateGourmet/Gestor_usuarios/add_gestor.php
-http://localhost/GateGourmet/Gestor_usuarios/edit_gestor.php
-http://localhost/GateGourmet/Gestor_usuarios/delete_gestor.php
+http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor.php
+http://localhost/GateGourmet/Gestor_usuarios/php/user/edit_gestor.php
+http://localhost/GateGourmet/Gestor_usuarios/php/user/add_gestor.php
+http://localhost/GateGourmet/Gestor_usuarios/php/user/delete_gestor.php
 http://localhost/GateGourmet/Gestor_usuarios/registro_exitoso.php
 
 Gestor de usuarios admin:
-http://localhost/GateGourmet/Gestor_usuarios/index_gestor_admin.php
-http://localhost/GateGourmet/Gestor_usuarios/add_gestor_admin.php
-http://localhost/GateGourmet/Gestor_usuarios/edit_gestor_admin.php
-
+http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor_admin.php
+http://localhost/GateGourmet/Gestor_usuarios/php/user/add_gestor_admin.php
+http://localhost/GateGourmet/Gestor_usuarios/php/user/edit_gestor_admin.php
 
 Register:
 http://localhost/GateGourmet/register/register_admin.php
@@ -31,7 +28,7 @@ http://localhost/GateGourmet/register/regiter_prueba/register2.php
 
 http://localhost/GateGourmet/register/register3.php
 http://localhost/GateGourmet/register/regiter_prueba/registro_exitoso.php
-http://localhost/GateGourmet/register/registro_exitoso_admin.php
+http://localhost/GateGourmet/register/registro_exitoso/registro_exitoso.php
 
 Index:
 http://localhost/GateGourmet/Index/index_prueba/index1.html
@@ -44,22 +41,17 @@ http://localhost/GateGourmet/Index/index_principal.html
 http://localhost/GateGourmet/Index/index_admin.html
 
 
-
-
-Gestor de usuarios:
-http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor.php
-http://localhost/GateGourmet/Gestor_usuarios/php/user/edit_gestor.php
-http://localhost/GateGourmet/Gestor_usuarios/php/user/add_gestor.php
-http://localhost/GateGourmet/Gestor_usuarios/php/user/delete_gestor.php
-http://localhost/GateGourmet/Gestor_usuarios/registro_exitoso.php
-
-
-Gestor de usuarios admin:
-http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor_admin.php
-http://localhost/GateGourmet/Gestor_usuarios/php/user/add_gestor_admin.php
-http://localhost/GateGourmet/Gestor_usuarios/php/user/edit_gestor_admin.php
-
-
 Procesos
-
 http://localhost/GateGourmet/procesos/procesos.php
+
+listado_maestro
+http://localhost/GateGourmet/listado_maestro/listado_maestro.php
+
+
+reestablecer:
+http://localhost/GateGourmet/restablecer/restablecer.php
+http://localhost/GateGourmet/restablecer/restablecer_exitoso.php
+
+
+
+

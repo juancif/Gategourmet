@@ -10,12 +10,7 @@ body{
     margin: 0;
 }
 
-
-.logoindex{
-    width: 600px;
-    height: 100px;
-    margin: 50px 50px;
-}
+/*
 
 .logo__menu{
     width: 180px;
@@ -23,68 +18,42 @@ body{
     margin-left: -160px;
     margin-top: 28px;
     position: absolute;
-}
-.img1__menu{
+} 
+ .img1__menu{
     width: 20px;
     height: 20px;
-    
+} */
+
+
+.crear_documentos{
+    position: relative;
+    margin-left: 300px;
+    width: 25px;
+    height: 25px;
+}
+
+.procesos{
+    margin-left: -150px;
+    width: 25px;
+    height: 25px;
+}
+.listado_maestro {
+    margin-left: 400px;
+    width: 25px;
+    height: 25px;
+}
+
+.gestionar_usuarios{
+    margin-left: 100px;
+    width: 25px;
+    height: 25px;
 }
 
 .imgs__menu{
     width: 20px;
     height: 20px;
-    padding-right:10px ;
+    padding-right:10px;
 }
-
-/* Estilo del menú lateral */
-.menu-lateral {
-    height: 400px;
-    width: 300px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color:#1112;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-    z-index: 30;
-}
-
-.menu-lateral a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-
-.menu-lateral a:hover {
-    color: #f1f1f1;
-}
-
-.menu-lateral .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-
-.openbtn {
-    font-size: 20px;
-    cursor: pointer;
-}
-
-/* Botón para abrir el menú lateral */
-span[style*="font-size:30px;cursor:pointer"] {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    margin-left: 20px;
-}
-
 
 .img__usuario{
     width: 60px;
@@ -94,6 +63,39 @@ span[style*="font-size:30px;cursor:pointer"] {
     position:relative;
     background-color: transparent;
 }
+
+.link{
+    border: none;
+    text-decoration: none;
+    font-family: sans-serif;
+    background-color:#1110;
+    color: rgb(243, 238, 238);
+    padding: initial;
+    padding: 30px;
+    display: inline-block;
+    font-size: 25px;
+}
+
+.link_crear_documentos{
+    margin-left: -1100px;
+    }
+
+.link_procesos{
+    margin-left: 50px;
+    }
+
+.link_listado_maestro{
+    margin-left: -500px;
+    }
+
+.link_gestionar{
+    margin-left: -500px;
+    }
+
+.link:hover{
+    background-color:#1112;
+}
+
 
 .img__usuario:hover{
     background-color:#1111;
@@ -139,20 +141,15 @@ span[style*="font-size:30px;cursor:pointer"] {
 }
 
 
-.nav__link:hover{
-    background-color:#1112;
+
+
+/* Estilos básicos del menú desplegable */
+.logoindex{
+    width: 600px;
+    height: 100px;
+    margin: 50px 50px;
 }
 
-.nav__link{
-    border: none;
-    text-decoration: none;
-    font-family: sans-serif;
-    background-color:#1110;
-    color: rgb(243, 238, 238);
-    padding: initial;
-    padding: 30px;
-    display: inline-block;
-}
 
 .triangulo{
     max-width: 650px;

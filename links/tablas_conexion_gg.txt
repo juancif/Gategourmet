@@ -1,226 +1,125 @@
-create table usuarios (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
-    correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
-    int not null primary key, area varchar (25)not null,
-    cargo varchar(25)not null, rol varchar(25)not null);
+CREATE DATABASE gategourmet;
+use gategourmet;
 
-create table administradores (nombre_usuario varchar(50)not null, contrasena varchar(25)not null,
-    correo varchar (25)not null,nombres_apellidos varchar(50)not null,documento 
-    int not null primary key, area varchar (25)not null,
-    cargo varchar(25)not null rol varchar(25)not null);
-
-
-
-CREATE TABLE alarmas (
-    id_alarmas INT AUTO_INCREMENT PRIMARY KEY,
-    documento INT NOT NULL,
-    evento VARCHAR(255) NOT NULL,
-    fecha DATETIME NOT NULL,
-    estado VARCHAR(50) NOT NULL,
-    FOREIGN KEY (documento) REFERENCES usuarios(documento)
-
+CREATE TABLE usuarios (
+    documento varchar(25) NOT NULL,
+    nombre_usuario varchar(50) NOT NULL,
+    contrasena varchar(25) NOT NULL,
+    correo varchar(50) NOT NULL,
+    nombres_apellidos varchar(100) NOT NULL,
+    area varchar(25) NOT NULL,
+    cargo varchar(25) NOT NULL,
+    estado varchar(50) NOT NULL,
+    PRIMARY KEY (documento)
 );
 
-CREATE TABLE log_eventos (id_evento INT AUTO_INCREMENT PRIMARY KEY, evento
-)
+CREATE TABLE administradores (
+    documento varchar(25) NOT NULL,
+    nombre_usuario varchar(50) NOT NULL,
+    contrasena varchar(25) NOT NULL,
+    correo varchar(50) NOT NULL,
+    nombres_apellidos varchar(100) NOT NULL,
+    area varchar(25) NOT NULL,
+    cargo varchar(25) NOT NULL,
+    rol varchar(255) DEFAULT NULL,
+    PRIMARY KEY (documento),
+    FOREIGN KEY (documento) REFERENCES usuarios(documento)
+);
 
-CREATE TABLE areas ()
+CREATE TABLE cargos (
+    id int(11) NOT NULL AUTO_INCREMENT,
+    nombre_cargo varchar(255) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE (nombre_cargo)
+);
+
+CREATE TABLE roles (
+    id int(11) NOT NULL AUTO_INCREMENT,
+    nombre_rol varchar(255) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE (nombre_rol)
+);
 
 CREATE TABLE documentos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    codigo VARCHAR(50) NOT NULL UNIQUE,
-    tipo_documento ENUM('Word', 'Excel', 'PDF', 'PowerPoint', 'Texto', 'Otro') NOT NULL,
-    estado ENUM('Activo', 'Inactivo', 'Pendiente', 'Archivado') NOT NULL,
-    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    usuario_id INT, -- Relación opcional con usuarios
-    administrador_id INT, -- Relación opcional con administradores
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-    FOREIGN KEY (administrador_id) REFERENCES administradores(id)
+    id int(11) NOT NULL AUTO_INCREMENT,
+    codigo varchar(50) NOT NULL,
+    tipo_documento enum('Word', 'Excel', 'PDF', 'PowerPoint', 'Texto', 'Otro') NOT NULL,
+    estado enum('Activo', 'Inactivo', 'Pendiente', 'Archivado') NOT NULL,
+    fecha_creacion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    fecha_modificacion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
 );
-
-
 
 CREATE TABLE listado_maestro (
-    cod INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(255) NOT NULL,
-    fecha DATE NOT NULL,
-    estado VARCHAR(50) NOT NULL,
-    url VARCHAR(255) NOT NULL
-);
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    proceso VARCHAR(255),
+    codigo VARCHAR(255),
+    titulo_documento VARCHAR(255),
+    tipo VARCHAR(255),
+    version VARCHAR(50),
+    estado VARCHAR(50),
+    fecha_aprobacion DATE,
+    areas TEXT,
+    motivo_del_cambio TEXT,
+    tiempo_de_retencion VARCHAR(255),
+    responsable_de_retencion VARCHAR(255),
+    lugar_de_almacenamiento_fisico TEXT,
+    lugar_de_almacenamiento_magnetico TEXT,
+    conservacion TEXT,
+    disposicion_final TEXT,
+    copias_controladas TEXT,
+    fecha_de_vigencia DATE,
+    dias INT,
+    senal_alerta VARCHAR(50),
+    obsoleto TINYINT(1),
+    anulado TINYINT(1),
+    en_actualizacion TINYINT(1)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- Crear la tabla log_eventos
+
 CREATE TABLE log_eventos (
-    id_usuario INT NOT NULL,
-    evento VARCHAR(255) NOT NULL,
-    fecha DATETIME NOT NULL,
-    PRIMARY KEY (id_usuario, fecha)
+    id_usuario int(11) NOT NULL,
+    evento varchar(255) NOT NULL,
+    fecha datetime NOT NULL,
+    PRIMARY KEY (id_usuario, fecha),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(documento)
 );
-
--- Crear la tabla alarmas
-CREATE TABLE alarmas (
-    id_usuario INT NOT NULL,
-    evento VARCHAR(255) NOT NULL,
-    fecha DATETIME NOT NULL,
-    estado VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id_usuario, fecha)
-);
-
--- Crear la tabla usuarios
-CREATE TABLE usuarios (
-    nombre_usuario VARCHAR(50) NOT NULL,
-    contrasena VARCHAR(25) NOT NULL,
-    correo VARCHAR(25) NOT NULL,
-    nombres_apellidos VARCHAR(50) NOT NULL,
-    documento VARCHAR(25) NOT NULL PRIMARY KEY,
-    area VARCHAR(25) NOT NULL,
-    cargo VARCHAR(25) NOT NULL,
-    estado VARCHAR(50) NOT NULL
-);
-
--- Crear la tabla areas
-CREATE TABLE areas (
-    gestion_corporativa VARCHAR(255) NOT NULL,
-    compliance VARCHAR(255) NOT NULL,
-    supply_chain VARCHAR(255) NOT NULL,
-    culinary_excellence VARCHAR(255) NOT NULL,
-    service_delivery VARCHAR(255) NOT NULL,
-    assembly VARCHAR(255) NOT NULL,
-    servicios_institucionales VARCHAR(255) NOT NULL,
-    financiera VARCHAR(255) NOT NULL,
-    costos VARCHAR(255) NOT NULL,
-    comunicaciones VARCHAR(255) NOT NULL,
-    tecnologia_informacion VARCHAR(255) NOT NULL,
-    talento_humano VARCHAR(255) NOT NULL,
-    mantenimiento VARCHAR(255) NOT NULL,
-    servicio_cliente VARCHAR(255) NOT NULL,
-    security VARCHAR(255) NOT NULL
-);
-CREATE TABLE alarmas (id_alarmas int() AUTO_INCREMENT PRIMARY KEY, documento int() not null FOREIGN KEY, 
-evento varchar(255) not null, fecha datetime FOREIGN KEY not null,
-estado varchar(50) not null);
-
-
-
 
 CREATE TABLE password_resets (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(255) NOT NULL,
-    token VARCHAR(100) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    id int(11) NOT NULL AUTO_INCREMENT,
+    email varchar(50) NOT NULL,
+    token varchar(100) NOT NULL,
+    created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (email) REFERENCES usuarios(correo)
 );
 
 
-INSERT INTO procesos (macroproceso, proceso, usuarios, cargos, email, rol) VALUES
--- Estrategicos - Gestion Corporativa
-('GESTION CORPORATIVA', 'DES - Direccionamiento Estratégico', 'Sanchez Fernandez Antonio', 'Country Manager', 'asanchez@gategroup.com', 'Observador'),
-('GESTION CORPORATIVA', 'GMC - Gestión de Mejora Continua', 'Camacho Salcedo Vanessa', 'Manager HR', 'VaCamacho@gategroup.com', 'Aprueba'),
-('GESTION CORPORATIVA', 'IND - Inducción Organizacional', 'Rodríguez Camacho Magda', 'Superintendent HR', 'MagRodriguez@gategroup.com', 'Digita'),
-('GESTION CORPORATIVA', 'IND - Inducción Organizacional', 'Huertas Carmona Catalina', 'Superintendent Development And Communications', 'chuertascarmona@gategroup.com', 'Digita'),
-('GESTION CORPORATIVA', 'EYS - Evaluación y Seguimiento', 'Ramírez Domínguez Diana', 'Continuous Improvement Manager', 'DRamirez@gategroup.com', 'Administrador'),
-('GESTION CORPORATIVA', 'EYS - Evaluación y Seguimiento', 'Jaimes Puertas Diego', 'Coordinador de mejoramiento Continuo', 'DJaimes@gategroup.com', 'Administrador'),
--- Estrategicos - Compliance
-('COMPLIANCE', 'SEO - Seguridad Operacional - Ramp Safety', 'Dominguez Posada Natalia', 'Process Owner Assembly', 'NDominguezPosada@gategroup.com', 'Observador'),
--- Misionales Operativos - Supply Chain
-('SUPPLY CHAIN', 'COM - Compras', 'Suarez Ortiz William', 'Section Manager Pick & Pack', 'WSuarez@gategroup.com', 'Digita'),
-('SUPPLY CHAIN', 'ABS - Abastecimiento', 'Sanabria Rodríguez Edwin', 'Section Manager Wash & Pack', 'ESanabria@gategroup.com', 'Digita'),
-('SUPPLY CHAIN', 'IDS - Sistemas Internos de Entrega', 'Ordonez Rodríguez Michael', 'Section Manager Laundry', 'miordonez@gategroup.com', 'Digita'),
-('SUPPLY CHAIN', 'SIM - Solicitud Interna de Materiales', 'Roa Pinzon Edwin', 'Section Manager Make & Pack', 'ERoa@gategroup.com', 'Digita'),
--- Misionales Operativos - Culinary Excellence
-('CULINARY EXCELLENCE', 'COF - Cocina Fría', 'Escobar Nancy', 'Director Comercial', 'nescobar@gategroup.com', 'Aprueba'),
--- Misionales Operativos - Service Delivery
-('SERVICE DELIVERY', 'TRA - Transporte', 'Medellin Carmen', 'Manager Finance', 'CMedellin@gategroup.com', 'Aprueba'),
--- Assembly
-('ASSEMBLY', 'HFR - Holding Frío', 'Carabante Nelson', 'Auxiliar Contable', 'NCarabante@gategroup.com', 'Digita');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+DROP TABLE IF EXISTS procesos;
+
+CREATE TABLE procesos (
+    id int(11) NOT NULL AUTO_INCREMENT,
+    macroproceso varchar(255) NOT NULL,
+    proceso varchar(255) NOT NULL,
+    usuarios varchar(25) NOT NULL,  -- Asegúrate de que el tamaño coincida
+    cargos varchar(255) NOT NULL,
+    email varchar(50) NOT NULL,      -- Asegúrate de que el tamaño coincida
+    rol varchar(255) NOT NULL,       -- Asegúrate de que el tamaño coincida
+   
+    PRIMARY KEY (id),
+    FOREIGN KEY (rol) REFERENCES roles(nombre_rol),
+    FOREIGN KEY (cargos) REFERENCES cargos(nombre_cargo),
+    FOREIGN KEY (email) REFERENCES usuarios(correo)
+);
+
+
+LOAD DATA INFILE 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro6.csv'
+INTO TABLE listado_maestro
+FIELDS TERMINATED BY ';'
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(proceso, codigo, titulo_documento, tipo, version, estado, fecha_aprobacion, areas, motivo_del_cambio, tiempo_de_retencion, responsable_de_retencion, lugar_de_almacenamiento_fisico, lugar_de_almacenamiento_magnetico, conservacion, disposicion_final, copias_controladas, fecha_de_vigencia, dias, senal_alerta, obsoleto, anulado, en_actualizacion);
+
+
+'C:/xampp/htdocs/Gategourmet/documentos/Libro1.csv'
