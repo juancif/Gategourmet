@@ -1,120 +1,137 @@
 <?php
-include_once("config_gestor.php");
+include_once("/Gestor_usuarios/config/config_gestor.php");
 
-if(isset($_POST['update']))
-{
+if (isset($_POST['Submit'])) {
     $nombre_usuario = $_POST['nombre_usuario'];
     $contrasena = $_POST['contrasena'];
     $correo = $_POST['correo'];
-    $nombres_apellidos = $_POST['nombres_apellidos'];;
+    $nombres_apellidos = $_POST['nombres_apellidos'];
     $documento = $_POST['documento'];
     $area = $_POST['area'];
     $cargo = $_POST['cargo'];
     $rol = $_POST['rol'];
 
-    if(empty($nombre_usuario) || empty($contrasena) || empty($correo) || empty($nombres_apellidos) || 
-    empty($documento) || empty($area) || empty($cargo) || empty($rol)) {
-        if(empty($nombre_usuario)) {
+    // Verificar si algún campo está vacío
+    if (empty($nombre_usuario) || empty($contrasena) || empty($correo) || empty($nombres_apellidos) || empty($documento) || empty($area) || empty($cargo) || empty($rol)) {
+        if (empty($nombre_usuario)) {
             echo "<font color='red'>Campo: nombre_usuario está vacío.</font><br/>";
         }
-        if(empty($contrasena)) {
+        if (empty($contrasena)) {
             echo "<font color='red'>Campo: contrasena está vacío.</font><br/>";
         }
-        if(empty($correo)) {
+        if (empty($correo)) {
             echo "<font color='red'>Campo: correo está vacío.</font><br/>";
         }
-        if(empty($nombres_apellidos)) {
+        if (empty($nombres_apellidos)) {
             echo "<font color='red'>Campo: nombres_apellidos está vacío.</font><br/>";
         }
-        if(empty($documento)) {
+        if (empty($documento)) {
             echo "<font color='red'>Campo: documento está vacío.</font><br/>";
         }
-        if(empty($area)) {
-            echo "<font color='red'>Campo: area está vacío.</font><br/>";
+        if (empty($area)) {
+            echo "<font color='red'>Campo: área está vacío.</font><br/>";
         }
-        if(empty($cargo)) {
+        if (empty($cargo)) {
             echo "<font color='red'>Campo: cargo está vacío.</font><br/>";
         }
-        if(empty($rol)) {
+        if (empty($rol)) {
             echo "<font color='red'>Campo: rol está vacío.</font><br/>";
         }
+        echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
     } else {
-        $sql = "UPDATE administradores SET nombre_usuario=:nombre_usuario, contrasena=:contrasena, correo=:correo, nombres_apellidos=:nombres_apellidos, 
-       documento=:documento, area=:area, cargo=:cargo, rol=:rol
-        WHERE documento=:documento";
-        $query = $dbConn->prepare($sql);
-        $query->bindParam(':nombre_usuario', $nombre_usuario);
-        $query->bindParam(':contrasena', $contrasena);
-        $query->bindParam(':correo', $correo);
-        $query->bindParam(':nombres_apellidos', $nombres_apellidos);
-        $query->bindParam(':documento', $documento);
-        $query->bindParam(':area', $area);
-        $query->bindParam(':cargo', $cargo);
-        $query->bindParam(':rol', $rol); 
-        $query->execute();
-        header("Location: index_gestor_admin.php");
+        try {
+            $dbConn->beginTransaction(); // Iniciar transacción
+
+            if ($rol === 'Administrador') {
+                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
+                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
+            } else {
+                $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
+                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
+            }
+
+            $query = $dbConn->prepare($sql);
+
+            // Crear hash de la contraseña
+            $contrasena_hash = password_hash($contrasena, PASSWORD_DEFAULT);
+
+            $query->bindparam(':nombre_usuario', $nombre_usuario);
+            $query->bindparam(':contrasena', $contrasena_hash);
+            $query->bindparam(':correo', $correo);
+            $query->bindparam(':nombres_apellidos', $nombres_apellidos);
+            $query->bindparam(':documento', $documento);
+            $query->bindparam(':area', $area);
+            $query->bindparam(':cargo', $cargo);
+            $query->bindparam(':rol', $rol);
+
+            $query->execute();
+
+            $dbConn->commit();
+
+            if ($query->rowCount() > 0) {
+                // Redirigir a la página deseada después del registro exitoso
+                header("Location: http://localhost/GateGourmet/Gestor_usuarios/registro_exitoso.php");
+                exit();
+            } else {
+                echo "<font color='red'>Error al registrar el usuario o administrador.</font><br/>";
+            }
+        } catch (Exception $e) {
+            $dbConn->rollBack();
+            echo "<font color='red'>Error: " . $e->getMessage() . "</font><br/>";
+        }
     }
 }
 ?>
 
-<?php
-$documento = $_GET['documento'];
-$sql = "SELECT * FROM administradores WHERE documento=:documento";
-$query = $dbConn->prepare($sql);
-$query->execute(array(':documento' => $documento));
-$row = $query->fetch(PDO::FETCH_ASSOC);
-$nombre_usuario = $row['nombre_usuario'];
-$contrasena = $row['contrasena'];
-$correo = $row['correo'];
-$nombres_apellidos = $row['nombres_apellidos'];
-$documento = $row['documento'];
-$area = $row['area'];
-$cargo = $row['cargo'];
-?>
-<html>
+
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>Editar Datos</title>
-    <link rel="stylesheet" href="style_edit_gestor.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registro de Usuarios</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="style_add_gestor.css">
 </head>
 <body>
-<form name="form1" method="post" action="edit_gestor_admin.php">
     <header class="header">
-        <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
+        <img src="../Imagenes/logo_oficial_color.png" alt="Gate Gourmet Logo" class="logo">
     </header>
     <main class="main-content">
         <div class="register-container">
             <div class="register-box">
-                <h2>Registro de Administradores</h2>
-                <form method="post" action="index_gestor_admin.php">
+                <h2>Registro de Usuarios</h2>
+                <form method="post" action="">
                     <div class="input-group">
                         <label for="nombre_usuario">Nombre de Usuario</label>
-                        <input type="text" id="nombre_usuario" name="nombre_usuario" required value="<?php echo $nombre_usuario;?>">
+                        <input type="text" id="nombre_usuario" name="nombre_usuario" required>
                     </div>
                     <div class="input-group">
                         <label for="contrasena">Contraseña</label>
-                        <input type="contrasena" id="contrasena" name="contrasena" required value="<?php echo $contrasena;?>">
-                    </div>
+                        <input type="password" id="contrasena" name="contrasena" 
+                        required onclick="mouseover('ejemplo')">
                     <div class="input-group">
                         <label for="correo">Correo Electrónico</label>
-                        <input type="email" id="correo" name="correo" required value="<?php echo $correo;?>">
+                        <input type="email" id="correo" name="correo" required>
                     </div>
                     <div class="input-group">
-                        <label for="first_name">nombres_apellidos</label>
-                        <input type="text" id="nombres_apellidos" name="nombres_apellidos" required value="<?php echo $nombres_apellidos;?>">
+                        <label for="nombres_apellidos">Nombres y Apellidos</label>
+                        <input type="text" id="nombres_apellidos" name="nombres_apellidos" required>
                     </div>
                     <div class="input-group">
-                        <label for="document">Documento</label>
-                        <input type="text" id="documento" name="documento" required value="<?php echo $documento;?>">
+                        <label for="documento">Documento</label>
+                        <input type="number" id="documento" name="documento" required>
                     </div>
                     <div class="input-group">
                         <label for="area">Área</label>
-                        <select name="area" id="area" value="<?php echo $area;?>">
+                        <select name="area" id="area">
                             <option value="">Seleccione una opción</option>
                             <option value="Gestion_corporativa">Gestión corporativa</option>
                             <option value="Compliance">Compliance</option>
                             <option value="Supply_chain">Supply Chain</option>
                             <option value="Culinary_Excellence">Culinary Excellence</option>
-                            <option value="Supervisor">Service Delivery</option>
+                            <option value="Supervisor"  >Service Delivery</option>
                             <option value="Assembly">Assembly</option>
                             <option value="Servicios_institucionales">Servicios institucionales</option>
                             <option value="Financiera">Financiera</option>
@@ -129,7 +146,7 @@ $cargo = $row['cargo'];
                     </div>
                     <div class="input-group">
                         <label for="cargo">Cargo</label>
-                        <select name="cargo" id="cargo" value="<?php echo $cargo;?>">
+                        <select name="cargo" id="cargo">
                             <option value="">Seleccione una opción</option>
                             <option value="Auxiliar_Contable">Auxiliar Contable</option>
                             <option value="Continuous_Improvement_Manager">Continuous Improvement Manager</option>
@@ -167,17 +184,17 @@ $cargo = $row['cargo'];
                     </div>
                     <div class="input-group">
                         <label for="rol">Rol</label>
-                        <select name="rol" id="rol" value="<?php echo $rol;?>">
+                        <select name="rol" id="rol">
                             <option value="">Seleccione una opción</option>
                             <option value="Administrador">Administrador</option>
-                            <option value="Supervisor">Aprobador</option>
-                            <option value="Empleado">Digitador</option>
+                            <option value="Aprobador">Aprobador</option>
+                            <option value="Digitador">Digitador</option>
                             <option value="Observador">Observador</option>
-                        </select>                    
+                         </select>                    
                     </div>
                     <div class="buttons">
-                    <input type="Submit" name="update" value="Editar" class="Registrarse"></input>
-                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor_admin.php" class="regresar">Volver</a>
+                        <input type="submit" name="Submit" value="Registrarse" class="Registrarse">
+                        <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="regresar">Regresar</a>
                     </div>
                 </form>
             </div>
@@ -185,6 +202,7 @@ $cargo = $row['cargo'];
     </main>
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
+        <script src="script.js"></script>
     </footer>
 </body>
 </html>

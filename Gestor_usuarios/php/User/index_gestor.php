@@ -1,5 +1,5 @@
 <?php
-include_once("config_gestor.php");
+include_once("/Gestor_usuarios/config/config_gestor.php");
 
 // Consulta a la base de datos
 $result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
