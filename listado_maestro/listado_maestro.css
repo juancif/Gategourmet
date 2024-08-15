@@ -18,34 +18,34 @@ body {
 }
 
 .header h1 {
-    font-size: 2.5rem; /* Tamaño de fuente ajustado */
-    color: #0b8b0f; /* Color verde oscuro para el título */
-    background: rgba(255, 249, 249, 0.9); /* Fondo ligeramente translúcido */
+    font-size: 2.5rem;
+    color: #0b8b0f;
+    background: rgba(255, 249, 249, 0.9);
     display: inline-block;
-    padding: 1rem 2rem; /* Aumentar el padding para mejorar el espacio alrededor del título */
+    padding: 1rem 2rem;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más prominente */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin-top: -30px;
 }
 
 .container {
     width: 90%;
-    max-width: 1800px; /* Ancho máximo del contenedor */
-    margin: 1rem auto; /* Ajusta el margen para centrar el contenedor verticalmente */
-    background: rgba(255, 249, 249, 0.9); /* Fondo más claro para el contenedor */
-    padding: 2rem; /* Aumentar el padding interior del contenedor */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más prominente */
+    max-width: 1800px;
+    margin: 1rem auto;
+    background: rgba(255, 249, 249, 0.9);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: relative;
-    margin-top: -50px;
+    margin-top: -30px;
 }
 
 .table-wrapper {
     overflow-x: auto;
-    overflow-y: auto; /* Asegura el desplazamiento vertical */
-    max-height: calc(100vh - 8rem); /* Ajusta la altura del contenedor para dejar espacio para el título y márgenes */
-    border: 2px solid #000; /* Borde alrededor del contenedor de la tabla */
-    padding-bottom: 1rem; /* Espacio para la barra de desplazamiento horizontal */
+    overflow-y: auto;
+    max-height: calc(100vh - 8rem);
+    border: 2px solid #000;
+    padding-bottom: 1rem;
 }
 
 table {
@@ -55,31 +55,84 @@ table {
 }
 
 table, th, td {
-    border: 2px solid #000; /* Borde oscuro para destacar las cuadrículas */
-    background: rgba(255, 249, 249, 0.9); /* Fondo translúcido */
+    border: 2px solid #000;
+    background: rgba(255, 249, 249, 0.9);
 }
 
 th, td {
-    padding: 12px; /* Espacio interior aumentado */
+    padding: 12px;
     text-align: left;
-    font-size: 14px; /* Tamaño de fuente ajustado */
+    font-size: 14px;
+    color: #000;
 }
 
 th {
-    background-color: #0b8b0f; /* Color de fondo del encabezado más prominente */
+    background-color: #0b8b0f;
     color: white;
 }
 
 tr:nth-child(even) {
-    background: rgba(255, 249, 249, 0.9); /* Color de fondo más claro para filas pares */
+    background: rgba(255, 249, 249, 0.9);
 }
 
 tr:nth-child(odd) {
-    background: rgba(255, 249, 249, 0.95); /* Color de fondo blanco ligeramente más claro para filas impares */
+    background: rgba(255, 249, 249, 0.95);
 }
 
 tr:hover td {
-    background-color: rgba(0, 0, 0, 0.1); /* Fondo más oscuro en hover */
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para filas con clases especiales */
+tr.vigente td {
+    background-color: rgba(51, 187, 255, 0.4); /* Azul claro con transparencia */
+    color: #000; /* Texto negro para contraste */
+}
+
+tr.desactualizado td {
+    background-color: rgba(247, 86, 86, 0.4); /* Rojo claro con transparencia */
+    color: #000; /* Texto negro para contraste */
+}
+
+tr.obsoleto td {
+    background-color: rgba(151, 151, 151, 0.4); /* Gris claro con transparencia */
+    color: #000; /* Texto negro para contraste */
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.search-bar form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: -50px;
+}
+
+.search-bar input[type="text"] {
+    width: 300px;
+    padding: 0.5rem;
+    border: 2px solid #0b8b0f;
+    border-radius: 4px;
+    font-size: 1rem;
+    margin-right: 0.5rem;
+}
+
+.search-bar button {
+    padding: 0.5rem 1rem;
+    background-color: #0b8b0f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -105,6 +158,6 @@ tr:hover td {
         padding-right: 10px;
         font-weight: bold;
         white-space: nowrap;
-        color: #333; /* Color del texto en dispositivos móviles */
+        color: #333;
     }
 }
