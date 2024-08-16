@@ -9,11 +9,23 @@ CREATE TABLE usuarios (
     nombres_apellidos varchar(100) NOT NULL,
     area varchar(25) NOT NULL,
     cargo varchar(25) NOT NULL,
+    rol varchar(25) DEFAULT NULL,
     estado varchar(50) NOT NULL,
     PRIMARY KEY (id_usuario)
 );
 
-
+CREATE TABLE administradores (
+    id_admin int NOT NULL,
+    nombre_usuario varchar(50) NOT NULL,
+    contrasena varchar(25) NOT NULL,
+    correo varchar(50) NOT NULL,
+    nombres_apellidos varchar(100) NOT NULL,
+    area varchar(25) NOT NULL,
+    cargo varchar(25) NOT NULL,
+    rol varchar(25) DEFAULT NULL,
+    PRIMARY KEY (documento_admin),
+    FOREIGN KEY (documento) REFERENCES usuarios(documento)
+);
 
 CREATE TABLE cargos (
     id int(11) NOT NULL AUTO_INCREMENT,
@@ -122,15 +134,3 @@ SET
     
 <!-- //C:\\Users\\lrodriguezcorrea\\Desktop\\Libro6.csv' -->
 
-CREATE TABLE administradores (
-    id_admin int NOT NULL,
-    nombre_usuario varchar(50) NOT NULL,
-    contrasena varchar(25) NOT NULL,
-    correo varchar(50) NOT NULL,
-    nombres_apellidos varchar(100) NOT NULL,
-    area varchar(25) NOT NULL,
-    cargo varchar(25) NOT NULL,
-    rol varchar(255) DEFAULT NULL,
-    PRIMARY KEY (documento),
-    FOREIGN KEY (documento) REFERENCES usuarios(documento)
-);
