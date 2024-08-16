@@ -40,10 +40,11 @@ if (isset($_POST['Submit'])) {
         echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
     } else {
         try {
-            $dbConn->beginTransaction(); // Iniciar transacción
+            $dbConn->beginTransaction();
 
+            // Verificar el campo cargo y definir la tabla correspondiente
             if ($rol === 'Administrador') {
-                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
+                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol ) 
                         VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
             } else {
                 $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
@@ -51,26 +52,21 @@ if (isset($_POST['Submit'])) {
             }
 
             $query = $dbConn->prepare($sql);
-
-            // Crear hash de la contraseña
-            $contrasena_hash = password_hash($contrasena, PASSWORD_DEFAULT);
-
             $query->bindparam(':nombre_usuario', $nombre_usuario);
-            $query->bindparam(':contrasena', $contrasena_hash);
+            $query->bindparam(':contrasena', $contrasena);
             $query->bindparam(':correo', $correo);
             $query->bindparam(':nombres_apellidos', $nombres_apellidos);
             $query->bindparam(':documento', $documento);
             $query->bindparam(':area', $area);
             $query->bindparam(':cargo', $cargo);
             $query->bindparam(':rol', $rol);
-
             $query->execute();
 
             $dbConn->commit();
 
             if ($query->rowCount() > 0) {
                 // Redirigir a la página deseada después del registro exitoso
-                header("Location: http://localhost/GateGourmet/register/registro_exitoso/registro_exitoso.php");
+                header("Location: http://localhost/GateGourmet/register/registro_exitoso.php");
                 exit();
             } else {
                 echo "<font color='red'>Error al registrar el usuario o administrador.</font><br/>";
@@ -82,7 +78,6 @@ if (isset($_POST['Submit'])) {
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -183,13 +178,13 @@ if (isset($_POST['Submit'])) {
                         </select>
                     </div>
                     <div class="input-group">
-                        <label for="rol">Rol</label>
+                        <label for="rol">Roles</label>
                         <select name="rol" id="rol">
                             <option value="">Seleccione una opción</option>
                             <option value="Administrador">Administrador</option>
-                            <option value="Aprobador">Aprobador</option>
-                            <option value="Digitador">Digitador</option>
-                            <option value="Observador">Observador</option>
+                            <option value="Supervisor">Aprobador</option>
+                            <option value="Empleado">Digitador</option>
+                            <option value="Administrador">Observador</option>
                          </select>                    
                     </div>
                     <div class="buttons">
@@ -202,7 +197,7 @@ if (isset($_POST['Submit'])) {
     </main>
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
-        <script src="/script_prueba/script.js"></script>
+        <script src="script.js"></script>
     </footer>
 </body>
 </html>

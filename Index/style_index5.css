@@ -188,8 +188,9 @@ body{
     display: inline-block;
     margin: auto;
     margin-left: 250px;
-    margin-right: -10px;
-    padding-right: 120px;
+    margin-right: 5cqmin;
+    margin-right: -1cqmax;
+    padding-right: 40px;
 }
 
 .nav__item__user{
@@ -237,18 +238,9 @@ body{
     margin: 50px 50px;
 }
 
-
-.triangulo{
-    max-width: 650px;
-    height: 180px;
-    margin-bottom: 20px;   
-    margin-left: 14cqmax;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
-    position: absolute;
-}
 .recuadroimagen{
-    width: 95%;
+    position: relative;
+    max-width: 1250px;
     height: 180px;
     background: linear-gradient(to left,transparent, rgb(10, 192, 146), rgb(67, 153, 82),transparent);
     backdrop-filter: blur(10px);
@@ -257,6 +249,18 @@ body{
     margin-top: 30px;
     z-index: 30;
 }
+
+.triangulo{
+    max-width: 1250px;
+    height: 180px;
+    margin-bottom: 20px;   
+    margin-left: 20cqmin;
+    margin-left: 14cqmax;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    position: absolute;
+}
+
 
 .cuadro1, .cuadro2, .cuadro3{
     width: 98.5%;
