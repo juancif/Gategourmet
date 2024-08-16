@@ -2,29 +2,30 @@ CREATE DATABASE gategourmet;
 use gategourmet;
 
 CREATE TABLE usuarios (
-    id_usuario int NOT NULL,
+    documento_user int NOT NULL,
     nombre_usuario varchar(50) NOT NULL,
     contrasena varchar(25) NOT NULL,
     correo varchar(50) NOT NULL,
     nombres_apellidos varchar(100) NOT NULL,
     area varchar(25) NOT NULL,
     cargo varchar(25) NOT NULL,
-    rol varchar(25) DEFAULT NULL,
+    rol varchar(50) DEFAULT NULL,
     estado varchar(50) NOT NULL,
-    PRIMARY KEY (id_usuario)
+    PRIMARY KEY (documento_user),
+    UNIQUE (correo) 
 );
 
 CREATE TABLE administradores (
-    id_admin int NOT NULL,
+    documento_admin int NOT NULL,
     nombre_usuario varchar(50) NOT NULL,
     contrasena varchar(25) NOT NULL,
     correo varchar(50) NOT NULL,
     nombres_apellidos varchar(100) NOT NULL,
     area varchar(25) NOT NULL,
     cargo varchar(25) NOT NULL,
-    rol varchar(25) DEFAULT NULL,
+    rol varchar(50) DEFAULT NULL,
     PRIMARY KEY (documento_admin),
-    FOREIGN KEY (documento) REFERENCES usuarios(documento)
+    FOREIGN KEY (documento_admin) REFERENCES usuarios(documento_user)
 );
 
 CREATE TABLE cargos (
@@ -83,7 +84,7 @@ CREATE TABLE log_eventos (
     evento varchar(255) NOT NULL,
     fecha datetime NOT NULL,
     PRIMARY KEY (id_evento, fecha),
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+    FOREIGN KEY (id_evento) REFERENCES usuarios(documento_user)
 );
 
 CREATE TABLE password_resets (
@@ -95,7 +96,7 @@ CREATE TABLE password_resets (
     FOREIGN KEY (correo) REFERENCES usuarios(correo)
 );
 
-LOAD DATA INFILE 'C:\Users\Administrator\Desktop\Libro6.csv' 
+LOAD DATA INFILE 'C:/Users/Administrator/Desktop/Libro6.csv' 
 INTO TABLE listado_maestro
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
@@ -113,8 +114,7 @@ CREATE TABLE procesos (
     rol VARCHAR(255)
 );
 
-
-LOAD DATA LOCAL INFILE 'C:\Users\Administrator\Desktop\Libro1.csv'
+LOAD DATA INFILE 'C:/Users/Administrator/Desktop/Libro1.csv' 
 INTO TABLE procesos
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
