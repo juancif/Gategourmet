@@ -74,12 +74,12 @@ $rol = $row['rol'];
 <html>
 <head>
     <title>Editar Datos</title>
-    <link rel="stylesheet" href="/Gestor_usuarios/css/style_edit_gestor.css">
+    <link rel="stylesheet" href="../../css/style_edit_gestor.css">
 </head>
 <body>
 <form name="form1" method="post" action="edit_gestor.php">
     <header class="header">
-        <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
+        <img src="../../../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
     </header>
     <main class="main-content">
         <div class="register-container">

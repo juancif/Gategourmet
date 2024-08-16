@@ -2,28 +2,30 @@ CREATE DATABASE gategourmet;
 use gategourmet;
 
 CREATE TABLE usuarios (
-    documento varchar(25) NOT NULL,
+    documento_user int NOT NULL,
     nombre_usuario varchar(50) NOT NULL,
     contrasena varchar(25) NOT NULL,
     correo varchar(50) NOT NULL,
     nombres_apellidos varchar(100) NOT NULL,
     area varchar(25) NOT NULL,
     cargo varchar(25) NOT NULL,
+    rol varchar(50) DEFAULT NULL,
     estado varchar(50) NOT NULL,
-    PRIMARY KEY (documento)
+    PRIMARY KEY (documento_user),
+    UNIQUE (correo) 
 );
 
 CREATE TABLE administradores (
-    documento varchar(25) NOT NULL,
+    documento_admin int NOT NULL,
     nombre_usuario varchar(50) NOT NULL,
     contrasena varchar(25) NOT NULL,
     correo varchar(50) NOT NULL,
     nombres_apellidos varchar(100) NOT NULL,
     area varchar(25) NOT NULL,
     cargo varchar(25) NOT NULL,
-    rol varchar(255) DEFAULT NULL,
-    PRIMARY KEY (documento),
-    FOREIGN KEY (documento) REFERENCES usuarios(documento)
+    rol varchar(50) DEFAULT NULL,
+    PRIMARY KEY (documento_admin),
+    FOREIGN KEY (documento_admin) REFERENCES usuarios(documento_user)
 );
 
 CREATE TABLE cargos (
@@ -78,48 +80,60 @@ CREATE TABLE listado_maestro (
 
 
 CREATE TABLE log_eventos (
-    id_usuario int(11) NOT NULL,
+    id_evento int NOT NULL,
     evento varchar(255) NOT NULL,
     fecha datetime NOT NULL,
-    PRIMARY KEY (id_usuario, fecha),
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(documento)
+    PRIMARY KEY (id_evento, fecha),
+    FOREIGN KEY (id_evento) REFERENCES usuarios(documento_user)
 );
 
 CREATE TABLE password_resets (
-    id int(11) NOT NULL AUTO_INCREMENT,
-    email varchar(50) NOT NULL,
+    id_password int(11) NOT NULL AUTO_INCREMENT,
+    correo varchar(50) NOT NULL,
     token varchar(100) NOT NULL,
     created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id),
-    FOREIGN KEY (email) REFERENCES usuarios(correo)
+    PRIMARY KEY (id_password),
+    FOREIGN KEY (correo) REFERENCES usuarios(correo)
 );
 
-
-DROP TABLE IF EXISTS procesos;
-
-CREATE TABLE procesos (
-    id int(11) NOT NULL AUTO_INCREMENT,
-    macroproceso varchar(255) NOT NULL,
-    proceso varchar(255) NOT NULL,
-    usuarios varchar(25) NOT NULL,  -- Asegúrate de que el tamaño coincida
-    cargos varchar(255) NOT NULL,
-    email varchar(50) NOT NULL,      -- Asegúrate de que el tamaño coincida
-    rol varchar(255) NOT NULL,       -- Asegúrate de que el tamaño coincida
-   
-    PRIMARY KEY (id),
-    FOREIGN KEY (rol) REFERENCES roles(nombre_rol),
-    FOREIGN KEY (cargos) REFERENCES cargos(nombre_cargo),
-    FOREIGN KEY (email) REFERENCES usuarios(correo)
-);
-
-
-LOAD DATA INFILE 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro6.csv'
+LOAD DATA INFILE 'C:/Users/Administrator/Desktop/Libro6.csv' 
 INTO TABLE listado_maestro
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (proceso, codigo, titulo_documento, tipo, version, estado, fecha_aprobacion, areas, motivo_del_cambio, tiempo_de_retencion, responsable_de_retencion, lugar_de_almacenamiento_fisico, lugar_de_almacenamiento_magnetico, conservacion, disposicion_final, copias_controladas, fecha_de_vigencia, dias, senal_alerta, obsoleto, anulado, en_actualizacion);
+
+CREATE TABLE procesos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    macroproceso VARCHAR(255),
+    proceso VARCHAR(255),
+    usuario VARCHAR(255),
+    cargo VARCHAR(255),
+    email VARCHAR(255),
+    rol VARCHAR(255)
+);
+
+LOAD DATA INFILE 'C:/Users/Administrator/Desktop/Libro1.csv' 
+INTO TABLE procesos
+FIELDS TERMINATED BY ';'
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(@macroproceso, @proceso, @usuario, @cargo, @email, @rol)
+SET 
+    macroproceso = TRIM(BOTH FROM @macroproceso),
+    proceso = TRIM(BOTH FROM @proceso),
+    usuario = TRIM(BOTH FROM @usuario),
+    cargo = TRIM(BOTH FROM @cargo),
+    email = TRIM(BOTH FROM @email),
+    rol = TRIM(BOTH FROM @rol);
+
+
+
+    
+<!-- //C:\\Users\\lrodriguezcorrea\\Desktop\\Libro6.csv' -->
+
 
 
 'C:/xampp/htdocs/Gategourmet/documentos/Libro1.csv'

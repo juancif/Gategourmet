@@ -74,12 +74,12 @@ $cargo = $row['cargo'];
 <html>
 <head>
     <title>Editar Datos</title>
-    <link rel="stylesheet" href="/Gestor_usuarios/css/style_edit_gestor.css">
+    <link rel="stylesheet" href="../../css/style_edit_gestor.css">
 </head>
 <body>
 <form name="form1" method="post" action="edit_gestor_admin.php">
     <header class="header">
-        <img src="/Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
+        <img src="../../../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
     </header>
     <main class="main-content">
         <div class="register-container">
@@ -177,7 +177,7 @@ $cargo = $row['cargo'];
                     </div>
                     <div class="buttons">
                     <input type="Submit" name="update" value="Editar" class="Registrarse"></input>
-                        <a href="http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor_admin.php" class="regresar">Volver</a>
+                        <a href="http://localhost/GateGourmet/Gestor_usuarios/php/admin/index_gestor_admin.php" class="regresar">Volver</a>
                     </div>
                 </form>
             </div>

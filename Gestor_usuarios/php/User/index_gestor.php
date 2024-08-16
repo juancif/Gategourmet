@@ -8,13 +8,13 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de usuarios</title>
-    <link rel="stylesheet" href="/">
+    <link rel="stylesheet" href="../../css/style_gestor.css">
 </head>
 <body>
     <div class="cuadro_logo">
-        <img src="../Imagenes/logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
+        <img src="../../../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
         <li class="nav__item__user">
-                <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link"><img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
+                <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link"><img src="../../../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
             </li>
     </div>
 
@@ -54,7 +54,7 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
         </table>
     </div>
     <a href="add_gestor.php" class="boton_adicionar">Adicionar usuario</a><br/><br/>
-    <a href="http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor_admin.php" class="boton_volver">Ver administradores</a><br/><br/>    
+    <a href="http://localhost/GateGourmet/Gestor_usuarios/php/admin/index_gestor_admin.php" class="boton_volver">Ver administradores</a><br/><br/>    
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
     </footer>

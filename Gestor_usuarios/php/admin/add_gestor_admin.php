@@ -70,7 +70,7 @@ if (isset($_POST['Submit'])) {
 
             if ($query->rowCount() > 0) {
                 // Redirigir a la página deseada después del registro exitoso
-                header("Location: http://localhost/GateGourmet/Gestor_usuarios/registro_exitoso.php");
+                header("Location: http://localhost/GateGourmet/Gestor_usuarios/php/registro_exitoso.php");
                 exit();
             } else {
                 echo "<font color='red'>Error al registrar el usuario o administrador.</font><br/>";
@@ -92,11 +92,11 @@ if (isset($_POST['Submit'])) {
     <title>Registro de Usuarios</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="/Gestor_usuarios/css/style_add_gestor.css">
+    <link rel="stylesheet" href="../../css/style_add_gestor.css">
 </head>
 <body>
     <header class="header">
-        <img src="/Imagenes/logo_oficial_color.png" alt="Gate Gourmet Logo" class="logo">
+        <img src="../../../Imagenes/logo_oficial_color.png" alt="Gate Gourmet Logo" class="logo">
     </header>
     <main class="main-content">
         <div class="register-container">
@@ -194,7 +194,7 @@ if (isset($_POST['Submit'])) {
                     </div>
                     <div class="buttons">
                         <input type="submit" name="Submit" value="Registrarse" class="Registrarse">
-                        <a href="http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor_admin.php" class="regresar">Regresar</a>
+                        <a href="http://localhost/GateGourmet/Gestor_usuarios/php/admin/index_gestor_admin.php" class="regresar">Regresar</a>
                     </div>
                 </form>
             </div>

@@ -14,12 +14,12 @@ http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor.php
 http://localhost/GateGourmet/Gestor_usuarios/php/user/edit_gestor.php
 http://localhost/GateGourmet/Gestor_usuarios/php/user/add_gestor.php
 http://localhost/GateGourmet/Gestor_usuarios/php/user/delete_gestor.php
-http://localhost/GateGourmet/Gestor_usuarios/registro_exitoso.php
+http://localhost/GateGourmet/Gestor_usuarios/php/registro_exitoso.php
 
 Gestor de usuarios admin:
-http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor_admin.php
-http://localhost/GateGourmet/Gestor_usuarios/php/user/add_gestor_admin.php
-http://localhost/GateGourmet/Gestor_usuarios/php/user/edit_gestor_admin.php
+http://localhost/GateGourmet/Gestor_usuarios/php/admin/index_gestor_admin.php
+http://localhost/GateGourmet/Gestor_usuarios/php/admin/add_gestor_admin.php
+http://localhost/GateGourmet/Gestor_usuarios/php/admin/edit_gestor_admin.php
 
 Register:
 http://localhost/GateGourmet/register/register_admin.php

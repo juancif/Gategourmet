@@ -8,13 +8,13 @@ $result = $dbConn->query("SELECT * FROM administradores ORDER BY documento ASC")
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de usuarios</title>
-    <link rel="stylesheet" href="/Gestor_usuarios/css/style_gestor.css">
+    <link rel="stylesheet" href="../../css/style_gestor.css">
 </head>
 <body>
     <div class="cuadro_logo">
-        <img src="../Imagenes/logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
+        <img src="../../../Imagenes/logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
         <li class="nav__item__user">
-                <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link"><img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
+                <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link"><img src="../../../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
             </li>
     </div>
     <div>
