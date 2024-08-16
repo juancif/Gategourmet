@@ -1,172 +1,208 @@
 <?php
-// Conectar a la base de datos
-$conn = new mysqli("localhost", "root", "", "gategourmet");
+// Conexión a la base de datos
+$mysqli = new mysqli("localhost", "root", "", "gategourmet");
 
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+// Verificar la conexión
+if ($mysqli->connect_error) {
+    die("Conexión fallida: " . $mysqli->connect_error);
 }
 
-// Consultas a la base de datos
-$sql_estado = "
-    SELECT 
-        SUM(CASE WHEN en_actualizacion = 1 THEN 1 ELSE 0 END) AS en_actualizacion,
-        SUM(CASE WHEN obsoleto = 1 THEN 1 ELSE 0 END) AS obsoleto,
-        SUM(CASE WHEN anulado = 1 THEN 1 ELSE 0 END) AS anulado,
-        SUM(CASE WHEN en_actualizacion = 0 AND obsoleto = 0 AND anulado = 0 THEN 1 ELSE 0 END) AS desactualizado
-    FROM listado_maestro";
-$resultado_estado = $conn->query($sql_estado);
+// Consultas
+$sql_estado_area = "SELECT areas, estado, COUNT(*) AS cantidad FROM listado_maestro GROUP BY areas, estado";
+$result_estado_area = $mysqli->query($sql_estado_area);
 
-// Validación de datos obtenidos
-$estado = $resultado_estado ? $resultado_estado->fetch_assoc() : ['en_actualizacion' => 0, 'obsoleto' => 0, 'anulado' => 0, 'desactualizado' => 0];
+$sql_tipo_desactualizada = "SELECT tipo, COUNT(*) AS cantidad_desactualizada FROM listado_maestro WHERE estado = 'Desactualizado' GROUP BY tipo";
+$result_tipo_desactualizada = $mysqli->query($sql_tipo_desactualizada);
 
-$estado = array_map(function ($value) {
-    return $value !== null ? (int)$value : 0;
-}, $estado);
+$sql_actualizacion_mensual = "SELECT areas, COUNT(*) AS cantidad_actualizada FROM listado_maestro WHERE fecha_aprobacion >= CURDATE() - INTERVAL 1 MONTH GROUP BY areas";
+$result_actualizacion_mensual = $mysqli->query($sql_actualizacion_mensual);
 
-$max_valor = max($estado);
-$factor_escala = ($max_valor > 0) ? 200 / $max_valor : 1; // Evita división por cero
+$sql_cantidad_desactualizada = "SELECT areas, COUNT(*) AS cantidad_desactualizada FROM listado_maestro WHERE estado = 'Desactualizado' GROUP BY areas";
+$result_cantidad_desactualizada = $mysqli->query($sql_cantidad_desactualizada);
 
-$sql_porcentaje = "
-    SELECT 
-        areas, 
-        COUNT(*) AS total_documentos, 
-        SUM(CASE WHEN en_actualizacion = 1 THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0) * 100 AS porcentaje_actualizacion 
-    FROM listado_maestro 
-    GROUP BY areas";
-$resultado_porcentaje = $conn->query($sql_porcentaje);
+$sql_total = "SELECT areas, COUNT(*) AS total_documentos FROM listado_maestro GROUP BY areas";
+$result_total = $mysqli->query($sql_total);
 
-$sql_desactualizada = "
-    SELECT 
-        areas, 
-        COUNT(*) AS total_desactualizados 
-    FROM listado_maestro 
-    WHERE obsoleto = 1 OR anulado = 1
-    GROUP BY areas";
-$resultado_desactualizada = $conn->query($sql_desactualizada);
+$sql_actualizados = "SELECT areas, COUNT(*) AS documentos_actualizados FROM listado_maestro WHERE estado = 'Actualizado' GROUP BY areas";
+$result_actualizados = $mysqli->query($sql_actualizados);
 
-$sql_tiempos = "
-    SELECT 
-        SUM(CASE WHEN a_tiempo = 1 THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0) * 100 AS porcentaje_a_tiempo,
-        SUM(CASE WHEN fuera_de_tiempo = 1 THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0) * 100 AS porcentaje_fuera_de_tiempo,
-        SUM(CASE WHEN no_entregado = 1 THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0) * 100 AS porcentaje_no_entregado
-    FROM listado_maestro";
-$resultado_tiempos = $conn->query($sql_tiempos);
-$tiempos = $resultado_tiempos->fetch_assoc();
+$total_documentos = [];
+$documentos_actualizados = [];
 
-$conn->close();
+// Guardar resultados de total de documentos por área
+while ($row = $result_total->fetch_assoc()) {
+    $total_documentos[$row['areas']] = $row['total_documentos'];
+}
+
+// Guardar resultados de documentos actualizados por área
+while ($row = $result_actualizados->fetch_assoc()) {
+    $documentos_actualizados[$row['areas']] = $row['documentos_actualizados'];
+}
+
+$mysqli->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indicador General de Documentación</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="indicadores.css"
+    <title>Indicadores de Documentación</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="indicadores.css"> <!-- Enlace a tu archivo CSS -->
+    <style>
+        /* Estilos generales */
+
+    </style>
+</head>
 <body>
+    <div class="header">
+        <img src="../Imagenes/Logo_oficial_B-N.png" alt="Logo" class="logo">
+    </div>
 
-<div class="header">
-    <img src="../Imagenes/Logo_oficial_B-N.png" alt="Logo de la empresa" title="Logo de la empresa">
-    <h1>Indicadores Generales</h1>
-</div>
+    <div class="main-content">
+        <div class="chart-container">
+            <h2>Estado de Documentación por Área</h2>
+            <canvas id="estadoAreaChart"></canvas>
+        </div>
 
-<div class="container">
-    <div class="card">
-        <h2>Estado General de Documentación</h2>
-        <div class="bar-container">
-            <div class="bar" role="progressbar" aria-valuenow="<?php echo $estado['en_actualizacion']; ?>" aria-valuemin="0" aria-valuemax="<?php echo $max_valor; ?>">
-                <div id="en-actualizacion" style="height: <?php echo $estado['en_actualizacion'] * $factor_escala; ?>px;">
-                    <div class="bar-value"><?php echo htmlspecialchars($estado['en_actualizacion']); ?></div>
-                    <div class="bar-label">En Actualización</div>
-                </div>
-            </div>
-            <div class="bar" role="progressbar" aria-valuenow="<?php echo $estado['obsoleto']; ?>" aria-valuemin="0" aria-valuemax="<?php echo $max_valor; ?>">
-                <div id="obsoleto" style="height: <?php echo $estado['obsoleto'] * $factor_escala; ?>px;">
-                    <div class="bar-value"><?php echo htmlspecialchars($estado['obsoleto']); ?></div>
-                    <div class="bar-label">Obsoleto</div>
-                </div>
-            </div>
-            <div class="bar" role="progressbar" aria-valuenow="<?php echo $estado['anulado']; ?>" aria-valuemin="0" aria-valuemax="<?php echo $max_valor; ?>">
-                <div id="anulado" style="height: <?php echo $estado['anulado'] * $factor_escala; ?>px;">
-                    <div class="bar-value"><?php echo htmlspecialchars($estado['anulado']); ?></div>
-                    <div class="bar-label">Anulado</div>
-                </div>
-            </div>
-            <div class="bar" role="progressbar" aria-valuenow="<?php echo $estado['desactualizado']; ?>" aria-valuemin="0" aria-valuemax="<?php echo $max_valor; ?>">
-                <div id="desactualizado" style="height: <?php echo $estado['desactualizado'] * $factor_escala; ?>px;">
-                    <div class="bar-value"><?php echo htmlspecialchars($estado['desactualizado']); ?></div>
-                    <div class="bar-label">Desactualizado</div>
-                </div>
-            </div>
+        <div class="chart-container">
+            <h2>Tipo de Documentación Desactualizada</h2>
+            <canvas id="tipoDesactualizadaChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h2>Actualización Mensual por Área</h2>
+            <canvas id="actualizacionMensualChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h2>Cantidad de Documentación Desactualizada por Área</h2>
+            <canvas id="cantidadDesactualizadaChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h2>Porcentaje de Actualización por Área</h2>
+            <canvas id="porcentajeActualizacionChart"></canvas>
         </div>
     </div>
 
-    <div class="card">
-        <h2>Porcentajes de Documentación</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Área</th>
-                <th>Documentos Totales</th>
-                <th>% En Actualización</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php while ($fila = $resultado_porcentaje->fetch_assoc()): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($fila['areas']); ?></td>
-                    <td><?php echo (int)$fila['total_documentos']; ?></td>
-                    <td><?php echo ($fila['total_documentos'] > 0) ? round($fila['porcentaje_actualizacion'], 2) : 0; ?>%</td>
-                </tr>
-            <?php endwhile; ?>
-            </tbody>
-        </table>
+    <div class="footer">
+        <p>© 2024 Nombre de la Empresa. Todos los derechos reservados.</p>
+        <a href="#">Política de privacidad</a> | <a href="#">Términos de servicio</a>
     </div>
 
-    <div class="card">
-        <h2>Documentos Desactualizados</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Área</th>
-                <th>Total Desactualizados</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php while ($fila = $resultado_desactualizada->fetch_assoc()): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($fila['areas']); ?></td>
-                    <td><?php echo (int)$fila['total_desactualizados']; ?></td>
-                </tr>
-            <?php endwhile; ?>
-            </tbody>
-        </table>
-    </div>
+    <script>
+        // Gráfico 1: Estado de Documentación por Área
+        var ctx1 = document.getElementById('estadoAreaChart').getContext('2d');
+        var estadoAreaChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode(array_column($result_estado_area->fetch_all(MYSQLI_ASSOC), 'areas')); ?>,
+                datasets: [{
+                    label: 'Cantidad',
+                    data: <?php echo json_encode(array_column($result_estado_area->fetch_all(MYSQLI_ASSOC), 'cantidad')); ?>,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
 
-    <div class="card">
-        <h2>Tiempos de Entrega</h2>
-        <div class="progress">
-            <div class="progress-bar green" style="width: <?php echo round($tiempos['porcentaje_a_tiempo'], 2); ?>%;">
-                A Tiempo: <?php echo round($tiempos['porcentaje_a_tiempo'], 2); ?>%
-            </div>
-        </div>
-        <div class="progress">
-            <div class="progress-bar red" style="width: <?php echo round($tiempos['porcentaje_fuera_de_tiempo'], 2); ?>%;">
-                Fuera de Tiempo: <?php echo round($tiempos['porcentaje_fuera_de_tiempo'], 2); ?>%
-            </div>
-        </div>
-        <div class="progress">
-            <div class="progress-bar gray" style="width: <?php echo round($tiempos['porcentaje_no_entregado'], 2); ?>%;">
-                No Entregado: <?php echo round($tiempos['porcentaje_no_entregado'], 2); ?>%
-            </div>
-        </div>
-    </div>
-</div>
+        // Gráfico 2: Tipo de Documentación Desactualizada
+        var ctx2 = document.getElementById('tipoDesactualizadaChart').getContext('2d');
+        var tipoDesactualizadaChart = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode(array_column($result_tipo_desactualizada->fetch_all(MYSQLI_ASSOC), 'tipo')); ?>,
+                datasets: [{
+                    label: 'Cantidad Desactualizada',
+                    data: <?php echo json_encode(array_column($result_tipo_desactualizada->fetch_all(MYSQLI_ASSOC), 'cantidad_desactualizada')); ?>,
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
 
-<div class="footer">
-    <p>&copy; 2024 gategourmet. Todos los derechos reservados.</p>
-</div>
+        // Gráfico 3: Actualización Mensual por Área
+        var ctx3 = document.getElementById('actualizacionMensualChart').getContext('2d');
+        var actualizacionMensualChart = new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode(array_column($result_actualizacion_mensual->fetch_all(MYSQLI_ASSOC), 'areas')); ?>,
+                datasets: [{
+                    label: 'Cantidad Actualizada',
+                    data: <?php echo json_encode(array_column($result_actualizacion_mensual->fetch_all(MYSQLI_ASSOC), 'cantidad_actualizada')); ?>,
+                    backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                    borderColor: 'rgba(255, 206, 86, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
 
+        // Gráfico 4: Cantidad de Documentación Desactualizada por Área
+        var ctx4 = document.getElementById('cantidadDesactualizadaChart').getContext('2d');
+        var cantidadDesactualizadaChart = new Chart(ctx4, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode(array_column($result_cantidad_desactualizada->fetch_all(MYSQLI_ASSOC), 'areas')); ?>,
+                datasets: [{
+                    label: 'Cantidad Desactualizada',
+                    data: <?php echo json_encode(array_column($result_cantidad_desactualizada->fetch_all(MYSQLI_ASSOC), 'cantidad_desactualizada')); ?>,
+                    backgroundColor:'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Gráfico 5: Porcentaje de Actualización por Área
+        var ctx5 = document.getElementById('porcentajeActualizacionChart').getContext('2d');
+        var porcentajeActualizacionChart = new Chart(ctx5, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode(array_keys($total_documentos)); ?>,
+                datasets: [{
+                    label: 'Porcentaje de Actualización',
+                    data: <?php
+                        $porcentajes = [];
+                        foreach ($total_documentos as $area => $total) {
+                            $actualizados = isset($documentos_actualizados[$area]) ? $documentos_actualizados[$area] : 0;
+                            $porcentajes[] = $total > 0 ? ($actualizados / $total) * 100 : 0;
+                        }
+                        echo json_encode($porcentajes);
+                    ?>,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
+
