@@ -15,7 +15,13 @@ $sql_estado = "
         SUM(CASE WHEN en_actualizacion = 0 AND obsoleto = 0 AND anulado = 0 THEN 1 ELSE 0 END) AS desactualizado
     FROM listado_maestro";
 $resultado_estado = $conn->query($sql_estado);
-$estado = $resultado_estado->fetch_assoc();
+
+// Validación de datos obtenidos
+$estado = $resultado_estado ? $resultado_estado->fetch_assoc() : ['en_actualizacion' => 0, 'obsoleto' => 0, 'anulado' => 0, 'desactualizado' => 0];
+
+$estado = array_map(function ($value) {
+    return $value !== null ? (int)$value : 0;
+}, $estado);
 
 $max_valor = max($estado);
 $factor_escala = ($max_valor > 0) ? 200 / $max_valor : 1; // Evita división por cero
@@ -46,6 +52,8 @@ $sql_tiempos = "
     FROM listado_maestro";
 $resultado_tiempos = $conn->query($sql_tiempos);
 $tiempos = $resultado_tiempos->fetch_assoc();
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -53,310 +61,111 @@ $tiempos = $resultado_tiempos->fetch_assoc();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indicadores de Documentación</title>
+    <title>Indicador General de Documentación</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: url('../Imagenes/fondogg3.webp') no-repeat center center fixed;
-            background-size: cover;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-
-        .header {
-            background-color: #004d40;
-            color: #ffffff;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin-bottom: 30px;
-            border-bottom: 5px solid #00332c;
-            border-radius: 12px;
-        }
-
-        .header img {
-            max-width: 100px;
-            margin-bottom: 15px;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin: 0;
-            letter-spacing: 1px;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .card {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-            padding: 20px;
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
-        }
-
-        .card:hover {
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            transform: translateY(-5px);
-        }
-
-        .card h2 {
-            font-size: 1.8rem;
-            color: #004d40;
-            margin-bottom: 20px;
-            border-bottom: 4px solid #00332c;
-            padding-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .bar-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-end;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .bar {
-            flex: 1;
-            text-align: center;
-            position: relative;
-            padding: 0 10px;
-            min-width: 120px;
-            max-width: 180px;
-        }
-
-        .bar div {
-            background: #00796b;
-            width: 100%;
-            border-radius: 8px 8px 0 0;
-            position: relative;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            transition: background 0.3s ease;
-        }
-
-        .bar div:hover {
-            background: #004d40;
-        }
-
-        .bar-label {
-            position: absolute;
-            top: -30px;
-            width: 100%;
-            text-align: center;
-            font-weight: 600;
-            color: #004d40;
-            font-size: 1rem;
-        }
-
-        .bar-value {
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #ffffff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        table th, table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        table th {
-            background-color: #004d40;
-            color: #ffffff;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        table td {
-            text-align: center;
-        }
-
-        .progress {
-            background-color: #f4f4f4;
-            border-radius: 8px;
-            height: 20px;
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 20px;
-            border-radius: 8px;
-            text-align: right;
-            padding-right: 5px;
-            color: #ffffff;
-            font-weight: 100;
-            line-height: 20px;
-            transition: width 0.3s ease, background 0.3s ease;
-        }
-
-        .progress-bar.green {
-            background: linear-gradient(135deg, #004d40 0%, #00796b 100%);
-        }
-
-        .progress-bar.red {
-            background: linear-gradient(135deg, #d32f2f 0%, #ff6f6f 100%);
-        }
-
-        .footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #004d40;
-            color: #ffffff;
-            margin-top: 30px;
-            border-radius: 12px;
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .bar-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-            }
-
-            .bar {
-                min-width: 100px;
-                max-width: 150px;
-            }
-
-            .card {
-                padding: 15px;
-            }
-
-            .bar div {
-                height: 150px;
-            }
-        }
-    </style>
-</head>
+    <link rel="stylesheet" href="indicadores.css"
 <body>
 
 <div class="header">
-    <img src="../Imagenes/logo.png" alt="Logo de Gategourmet">
-    <h1>Indicadores de Documentación</h1>
+    <img src="../Imagenes/Logo_oficial_B-N.png" alt="Logo de la empresa" title="Logo de la empresa">
+    <h1>Indicadores Generales</h1>
 </div>
 
 <div class="container">
     <div class="card">
-        <h2>Estado de Documentación</h2>
+        <h2>Estado General de Documentación</h2>
         <div class="bar-container">
-            <div class="bar">
-                <div style="height: <?php echo $estado['en_actualizacion'] * $factor_escala; ?>px;"></div>
-                <div class="bar-value"><?php echo htmlspecialchars($estado['en_actualizacion']); ?></div>
-                <div class="bar-label">En Actualización</div>
+            <div class="bar" role="progressbar" aria-valuenow="<?php echo $estado['en_actualizacion']; ?>" aria-valuemin="0" aria-valuemax="<?php echo $max_valor; ?>">
+                <div id="en-actualizacion" style="height: <?php echo $estado['en_actualizacion'] * $factor_escala; ?>px;">
+                    <div class="bar-value"><?php echo htmlspecialchars($estado['en_actualizacion']); ?></div>
+                    <div class="bar-label">En Actualización</div>
+                </div>
             </div>
-            <div class="bar">
-                <div style="height: <?php echo $estado['desactualizado'] * $factor_escala; ?>px;"></div>
-                <div class="bar-value"><?php echo htmlspecialchars($estado['desactualizado']); ?></div>
-                <div class="bar-label">Desactualizado</div>
+            <div class="bar" role="progressbar" aria-valuenow="<?php echo $estado['obsoleto']; ?>" aria-valuemin="0" aria-valuemax="<?php echo $max_valor; ?>">
+                <div id="obsoleto" style="height: <?php echo $estado['obsoleto'] * $factor_escala; ?>px;">
+                    <div class="bar-value"><?php echo htmlspecialchars($estado['obsoleto']); ?></div>
+                    <div class="bar-label">Obsoleto</div>
+                </div>
             </div>
-            <div class="bar">
-                <div style="height: <?php echo $estado['obsoleto'] * $factor_escala; ?>px;"></div>
-                <div class="bar-value"><?php echo htmlspecialchars($estado['obsoleto']); ?></div>
-                <div class="bar-label">Obsoleto</div>
+            <div class="bar" role="progressbar" aria-valuenow="<?php echo $estado['anulado']; ?>" aria-valuemin="0" aria-valuemax="<?php echo $max_valor; ?>">
+                <div id="anulado" style="height: <?php echo $estado['anulado'] * $factor_escala; ?>px;">
+                    <div class="bar-value"><?php echo htmlspecialchars($estado['anulado']); ?></div>
+                    <div class="bar-label">Anulado</div>
+                </div>
             </div>
-            <div class="bar">
-                <div style="height: <?php echo $estado['anulado'] * $factor_escala; ?>px;"></div>
-                <div class="bar-value"><?php echo htmlspecialchars($estado['anulado']); ?></div>
-                <div class="bar-label">Anulado</div>
+            <div class="bar" role="progressbar" aria-valuenow="<?php echo $estado['desactualizado']; ?>" aria-valuemin="0" aria-valuemax="<?php echo $max_valor; ?>">
+                <div id="desactualizado" style="height: <?php echo $estado['desactualizado'] * $factor_escala; ?>px;">
+                    <div class="bar-value"><?php echo htmlspecialchars($estado['desactualizado']); ?></div>
+                    <div class="bar-label">Desactualizado</div>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="card">
-        <h2>Porcentaje de Documentación en Actualización por Área</h2>
+        <h2>Porcentajes de Documentación</h2>
         <table>
             <thead>
-                <tr>
-                    <th>Área</th>
-                    <th>Porcentaje en Actualización</th>
-                </tr>
+            <tr>
+                <th>Área</th>
+                <th>Documentos Totales</th>
+                <th>% En Actualización</th>
+            </tr>
             </thead>
             <tbody>
-                <?php while ($fila = $resultado_porcentaje->fetch_assoc()) : ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($fila['areas']); ?></td>
-                        <td>
-                            <div class="progress">
-                                <div class="progress-bar green" style="width: <?php echo htmlspecialchars($fila['porcentaje_actualizacion']); ?>%;">
-                                    <?php echo number_format($fila['porcentaje_actualizacion'], 2); ?>%
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
+            <?php while ($fila = $resultado_porcentaje->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($fila['areas']); ?></td>
+                    <td><?php echo (int)$fila['total_documentos']; ?></td>
+                    <td><?php echo ($fila['total_documentos'] > 0) ? round($fila['porcentaje_actualizacion'], 2) : 0; ?>%</td>
+                </tr>
+            <?php endwhile; ?>
             </tbody>
         </table>
     </div>
 
     <div class="card">
-        <h2>Cantidad de Documentación Desactualizada por Área</h2>
+        <h2>Documentos Desactualizados</h2>
         <table>
             <thead>
-                <tr>
-                    <th>Área</th>
-                    <th>Documentos Desactualizados</th>
-                </tr>
+            <tr>
+                <th>Área</th>
+                <th>Total Desactualizados</th>
+            </tr>
             </thead>
             <tbody>
-                <?php while ($fila = $resultado_desactualizada->fetch_assoc()) : ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($fila['areas']); ?></td>
-                        <td><?php echo htmlspecialchars($fila['total_desactualizados']); ?></td>
-                    </tr>
-                <?php endwhile; ?>
+            <?php while ($fila = $resultado_desactualizada->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($fila['areas']); ?></td>
+                    <td><?php echo (int)$fila['total_desactualizados']; ?></td>
+                </tr>
+            <?php endwhile; ?>
             </tbody>
         </table>
     </div>
 
     <div class="card">
-        <h2>Indicadores de Tiempo de Entrega</h2>
-        <div class="bar-container">
-            <div class="bar">
-                <div style="height: <?php echo $tiempos['porcentaje_a_tiempo']; ?>%;"></div>
-                <div class="bar-value"><?php echo number_format($tiempos['porcentaje_a_tiempo'], 2); ?>%</div>
-                <div class="bar-label">A Tiempo</div>
+        <h2>Tiempos de Entrega</h2>
+        <div class="progress">
+            <div class="progress-bar green" style="width: <?php echo round($tiempos['porcentaje_a_tiempo'], 2); ?>%;">
+                A Tiempo: <?php echo round($tiempos['porcentaje_a_tiempo'], 2); ?>%
             </div>
-            <div class="bar">
-                <div style="height: <?php echo $tiempos['porcentaje_fuera_de_tiempo']; ?>%;"></div>
-                <div class="bar-value"><?php echo number_format($tiempos['porcentaje_fuera_de_tiempo'], 2); ?>%</div>
-                <div class="bar-label">Fuera de Tiempo</div>
+        </div>
+        <div class="progress">
+            <div class="progress-bar red" style="width: <?php echo round($tiempos['porcentaje_fuera_de_tiempo'], 2); ?>%;">
+                Fuera de Tiempo: <?php echo round($tiempos['porcentaje_fuera_de_tiempo'], 2); ?>%
             </div>
-            <div class="bar">
-                <div style="height: <?php echo $tiempos['porcentaje_no_entregado']; ?>%;"></div>
-                <div class="bar-value"><?php echo number_format($tiempos['porcentaje_no_entregado'], 2); ?>%</div>
-                <div class="bar-label">No Entregado</div>
+        </div>
+        <div class="progress">
+            <div class="progress-bar gray" style="width: <?php echo round($tiempos['porcentaje_no_entregado'], 2); ?>%;">
+                No Entregado: <?php echo round($tiempos['porcentaje_no_entregado'], 2); ?>%
             </div>
         </div>
     </div>
 </div>
 
 <div class="footer">
-    &copy; <?php echo date('Y'); ?> Gategourmet. Todos los derechos reservados.
+    <p>&copy; 2024 gategourmet. Todos los derechos reservados.</p>
 </div>
 
 </body>
