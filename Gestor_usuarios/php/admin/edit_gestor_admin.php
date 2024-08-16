@@ -1,5 +1,5 @@
 <?php
-include_once("/config/config_gestor.php");
+include_once("config_gestor.php");
 
 if(isset($_POST['update']))
 {
