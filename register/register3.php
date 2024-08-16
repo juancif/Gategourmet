@@ -202,7 +202,7 @@ if (isset($_POST['Submit'])) {
     </main>
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
-        <script src="script.js"></script>
+        <script src="/script_prueba/script.js"></script>
     </footer>
 </body>
 </html>
