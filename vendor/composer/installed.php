@@ -4,10 +4,14 @@
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
 <<<<<<< HEAD
+<<<<<<< HEAD
         'reference' => '3ea047006e4672d6471816919454e4080e0c36af',
 =======
         'reference' => '8c8509fe50eccd74d31160511f7cb1c4d051ef39',
 >>>>>>> cf18b17ca5bb4e27e51670217984bdff237faf3b
+=======
+        'reference' => '8ee87764abb9842436d37341f156c745f8f3b195',
+>>>>>>> parent of cf18b17 (Actualizacion36)
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -18,15 +22,20 @@
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
 <<<<<<< HEAD
+<<<<<<< HEAD
             'reference' => '3ea047006e4672d6471816919454e4080e0c36af',
 =======
             'reference' => '8c8509fe50eccd74d31160511f7cb1c4d051ef39',
 >>>>>>> cf18b17ca5bb4e27e51670217984bdff237faf3b
+=======
+            'reference' => '8ee87764abb9842436d37341f156c745f8f3b195',
+>>>>>>> parent of cf18b17 (Actualizacion36)
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
         'maennchen/zipstream-php' => array(
@@ -57,6 +66,8 @@
             'dev_requirement' => false,
         ),
 >>>>>>> cf18b17ca5bb4e27e51670217984bdff237faf3b
+=======
+>>>>>>> parent of cf18b17 (Actualizacion36)
         'phpmailer/phpmailer' => array(
             'pretty_version' => 'v6.9.1',
             'version' => '6.9.1.0',
@@ -77,15 +88,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'phpoffice/phpspreadsheet' => array(
-            'pretty_version' => '2.2.2',
-            'version' => '2.2.2.0',
-            'reference' => 'ffbcee68069b073bff07a71eb321dcd9f2763513',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../phpoffice/phpspreadsheet',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'phpoffice/phpword' => array(
             'pretty_version' => '1.2.0',
             'version' => '1.2.0.0',
@@ -95,6 +97,7 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+<<<<<<< HEAD
         'psr/http-client' => array(
             'pretty_version' => '1.0.3',
             'version' => '1.0.3.0',
@@ -132,5 +135,7 @@
             'dev_requirement' => false,
         ),
 >>>>>>> cf18b17ca5bb4e27e51670217984bdff237faf3b
+=======
+>>>>>>> parent of cf18b17 (Actualizacion36)
     ),
 );

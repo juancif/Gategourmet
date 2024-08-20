@@ -8,6 +8,7 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
 {
     public static $prefixLengthsPsr4 = array (
 <<<<<<< HEAD
+<<<<<<< HEAD
         'P' => 
         array (
             'PHPMailer\\PHPMailer\\' => 20,
@@ -20,59 +21,28 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
         array (
             'ZipStream\\' => 10,
         ),
+=======
+>>>>>>> parent of cf18b17 (Actualizacion36)
         'T' => 
         array (
             'Tests\\PhpOffice\\Math\\' => 21,
         ),
         'P' => 
         array (
-            'Psr\\SimpleCache\\' => 16,
-            'Psr\\Http\\Message\\' => 17,
-            'Psr\\Http\\Client\\' => 16,
             'PhpOffice\\PhpWord\\' => 18,
-            'PhpOffice\\PhpSpreadsheet\\' => 25,
             'PhpOffice\\Math\\' => 15,
             'PHPMailer\\PHPMailer\\' => 20,
-        ),
-        'M' => 
-        array (
-            'Matrix\\' => 7,
-        ),
-        'C' => 
-        array (
-            'Complex\\' => 8,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'ZipStream\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/maennchen/zipstream-php/src',
-        ),
         'Tests\\PhpOffice\\Math\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoffice/math/tests/Math',
         ),
-        'Psr\\SimpleCache\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
-        ),
-        'Psr\\Http\\Message\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
-        ),
-        'Psr\\Http\\Client\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/http-client/src',
-        ),
         'PhpOffice\\PhpWord\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoffice/phpword/src/PhpWord',
-        ),
-        'PhpOffice\\PhpSpreadsheet\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet',
         ),
         'PhpOffice\\Math\\' => 
         array (
@@ -84,6 +54,7 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         'Matrix\\' => 
         array (
@@ -94,6 +65,8 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
             0 => __DIR__ . '/..' . '/markbaker/complex/classes/src',
         ),
 >>>>>>> cf18b17ca5bb4e27e51670217984bdff237faf3b
+=======
+>>>>>>> parent of cf18b17 (Actualizacion36)
     );
 
     public static $classMap = array (
