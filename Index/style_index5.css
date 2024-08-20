@@ -166,7 +166,6 @@ body{
     margin-top: 0px;
     position:relative;
     background-color: transparent;
-    
 }
 
 .img__usuario:hover{
@@ -190,7 +189,7 @@ body{
     margin-left: 250px;
     margin-right: 5cqmin;
     margin-right: -3cqmax;
-    padding-right: 40px;
+    padding-right: 10px;
 }
 
 .nav__item__user{
@@ -198,12 +197,12 @@ body{
     position: absolute;
     display: inline-block;
     margin: auto;
-    margin-left: -280px;
-    
+    margin-left: -200px;
 }
 
 .cerrar__sesion__link{
     margin: 0;
+    margin-top: 30px;
     text-decoration: none;
     text-decoration:#1117;
     color:black ;

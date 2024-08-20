@@ -41,19 +41,30 @@ if (isset($_POST['Submit'])) {
     } else {
         try {
             $dbConn->beginTransaction();
-
+        
+            // Verificar si el documento ya existe en la base de datos
+            $checkDocSql = "SELECT COUNT(*) FROM administradores WHERE documento = :documento";
+            $checkDocQuery = $dbConn->prepare($checkDocSql);
+            $checkDocQuery->bindparam(':documento', $documento);
+            $checkDocQuery->execute();
+            $count = $checkDocQuery->fetchColumn();
+        
+            if ($count > 0) {
+                throw new Exception("El documento ya está registrado.");
+            }
+        
             // Verificar el campo cargo y definir la tabla correspondiente
             if ($rol === 'Administrador') {
-                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol ) 
+                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
                         VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
             } else {
                 $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
                         VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
             }
-
+        
             $query = $dbConn->prepare($sql);
             $query->bindparam(':nombre_usuario', $nombre_usuario);
-            $query->bindparam(':contrasena', $contrasena);
+            $query->bindparam(':contrasena', $contrasena); // Hash de la contraseña
             $query->bindparam(':correo', $correo);
             $query->bindparam(':nombres_apellidos', $nombres_apellidos);
             $query->bindparam(':documento', $documento);
@@ -61,12 +72,12 @@ if (isset($_POST['Submit'])) {
             $query->bindparam(':cargo', $cargo);
             $query->bindparam(':rol', $rol);
             $query->execute();
-
+        
             $dbConn->commit();
-
+        
             if ($query->rowCount() > 0) {
                 // Redirigir a la página deseada después del registro exitoso
-                header("Location: http://localhost/GateGourmet/register/registro_exitoso.php");
+                header("Location: http://localhost/GateGourmet/register/registro_exitoso/registro_exitoso.php");
                 exit();
             } else {
                 echo "<font color='red'>Error al registrar el usuario o administrador.</font><br/>";
@@ -75,6 +86,7 @@ if (isset($_POST['Submit'])) {
             $dbConn->rollBack();
             echo "<font color='red'>Error: " . $e->getMessage() . "</font><br/>";
         }
+        
     }
 }
 ?>
