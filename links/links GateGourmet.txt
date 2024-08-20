@@ -55,10 +55,13 @@ http://localhost/GateGourmet/restablecer/restablecer_exitoso.php
 Indicadores
 
 http://localhost/GateGourmet/Indicadores/indicadores.php
+http://localhost/GateGourmet/Indicadores/read_excel.php
 
 
 Estadisticas
 
 http://localhost/GateGourmet/Estadisticas/estadisticas.php
+
+
 
 
