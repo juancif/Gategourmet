@@ -6,6 +6,7 @@
     ],
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "content-hash": "baf0b1b659e688a64051c5ee9742a77e",
     "packages": [
         {
@@ -202,6 +203,11 @@
         },
         {
 >>>>>>> cf18b17ca5bb4e27e51670217984bdff237faf3b
+=======
+    "content-hash": "f4dbe78037806b619b5c1ddee1160d4d",
+    "packages": [
+        {
+>>>>>>> parent of cf18b17 (Actualizacion36)
 =======
     "content-hash": "f4dbe78037806b619b5c1ddee1160d4d",
     "packages": [
@@ -451,6 +457,7 @@
             },
             "time": "2023-11-30T11:22:23+00:00"
 <<<<<<< HEAD
+<<<<<<< HEAD
         },
         {
             "name": "psr/http-client",
@@ -663,6 +670,8 @@
             },
             "time": "2021-10-29T13:26:27+00:00"
 >>>>>>> cf18b17ca5bb4e27e51670217984bdff237faf3b
+=======
+>>>>>>> parent of cf18b17 (Actualizacion36)
 =======
 >>>>>>> parent of cf18b17 (Actualizacion36)
         }

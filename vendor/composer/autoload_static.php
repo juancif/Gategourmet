@@ -9,6 +9,7 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
     public static $prefixLengthsPsr4 = array (
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         'P' => 
         array (
             'PHPMailer\\PHPMailer\\' => 20,
@@ -21,6 +22,8 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
         array (
             'ZipStream\\' => 10,
         ),
+=======
+>>>>>>> parent of cf18b17 (Actualizacion36)
 =======
 >>>>>>> parent of cf18b17 (Actualizacion36)
         'T' => 
@@ -55,6 +58,7 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
         ),
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         'Matrix\\' => 
         array (
@@ -65,6 +69,8 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
             0 => __DIR__ . '/..' . '/markbaker/complex/classes/src',
         ),
 >>>>>>> cf18b17ca5bb4e27e51670217984bdff237faf3b
+=======
+>>>>>>> parent of cf18b17 (Actualizacion36)
 =======
 >>>>>>> parent of cf18b17 (Actualizacion36)
     );

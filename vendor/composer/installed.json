@@ -3,6 +3,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
             "name": "maennchen/zipstream-php",
             "version": "3.1.0",
@@ -202,6 +203,8 @@
         },
         {
 >>>>>>> cf18b17ca5bb4e27e51670217984bdff237faf3b
+=======
+>>>>>>> parent of cf18b17 (Actualizacion36)
 =======
 >>>>>>> parent of cf18b17 (Actualizacion36)
             "name": "phpmailer/phpmailer",
@@ -457,6 +460,7 @@
             },
             "install-path": "../phpoffice/phpword"
 <<<<<<< HEAD
+<<<<<<< HEAD
         },
         {
             "name": "psr/http-client",
@@ -681,6 +685,8 @@
             },
             "install-path": "../psr/simple-cache"
 >>>>>>> cf18b17ca5bb4e27e51670217984bdff237faf3b
+=======
+>>>>>>> parent of cf18b17 (Actualizacion36)
 =======
 >>>>>>> parent of cf18b17 (Actualizacion36)
         }
