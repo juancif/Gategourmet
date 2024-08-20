@@ -52,6 +52,13 @@ reestablecer:
 http://localhost/GateGourmet/restablecer/restablecer.php
 http://localhost/GateGourmet/restablecer/restablecer_exitoso.php
 
+Indicadores
 
+http://localhost/GateGourmet/Indicadores/indicadores.php
+
+
+Estadisticas
+
+http://localhost/GateGourmet/Estadisticas/estadisticas.php
 
 
