@@ -26,17 +26,11 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
                 <th>CONTRASEÑA</th>
                 <th>CORREO ELECTRONICO</th>
                 <th>NOMBRES Y APELLIDOS</th>
-<<<<<<< HEAD:Gestor_usuarios/php/User/index_gestor.php
                 <th>DOCUMENTO</th>
                 <th>AREA PERTENECE</th>
                 <th>CARGO</th>
                 <th>ROL</th>
-=======
-                <th>documento</th>
-                <th>area</th>
-                <th>cargo</th>
->>>>>>> cf18b17ca5bb4e27e51670217984bdff237faf3b:Gestor_usuarios/index_gestor.php
-                <th>EDICIÓN</th>
+             <th>EDICIÓN</th>
             </tr>
             <?php
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {

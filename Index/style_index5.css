@@ -189,7 +189,7 @@ body{
     margin: auto;
     margin-left: 250px;
     margin-right: 5cqmin;
-    margin-right: -1cqmax;
+    margin-right: -3cqmax;
     padding-right: 40px;
 }
 
@@ -199,7 +199,7 @@ body{
     display: inline-block;
     margin: auto;
     margin-left: -280px;
-    margin-top: 5px;
+    
 }
 
 .cerrar__sesion__link{
@@ -238,23 +238,9 @@ body{
     margin: 50px 50px;
 }
 
-.triangulo{
-    max-width: 650px;
-    height: 180px;
-    margin-bottom: 20px;   
-    margin-left: 12cqmax;
-    margin-left: 450px;
-    margin-left: 14cqmax;
-    margin-left: 14cqmax;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
-    position: absolute;
-
-}
-
 .recuadroimagen{
     position: relative;
-    max-width: 1250px;
+    width: 95%;
     height: 180px;
     background: linear-gradient(to left,transparent, rgb(10, 192, 146), rgb(67, 153, 82),transparent);
     backdrop-filter: blur(10px);
