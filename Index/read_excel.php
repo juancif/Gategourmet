@@ -1,53 +1,36 @@
 <?php
-require 'vendor/indicadores.php'; // Asegúrate de que la ruta sea correcta
+require 'vendor/autoload.php'; // Asegúrate de tener Composer instalado y el autoload
 
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
-// Ruta al archivo Excel
-$excelFile = 'C:/xampp/htdocs/Gategourmet/documentos/Listado_maestro.csv';
+// Conexión a la base de datos
+$mysqli = new mysqli("localhost", "root", "", "gategourmet");
 
-// Leer el archivo Excel
-$reader = new Xlsx();
-$spreadsheet = $reader->load($excelFile);
+// Verificar la conexión
+if ($mysqli->connect_error) {
+    die("Conexión fallida: " . $mysqli->connect_error);
+}
+
+// Cargar el archivo Excel
+$spreadsheet = IOFactory::load('datos.xlsx');
 $sheet = $spreadsheet->getActiveSheet();
-
-// Obtener los datos de la hoja activa
 $data = $sheet->toArray();
-?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Indicadores de Documentación</title>
-    <link rel="stylesheet" href="indicadores.css">
-</head>
-<body>
-    <h1>Datos del Archivo Excel</h1>
-    <table>
-        <thead>
-            <tr>
-                <?php
-                // Imprimir encabezados de columna
-                foreach ($data[0] as $header) {
-                    echo "<th>{$header}</th>";
-                }
-                ?>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            // Imprimir datos de las filas
-            for ($i = 1; $i < count($data); $i++) {
-                echo "<tr>";
-                foreach ($data[$i] as $cell) {
-                    echo "<td>{$cell}</td>";
-                }
-                echo "</tr>";
-            }
-            ?>
-        </tbody>
-    </table>
-</body>
-</html>
+// Limpiar la tabla antes de insertar nuevos datos
+$mysqli->query("TRUNCATE TABLE listado_maestro");
+
+// Insertar datos en la base de datos
+$stmt = $mysqli->prepare("INSERT INTO listado_maestro (areas, estado, tipo, fecha_aprobacion) VALUES (?, ?, ?, ?)");
+foreach ($data as $row) {
+    // Omite la primera fila si es encabezado
+    if ($row[0] === 'Área') {
+        continue;
+    }
+    $stmt->bind_param('ssss', $row[0], $row[1], $row[2], $row[3]);
+    $stmt->execute();
+}
+
+$stmt->close();
+$mysqli->close();
+?>
