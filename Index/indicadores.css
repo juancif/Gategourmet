@@ -15,7 +15,7 @@ body {
 
 /* Encabezado */
 .header {
-    background: rgba(0, 0, 0, 0.9);
+    background: linear-gradient(to left,transparent, rgb(10, 192, 146), rgb(67, 153, 82),transparent);
     backdrop-filter: blur(10px);
     text-align: center;
     padding: 40px 20px;
@@ -25,13 +25,14 @@ body {
 }
 
 .logo {
-    max-width: 300px;
+    max-width: 7000px;
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .logo:hover {
     transform: scale(1.1);
     filter: brightness(1.2);
+    
 }
 
 /* Contenido principal */
@@ -143,12 +144,11 @@ tr:hover td {
 
 /* Pie de página */
 .footer {
-    background: rgba(0, 0, 0, 0.9);
+    background: linear-gradient(to left,transparent, rgb(10, 192, 146), rgb(67, 153, 82),transparent);
     backdrop-filter: blur(10px);
     text-align: center;
     padding: 20px;
-    color: #fff;
-    box-shadow: 0 -12px 24px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(to left,transparent, rgb(10, 192, 146), rgb(67, 153, 82),transparent);
     font-size: 0.9em;
     letter-spacing: 0.05em;
     font-family: 'Roboto', sans-serif;
@@ -263,11 +263,34 @@ th {
 }
 
 .footer a {
-    color: #007bff;
+    background-color: #f2f2f2;
     text-decoration: none;
     margin: 0 5px;
 }
 
 .footer a:hover {
     text-decoration: underline;
+}
+.progress-bar {
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 20px;
+    line-height: 20px;
+    color: white;
+    text-align: right;
+    padding-right: 5px;
+    border-radius: 5px;
+}
+
+.low {
+    background-color: red; /* Menos de 50% */
+}
+
+.high {
+    background-color: green; /* 50% o más */
 }

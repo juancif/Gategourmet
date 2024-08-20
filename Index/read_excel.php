@@ -13,7 +13,7 @@ if ($mysqli->connect_error) {
 }
 
 // Cargar el archivo Excel
-$spreadsheet = IOFactory::load('datos.xlsx');
+$spreadsheet = IOFactory::load('libro9.xlsx');
 $sheet = $spreadsheet->getActiveSheet();
 $data = $sheet->toArray();
 

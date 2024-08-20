@@ -47,7 +47,41 @@ $mysqli->close();
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <link rel="stylesheet" href="indicadores.css">
     <style>
-        
+        .table-container {
+            margin: 20px 0;
+        }
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table-container th, .table-container td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #f3f3f3;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress {
+            height: 20px;
+            line-height: 20px;
+            color: white;
+            text-align: right;
+            padding-right: 5px;
+            border-radius: 5px;
+        }
+        .low {
+            background-color: red; /* Menos de 50% */
+        }
+        .high {
+            background-color: green; /* 50% o más */
+        }
+        .chart-container {
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
