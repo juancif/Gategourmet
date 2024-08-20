@@ -59,7 +59,7 @@ CREATE TABLE listado_maestro (
     version VARCHAR(50),
     estado VARCHAR(50),
     fecha_aprobacion DATE,
-    areas TEXT,
+    areas VARCHAR(255),
     motivo_del_cambio TEXT,
     tiempo_de_retencion VARCHAR(255),
     responsable_de_retencion VARCHAR(255),
@@ -73,8 +73,14 @@ CREATE TABLE listado_maestro (
     senal_alerta VARCHAR(50),
     obsoleto VARCHAR(50),
     anulado VARCHAR(50),
-    en_actualizacion VARCHAR(50)
+    en_actualizacion VARCHAR(50),
+    INDEX idx_areas (areas),
+    INDEX idx_estado (estado),
+    INDEX idx_tipo (tipo),
+    INDEX idx_fecha_aprobacion (fecha_aprobacion),
+    INDEX idx_fecha_vigencia (fecha_de_vigencia)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 
 
 CREATE TABLE log_eventos (
