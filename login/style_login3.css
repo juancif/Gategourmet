@@ -123,6 +123,7 @@ input[type="text"]:focus, input[type="password"]:focus {
     margin-top: 20px;
 }
 
+<<<<<<< HEAD
 input[type="submit"], .button, .button-reestablecer {
     background: #3d9970; /* Cambiado a verde oliva */
     color: white;
@@ -154,6 +155,9 @@ input[type="submit"], .button, .button-reestablecer {
 }
 
 .button-reestablecer {
+=======
+input[type="submit"], .button, .button-small {
+>>>>>>> cf18b17ca5bb4e27e51670217984bdff237faf3b
     background: #3d9970; /* Cambiado a verde oliva */
     color: white;
     font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
@@ -171,7 +175,12 @@ input[type="submit"], .button, .button-reestablecer {
     margin-left: 75px;
 }
 
+<<<<<<< HEAD
 input[type="submit"]:hover, .button:hover {
+=======
+
+input[type="submit"]:hover, .button-small, .button:hover {
+>>>>>>> cf18b17ca5bb4e27e51670217984bdff237faf3b
     background: #2d6e50; /* Verde oliva más oscuro */
     transform: scale(1.05);
 }
@@ -222,5 +231,9 @@ input[type="submit"]:active, .button-reestablecer , .button:active {
         width: 100%;
         margin-bottom: 10px;
     }
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> cf18b17ca5bb4e27e51670217984bdff237faf3b

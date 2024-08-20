@@ -1,0 +1,78 @@
+/* Estilos generales */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: url('../Imagenes/fondogg3.webp') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Encabezado */
+.header {
+    background: rgba(17, 17, 17, 0.7); /* Semi-transparente para el encabezado */
+    backdrop-filter: blur(10px);
+    text-align: center;
+    padding: 20px 40px;
+    box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
+}
+
+.logo {
+    max-width: 600px;
+}
+
+/* Contenido principal */
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    flex-direction: column;
+}
+
+/* Contenedor de gráficos */
+.chart-container {
+    width: 80%;
+    margin: auto;
+    margin-bottom: 50px;
+    background: rgba(255, 255, 255, 0.9); /* Fondo blanco con opacidad para los contenedores de gráficos */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.chart-container h2 {
+    margin-top: 0;
+    color: #333; /* Color del texto del título */
+}
+
+/* Pie de página */
+.footer {
+    background: rgba(17, 17, 17, 0.7); /* Semi-transparente para el pie de página */
+    backdrop-filter: blur(10px);
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .chart-container {
+        width: 95%;
+        margin-bottom: 20px;
+    }
+}

@@ -1,0 +1,122 @@
+CREATE DATABASE gategourmet;
+use gategourmet;
+
+CREATE TABLE usuarios (
+    documento varchar(25) NOT NULL,
+    nombre_usuario varchar(50) NOT NULL,
+    contrasena varchar(25) NOT NULL,
+    correo varchar(50) NOT NULL,
+    nombres_apellidos varchar(100) NOT NULL,
+    area varchar(25) NOT NULL,
+    cargo varchar(25) NOT NULL,
+    estado varchar(50) NOT NULL,
+    PRIMARY KEY (documento)
+);
+
+CREATE TABLE administradores (
+    documento varchar(25) NOT NULL,
+    nombre_usuario varchar(50) NOT NULL,
+    contrasena varchar(25) NOT NULL,
+    correo varchar(50) NOT NULL,
+    nombres_apellidos varchar(100) NOT NULL,
+    area varchar(25) NOT NULL,
+    cargo varchar(25) NOT NULL,
+    rol varchar(255) DEFAULT NULL,
+    PRIMARY KEY (documento),
+    FOREIGN KEY (documento) REFERENCES usuarios(documento)
+);
+
+CREATE TABLE cargos (
+    id int(11) NOT NULL AUTO_INCREMENT,
+    nombre_cargo varchar(255) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE (nombre_cargo)
+);
+
+CREATE TABLE roles (
+    id int(11) NOT NULL AUTO_INCREMENT,
+    nombre_rol varchar(255) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE (nombre_rol)
+);
+
+CREATE TABLE documentos (
+    id int(11) NOT NULL AUTO_INCREMENT,
+    codigo varchar(50) NOT NULL,
+    tipo_documento enum('Word', 'Excel', 'PDF', 'PowerPoint', 'Texto', 'Otro') NOT NULL,
+    estado enum('Activo', 'Inactivo', 'Pendiente', 'Archivado') NOT NULL,
+    fecha_creacion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    fecha_modificacion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE listado_maestro (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    proceso VARCHAR(255),
+    codigo VARCHAR(255),
+    titulo_documento VARCHAR(255),
+    tipo VARCHAR(255),
+    version VARCHAR(50),
+    estado VARCHAR(50),
+    fecha_aprobacion DATE,
+    areas TEXT,
+    motivo_del_cambio TEXT,
+    tiempo_de_retencion VARCHAR(255),
+    responsable_de_retencion VARCHAR(255),
+    lugar_de_almacenamiento_fisico TEXT,
+    lugar_de_almacenamiento_magnetico TEXT,
+    conservacion TEXT,
+    disposicion_final TEXT,
+    copias_controladas TEXT,
+    fecha_de_vigencia DATE,
+    dias INT,
+    senal_alerta VARCHAR(50),
+    obsoleto TINYINT(1),
+    anulado TINYINT(1),
+    en_actualizacion TINYINT(1)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+
+CREATE TABLE log_eventos (
+    id_usuario int(11) NOT NULL,
+    evento varchar(255) NOT NULL,
+    fecha datetime NOT NULL,
+    PRIMARY KEY (id_usuario, fecha),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(documento)
+);
+
+CREATE TABLE password_resets (
+    id int(11) NOT NULL AUTO_INCREMENT,
+    email varchar(50) NOT NULL,
+    token varchar(100) NOT NULL,
+    created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (email) REFERENCES usuarios(correo)
+);
+
+
+DROP TABLE IF EXISTS procesos;
+
+CREATE TABLE procesos (
+    id int(11) NOT NULL AUTO_INCREMENT,
+    macroproceso varchar(255) NOT NULL,
+    proceso varchar(255) NOT NULL,
+    usuarios varchar(25) NOT NULL,  -- Asegúrate de que el tamaño coincida
+    cargos varchar(255) NOT NULL,
+    email varchar(50) NOT NULL,      -- Asegúrate de que el tamaño coincida
+    rol varchar(255) NOT NULL,       -- Asegúrate de que el tamaño coincida
+   
+    PRIMARY KEY (id),
+    FOREIGN KEY (rol) REFERENCES roles(nombre_rol),
+    FOREIGN KEY (cargos) REFERENCES cargos(nombre_cargo),
+    FOREIGN KEY (email) REFERENCES usuarios(correo)
+);
+
+
+LOAD DATA INFILE 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro6.csv'
+INTO TABLE listado_maestro
+FIELDS TERMINATED BY ';'
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(proceso, codigo, titulo_documento, tipo, version, estado, fecha_aprobacion, areas, motivo_del_cambio, tiempo_de_retencion, responsable_de_retencion, lugar_de_almacenamiento_fisico, lugar_de_almacenamiento_magnetico, conservacion, disposicion_final, copias_controladas, fecha_de_vigencia, dias, senal_alerta, obsoleto, anulado, en_actualizacion);
