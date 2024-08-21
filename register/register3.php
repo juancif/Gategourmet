@@ -10,9 +10,11 @@ if (isset($_POST['Submit'])) {
     $area = $_POST['area'];
     $cargo = $_POST['cargo'];
     $rol = $_POST['rol'];
+    $estado = $_POST['estado'];
 
     // Verificar si algún campo está vacío
-    if (empty($nombre_usuario) || empty($contrasena) || empty($correo) || empty($nombres_apellidos) || empty($documento) || empty($area) || empty($cargo) || empty($rol)) {
+    if (empty($nombre_usuario) || empty($contrasena) || empty($correo) || empty($nombres_apellidos) || empty($documento) 
+    || empty($area) || empty($cargo) || empty($rol) || empty($estado)) {
         if (empty($nombre_usuario)) {
             echo "<font color='red'>Campo: nombre_usuario está vacío.</font><br/>";
         }
@@ -37,26 +39,29 @@ if (isset($_POST['Submit'])) {
         if (empty($rol)) {
             echo "<font color='red'>Campo: rol está vacío.</font><br/>";
         }
+        if (empty($estado)) {
+            echo "<font color='red'>Campo: estado está vacío.</font><br/>";
+        }
         echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
     } else {
         try {
             $dbConn->beginTransaction();
         
             // Verificar si el documento ya existe en la base de datos
-            $checkDocSql = "SELECT COUNT(*) FROM administradores WHERE documento = :documento";
+            $checkDocSql = "SELECT COUNT(*) FROM administradores WHERE documento_admin = :documento_admin";
             $checkDocQuery = $dbConn->prepare($checkDocSql);
-            $checkDocQuery->bindparam(':documento', $documento);
+            $checkDocQuery->bindparam(':documento_admin', $documento_admin);
             $checkDocQuery->execute();
             $count = $checkDocQuery->fetchColumn();
 
         
             // Verificar el campo cargo y definir la tabla correspondiente
             if ($rol === 'Administrador') {
-                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
-                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
+                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento_admin, area, cargo, rol, estado) 
+                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento_admin, :area, :cargo, :rol, :estado)";
             } else {
-                $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
-                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
+                $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol, estado) 
+                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol, :estado)";
             }
         
             $query = $dbConn->prepare($sql);
@@ -68,6 +73,7 @@ if (isset($_POST['Submit'])) {
             $query->bindparam(':area', $area);
             $query->bindparam(':cargo', $cargo);
             $query->bindparam(':rol', $rol);
+            $query->bindparam(':estado', $estado);
             $query->execute();
         
             $dbConn->commit();
