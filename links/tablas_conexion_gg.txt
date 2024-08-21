@@ -2,16 +2,16 @@ CREATE DATABASE gategourmet;
 use gategourmet;
 
 CREATE TABLE usuarios (
-    documento int NOT NULL,
+    documento_user int NOT NULL,
     nombre_usuario varchar(50) NOT NULL,
     contrasena varchar(25) NOT NULL,
     correo varchar(50) NOT NULL,
     nombres_apellidos varchar(100) NOT NULL,
     area varchar(25) NOT NULL,
     cargo varchar(25) NOT NULL,
-    rol varchar(50) NOT NULL,
-    estado varchar(50) DEFAULT NULL,
-    PRIMARY KEY (documento),
+    rol varchar(50) DEFAULT NULL,
+    estado varchar(50) NOT NULL,
+    PRIMARY KEY (documento_user),
     UNIQUE (correo) 
 );
 
@@ -23,10 +23,9 @@ CREATE TABLE administradores (
     nombres_apellidos varchar(100) NOT NULL,
     area varchar(25) NOT NULL,
     cargo varchar(25) NOT NULL,
-    rol varchar(50)  NOT NULL,
-    estado varchar(50) DEFAULT NULL,
+    rol varchar(50) DEFAULT NULL,
     PRIMARY KEY (documento_admin),
-    FOREIGN KEY (documento_admin) REFERENCES usuarios(documento)
+    FOREIGN KEY (documento_admin) REFERENCES usuarios(documento_user)
 );
 
 CREATE TABLE cargos (
@@ -85,7 +84,7 @@ CREATE TABLE log_eventos (
     evento varchar(255) NOT NULL,
     fecha datetime NOT NULL,
     PRIMARY KEY (id_evento, fecha),
-    FOREIGN KEY (id_evento) REFERENCES usuarios(documento)
+    FOREIGN KEY (id_evento) REFERENCES usuarios(documento_user)
 );
 
 CREATE TABLE password_resets (
