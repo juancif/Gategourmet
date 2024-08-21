@@ -43,6 +43,22 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
         array (
             0 => __DIR__ . '/..' . '/phpoffice/math/tests/Math',
         ),
+<<<<<<< HEAD
+=======
+        'Psr\\SimpleCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
+        ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Psr\\Http\\Client\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-client/src',
+        ),
+>>>>>>> a2c47a0f8c89d6107a8535b3294f5f4d8578acd6
         'PhpOffice\\PhpWord\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoffice/phpword/src/PhpWord',

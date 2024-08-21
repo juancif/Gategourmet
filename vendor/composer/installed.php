@@ -6,6 +6,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         'reference' => '3ea047006e4672d6471816919454e4080e0c36af',
 =======
         'reference' => '8c8509fe50eccd74d31160511f7cb1c4d051ef39',
@@ -16,6 +17,9 @@
 =======
         'reference' => '8ee87764abb9842436d37341f156c745f8f3b195',
 >>>>>>> parent of cf18b17 (Actualizacion36)
+=======
+        'reference' => '0a2621e98f5fc2d079dc576c6861afd7e6a952ac',
+>>>>>>> a2c47a0f8c89d6107a8535b3294f5f4d8578acd6
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -25,6 +29,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -38,6 +43,9 @@
 =======
             'reference' => '8ee87764abb9842436d37341f156c745f8f3b195',
 >>>>>>> parent of cf18b17 (Actualizacion36)
+=======
+            'reference' => '0a2621e98f5fc2d079dc576c6861afd7e6a952ac',
+>>>>>>> a2c47a0f8c89d6107a8535b3294f5f4d8578acd6
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

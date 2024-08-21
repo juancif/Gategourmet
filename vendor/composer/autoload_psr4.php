@@ -17,6 +17,12 @@ return array(
 =======
 >>>>>>> parent of cf18b17 (Actualizacion36)
     'Tests\\PhpOffice\\Math\\' => array($vendorDir . '/phpoffice/math/tests/Math'),
+<<<<<<< HEAD
+=======
+    'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
+    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-factory/src', $vendorDir . '/psr/http-message/src'),
+    'Psr\\Http\\Client\\' => array($vendorDir . '/psr/http-client/src'),
+>>>>>>> a2c47a0f8c89d6107a8535b3294f5f4d8578acd6
     'PhpOffice\\PhpWord\\' => array($vendorDir . '/phpoffice/phpword/src/PhpWord'),
     'PhpOffice\\Math\\' => array($vendorDir . '/phpoffice/math/src/Math'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
