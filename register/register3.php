@@ -43,7 +43,13 @@ if (isset($_POST['Submit'])) {
             $dbConn->beginTransaction();
         
             // Verificar si el documento ya existe en la base de datos
-            $checkDocSql = "SELECT COUNT(*) FROM administradores WHERE documento = :documento";
+            $checkDocSql = "SELECT COUNT(*) FROM administradores WHERE documento_admin = :documento_admin";
+            $checkDocQuery = $dbConn->prepare($checkDocSql);
+            $checkDocQuery->bindparam(':documento_admin', $documento_admin);
+            $checkDocQuery->execute();
+            $count = $checkDocQuery->fetchColumn();
+
+            $checkDocSql = "SELECT COUNT(*) FROM usuarios WHERE documento = :documento";
             $checkDocQuery = $dbConn->prepare($checkDocSql);
             $checkDocQuery->bindparam(':documento', $documento);
             $checkDocQuery->execute();
@@ -52,8 +58,8 @@ if (isset($_POST['Submit'])) {
         
             // Verificar el campo cargo y definir la tabla correspondiente
             if ($rol === 'Administrador') {
-                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
-                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
+                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento_admin, area, cargo, rol) 
+                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento_admin, :area, :cargo, :rol)";
             } else {
                 $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
                         VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
@@ -69,8 +75,6 @@ if (isset($_POST['Submit'])) {
             $query->bindparam(':cargo', $cargo);
             $query->bindparam(':rol', $rol);
             $query->execute();
-        
-            $dbConn->commit();
         
             if ($query->rowCount() > 0) {
                 // Redirigir a la página deseada después del registro exitoso
@@ -125,7 +129,7 @@ if (isset($_POST['Submit'])) {
                     </div>
                     <div class="input-group">
                         <label for="documento">Documento</label>
-                        <input type="text" id="documento" name="documento" required>
+                        <input type="number" id="documento" name="documento" required>
                     </div>
                     <div class="input-group">
                         <label for="area">Área</label>
