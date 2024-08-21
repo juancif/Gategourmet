@@ -47,9 +47,6 @@ $mysqli->close();
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <link rel="stylesheet" href="indicadores.css">
     <style>
-<<<<<<< HEAD:Indicadores/indicadores.php
-        
-=======
         .table-container {
             margin: 20px 0;
         }
@@ -85,7 +82,6 @@ $mysqli->close();
         .chart-container {
             margin: 20px 0;
         }
->>>>>>> a2c47a0f8c89d6107a8535b3294f5f4d8578acd6:Index/indicadores.php
     </style>
 </head>
 <body>

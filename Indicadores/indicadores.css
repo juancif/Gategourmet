@@ -15,7 +15,7 @@ body {
 
 /* Encabezado */
 .header {
-    background: rgba(0, 0, 0, 0.9);
+    background: linear-gradient(to left, transparent, rgb(10, 192, 146), rgb(67, 153, 82), transparent);
     backdrop-filter: blur(10px);
     text-align: center;
     padding: 40px 20px;
@@ -25,7 +25,7 @@ body {
 }
 
 .logo {
-    max-width: 300px;
+    max-width: 600px; /* Ajustado para un mejor ajuste en pantalla */
     transition: transform 0.3s ease, filter 0.3s ease;
 }
 
@@ -51,10 +51,11 @@ body {
 /* Contenedor de gráficos */
 .chart-container {
     width: 100%;
+    max-width: 1200px; /* Limita el ancho máximo */
     background: #ffffff;
     border-radius: 12px;
-    padding: 30px;
-    margin-bottom: 40px;
+    padding: 20px; /* Ajustado para un espacio más uniforme */
+    margin-bottom: 30px; /* Espacio entre gráficos */
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
@@ -66,7 +67,7 @@ body {
 
 .chart-container h2 {
     margin: 0 0 20px;
-    font-size: 2.5em;
+    font-size: 2.2em; /* Tamaño ajustado para mejor visibilidad */
     color: #2c3e50;
     text-align: center;
     border-bottom: 4px solid #4CAF50;
@@ -76,6 +77,12 @@ body {
 }
 
 /* Tabla de progreso */
+.table-container {
+    width: 100%;
+    max-width: 1200px; /* Limita el ancho máximo */
+    margin: 0 auto 30px; /* Centra la tabla y añade margen inferior */
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -143,12 +150,10 @@ tr:hover td {
 
 /* Pie de página */
 .footer {
-    background: rgba(0, 0, 0, 0.9);
+    background: linear-gradient(to left, transparent, rgb(10, 192, 146), rgb(67, 153, 82), transparent);
     backdrop-filter: blur(10px);
     text-align: center;
     padding: 20px;
-    color: #fff;
-    box-shadow: 0 -12px 24px rgba(0, 0, 0, 0.5);
     font-size: 0.9em;
     letter-spacing: 0.05em;
     font-family: 'Roboto', sans-serif;
@@ -176,85 +181,36 @@ tr:hover td {
 
     .chart-container {
         width: 95%;
-        padding: 20px;
+        padding: 15px; /* Ajustado para dispositivos móviles */
     }
 
     .chart-container h2 {
-        font-size: 2em;
+        font-size: 1.8em; /* Tamaño reducido para pantallas pequeñas */
     }
 
     table {
-        font-size: 1em;
+        font-size: 0.9em; /* Ajustado para pantallas móviles */
     }
 
     .logo {
-        max-width: 200px;
+        max-width: 500px; /* Ajustado para pantallas pequeñas */
     }
 }
 
-.progress-bar {
-    width: 100%;
-    background-color: #f3f3f3;
-}
-
-.progress {
-    height: 20px;
-    background-color: #4caf50;
-    text-align: center;
-    line-height: 20px;
-    color: white;
-}
-
-.progress.low {
-    background-color: #f44336;
-}
-
-.progress.high {
-    background-color: #4caf50;
-}
-
-.header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.logo {
-    width: 150px;
-}
-
-.main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
+/* Ajustes adicionales */
 .chart-container {
-    width: 80%;
-    margin-bottom: 30px;
+    margin: 20px auto; /* Añadido margen automático para centrado en pantallas grandes */
 }
 
 .table-container {
-    width: 80%;
+    margin: 30px auto; /* Añadido margen automático para centrado en pantallas grandes */
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 30px;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f2f2f2;
+    margin-bottom: 30px; /* Espacio consistente con otras secciones */
 }
 
 .footer {
-    text-align: center;
     margin-top: 20px;
 }
 
@@ -263,7 +219,7 @@ th {
 }
 
 .footer a {
-    color: #007bff;
+    background-color: #f2f2f2;
     text-decoration: none;
     margin: 0 5px;
 }

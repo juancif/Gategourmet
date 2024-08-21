@@ -85,6 +85,13 @@ body {
     outline: none;
 }
 
+.error-message {
+    color: rgb(194, 194, 194);
+    font-size: 1.5em;
+    margin-top: 0.2em;
+    display: none; /* Ocultamos el mensaje por defecto */
+}
+
 .regresar{
     background: #3d9970; /* Verde oliva */
     color: white;

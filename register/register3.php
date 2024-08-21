@@ -113,11 +113,12 @@ if (isset($_POST['Submit'])) {
                     </div>
                     <div class="input-group">
                         <label for="contrasena">Contraseña</label>
-                        <input type="password" id="contrasena" name="contrasena" 
-                        required onclick="mouseover('ejemplo')">
+                        <input type="password" id="contrasena" name="contrasena" required>
+                    </div>
                     <div class="input-group">
                         <label for="correo">Correo Electrónico</label>
                         <input type="email" id="correo" name="correo" required>
+                        <div id="email-error" class="error-message">Recuerda, que para registrarte debes ingresar un correo con el dominio "@gategroup.com".</div>
                     </div>
                     <div class="input-group">
                         <label for="nombres_apellidos">Nombres y Apellidos</label>
@@ -125,7 +126,7 @@ if (isset($_POST['Submit'])) {
                     </div>
                     <div class="input-group">
                         <label for="documento">Documento</label>
-                        <input type="text" id="documento" name="documento" required>
+                        <input type="number" id="documento" name="documento" required>
                     </div>
                     <div class="input-group">
                         <label for="area">Área</label>
@@ -206,7 +207,25 @@ if (isset($_POST['Submit'])) {
     </main>
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
-        <script src="script.js"></script>
+        <script>
+            function showAlert(message) {
+                // Ya no necesitamos esta función
+            }
+
+            document.querySelector('form').addEventListener('submit', function(event) {
+                var emailField = document.getElementById('correo');
+                var emailValue = emailField.value;
+                var errorMessage = document.getElementById('email-error');
+
+                // Verificar si el correo electrónico tiene el dominio específico
+                if (!emailValue.endsWith('@gategroup.com')) {
+                    errorMessage.style.display = 'block'; // Mostrar el mensaje de error
+                    event.preventDefault(); // Evita el envío del formulario
+                } else {
+                    errorMessage.style.display = 'none'; // Ocultar el mensaje de error si es válido
+                }
+            });
+        </script>
     </footer>
 </body>
 </html>
