@@ -48,10 +48,7 @@ if (isset($_POST['Submit'])) {
             $checkDocQuery->bindparam(':documento', $documento);
             $checkDocQuery->execute();
             $count = $checkDocQuery->fetchColumn();
-        
-            if ($count > 0) {
-                throw new Exception("El documento ya está registrado.");
-            }
+
         
             // Verificar el campo cargo y definir la tabla correspondiente
             if ($rol === 'Administrador') {
