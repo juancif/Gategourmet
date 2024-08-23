@@ -36,25 +36,26 @@ $result = $connect->query($sql);
                     <th>Usuario</th>
                     <th>Acción</th>
                     <th>Fecha</th>
-                    <th>Dirección IP</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <tr>
                         <td><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['usuario']; ?></td>
+                        <td><?php echo $row['nombre_usuario']; ?></td>
                         <td><?php echo $row['accion']; ?></td>
                         <td><?php echo $row['fecha']; ?></td>
-                        <td><?php echo $row['ip_address']; ?></td>
                     </tr>
                 <?php endwhile; ?>
             </tbody>
         </table>
     </main>
-    <footer>
-        <a href="http://localhost/GateGourmet/Index/index_admin.html">Volver al Dashboard</a>
-    </footer>
+    <button>
+    <a href="http://localhost/GateGourmet/Index/index_admin.html">Volver al Dashboard</a>
+    </button>
+    <!-- <footer class="footer">
+    <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
+    </footer> -->
 </body>
 </html>
 
