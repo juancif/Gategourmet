@@ -50,6 +50,32 @@ CREATE TABLE documentos (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE listado_maestro (                                                         
+    id INT AUTO_INCREMENT PRIMARY KEY,      
+    proceso VARCHAR(255),
+    codigo VARCHAR(255),
+    titulo_documento VARCHAR(255),
+    tipo VARCHAR(255),
+    version VARCHAR(50),
+    estado VARCHAR(50),
+    fecha_aprobacion DATE,
+    areas TEXT,
+    motivo_del_cambio TEXT,
+    tiempo_de_retencion VARCHAR(255),
+    responsable_de_retencion VARCHAR(255),
+    lugar_de_almacenamiento_fisico TEXT,
+    lugar_de_almacenamiento_magnetico TEXT,
+    conservacion TEXT,
+    disposicion_final TEXT,
+    copias_controladas TEXT,
+    fecha_de_vigencia DATE,
+    dias INT,
+    senal_alerta VARCHAR(50),
+    obsoleto VARCHAR(50),
+    anulado VARCHAR(50),
+    en_actualizacion VARCHAR(50)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; 
+
 CREATE TABLE listado_maestro (
     id INT AUTO_INCREMENT PRIMARY KEY,
     proceso VARCHAR(255),
@@ -77,6 +103,7 @@ CREATE TABLE listado_maestro (
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 
+
 CREATE TABLE log_eventos (
     id_usuario int(11) NOT NULL,
     evento varchar(255) NOT NULL,
@@ -97,7 +124,7 @@ CREATE TABLE password_resets (
 
 <!-- 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro6.csv' -->
 
-LOAD DATA INFILE 'C:/xampp/htdocs/Gategourmet/documentos/Libro6.csv'
+LOAD DATA INFILE 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro6.csv'
 INTO TABLE listado_maestro
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'

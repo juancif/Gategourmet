@@ -24,6 +24,10 @@ $result_actualizados = $mysqli->query($sql_actualizados);
 
 $total_documentos = [];
 $documentos_actualizados = [];
+$data_estado_area = [];
+$data_tipo_desactualizada = [];
+$data_actualizacion_mensual = [];
+$data_cantidad_desactualizada = [];
 
 // Guardar resultados de total de documentos por área
 while ($row = $result_total->fetch_assoc()) {
@@ -33,6 +37,26 @@ while ($row = $result_total->fetch_assoc()) {
 // Guardar resultados de documentos actualizados por área
 while ($row = $result_actualizados->fetch_assoc()) {
     $documentos_actualizados[$row['areas']] = $row['documentos_actualizados'];
+}
+
+// Guardar resultados para el gráfico Estado de Documentación por Área
+while ($row = $result_estado_area->fetch_assoc()) {
+    $data_estado_area[] = $row;
+}
+
+// Guardar resultados para el gráfico Tipo de Documentación Desactualizada
+while ($row = $result_tipo_desactualizada->fetch_assoc()) {
+    $data_tipo_desactualizada[] = $row;
+}
+
+// Guardar resultados para el gráfico Actualización Mensual por Área
+while ($row = $result_actualizacion_mensual->fetch_assoc()) {
+    $data_actualizacion_mensual[] = $row;
+}
+
+// Guardar resultados para el gráfico Cantidad de Documentación Desactualizada por Área
+while ($row = $result_cantidad_desactualizada->fetch_assoc()) {
+    $data_cantidad_desactualizada[] = $row;
 }
 
 $mysqli->close();
@@ -102,7 +126,7 @@ $mysqli->close();
         </div>
 
         <div class="chart-container">
-            <h2>Actualización Mensual por Área</h2>
+            <h2>Actualización Mensual por Área</h>
             <canvas id="actualizacionMensualChart"></canvas>
         </div>
 
@@ -149,21 +173,21 @@ $mysqli->close();
     </div>
 
     <script>
+        // Datos para los gráficos
+        const dataEstadoArea = <?php echo json_encode($data_estado_area); ?>;
+        const dataTipoDesactualizada = <?php echo json_encode($data_tipo_desactualizada); ?>;
+        const dataActualizacionMensual = <?php echo json_encode($data_actualizacion_mensual); ?>;
+        const dataCantidadDesactualizada = <?php echo json_encode($data_cantidad_desactualizada); ?>;
+
         // Gráfico 1: Estado de Documentación por Área
-        var ctx1 = document.getElementById('estadoAreaChart').getContext('2d');
-        var estadoAreaChart = new Chart(ctx1, {
+        const ctx1 = document.getElementById('estadoAreaChart').getContext('2d');
+        const estadoAreaChart = new Chart(ctx1, {
             type: 'bar',
             data: {
-                labels: <?php
-                    $result_estado_area->data_seek(0); // Reiniciar el puntero del resultado
-                    echo json_encode(array_column($result_estado_area->fetch_all(MYSQLI_ASSOC), 'areas'));
-                ?>,
+                labels: dataEstadoArea.map(item => item.areas),
                 datasets: [{
                     label: 'Cantidad',
-                    data: <?php
-                        $result_estado_area->data_seek(0); // Reiniciar el puntero del resultado
-                        echo json_encode(array_column($result_estado_area->fetch_all(MYSQLI_ASSOC), 'cantidad'));
-                    ?>,
+                    data: dataEstadoArea.map(item => item.cantidad),
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1
@@ -177,20 +201,14 @@ $mysqli->close();
         });
 
         // Gráfico 2: Tipo de Documentación Desactualizada
-        var ctx2 = document.getElementById('tipoDesactualizadaChart').getContext('2d');
-        var tipoDesactualizadaChart = new Chart(ctx2, {
+        const ctx2 = document.getElementById('tipoDesactualizadaChart').getContext('2d');
+        const tipoDesactualizadaChart = new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: <?php
-                    $result_tipo_desactualizada->data_seek(0); // Reiniciar el puntero del resultado
-                    echo json_encode(array_column($result_tipo_desactualizada->fetch_all(MYSQLI_ASSOC), 'tipo'));
-                ?>,
+                labels: dataTipoDesactualizada.map(item => item.tipo),
                 datasets: [{
                     label: 'Cantidad Desactualizada',
-                    data: <?php
-                        $result_tipo_desactualizada->data_seek(0); // Reiniciar el puntero del resultado
-                        echo json_encode(array_column($result_tipo_desactualizada->fetch_all(MYSQLI_ASSOC), 'cantidad_desactualizada'));
-                    ?>,
+                    data: dataTipoDesactualizada.map(item => item.cantidad_desactualizada),
                     backgroundColor: 'rgba(153, 102, 255, 0.2)',
                     borderColor: 'rgba(153, 102, 255, 1)',
                     borderWidth: 1
@@ -204,22 +222,16 @@ $mysqli->close();
         });
 
         // Gráfico 3: Actualización Mensual por Área
-        var ctx3 = document.getElementById('actualizacionMensualChart').getContext('2d');
-        var actualizacionMensualChart = new Chart(ctx3, {
+        const ctx3 = document.getElementById('actualizacionMensualChart').getContext('2d');
+        const actualizacionMensualChart = new Chart(ctx3, {
             type: 'bar',
             data: {
-                labels: <?php
-                    $result_actualizacion_mensual->data_seek(0); // Reiniciar el puntero del resultado
-                    echo json_encode(array_column($result_actualizacion_mensual->fetch_all(MYSQLI_ASSOC), 'areas'));
-                ?>,
+                labels: dataActualizacionMensual.map(item => item.areas),
                 datasets: [{
                     label: 'Cantidad Actualizada',
-                    data: <?php
-                        $result_actualizacion_mensual->data_seek(0); // Reiniciar el puntero del resultado
-                        echo json_encode(array_column($result_actualizacion_mensual->fetch_all(MYSQLI_ASSOC), 'cantidad_actualizada'));
-                    ?>,
-                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                    borderColor: 'rgba(255, 159, 64, 1)',
+                    data: dataActualizacionMensual.map(item => item.cantidad_actualizada),
+                    backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                    borderColor: 'rgba(255, 206, 86, 1)',
                     borderWidth: 1
                 }]
             },
@@ -231,20 +243,14 @@ $mysqli->close();
         });
 
         // Gráfico 4: Cantidad de Documentación Desactualizada por Área
-        var ctx4 = document.getElementById('cantidadDesactualizadaChart').getContext('2d');
-        var cantidadDesactualizadaChart = new Chart(ctx4, {
+        const ctx4 = document.getElementById('cantidadDesactualizadaChart').getContext('2d');
+        const cantidadDesactualizadaChart = new Chart(ctx4, {
             type: 'bar',
             data: {
-                labels: <?php
-                    $result_cantidad_desactualizada->data_seek(0); // Reiniciar el puntero del resultado
-                    echo json_encode(array_column($result_cantidad_desactualizada->fetch_all(MYSQLI_ASSOC), 'areas'));
-                ?>,
+                labels: dataCantidadDesactualizada.map(item => item.areas),
                 datasets: [{
                     label: 'Cantidad Desactualizada',
-                    data: <?php
-                        $result_cantidad_desactualizada->data_seek(0); // Reiniciar el puntero del resultado
-                        echo json_encode(array_column($result_cantidad_desactualizada->fetch_all(MYSQLI_ASSOC), 'cantidad_desactualizada'));
-                    ?>,
+                    data: dataCantidadDesactualizada.map(item => item.cantidad_desactualizada),
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1

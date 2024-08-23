@@ -96,8 +96,6 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado Maestro</title>
     <link rel="stylesheet" href="listado_maestro.css">
-    <style>
-    </style>
 </head>
 <body>
     <header class="header">
@@ -145,10 +143,22 @@ $result = $stmt->get_result();
                         <?php while($row = $result->fetch_assoc()): 
                             // Determinar la clase CSS basada en el estado del documento
                             $rowClass = '';
-                            $fecha_vigencia = strtotime($row['fecha_de_vigencia']);
-                            $hoy = strtotime(date('Y-m-d'));
 
+                            // Comprobar y formatear fechas
+                            $fecha_aprobacion_formateada = 'No disponible';  // Valor predeterminado
+                            if (!empty($row['fecha_aprobacion']) && strtotime($row['fecha_aprobacion'])) {
+                                $fecha_aprobacion = strtotime($row['fecha_aprobacion']);
+                                $fecha_aprobacion_formateada = date('d/M/Y', $fecha_aprobacion);
+                            }
                             
+                            $fecha_vigencia_formateada = 'No disponible';  // Valor predeterminado
+                            if (!empty($row['fecha_de_vigencia']) && strtotime($row['fecha_de_vigencia'])) {
+                                $fecha_vigencia = strtotime($row['fecha_de_vigencia']);
+                                $fecha_vigencia_formateada = date('d/M/Y', $fecha_vigencia);
+                            }
+                            
+
+                            // Definir la clase de la fila basada en el estado
                             if (strtolower($row['estado']) == 'vigente') {
                                 $rowClass = 'vigente';
                             } elseif (strtolower($row['estado']) == 'desactualizado') {
@@ -156,34 +166,32 @@ $result = $stmt->get_result();
                             } elseif (strtolower($row['estado']) == 'obsoleto') {
                                 $rowClass = 'obsoleto';
                             }
-                            
                         ?>
-
- <tr class="<?php echo $rowClass; ?>">
-                        <td><?php echo htmlspecialchars($row['proceso']); ?></td>
-                        <td><?php echo htmlspecialchars($row['codigo']); ?></td>
-                        <td><?php echo htmlspecialchars($row['titulo_documento']); ?></td>
-                        <td><?php echo htmlspecialchars($row['tipo']); ?></td>
-                        <td><?php echo htmlspecialchars($row['version']); ?></td>
-                        <td><?php echo htmlspecialchars($row['estado']); ?></td>
-                        <td><?php echo htmlspecialchars($row['fecha_aprobacion']); ?></td>
-                        <td><?php echo htmlspecialchars($row['areas']); ?></td>
-                        <td><?php echo htmlspecialchars($row['motivo_del_cambio']); ?></td>
-                        <td><?php echo htmlspecialchars($row['tiempo_de_retencion']); ?></td>
-                        <td><?php echo htmlspecialchars($row['responsable_de_retencion']); ?></td>
-                        <td><?php echo htmlspecialchars($row['lugar_de_almacenamiento_fisico']); ?></td>
-                        <td><?php echo htmlspecialchars($row['lugar_de_almacenamiento_magnetico']); ?></td>
-                        <td><?php echo htmlspecialchars($row['conservacion']); ?></td>
-                        <td><?php echo htmlspecialchars($row['disposicion_final']); ?></td>
-                        <td><?php echo htmlspecialchars($row['copias_controladas']); ?></td>
-                        <td><?php echo htmlspecialchars($row['fecha_de_vigencia']); ?></td>
-                        <td><?php echo htmlspecialchars($row['dias']); ?></td>
-                        <td><?php echo htmlspecialchars($row['senal_alerta']); ?></td>
-                        <td><?php echo htmlspecialchars($row['obsoleto']); ?></td>
-                        <td><?php echo htmlspecialchars($row['anulado']); ?></td>
-                        <td><?php echo htmlspecialchars($row['en_actualizacion']); ?></td>
-</tr>
-<?php endwhile; ?>
+                        <tr class="<?php echo $rowClass; ?>">
+                            <td><?php echo htmlspecialchars($row['proceso']); ?></td>
+                            <td><?php echo htmlspecialchars($row['codigo']); ?></td>
+                            <td><?php echo htmlspecialchars($row['titulo_documento']); ?></td>
+                            <td><?php echo htmlspecialchars($row['tipo']); ?></td>
+                            <td><?php echo htmlspecialchars($row['version']); ?></td>
+                            <td><?php echo htmlspecialchars($row['estado']); ?></td>
+                            <td><?php echo htmlspecialchars($fecha_aprobacion_formateada); ?></td>
+                            <td><?php echo htmlspecialchars($row['areas']); ?></td>
+                            <td><?php echo htmlspecialchars($row['motivo_del_cambio']); ?></td>
+                            <td><?php echo htmlspecialchars($row['tiempo_de_retencion']); ?></td>
+                            <td><?php echo htmlspecialchars($row['responsable_de_retencion']); ?></td>
+                            <td><?php echo htmlspecialchars($row['lugar_de_almacenamiento_fisico']); ?></td>
+                            <td><?php echo htmlspecialchars($row['lugar_de_almacenamiento_magnetico']); ?></td>
+                            <td><?php echo htmlspecialchars($row['conservacion']); ?></td>
+                            <td><?php echo htmlspecialchars($row['disposicion_final']); ?></td>
+                            <td><?php echo htmlspecialchars($row['copias_controladas']); ?></td>
+                            <td><?php echo htmlspecialchars($fecha_vigencia_formateada); ?></td>
+                            <td><?php echo htmlspecialchars($row['dias']); ?></td>
+                            <td><?php echo htmlspecialchars($row['senal_alerta']); ?></td>
+                            <td><?php echo htmlspecialchars($row['obsoleto']); ?></td>
+                            <td><?php echo htmlspecialchars($row['anulado']); ?></td>
+                            <td><?php echo htmlspecialchars($row['en_actualizacion']); ?></td>
+                        </tr>
+                        <?php endwhile; ?>
                     </tbody>
                 </table>
             </div>
