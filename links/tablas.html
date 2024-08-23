@@ -2,31 +2,30 @@ CREATE DATABASE gategourmet;
 use gategourmet;
 
 CREATE TABLE usuarios (
-    documento int NOT NULL,
-    nombre_usuario varchar(50) NOT NULL,
-    contrasena varchar(25) NOT NULL,
-    correo varchar(50) NOT NULL,
-    nombres_apellidos varchar(100) NOT NULL,
-    area varchar(25) NOT NULL,
-    cargo varchar(25) NOT NULL,
-    rol varchar(50) NOT NULL ,
-    estado varchar(50) DEFAULT NULL,
-    PRIMARY KEY (documento),
-    UNIQUE (correo) 
+    documento INT PRIMARY KEY,
+    nombre_usuario VARCHAR(50) NOT NULL,
+    contrasena VARCHAR(255) NOT NULL,
+    correo VARCHAR(100) NOT NULL UNIQUE,
+    nombres_apellidos VARCHAR(100) NOT NULL,
+    area VARCHAR(50) NOT NULL,
+    cargo VARCHAR(50) NOT NULL,
+    rol ENUM('Administrador', 'Supervisor', 'Empleado') NOT NULL,
+    estado ENUM('Activo', 'Inactivo') DEFAULT 'Inactivo'
 );
 
+
 CREATE TABLE administradores (
-    documento int NOT NULL,
-    nombre_usuario varchar(50) NOT NULL,
-    contrasena varchar(25) NOT NULL,
-    correo varchar(50) NOT NULL,
-    nombres_apellidos varchar(100) NOT NULL,
-    area varchar(25) NOT NULL,
-    cargo varchar(25) NOT NULL,
-    rol varchar(50) NOT NULL ,
-    estado varchar(50) DEFAULT NULL,
-    PRIMARY KEY (documento)
+    documento INT PRIMARY KEY,
+    nombre_usuario VARCHAR(50) NOT NULL,
+    contrasena VARCHAR(255) NOT NULL,
+    correo VARCHAR(100) NOT NULL,
+    nombres_apellidos VARCHAR(100) NOT NULL,
+    area VARCHAR(50) NOT NULL,
+    cargo VARCHAR(50) NOT NULL,
+    rol ENUM('Administrador') NOT NULL,
+    estado ENUM('Activo', 'Inactivo') DEFAULT 'Inactivo'
 );
+
 
 CREATE TABLE cargos (
     id int(11) NOT NULL AUTO_INCREMENT,
@@ -80,21 +79,22 @@ CREATE TABLE listado_maestro (
 
 
 CREATE TABLE log_eventos (
-    id_evento int NOT NULL,
-    evento varchar(255) NOT NULL,
-    fecha datetime NOT NULL,
-    PRIMARY KEY (id_evento, fecha),
-    FOREIGN KEY (id_evento) REFERENCES usuarios(documento)
+    id_evento INT AUTO_INCREMENT PRIMARY KEY,
+    documento INT,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    detalle TEXT,
+    FOREIGN KEY (documento) REFERENCES usuarios(documento) ON DELETE CASCADE
 );
 
 CREATE TABLE password_resets (
-    id_password int(11) NOT NULL AUTO_INCREMENT,
-    correo varchar(50) NOT NULL,
-    token varchar(100) NOT NULL,
-    created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    id_password INT(11) NOT NULL AUTO_INCREMENT,
+    correo VARCHAR(100) NOT NULL,  
+    token VARCHAR(255) NOT NULL,  
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id_password),
-    FOREIGN KEY (correo) REFERENCES usuarios(correo)
+    FOREIGN KEY (correo) REFERENCES usuarios(correo) ON DELETE CASCADE
 );
+
 
 LOAD DATA INFILE 'C:/Users/Administrator/Desktop/Libro6.csv' 
 INTO TABLE listado_maestro

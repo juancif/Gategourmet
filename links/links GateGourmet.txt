@@ -63,5 +63,8 @@ Estadisticas
 http://localhost/GateGourmet/Estadisticas/estadisticas.php
 
 
+Crear_documento
+
+http://localhost/GateGourmet/Crear_documento/crear.php
 
 

@@ -1,3 +1,4 @@
+
 <?php
 include_once("config_register.php");
 
@@ -10,11 +11,9 @@ if (isset($_POST['Submit'])) {
     $area = $_POST['area'];
     $cargo = $_POST['cargo'];
     $rol = $_POST['rol'];
-    $estado = $_POST['estado'];
 
     // Verificar si algún campo está vacío
-    if (empty($nombre_usuario) || empty($contrasena) || empty($correo) || empty($nombres_apellidos) || empty($documento) 
-    || empty($area) || empty($cargo) || empty($rol) || empty($estado)) {
+    if (empty($nombre_usuario) || empty($contrasena) || empty($correo) || empty($nombres_apellidos) || empty($documento) || empty($area) || empty($cargo) || empty($rol)) {
         if (empty($nombre_usuario)) {
             echo "<font color='red'>Campo: nombre_usuario está vacío.</font><br/>";
         }
@@ -39,29 +38,26 @@ if (isset($_POST['Submit'])) {
         if (empty($rol)) {
             echo "<font color='red'>Campo: rol está vacío.</font><br/>";
         }
-        if (empty($estado)) {
-            echo "<font color='red'>Campo: estado está vacío.</font><br/>";
-        }
         echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
     } else {
         try {
             $dbConn->beginTransaction();
         
             // Verificar si el documento ya existe en la base de datos
-            $checkDocSql = "SELECT COUNT(*) FROM administradores WHERE documento_admin = :documento_admin";
+            $checkDocSql = "SELECT COUNT(*) FROM administradores WHERE documento = :documento";
             $checkDocQuery = $dbConn->prepare($checkDocSql);
-            $checkDocQuery->bindparam(':documento_admin', $documento_admin);
+            $checkDocQuery->bindparam(':documento', $documento);
             $checkDocQuery->execute();
             $count = $checkDocQuery->fetchColumn();
 
         
             // Verificar el campo cargo y definir la tabla correspondiente
             if ($rol === 'Administrador') {
-                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento_admin, area, cargo, rol, estado) 
-                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento_admin, :area, :cargo, :rol, :estado)";
+                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
+                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
             } else {
-                $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol, estado) 
-                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol, :estado)";
+                $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
+                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
             }
         
             $query = $dbConn->prepare($sql);
@@ -73,7 +69,6 @@ if (isset($_POST['Submit'])) {
             $query->bindparam(':area', $area);
             $query->bindparam(':cargo', $cargo);
             $query->bindparam(':rol', $rol);
-            $query->bindparam(':estado', $estado);
             $query->execute();
         
             $dbConn->commit();
@@ -106,7 +101,7 @@ if (isset($_POST['Submit'])) {
 </head>
 <body>
     <header class="header">
-        <img src="../Imagenes/logo_oficial_color.png" alt="Gate Gourmet Logo" class="logo">
+        <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
     </header>
     <main class="main-content">
         <div class="register-container">
@@ -119,12 +114,12 @@ if (isset($_POST['Submit'])) {
                     </div>
                     <div class="input-group">
                         <label for="contrasena">Contraseña</label>
-                        <input type="password" id="contrasena" name="contrasena" required>
-                    </div>
+                        <input type="password" id="contrasena" name="contrasena" 
+                        required >
                     <div class="input-group">
                         <label for="correo">Correo Electrónico</label>
                         <input type="email" id="correo" name="correo" required>
-                        <div id="email-error" class="error-message">Recuerda, que para registrarte debes ingresar un correo con el dominio "@gategroup.com".</div>
+                        <!-- <div id="email-error" class="error-message">Recuerda, que para registrarte debes ingresar un correo con el dominio "@gategroup.com".</div> -->
                     </div>
                     <div class="input-group">
                         <label for="nombres_apellidos">Nombres y Apellidos</label>
@@ -194,18 +189,18 @@ if (isset($_POST['Submit'])) {
                         </select>
                     </div>
                     <div class="input-group">
-                        <label for="rol">Roles</label>
+                        <label for="rol">Rol</label>
                         <select name="rol" id="rol">
                             <option value="">Seleccione una opción</option>
                             <option value="Administrador">Administrador</option>
-                            <option value="Supervisor">Aprobador</option>
-                            <option value="Empleado">Digitador</option>
-                            <option value="Administrador">Observador</option>
+                            <option value="Aprobador">Aprobador</option>
+                            <option value="Digitador">Digitador</option>
+                            <option value="Observador">Observador</option>
                          </select>                    
                     </div>
                     <div class="buttons">
                         <input type="submit" name="Submit" value="Registrarse" class="Registrarse">
-                        <a href="http://localhost/GateGourmet/login/login3.php" class="regresar">Regresar</a>
+                        <a href="http://localhost/GateGourmet/Gestor_usuarios/php/admin/index_gestor_admin.php" class="regresar">Regresar</a>
                     </div>
                 </form>
             </div>
@@ -213,11 +208,7 @@ if (isset($_POST['Submit'])) {
     </main>
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
-        <script>
-            function showAlert(message) {
-                // Ya no necesitamos esta función
-            }
-
+            <!-- <script>
             document.querySelector('form').addEventListener('submit', function(event) {
                 var emailField = document.getElementById('correo');
                 var emailValue = emailField.value;
@@ -231,7 +222,26 @@ if (isset($_POST['Submit'])) {
                     errorMessage.style.display = 'none'; // Ocultar el mensaje de error si es válido
                 }
             });
-        </script>
+            </script> -->
+        <script src="/script_prueba/script.js"></script>
     </footer>
 </body>
 </html>
+
+                       
+
+                                <!-- <script>
+            document.querySelector('form').addEventListener('submit', function(event) {
+                var emailField = document.getElementById('correo');
+                var emailValue = emailField.value;
+                var errorMessage = document.getElementById('email-error');
+
+                // Verificar si el correo electrónico tiene el dominio específico
+                if (!emailValue.endsWith('@gategroup.com')) {
+                    errorMessage.style.display = 'block'; // Mostrar el mensaje de error
+                    event.preventDefault(); // Evita el envío del formulario
+                } else {
+                    errorMessage.style.display = 'none'; // Ocultar el mensaje de error si es válido
+                }
+            });
+            </script>
