@@ -84,7 +84,7 @@ CREATE TABLE listado_maestro (
     tipo VARCHAR(255),
     version VARCHAR(50),
     estado VARCHAR(50),
-    fecha_aprobacion DATE,
+    fecha_aprobacion VARCHAR(50),
     areas TEXT,
     motivo_del_cambio TEXT,
     tiempo_de_retencion VARCHAR(255),
@@ -94,7 +94,7 @@ CREATE TABLE listado_maestro (
     conservacion TEXT,
     disposicion_final TEXT,
     copias_controladas TEXT,
-    fecha_de_vigencia DATE,
+    fecha_de_vigencia VARCHAR(50),
     dias INT,
     senal_alerta VARCHAR(50),
     obsoleto VARCHAR(50),
@@ -124,7 +124,7 @@ CREATE TABLE password_resets (
 
 <!-- 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro6.csv' -->
 
-LOAD DATA INFILE 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro6.csv'
+LOAD DATA INFILE 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro1.csv'
 INTO TABLE listado_maestro
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'

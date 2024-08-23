@@ -126,7 +126,7 @@ $mysqli->close();
         </div>
 
         <div class="chart-container">
-            <h2>Actualización Mensual por Área</h>
+            <h2>Actualización Mensual por Área</h2>
             <canvas id="actualizacionMensualChart"></canvas>
         </div>
 
@@ -262,6 +262,9 @@ $mysqli->close();
                 }
             }
         });
+
+        // Debugging output
+        console.log("Actualización Mensual Data:", dataActualizacionMensual);
     </script>
 </body>
 </html>
