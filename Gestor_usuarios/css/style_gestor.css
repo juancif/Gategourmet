@@ -12,18 +12,24 @@ body {
 
 /* Cuadro del logo */
 .cuadro_logo {
-    background-color:#111b;
-    padding: 20px 0;
+    background: #1117;
+    backdrop-filter: blur(10px);
     text-align: center;
-    border-bottom: 3px solid #222;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding-bottom: 40px;
+    padding: 20px 40px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
+    margin-bottom: 20px;
 }
 
 .logo {
     width: 500px;
     height: auto;
     margin-left: -1050px;
+}
+
+.logo:hover{
+    background-color:#1111;
+    text-decoration: none;
 }
 
 .img__usuario{

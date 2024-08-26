@@ -53,7 +53,10 @@ header {
     list-style-type: none;
 }
 
-
+.img__usuario:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
 .container {
     width: 90%;
     max-width: 1800px;

@@ -62,6 +62,10 @@ body {
     z-index: 20;
 }
 
+.img__usuario:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
 .logo {
     max-width: 600px; /* Ajustado para un mejor ajuste en pantalla */
     transition: transform 0.3s ease, filter 0.3s ease;
