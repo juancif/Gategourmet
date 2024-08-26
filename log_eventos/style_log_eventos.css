@@ -19,6 +19,38 @@ header {
     margin-bottom: 20px;
 }
 
+.cerrar__sesion__link{
+    margin: 0;
+    margin-left: 150px;
+    text-decoration: none;
+    text-decoration:#1117;
+    color:white ;
+    list-style-type: none;
+}
+
+.cerrar__sesion{
+    margin-left: 250px;
+    list-style-type: none;
+}
+
+.nav__item__user{
+    background-color: transparent;
+    position: absolute;
+    display: inline-block;
+    margin: auto;
+    margin-left: 1500px;
+    margin-top: 5px;
+}
+
+.img__usuario{
+    width: 80px;
+    height: 60px;
+    margin-left: 100px;
+    margin-top: 0px;
+    position:relative;
+    background-color: transparent;
+    list-style-type: none;
+}
 
 main {
     background: #1117;
@@ -70,7 +102,7 @@ button{
     cursor: pointer;
     text-decoration: none;
     text-align: center;
-    margin-left: 1000px;
+    margin-left: 1600px;
     width: 15%;
     height: 60px;
     transition: background 0.3s ease, transform 0.3s ease;

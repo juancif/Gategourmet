@@ -103,7 +103,9 @@ $result = $stmt->get_result();
     <header class="header">
         <h1>LISTADO MAESTRO</h1>
     </header>
-
+    <li class="nav__item__user">
+                <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link"><img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
+            </li>
     <div class="search-bar">
         <form method="post">
             <input type="text" name="search" placeholder="Buscar documentos..." value="<?php echo htmlspecialchars($searchTerm); ?>">

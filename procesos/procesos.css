@@ -10,20 +10,49 @@ body {
 }
 
 header {
+    background: #1117;
+    backdrop-filter: blur(10px);
     text-align: center;
-    margin-bottom: 2rem;
+    padding: 20px 40px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
+    margin-bottom: 50px;
+    color: white;
 }
 
-header h1 {
-    font-size: 2.5rem;
-    color: #0b8b0f;
-    background: rgba(255, 249, 249, 0.9);
-    display: inline-block;
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.cerrar__sesion__link{
     margin: 0;
+    margin-left: 150px;
+    text-decoration: none;
+    text-decoration:#1117;
+    color:white ;
+    list-style-type: none;
 }
+
+.cerrar__sesion{
+    margin-left: 250px;
+    list-style-type: none;
+}
+
+.nav__item__user{
+    background-color: transparent;
+    position: absolute;
+    display: inline-block;
+    margin: auto;
+    margin-left: 1500px;
+    margin-top: 5px;
+}
+
+.img__usuario{
+    width: 80px;
+    height: 60px;
+    margin-left: 100px;
+    margin-top: 0px;
+    position:relative;
+    background-color: transparent;
+    list-style-type: none;
+}
+
 
 .container {
     width: 90%;

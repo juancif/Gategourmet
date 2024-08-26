@@ -58,7 +58,9 @@ function obtenerColor($macroproceso) {
     <header>
         <h1>MAPEO DE PROCESOS</h1>
     </header>
-
+    <li class="nav__item__user">
+                <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link"><img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
+            </li>
     <main>
         <section class="container">
             <div class="table-wrapper">
