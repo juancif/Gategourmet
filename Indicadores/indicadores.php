@@ -88,12 +88,9 @@ $mysqli->close();
     <div class="header">
         <img src="../Imagenes/Logo_oficial_B-N.png" alt="Logo" class="logo">
     </div>
-    <li class="nav__item__user">
-                <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link"><img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
-            </li>
+
     <div class="main-content">
         <!-- Gráficos -->
-
         <div class="chart-container">
             <h2>Estado de Documentación por Área</h2>
             <canvas id="estadoAreaChart"></canvas>

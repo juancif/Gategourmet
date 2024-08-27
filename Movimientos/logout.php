@@ -1,4 +1,6 @@
 <?php
+
+include_once("config_mov.php");
 session_start();
 
 // Asegúrate de que la sesión esté iniciada
