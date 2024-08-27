@@ -190,7 +190,7 @@ body{
 
 /* Elemento del menú */
 .nav__item {
-    margin: 0 25px; /* Margen horizontal entre elementos del menú */
+    margin: 0 20px; /* Margen horizontal entre elementos del menú */
     font-size: 25px;
 }
 
