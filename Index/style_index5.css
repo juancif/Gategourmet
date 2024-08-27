@@ -169,65 +169,83 @@ body{
 }
 
 .img__usuario:hover{
-    background-color:#1111;
+    padding-left: 5px;
 }
 
-.nav__principal{
-    background-color: #1117;
-    backdrop-filter: blur(10px);
+/* Contenedor del menú */
+.nav__principal {
+    background: #1117;
+    backdrop-filter: blur(10px); /* Color de fondo del menú */
+    padding: 25px 20px; /* Espaciado interno del menú */
 }
 
-.nav__list{ 
-    margin: 0;
-    text-align: center;
-    font-size: 20px;
+/* Lista del menú */
+.nav__list {
+    list-style: none; /* Quitar puntos de lista */
+    padding: 0; /* Quitar padding de la lista */
+    margin: 0; /* Quitar margin de la lista */
+    display: flex; /* Usar flexbox para alinear horizontalmente */
+    flex-wrap: wrap; /* Permitir que los elementos se ajusten a múltiples líneas si es necesario */
 }
 
-.nav__item{
-    display: inline-block;
-    margin: auto;
-    margin-left: 250px;
-    margin-right: 5cqmin;
-    margin-right: -3cqmax;
-    padding-right: 10px;
+/* Elemento del menú */
+.nav__item {
+    margin: 0 25px; /* Margen horizontal entre elementos del menú */
+    font-size: 25px;
 }
 
-.nav__item__user{
-    background-color: transparent;
-    position: absolute;
-    display: inline-block;
-    margin: auto;
-    margin-left: -200px;
+/* Enlace del menú */
+.nav__link {
+    text-decoration: none; /* Quitar subrayado */
+    color:white; /* Color del texto */
+    display: flex; /* Usar flexbox para alinear imagen y texto */
+    align-items: center; /* Centrar verticalmente */
+    padding: 8px 12px; /* Padding interno para el enlace */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Transición suave para el hover */
 }
 
-.cerrar__sesion__link{
-    margin: 0;
-    margin-top: 30px;
-    text-decoration: none;
-    text-decoration:#1117;
-    color:black ;
+/* Imagen del menú */
+.imgs__menu {
+    width: 20px; /* Ajustar el tamaño de las imágenes */
+    height: 20px;
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
 }
 
-.cerrar__sesion{
-    margin-left: 150px;
+/* Hover del enlace del menú */
+.nav__link:hover {
+    background-color: #303030; /* Color de fondo al hacer hover */
 }
 
-
-.nav__link:hover{
-    background-color:#1112;
+/* Estilo para cerrar sesión */
+.nav__item__user {
+    margin-left: auto; /* Alinear a la derecha */
 }
 
-.nav__link{
-    border: none;
-    text-decoration: none;
-    font-family: sans-serif;
-    background-color:#1110;
-    color: rgb(243, 238, 238);
-    padding: initial;
-    padding: 30px;
-    margin-left: -400px;
-    display: inline-block;
+.cerrar__sesion__link {
+    display: flex; /* Usar flexbox para alinear imagen y texto */
+    align-items: center; /* Centrar verticalmente */
+    text-decoration: none; /* Quitar subrayado */
+    color: #ffffff;/* Color del texto */
+    font-size: 25px; 
+    margin-top: -20px;
+    position:absolute;
 }
+
+/* Imagen del usuario */
+.img__usuario {
+    width: 70px; /* Ajustar el tamaño de la imagen del usuario */
+    height: 70px;
+    margin-top: 0px;
+    margin-left: -180px;
+    padding-right: 20px;
+}
+
+/* Botón de cerrar sesión */
+.cerrar__sesion {
+    font-weight: bold; /* Hacer el texto en negrita */
+}
+
 
 
 /* Estilos básicos del menú desplegable */

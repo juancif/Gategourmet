@@ -73,6 +73,14 @@ if (isset($_POST['Submit'])) {
         
             $dbConn->commit();
         
+            $ipAddress = $_SERVER['REMOTE_ADDR'];
+            $movimientoSql = "INSERT INTO movimientos (usuario, accion, ip_address) VALUES (:usuario, 'Registro exitoso', :ip_address)";
+            $movimientoQuery = $dbConn->prepare($movimientoSql);
+            $movimientoQuery->bindparam(':usuario', $nombre_usuario);
+            $movimientoQuery->bindparam(':ip_address', $ipAddress);
+            $movimientoQuery->execute();
+
+            
             if ($query->rowCount() > 0) {
                 // Redirigir a la página deseada después del registro exitoso
                 header("Location: http://localhost/GateGourmet/register/registro_exitoso/registro_exitoso.php");
