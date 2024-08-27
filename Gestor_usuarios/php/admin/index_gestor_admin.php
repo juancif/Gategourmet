@@ -11,12 +11,12 @@ $result = $dbConn->query("SELECT * FROM administradores ORDER BY documento ASC")
     <link rel="stylesheet" href="../../css/style_gestor.css">
 </head>
 <body>
-    <div class="cuadro_logo">
-        <img src="../../../Imagenes/logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
+<header class="header">
+        <img src=".././../../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
         <li class="nav__item__user">
                 <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link"><img src="../../../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
             </li>
-    </div>
+    </header>
     <div>
         <table class="tabla_principal">
         <th class="cuadro_titulo">Administradores</th>
