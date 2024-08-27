@@ -121,7 +121,6 @@ $conn->close();
 <body>
     <header>
         <img src="../Imagenes/Logo_oficial_B-N.png" alt="GateGourmet Logo" class="logo">
-        <h1>INDICADORES GENERALES</h1>
     </header>
     <div class="container">
         <div class="chart-container">

@@ -1,48 +1,90 @@
+/* Estilo para el fondo de la pantalla */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-image: url("../Imagenes/fondogg3.webp");
+    background: url('../Imagenes/fondogg3.webp') no-repeat center center fixed;
+    background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
 }
 
-header {
-    background: linear-gradient(to left, #00c9a0, #027d6c);
-    color: #fff;
+/* Estilo para el contenedor principal */
+.container {
+    max-width: 1200px; /* Limita el ancho máximo para una mejor visualización */
+    margin: 0 auto; /* Centra el contenedor */
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Sombra más suave para el contenedor */
+    background: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente para mejor contraste */
+    border-radius: 8px; /* Bordes redondeados */
+}
+
+/* Estilo para las tablas */
+.table-container {
+    max-width: 100%; /* Ajusta para ocupar todo el ancho disponible */
+    margin: 0 auto; /* Centra la tabla horizontalmente */
+    overflow-x: auto; /* Permite el desplazamiento horizontal en pantallas pequeñas */
     padding: 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+tr:hover {
+    background-color: #f9f9f9; /* Efecto hover para mejorar la interactividad */
+}
+
+/* Estilo para el encabezado y pie de página */
+header, footer {
+   background: #1117;
+    backdrop-filter: blur(10px);
+    padding: 20px 40px;
     text-align: center;
-    position: relative;
+    box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
 }
 
 header .logo {
-    width: 400px; /* Ajustado para centrar mejor */
+    width: 500px; /* Ajustado para una apariencia más equilibrada */
     display: block;
-    margin: 0 auto 1rem auto; /* Centrado horizontalmente */
+    margin: 0 auto;
 }
 
-h3 {
+h1 {
+    font-size: 2rem;
     margin: 0;
-    font-size: 2.5rem; /* Aumentado para mayor visibilidad */
+}
+
+footer p {
+    backdrop-filter: blur(10px);
+    text-align: center;
+    text-align: center;
+    padding: 10px;
     color: #fff;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.container {
-    padding: 2rem;
-}
-
+/* Estilo de los gráficos */
 .chart-container {
     background: #fff;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
     margin-bottom: 2rem;
     padding: 1rem;
-}
-
-footer {
-    background: linear-gradient(to left, #00c9a0, #438c52);
-    color: #fff;
-    text-align: center;
-    padding: 1rem;
-    position: fixed;
     width: 100%;
-    bottom: 0;
+    max-width: 900px; /* Limita el ancho máximo de los gráficos */
+    margin: 0 auto; /* Centra los gráficos */
 }
