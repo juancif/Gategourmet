@@ -72,3 +72,6 @@ log_eventos
 
 http://localhost/GateGourmet/log_eventos/log_eventos.php
 
+logout
+
+http://localhost/GateGourmet/log_eventos/logout.php

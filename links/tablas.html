@@ -86,6 +86,15 @@ CREATE TABLE log_eventos (
     FOREIGN KEY (documento) REFERENCES usuarios(documento) ON DELETE CASCADE
 );
 
+CREATE TABLE movimientos (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    nombre_usuario VARCHAR(255) NOT NULL,
+    accion VARCHAR(255) NOT NULL,
+    fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+
 CREATE TABLE password_resets (
     id_password INT(11) NOT NULL AUTO_INCREMENT,
     correo VARCHAR(100) NOT NULL,  

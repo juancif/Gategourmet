@@ -16,8 +16,8 @@ body {
     padding: 20px 40px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
-<<<<<<< HEAD
-=======
+
+
     margin-bottom: 20px;
 }
 
@@ -45,7 +45,6 @@ body {
 .img__usuario:hover{
     transform: scale(1.1);
     filter: brightness(1.2);
->>>>>>> ebcd9b493e9f54bdac3730d3c17060a795e6dc22
 }
 
 .cerrar__sesion__link{
@@ -69,14 +68,11 @@ body {
     position: absolute;
     display: inline-block;
     margin: auto;
-<<<<<<< HEAD
     margin-left: 350px;
     margin-top: -10px;
     z-index: 20;
-=======
     margin-left: 200px;
-    margin-top: 5px;
->>>>>>> ebcd9b493e9f54bdac3730d3c17060a795e6dc22
+    margin-top: 5px
 }
 
 .img__usuario{
