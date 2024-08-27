@@ -22,6 +22,11 @@ body {
     max-width: 400px;
 }
 
+.logo:hover{
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
 .main-content {
     flex: 1;
     display: flex;
