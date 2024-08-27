@@ -145,18 +145,8 @@ $result = $stmt->get_result();
                             $rowClass = '';
 
                             // Comprobar y formatear fechas
-                            $fecha_aprobacion_formateada = 'No disponible';  // Valor predeterminado
-                            if (!empty($row['fecha_aprobacion']) && strtotime($row['fecha_aprobacion'])) {
-                                $fecha_aprobacion = strtotime($row['fecha_aprobacion']);
-                                $fecha_aprobacion_formateada = date('d/M/Y', $fecha_aprobacion);
-                            }
-                            
-                            $fecha_vigencia_formateada = 'No disponible';  // Valor predeterminado
-                            if (!empty($row['fecha_de_vigencia']) && strtotime($row['fecha_de_vigencia'])) {
-                                $fecha_vigencia = strtotime($row['fecha_de_vigencia']);
-                                $fecha_vigencia_formateada = date('d/M/Y', $fecha_vigencia);
-                            }
-                            
+                            $fecha_aprobacion_formateada = !empty($row['fecha_aprobacion']) ? htmlspecialchars($row['fecha_aprobacion']) : 'No disponible';
+                            $fecha_vigencia_formateada = !empty($row['fecha_de_vigencia']) ? htmlspecialchars($row['fecha_de_vigencia']) : 'No disponible';
 
                             // Definir la clase de la fila basada en el estado
                             if (strtolower($row['estado']) == 'vigente') {
@@ -174,7 +164,7 @@ $result = $stmt->get_result();
                             <td><?php echo htmlspecialchars($row['tipo']); ?></td>
                             <td><?php echo htmlspecialchars($row['version']); ?></td>
                             <td><?php echo htmlspecialchars($row['estado']); ?></td>
-                            <td><?php echo htmlspecialchars($fecha_aprobacion_formateada); ?></td>
+                            <td><?php echo $fecha_aprobacion_formateada; ?></td>
                             <td><?php echo htmlspecialchars($row['areas']); ?></td>
                             <td><?php echo htmlspecialchars($row['motivo_del_cambio']); ?></td>
                             <td><?php echo htmlspecialchars($row['tiempo_de_retencion']); ?></td>
@@ -184,7 +174,7 @@ $result = $stmt->get_result();
                             <td><?php echo htmlspecialchars($row['conservacion']); ?></td>
                             <td><?php echo htmlspecialchars($row['disposicion_final']); ?></td>
                             <td><?php echo htmlspecialchars($row['copias_controladas']); ?></td>
-                            <td><?php echo htmlspecialchars($fecha_vigencia_formateada); ?></td>
+                            <td><?php echo $fecha_vigencia_formateada; ?></td>
                             <td><?php echo htmlspecialchars($row['dias']); ?></td>
                             <td><?php echo htmlspecialchars($row['senal_alerta']); ?></td>
                             <td><?php echo htmlspecialchars($row['obsoleto']); ?></td>
