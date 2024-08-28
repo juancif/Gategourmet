@@ -3,31 +3,27 @@
 include_once("config_register.php");
 
 if (isset($_POST['Submit'])) {
-    $nombre_usuario = $_POST['nombre_usuario'];
-    $contrasena = $_POST['contrasena'];
     $correo = $_POST['correo'];
     $nombres_apellidos = $_POST['nombres_apellidos'];
-    $documento = $_POST['documento'];
+    $nombre_usuario = $_POST['nombre_usuario'];
+    $contrasena = $_POST['contrasena'];
     $area = $_POST['area'];
     $cargo = $_POST['cargo'];
     $rol = $_POST['rol'];
 
     // Verificar si algún campo está vacío
-    if (empty($nombre_usuario) || empty($contrasena) || empty($correo) || empty($nombres_apellidos) || empty($documento) || empty($area) || empty($cargo) || empty($rol)) {
-        if (empty($nombre_usuario)) {
-            echo "<font color='red'>Campo: nombre_usuario está vacío.</font><br/>";
-        }
-        if (empty($contrasena)) {
-            echo "<font color='red'>Campo: contrasena está vacío.</font><br/>";
-        }
+    if (empty($correo) || empty($nombres_apellidos) || empty($nombre_usuario) || empty($contrasena) ||  empty($area) || empty($cargo) || empty($rol)) {
         if (empty($correo)) {
             echo "<font color='red'>Campo: correo está vacío.</font><br/>";
         }
         if (empty($nombres_apellidos)) {
             echo "<font color='red'>Campo: nombres_apellidos está vacío.</font><br/>";
         }
-        if (empty($documento)) {
-            echo "<font color='red'>Campo: documento está vacío.</font><br/>";
+        if (empty($nombre_usuario)) {
+            echo "<font color='red'>Campo: nombre_usuario está vacío.</font><br/>";
+        }
+        if (empty($contrasena)) {
+            echo "<font color='red'>Campo: contrasena está vacío.</font><br/>";
         }
         if (empty($area)) {
             echo "<font color='red'>Campo: área está vacío.</font><br/>";
@@ -43,29 +39,28 @@ if (isset($_POST['Submit'])) {
         try {
             $dbConn->beginTransaction();
         
-            // Verificar si el documento ya existe en la base de datos
-            $checkDocSql = "SELECT COUNT(*) FROM administradores WHERE documento = :documento";
+            // Verificar si el nombre_usuario ya existe en la base de datos
+            $checkDocSql = "SELECT COUNT(*) FROM administradores WHERE nombre_usuario = :nombre_usuario";
             $checkDocQuery = $dbConn->prepare($checkDocSql);
-            $checkDocQuery->bindparam(':documento', $documento);
+            $checkDocQuery->bindparam(':nombre_usuario', $nombre_usuario);
             $checkDocQuery->execute();
             $count = $checkDocQuery->fetchColumn();
 
         
             // Verificar el campo cargo y definir la tabla correspondiente
             if ($rol === 'Administrador') {
-                $sql = "INSERT INTO administradores (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
-                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
+                $sql = "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol) 
+                        VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol)";
             } else {
-                $sql = "INSERT INTO usuarios (nombre_usuario, contrasena, correo, nombres_apellidos, documento, area, cargo, rol) 
-                        VALUES (:nombre_usuario, :contrasena, :correo, :nombres_apellidos, :documento, :area, :cargo, :rol)";
+                $sql = "INSERT INTO usuarios (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol) 
+                        VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol)";
             }
         
             $query = $dbConn->prepare($sql);
-            $query->bindparam(':nombre_usuario', $nombre_usuario);
-            $query->bindparam(':contrasena', $contrasena); // Hash de la contraseña
             $query->bindparam(':correo', $correo);
             $query->bindparam(':nombres_apellidos', $nombres_apellidos);
-            $query->bindparam(':documento', $documento);
+            $query->bindparam(':nombre_usuario', $nombre_usuario);
+            $query->bindparam(':contrasena', $contrasena); // Hash de la contraseña
             $query->bindparam(':area', $area);
             $query->bindparam(':cargo', $cargo);
             $query->bindparam(':rol', $rol);
@@ -117,14 +112,6 @@ if (isset($_POST['Submit'])) {
                 <h2>Registro de Usuarios</h2>
                 <form method="post" action="">
                     <div class="input-group">
-                        <label for="nombre_usuario">Nombre de Usuario</label>
-                        <input type="text" id="nombre_usuario" name="nombre_usuario" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="contrasena">Contraseña</label>
-                        <input type="password" id="contrasena" name="contrasena" 
-                        required >
-                    <div class="input-group">
                         <label for="correo">Correo Electrónico</label>
                         <input type="email" id="correo" name="correo" required>
                         <!-- <div id="email-error" class="error-message">Recuerda, que para registrarte debes ingresar un correo con el dominio "@gategroup.com".</div> -->
@@ -134,9 +121,13 @@ if (isset($_POST['Submit'])) {
                         <input type="text" id="nombres_apellidos" name="nombres_apellidos" required>
                     </div>
                     <div class="input-group">
-                        <label for="documento">Documento</label>
-                        <input type="number" id="documento" name="documento" required>
+                        <label for="nombre_usuario">Nombre de Usuario</label>
+                        <input type="text" id="nombre_usuario" name="nombre_usuario" required>
                     </div>
+                    <div class="input-group">
+                        <label for="contrasena">Contraseña</label>
+                        <input type="password" id="contrasena" name="contrasena" 
+                        required >
                     <div class="input-group">
                         <label for="area">Área</label>
                         <select name="area" id="area">
