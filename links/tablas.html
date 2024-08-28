@@ -2,7 +2,7 @@ CREATE DATABASE gategourmet;
 use gategourmet;
 
 CREATE TABLE usuarios (
-    correo VARCHAR(100) NOT NULL,
+    correo VARCHAR(100) NOT NULL UNIQUE,
     nombres_apellidos VARCHAR(100) NOT NULL,
     nombre_usuario VARCHAR(50) NOT NULL PRIMARY KEY,
     contrasena VARCHAR(255) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE usuarios (
 
 
 CREATE TABLE administradores (
-    correo VARCHAR(100) NOT NULL,
+    correo VARCHAR(100) NOT NULL UNIQUE,
     nombres_apellidos VARCHAR(100) NOT NULL,
     nombre_usuario VARCHAR(50) NOT NULL PRIMARY KEY,
     contrasena VARCHAR(255) NOT NULL,
@@ -78,10 +78,10 @@ CREATE TABLE listado_maestro (
 
 CREATE TABLE log_eventos (
     id_evento INT AUTO_INCREMENT PRIMARY KEY,
-    documento INT,
+    nombre_usuario VARCHAR(100) NOT NULL,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     detalle TEXT,
-    FOREIGN KEY (documento) REFERENCES usuarios(documento) ON DELETE CASCADE
+    FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario) ON DELETE CASCADE
 );
 
 CREATE TABLE movimientos (
@@ -121,7 +121,7 @@ CREATE TABLE procesos (
     rol VARCHAR(255)
 );
 
-LOAD DATA INFILE 'C:/Users/Administrator/Desktop/Libro1.csv' 
+LOAD DATA INFILE 'C:/Users/Administrator/Desktop/Libro6.csv' 
 INTO TABLE procesos
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
