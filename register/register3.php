@@ -1,4 +1,3 @@
-
 <?php
 include_once("config_register.php");
 
@@ -37,6 +36,7 @@ if (isset($_POST['Submit'])) {
         echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
     } else {
         try {
+            // Iniciar la transacción
             $dbConn->beginTransaction();
         
             // Verificar si el nombre_usuario ya existe en la base de datos
@@ -45,7 +45,6 @@ if (isset($_POST['Submit'])) {
             $checkDocQuery->bindparam(':nombre_usuario', $nombre_usuario);
             $checkDocQuery->execute();
             $count = $checkDocQuery->fetchColumn();
-
         
             // Verificar el campo cargo y definir la tabla correspondiente
             if ($rol === 'Administrador') {
@@ -66,16 +65,15 @@ if (isset($_POST['Submit'])) {
             $query->bindparam(':rol', $rol);
             $query->execute();
         
+            // Cometer la transacción
             $dbConn->commit();
         
             $ipAddress = $_SERVER['REMOTE_ADDR'];
-            $movimientoSql = "INSERT INTO movimientos (usuario, accion, ip_address) VALUES (:usuario, 'Registro exitoso', :ip_address)";
+            $movimientoSql = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (:nombre_usuario, 'Registro exitoso', NOW())";
             $movimientoQuery = $dbConn->prepare($movimientoSql);
-            $movimientoQuery->bindparam(':usuario', $nombre_usuario);
-            $movimientoQuery->bindparam(':ip_address', $ipAddress);
+            $movimientoQuery->bindparam(':nombre_usuario', $nombre_usuario);
             $movimientoQuery->execute();
 
-            
             if ($query->rowCount() > 0) {
                 // Redirigir a la página deseada después del registro exitoso
                 header("Location: http://localhost/GateGourmet/register/registro_exitoso/registro_exitoso.php");
@@ -84,13 +82,16 @@ if (isset($_POST['Submit'])) {
                 echo "<font color='red'>Error al registrar el usuario o administrador.</font><br/>";
             }
         } catch (Exception $e) {
-            $dbConn->rollBack();
+            // Revertir los cambios si ocurre un error
+            if ($dbConn->inTransaction()) {
+                $dbConn->rollBack();
+            }
             echo "<font color='red'>Error: " . $e->getMessage() . "</font><br/>";
         }
-        
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">

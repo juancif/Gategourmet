@@ -2,7 +2,7 @@
 include_once("config_gestor.php");
 
 // Consulta a la base de datos
-$result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
+$result = $dbConn->query("SELECT * FROM usuarios ORDER BY nombre_usuario ASC");
 ?>
 <html>
 <head>
@@ -20,11 +20,10 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
         <table class="tabla_principal">
         <th class="cuadro_titulo">Usuarios</th>
             <tr class="tabla_secundaria">
-                <th>NOMBRE DE USUARIO</th>
-                <th>CONTRASEÑA</th>
                 <th>CORREO ELECTRONICO</th>
                 <th>NOMBRES Y APELLIDOS</th>
-                <th>DOCUMENTO</th>
+                <th>NOMBRE DE USUARIO</th>
+                <th>CONTRASEÑA</th>
                 <th>AREA PERTENECE</th>
                 <th>CARGO</th>
                 <th>ROL</th>
@@ -33,17 +32,16 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY documento ASC");
             <?php
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                 echo "<tr>";
-                echo "<td>" . htmlspecialchars($row['nombre_usuario']) . "</td>";
                 echo "<td>" . str_repeat('*', strlen($row['contrasena']));
                 echo "<td>" . htmlspecialchars($row['correo']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['nombre_usuario']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['nombres_apellidos']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['documento']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['area']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['cargo']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['rol']) . "</td>";
                 echo "<td class='acciones'>
-                        <a href='edit_gestor.php?documento=" . htmlspecialchars($row['documento']) . "'>Editar</a> | 
-                        <a href='delete_gestor.php?documento=" . htmlspecialchars($row['documento']) . "' 
+                        <a href='edit_gestor.php?nombre_usuario=" . htmlspecialchars($row['nombre_usuario']) . "'>Editar</a> | 
+                        <a href='delete_gestor.php?nombre_usuario=" . htmlspecialchars($row['nombre_usuario']) . "' 
                            onclick=\"return confirm('¿Está seguro de eliminar este registro?')\">Eliminar</a>
                       </td>";
                 echo "</tr>";
