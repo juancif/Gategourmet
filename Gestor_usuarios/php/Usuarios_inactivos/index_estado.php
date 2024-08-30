@@ -2,7 +2,7 @@
 include_once("config_gestor.php");
 
 // Consulta a la base de datos
-$result = $dbConn->query("SELECT * FROM usuarios ORDER BY nombre_usuario ASC");
+$result = $dbConn->query("SELECT * FROM administradores ORDER BY nombre_usuario ASC");
 ?>
 <html>
 <head>
@@ -17,11 +17,9 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY nombre_usuario ASC");
                 <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link"><img src="../../../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
             </li>
     </header>
-    <a href="add_gestor.php" class="boton_adicionar">Adicionar usuario</a>
-    <a href="http://localhost/GateGourmet/Gestor_usuarios/Usuarios_inactivos/index_estado.php" class="boton_adicionar">ver inactivos</a>
-    <a href="http://localhost/GateGourmet/Gestor_usuarios/php/admin/index_gestor_admin.php" class="boton_volver">Ver administradores</a><br/><br/>
+    <div>
         <table class="tabla_principal">
-        <th class="cuadro_titulo">Usuarios</th>
+        <th class="cuadro_titulo">Usuarios Inactivos</th>
             <tr class="tabla_secundaria">
                 <th>CORREO ELECTRONICO</th>
                 <th>NOMBRES Y APELLIDOS</th>
@@ -31,29 +29,31 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY nombre_usuario ASC");
                 <th>CARGO</th>
                 <th>ROL</th>
                 <th>ESTADO</th>
-             <th>EDICIÓN</th>
+                <th>EDICIÓN</th>
             </tr>
             <?php
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                 echo "<tr>";
-                echo "<td>" . str_repeat('*', strlen($row['contrasena']));
                 echo "<td>" . htmlspecialchars($row['correo']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['nombre_usuario']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['nombres_apellidos']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['nombre_usuario']) . "</td>";
+                echo "<td>" . str_repeat('*', strlen($row['contrasena']));
                 echo "<td>" . htmlspecialchars($row['area']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['cargo']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['rol']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['estado']) . "</td>";
                 echo "<td class='acciones'>
-                        <a href='edit_gestor.php?nombre_usuario=" . htmlspecialchars($row['nombre_usuario']) . "'>Editar</a> | 
-                        <a href='delete_gestor.php?nombre_usuario=" . htmlspecialchars($row['nombre_usuario']) . "' 
+                        <a href='edit_gestor_admin.php?nombre_usuario=" . htmlspecialchars($row['nombre_usuario']) . "'>Editar</a> | 
+                        <a href='delete_gestor_admin.php?nombre_usuario=" . htmlspecialchars($row['nombre_usuario']) . "' 
                            onclick=\"return confirm('¿Está seguro de eliminar este registro?')\">Eliminar</a>
                       </td>";
                 echo "</tr>";
             }
             ?>
         </table>
-    </div>    
+    </div>
+    <a href="add_gestor_admin.php" class="boton_adicionar">Adicionar administradores</a><br/><br/>
+    <a href="http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor.php" class="boton_volver">Volver</a><br/><br/>    
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
     </footer>

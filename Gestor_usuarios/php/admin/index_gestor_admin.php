@@ -17,9 +17,11 @@ $result = $dbConn->query("SELECT * FROM administradores ORDER BY nombre_usuario 
                 <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link"><img src="../../../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
             </li>
     </header>
+    <a href="add_gestor_admin.php" class="boton_adicionar">Adicionar administradores</a><br/><br/>
+    <a href="http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor.php" class="boton_volver">Volver</a><br/><br/>
     <div>
         <table class="tabla_principal">
-        <th class="cuadro_titulo">Administradores</th>
+        <th class="cuadro_titulo">Usuarios</th>
             <tr class="tabla_secundaria">
                 <th>CORREO ELECTRONICO</th>
                 <th>NOMBRES Y APELLIDOS</th>
@@ -28,6 +30,7 @@ $result = $dbConn->query("SELECT * FROM administradores ORDER BY nombre_usuario 
                 <th>AREA PERTENECE</th>
                 <th>CARGO</th>
                 <th>ROL</th>
+                <th>ESTADO</th>
                 <th>EDICIÓN</th>
             </tr>
             <?php
@@ -40,6 +43,7 @@ $result = $dbConn->query("SELECT * FROM administradores ORDER BY nombre_usuario 
                 echo "<td>" . htmlspecialchars($row['area']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['cargo']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['rol']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['estado']) . "</td>";
                 echo "<td class='acciones'>
                         <a href='edit_gestor_admin.php?nombre_usuario=" . htmlspecialchars($row['nombre_usuario']) . "'>Editar</a> | 
                         <a href='delete_gestor_admin.php?nombre_usuario=" . htmlspecialchars($row['nombre_usuario']) . "' 
@@ -49,9 +53,7 @@ $result = $dbConn->query("SELECT * FROM administradores ORDER BY nombre_usuario 
             }
             ?>
         </table>
-    </div>
-    <a href="add_gestor_admin.php" class="boton_adicionar">Adicionar administradores</a><br/><br/>
-    <a href="http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor.php" class="boton_volver">Volver</a><br/><br/>    
+    </div>    
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
     </footer>
