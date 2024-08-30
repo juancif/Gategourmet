@@ -28,8 +28,9 @@ body {
     background: #1117;
     backdrop-filter: blur(10px);
     position: absolute;
-    margin-left: 600px;
+    margin-left: 80vh;
     margin-top: 350px;
+    border-radius: 20px;
 }
 
 .texto_cuadro{
@@ -49,6 +50,8 @@ body {
     margin-top: 10px;
 }
 
+
+
 .link_volver{
     text-decoration: none;
     color: black;
@@ -58,6 +61,11 @@ body {
     padding-right: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+ .boton_volver:hover{
+    margin-top: 20px;
+    background-color: rgb(183, 202, 183);
 }
 .footer {
     background: #1117;
