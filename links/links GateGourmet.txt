@@ -82,4 +82,4 @@ http://localhost/GateGourmet/Movimientos/registrar_movimiento.php
 
 usuarios inactivos
 
-http://localhost/GateGourmet/Gestor_usuarios/Usuarios_inactivos/index_estado.php
+http://localhost/GateGourmet/Gestor_usuarios/php/Usuarios_inactivos/index_estado.php
