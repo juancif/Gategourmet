@@ -79,3 +79,7 @@ http://localhost/GateGourmet/Movimientos/logout.php
 registrar_movimiento
 
 http://localhost/GateGourmet/Movimientos/registrar_movimiento.php
+
+usuarios inactivos
+
+http://localhost/GateGourmet/Gestor_usuarios/Usuarios_inactivos/index_estado.php

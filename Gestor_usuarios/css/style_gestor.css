@@ -116,7 +116,7 @@ body {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     overflow: hidden;
-    margin-top: 100px;
+    margin-top: 180px;
 }
 
 
@@ -154,7 +154,7 @@ body {
 }
 
 /* Botones */
-.boton_adicionar {
+.botones {
     background: #111b;
     color: white;
     font-family: 'Poppins', sans-serif;
@@ -170,29 +170,20 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.39);
     width: 200px;
     margin-left: 170vh;
-    margin-top: 70px;
+    margin-top: 10px;
     position: absolute;
+}
+.boton_inactivos{
+    margin-left: 95vh;
+}
+.boton_volver{
+    margin-left: 10vh;
 }
 
-.boton_volver {
-    background: #111b;
-    color: white;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1em;
-    padding: 12px 30px;
-    border: none;
-    border-radius: 25px;
-    text-decoration: none;
-    text-align: center;
-    display: inline-block;
-    margin: 20px 10px;
-    transition: background 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.39);
-    width: 200px;
-    margin-left: 10vh;
-    margin-top: 20px;
-    position: absolute;
+.boton_adicionar{
+    margin-left: 170vh;
 }
+
 .boton_adicionar:hover,
 .boton_volver:hover {
     background: #111;
