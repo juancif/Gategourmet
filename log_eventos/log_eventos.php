@@ -29,8 +29,11 @@ $result = $connect->query($sql);
         <h1>Log de Eventos</h1>
     </header>
     <li class="nav__item__user">
-                <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link"><img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
-            </li>
+        <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link">
+            <img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario">
+            <div class="cerrar__sesion">Volver al inicio</div>
+        </a>
+    </li>
     <main>
         <table>
             <thead>
@@ -44,19 +47,16 @@ $result = $connect->query($sql);
             <tbody>
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <tr>
-                        <td><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['nombre_usuario']; ?></td>
-                        <td><?php echo $row['accion']; ?></td>
-                        <td><?php echo $row['fecha']; ?></td>
+                        <td><?php echo htmlspecialchars($row['id']); ?></td>
+                        <td><?php echo htmlspecialchars($row['nombre_usuario']); ?></td>
+                        <td><?php echo htmlspecialchars($row['accion']); ?></td>
+                        <td><?php echo htmlspecialchars($row['fecha']); ?></td>
                     </tr>
                 <?php endwhile; ?>
             </tbody>
         </table>
     </main>
     <button onclick="window.location.reload();">Recargar Eventos</button>
-    <!-- <footer class="footer">
-    <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
-    </footer> -->
 </body>
 </html>
 

@@ -38,7 +38,7 @@ http://localhost/GateGourmet/Index/index_prueba/index4.html
 
 http://localhost/GateGourmet/Index/index5.html
 http://localhost/GateGourmet/Index/index_principal.html
-http://localhost/GateGourmet/Index/index_admin.php
+http://localhost/GateGourmet/Index/index_admin.html
 
 
 Procesos

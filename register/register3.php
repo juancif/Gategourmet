@@ -86,7 +86,7 @@ if (isset($_POST['Submit'])) {
             if ($dbConn->inTransaction()) {
                 $dbConn->rollBack();
             }
-            echo "<font color='red'>Error: " . $e->getMessage() . "</font><br/>";
+            echo "<font color='red', font-size='30'>Error: " . $e->getMessage() . "</font><br/>";
         }
     }
 }

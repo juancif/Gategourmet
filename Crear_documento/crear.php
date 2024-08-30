@@ -181,7 +181,7 @@ if (isset($_POST['Submit'])) {
                             <option value="Security">Security</option>
                         </select>
                     </div>
-                    <div class="input-group">
+                    <!-- <div class="input-group">
                         <label for="motivo_del_cambio">Motivo del Cambio</label>
                         <textarea id="motivo_del_cambio" name="motivo_del_cambio" placeholder="*Campo no obligatorio"></textarea>
                     </div>
@@ -208,7 +208,7 @@ if (isset($_POST['Submit'])) {
                     <div class="input-group">
                         <label for="disposicion_final">Disposición Final</label>
                         <textarea id="disposicion_final" name="disposicion_final" placeholder="*Campo no obligatorio"></textarea>
-                    </div>
+                    </div> -->
                     <div class="input-group">
                         <label for="copias_controladas">Copias Controladas</label>
                         <input type="number" id="copias_controladas" name="copias_controladas" placeholder="0"></input>
@@ -221,7 +221,7 @@ if (isset($_POST['Submit'])) {
                         <label for="dias">Días</label>
                         <input type="number" id="dias" name="dias">
                     </div>
-                    <div class="input-group">
+                    <!-- <div class="input-group">
                         <label for="senal_alerta">Señal de Alerta</label>
                         <input type="text" id="senal_alerta" name="senal_alerta" placeholder="*Campo no obligatorio">
                     </div>
@@ -236,7 +236,7 @@ if (isset($_POST['Submit'])) {
                     <div class="input-group">
                         <label for="en_actualizacion">En Actualización</label>
                         <input type="checkbox" id="en_actualizacion" name="en_actualizacion">
-                    </div>
+                    </div> -->
                     <div class="buttons">
                         <input type="submit" name="Submit" value="Agregar" class="Registrarse">
                         <a href="http://localhost/GateGourmet/Index/index_admin.html" class="regresar">Regresar</a>
