@@ -48,7 +48,7 @@ $result = $dbConn->query("SELECT * FROM administradores ORDER BY nombre_usuario 
                 echo "<td class='acciones'>
                         <a href='edit_gestor_admin.php?nombre_usuario=" . htmlspecialchars($row['nombre_usuario']) . "'>Editar</a> | 
                         <a href='delete_gestor_admin.php?nombre_usuario=" . htmlspecialchars($row['nombre_usuario']) . "' 
-                           onclick=\"return confirm('¿Está seguro de eliminar este registro?')\">Eliminar</a>
+                           onclick=\"return confirm('¿Está seguro de eliminar este registro?')\">Activar</a>
                       </td>";
                 echo "</tr>";
             }
