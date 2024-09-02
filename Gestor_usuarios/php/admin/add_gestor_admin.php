@@ -76,7 +76,7 @@ if (isset($_POST['Submit'])) {
 
             if ($query->rowCount() > 0) {
                 // Redirigir a la página deseada después del registro exitoso
-                header("Location: http://localhost/GateGourmet/Gestor_usuarios/php/registro_exitoso.php");
+                header("Location: http://localhost/GateGourmet/Gestor_usuarios/php/admin/registro_exitoso.php");
                 exit();
             } else {
                 echo "<font color='red'>Error al registrar el usuario o administrador.</font><br/>";
@@ -191,11 +191,7 @@ if (isset($_POST['Submit'])) {
                     <div class="input-group">
                         <label for="rol">Rol</label>
                         <select name="rol" id="rol">
-                            <option value="">Seleccione una opción</option>
-                            <option value="Administrador">Administrador</option>
-                            <option value="Aprobador">Aprobador</option>
-                            <option value="Digitador">Digitador</option>
-                            <option value="Observador">Observador</option>
+                            <option value="">Administrador</option>
                          </select>                    
                     </div>
                     <div class="buttons">

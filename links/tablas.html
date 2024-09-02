@@ -1,6 +1,8 @@
+-- Crear base de datos
 CREATE DATABASE gategourmet;
-use gategourmet;
+USE gategourmet;
 
+-- Crear tabla usuarios
 CREATE TABLE usuarios (
     correo VARCHAR(100) NOT NULL UNIQUE,
     nombres_apellidos VARCHAR(100) NOT NULL,
@@ -8,11 +10,11 @@ CREATE TABLE usuarios (
     contrasena VARCHAR(255) NOT NULL,
     area VARCHAR(50) NOT NULL,
     cargo VARCHAR(50) NOT NULL,
-    rol ENUM('Aprobador','Digitador', 'Observador') NOT NULL,
+    rol ENUM('Administrador', 'Aprobador', 'Digitador', 'Observador') NOT NULL,
     estado ENUM('Activo', 'Inactivo') DEFAULT 'Activo'
 );
 
-
+-- Crear tabla administradores
 CREATE TABLE administradores (
     correo VARCHAR(100) NOT NULL UNIQUE,
     nombres_apellidos VARCHAR(100) NOT NULL,
@@ -20,35 +22,38 @@ CREATE TABLE administradores (
     contrasena VARCHAR(255) NOT NULL,
     area VARCHAR(50) NOT NULL,
     cargo VARCHAR(50) NOT NULL,
-    rol ENUM('Administrador') NOT NULL,
+    rol ENUM('Administrador', 'Aprobador', 'Digitador', 'Observador') NOT NULL,
     estado ENUM('Activo', 'Inactivo') DEFAULT 'Activo'
 );
 
-
+-- Crear tabla cargos
 CREATE TABLE cargos (
-    id int(11) NOT NULL AUTO_INCREMENT,
-    nombre_cargo varchar(255) NOT NULL,
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    nombre_cargo VARCHAR(255) NOT NULL,
     PRIMARY KEY (id),
     UNIQUE (nombre_cargo)
 );
 
+-- Crear tabla roles
 CREATE TABLE roles (
-    id int(11) NOT NULL AUTO_INCREMENT,
-    nombre_rol varchar(255) NOT NULL,
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    nombre_rol VARCHAR(255) NOT NULL,
     PRIMARY KEY (id),
     UNIQUE (nombre_rol)
 );
 
+-- Crear tabla documentos
 CREATE TABLE documentos (
-    id int(11) NOT NULL AUTO_INCREMENT,
-    codigo varchar(50) NOT NULL,
-    tipo_documento enum('Word', 'Excel', 'PDF', 'PowerPoint', 'Texto', 'Otro') NOT NULL,
-    estado enum('Activo', 'Inactivo', 'Pendiente', 'Archivado') NOT NULL,
-    fecha_creacion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    fecha_modificacion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    codigo VARCHAR(50) NOT NULL,
+    tipo_documento ENUM('Word', 'Excel', 'PDF', 'PowerPoint', 'Texto', 'Otro') NOT NULL,
+    estado ENUM('Activo', 'Inactivo', 'Pendiente', 'Archivado') NOT NULL,
+    fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    fecha_modificacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
 
+-- Crear tabla inactivos
 CREATE TABLE inactivos (
     correo VARCHAR(100) NOT NULL UNIQUE,
     nombres_apellidos VARCHAR(100) NOT NULL,
@@ -60,7 +65,7 @@ CREATE TABLE inactivos (
     estado ENUM('Activo', 'Inactivo') DEFAULT 'Inactivo'
 );
 
-
+-- Crear tabla listado_maestro
 CREATE TABLE listado_maestro (
     id INT AUTO_INCREMENT PRIMARY KEY,
     proceso VARCHAR(255),
@@ -87,7 +92,7 @@ CREATE TABLE listado_maestro (
     en_actualizacion VARCHAR(50)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-
+-- Crear tabla log_eventos
 CREATE TABLE log_eventos (
     id_evento INT AUTO_INCREMENT PRIMARY KEY,
     nombre_usuario VARCHAR(100) NOT NULL,
@@ -96,6 +101,7 @@ CREATE TABLE log_eventos (
     FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario) ON DELETE CASCADE
 );
 
+-- Crear tabla movimientos
 CREATE TABLE movimientos (
     id INT(11) NOT NULL AUTO_INCREMENT,
     nombre_usuario VARCHAR(255) NOT NULL,
@@ -104,7 +110,7 @@ CREATE TABLE movimientos (
     PRIMARY KEY (id)
 );
 
-
+-- Crear tabla password_resets
 CREATE TABLE password_resets (
     id_password INT(11) NOT NULL AUTO_INCREMENT,
     correo VARCHAR(100) NOT NULL,  
@@ -113,15 +119,6 @@ CREATE TABLE password_resets (
     PRIMARY KEY (id_password),
     FOREIGN KEY (correo) REFERENCES usuarios(correo) ON DELETE CASCADE
 );
-
-
-LOAD DATA INFILE 'C:/Users/Administrator/Desktop/Libro1.csv' 
-INTO TABLE listado_maestro
-FIELDS TERMINATED BY ';'
-ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS
-(proceso, codigo, titulo_documento, tipo, version, estado, fecha_aprobacion, areas, motivo_del_cambio, tiempo_de_retencion, responsable_de_retencion, lugar_de_almacenamiento_fisico, lugar_de_almacenamiento_magnetico, conservacion, disposicion_final, copias_controladas, fecha_de_vigencia, dias, senal_alerta, obsoleto, anulado, en_actualizacion);
 
 CREATE TABLE procesos (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -133,12 +130,22 @@ CREATE TABLE procesos (
     rol VARCHAR(255)
 );
 
+-- Cargar datos en la tabla listado_maestro
+LOAD DATA INFILE 'C:/Users/Administrator/Desktop/Libro1.csv' 
+INTO TABLE listado_maestro
+FIELDS TERMINATED BY ';'
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(proceso, codigo, titulo_documento, tipo, version, estado, fecha_aprobacion, areas, motivo_del_cambio, tiempo_de_retencion, responsable_de_retencion, lugar_de_almacenamiento_fisico, lugar_de_almacenamiento_magnetico, conservacion, disposicion_final, copias_controladas, fecha_de_vigencia, dias, senal_alerta, obsoleto, anulado, en_actualizacion);
+
+-- Cargar datos en la tabla procesos
 LOAD DATA INFILE 'C:/Users/Administrator/Desktop/Libro6.csv' 
 INTO TABLE procesos
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGNORE 1 LINES
+IGNORE 1 ROWS
 (@macroproceso, @proceso, @usuario, @cargo, @email, @rol)
 SET 
     macroproceso = TRIM(BOTH FROM @macroproceso),
@@ -149,7 +156,7 @@ SET
     rol = TRIM(BOTH FROM @rol);
 
 
-
     
 <!-- //C:\\Users\\lrodriguezcorrea\\Desktop\\Libro6.csv' -->
+
 
