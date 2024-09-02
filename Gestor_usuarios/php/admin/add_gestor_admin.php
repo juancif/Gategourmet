@@ -76,7 +76,7 @@ if (isset($_POST['Submit'])) {
 
             if ($query->rowCount() > 0) {
                 // Redirigir a la página deseada después del registro exitoso
-                header("Location: http://localhost/GateGourmet/register/registro_exitoso/registro_exitoso.php");
+                header("Location: http://localhost/GateGourmet/Gestor_usuarios/php/registro_exitoso.php");
                 exit();
             } else {
                 echo "<font color='red'>Error al registrar el usuario o administrador.</font><br/>";
@@ -86,7 +86,7 @@ if (isset($_POST['Submit'])) {
             if ($dbConn->inTransaction()) {
                 $dbConn->rollBack();
             }
-            echo "<font color='red', font-size='30'>Error: " . $e->getMessage() . "</font><br/>";
+            echo "<font color='red', font-size='30'>Error: El usuario ya se encuentra registrado</font><br/>";
         }
     }
 }
@@ -197,16 +197,6 @@ if (isset($_POST['Submit'])) {
                             <option value="Digitador">Digitador</option>
                             <option value="Observador">Observador</option>
                          </select>                    
-                    </div>
-                    <div>
-                    <label for="rol">Rol</label>
-                        <select name="rol" id="rol">
-                            <option value="">Seleccione una opción</option>
-                            <option value="Administrador">Administrador</option>
-                            <option value="Aprobador">Aprobador</option>
-                            <option value="Digitador">Digitador</option>
-                            <option value="Observador">Observador</option>
-                         </select>
                     </div>
                     <div class="buttons">
                         <input type="submit" name="Submit" value="Registrarse" class="Registrarse">

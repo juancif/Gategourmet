@@ -6,7 +6,7 @@
     <title>Inicio Sesión Gateourmet</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="../../register/registro_exitoso/style_registro_exitoso.css">
+    <link rel="stylesheet" href="../../../register/registro_exitoso/style_registro_exitoso.css">
 </head>
 <body>
 <header class="header">
@@ -16,7 +16,7 @@
         <h2 class="texto_cuadro">¡Registro exitoso!</h2>
     
     <button class="boton_volver">
-    <a href="http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor.php" class="link_volver">Volver al inicio</a></button>
+    <a href="http://localhost/GateGourmet/Gestor_usuarios/php/Inactivos/index_inactivos.php" class="link_volver">Volver al inicio</a></button>
 </div>
     <footer class="footer">
             <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
