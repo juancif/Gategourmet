@@ -86,13 +86,11 @@ if (isset($_POST['Submit'])) {
             if ($dbConn->inTransaction()) {
                 $dbConn->rollBack();
             }
-            echo "<font color='red', font-size='30'>Error: " . $e->getMessage() . "</font><br/>";
+            echo "<font color='black', font-size='40',>Error: El nombre de usuario ya esta registrado</font><br/>";
         }
     }
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -125,10 +123,11 @@ if (isset($_POST['Submit'])) {
                         <label for="nombre_usuario">Nombre de Usuario</label>
                         <input type="text" id="nombre_usuario" name="nombre_usuario" required>
                     </div>
-                    <div class="input-group">
+                    <div class="input-group tooltip">
                         <label for="contrasena">Contraseña</label>
-                        <input type="password" id="contrasena" name="contrasena" 
-                        required >
+                        <input type="password" id="contrasena" name="contrasena" required>
+                        <span class="tooltiptext">Recuerda que la contraseña debe tener minimo 12 caracteres, un caracter especial y una mayuscula.</span>
+                    </div>
                     <div class="input-group">
                         <label for="area">Área</label>
                         <select name="area" id="area">

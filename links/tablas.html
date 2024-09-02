@@ -9,7 +9,7 @@ CREATE TABLE usuarios (
     area VARCHAR(50) NOT NULL,
     cargo VARCHAR(50) NOT NULL,
     rol ENUM('Aprobador','Digitador', 'Observador') NOT NULL,
-    estado ENUM('Activo', 'Inactivo') DEFAULT 'Inactivo'
+    estado ENUM('Activo', 'Inactivo') DEFAULT 'Activo'
 );
 
 
@@ -21,7 +21,7 @@ CREATE TABLE administradores (
     area VARCHAR(50) NOT NULL,
     cargo VARCHAR(50) NOT NULL,
     rol ENUM('Administrador') NOT NULL,
-    estado ENUM('Activo', 'Inactivo') DEFAULT 'Inactivo'
+    estado ENUM('Activo', 'Inactivo') DEFAULT 'Activo'
 );
 
 
@@ -48,6 +48,18 @@ CREATE TABLE documentos (
     fecha_modificacion timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE inactivos (
+    correo VARCHAR(100) NOT NULL UNIQUE,
+    nombres_apellidos VARCHAR(100) NOT NULL,
+    nombre_usuario VARCHAR(50) NOT NULL PRIMARY KEY,
+    contrasena VARCHAR(255) NOT NULL,
+    area VARCHAR(50) NOT NULL,
+    cargo VARCHAR(50) NOT NULL,
+    rol ENUM('Aprobador', 'Digitador', 'Observador') NOT NULL,
+    estado ENUM('Activo', 'Inactivo') DEFAULT 'Inactivo'
+);
+
 
 CREATE TABLE listado_maestro (
     id INT AUTO_INCREMENT PRIMARY KEY,
