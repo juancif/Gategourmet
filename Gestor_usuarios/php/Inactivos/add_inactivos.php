@@ -1,5 +1,5 @@
 <?php
-include_once("config_gestor.php");
+include_once("config_inactivos.php");
 
 if (isset($_POST['Submit'])) {
     $correo = $_POST['correo'];

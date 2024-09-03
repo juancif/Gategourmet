@@ -33,27 +33,42 @@ if (isset($_POST['update'])) {
         $row_check = $query_check->fetch(PDO::FETCH_ASSOC);
         $current_rol = $row_check['rol'];
 
-        // Debugging: Mostrar los valores
-        echo "Current Rol: " . htmlspecialchars($current_rol) . "<br>";
-        echo "New Rol: " . htmlspecialchars($rol) . "<br>";
-
-        if ($current_rol != 'Administrador' && $rol == 'Administrador') {
-            // Mover el registro a la tabla 'administradores'
-            $sql_move = "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol)
-                         SELECT correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol
-                         FROM usuarios
-                         WHERE nombre_usuario = :nombre_usuario";
-            $query_move = $dbConn->prepare($sql_move);
-            $query_move->bindParam(':nombre_usuario', $nombre_usuario);
-            $query_move->execute();
-            
-            // Eliminar el registro de la tabla 'usuarios'
-            $sql_delete = "DELETE FROM usuarios WHERE nombre_usuario = :nombre_usuario";
-            $query_delete = $dbConn->prepare($sql_delete);
-            $query_delete->bindParam(':nombre_usuario', $nombre_usuario);
-            $query_delete->execute();
+        if ($current_rol != $rol) {
+            if ($rol == 'Administrador') {
+                // Mover el registro a la tabla 'administradores'
+                $sql_move = "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol)
+                             SELECT correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, :rol
+                             FROM usuarios
+                             WHERE nombre_usuario = :nombre_usuario";
+                $query_move = $dbConn->prepare($sql_move);
+                $query_move->bindParam(':nombre_usuario', $nombre_usuario);
+                $query_move->bindParam(':rol', $rol);
+                $query_move->execute();
+                
+                // Eliminar el registro de la tabla 'usuarios'
+                $sql_delete = "DELETE FROM usuarios WHERE nombre_usuario = :nombre_usuario";
+                $query_delete = $dbConn->prepare($sql_delete);
+                $query_delete->bindParam(':nombre_usuario', $nombre_usuario);
+                $query_delete->execute();
+            } else {
+                // Mover el registro a la tabla 'usuarios'
+                $sql_move = "INSERT INTO usuarios (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol)
+                             SELECT correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, :rol
+                             FROM administradores
+                             WHERE nombre_usuario = :nombre_usuario";
+                $query_move = $dbConn->prepare($sql_move);
+                $query_move->bindParam(':nombre_usuario', $nombre_usuario);
+                $query_move->bindParam(':rol', $rol);
+                $query_move->execute();
+                
+                // Eliminar el registro de la tabla 'administradores'
+                $sql_delete = "DELETE FROM administradores WHERE nombre_usuario = :nombre_usuario";
+                $query_delete = $dbConn->prepare($sql_delete);
+                $query_delete->bindParam(':nombre_usuario', $nombre_usuario);
+                $query_delete->execute();
+            }
         } else {
-            // Actualizar el registro en la tabla 'usuarios'
+            // Si el rol no cambia, solo actualizar la tabla correspondiente
             $sql_update = "UPDATE usuarios SET correo=:correo, nombres_apellidos=:nombres_apellidos, contrasena=:contrasena,  
                            area=:area, cargo=:cargo, rol=:rol
                            WHERE nombre_usuario=:nombre_usuario";
@@ -67,9 +82,6 @@ if (isset($_POST['update'])) {
             $query_update->bindParam(':rol', $rol);
             $query_update->execute();
         }
-
-        // Debugging: Confirmar que la actualización o movimiento se realizó
-        echo "Update or move completed.<br>";
 
         header("Location: index_gestor.php");
         exit();
@@ -90,6 +102,7 @@ if (isset($_GET['nombre_usuario'])) {
     $rol = $row['rol'];
 }
 ?>
+
 
 
 <html>

@@ -192,7 +192,6 @@ if (isset($_POST['Submit'])) {
                         <label for="rol">Rol</label>
                         <select name="rol" id="rol">
                             <option value="">Seleccione una opción</option>
-                            <option value="Aprobador">Administrador</option>
                             <option value="Aprobador">Aprobador</option>
                             <option value="Digitador">Digitador</option>
                             <option value="Observador">Observador</option>

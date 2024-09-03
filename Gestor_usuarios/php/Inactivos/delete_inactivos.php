@@ -1,5 +1,5 @@
 <?php
-include("config_gestor.php");
+include("config_inactivos.php");
 $nombre_usuario = $_GET['nombre_usuario'];
 $sql = "DELETE FROM administradores WHERE nombre_usuario=:nombre_usuario"; // Aquí podrías necesitar cambiar ':nombre_usuario' a ':id' dependiendo del nombre real del parámetro en tu base de datos
 $query = $dbConn->prepare($sql);

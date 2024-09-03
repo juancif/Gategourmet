@@ -18,7 +18,7 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY nombre_usuario ASC");
             </li>
     </header>
     <a href="add_gestor.php" class="botones boton_adicionar">Adicionar usuario</a>
-    <a href="http://localhost/GateGourmet/Gestor_usuarios/php/Usuarios_inactivos/index_estado.php" class="botones boton_inactivos">ver inactivos</a>
+    <a href="http://localhost/GateGourmet/Gestor_usuarios/php/Inactivos/index_inactivos.php" class="botones boton_inactivos">ver inactivos</a>
     <a href="http://localhost/GateGourmet/Gestor_usuarios/php/admin/index_gestor_admin.php" class="botones boton_volver">Ver administradores</a>
         <table class="tabla_principal">
         <th class="cuadro_titulo">Usuarios</th>
