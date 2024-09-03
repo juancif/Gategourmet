@@ -32,19 +32,40 @@ if (isset($_POST['update'])) {
         $row_check = $query_check->fetch(PDO::FETCH_ASSOC);
         $current_rol = $row_check['rol'];
 
-        // Actualizar el usuario sin mover entre tablas
-        $sql_update = "UPDATE usuarios SET correo=:correo, nombres_apellidos=:nombres_apellidos, contrasena=:contrasena,  
-                       area=:area, cargo=:cargo, rol=:rol
-                       WHERE nombre_usuario=:nombre_usuario";
-        $query_update = $dbConn->prepare($sql_update);
-        $query_update->bindParam(':correo', $correo);
-        $query_update->bindParam(':nombres_apellidos', $nombres_apellidos);
-        $query_update->bindParam(':nombre_usuario', $nombre_usuario);
-        $query_update->bindParam(':contrasena', $contrasena);
-        $query_update->bindParam(':area', $area);
-        $query_update->bindParam(':cargo', $cargo);
-        $query_update->bindParam(':rol', $rol);
-        $query_update->execute();
+        // Si el rol ha cambiado a Administrador
+        if ($rol === 'Administrador') {
+            // Insertar en la tabla administradores
+            $sql_insert_admin = "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol)
+                                 VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol)";
+            $query_insert = $dbConn->prepare($sql_insert_admin);
+            $query_insert->bindParam(':correo', $correo);
+            $query_insert->bindParam(':nombres_apellidos', $nombres_apellidos);
+            $query_insert->bindParam(':nombre_usuario', $nombre_usuario);
+            $query_insert->bindParam(':contrasena', $contrasena);
+            $query_insert->bindParam(':area', $area);
+            $query_insert->bindParam(':cargo', $cargo);
+            $query_insert->bindParam(':rol', $rol);
+            $query_insert->execute();
+
+            // Eliminar del usuario
+            $sql_delete_user = "DELETE FROM usuarios WHERE nombre_usuario = :nombre_usuario";
+            $query_delete = $dbConn->prepare($sql_delete_user);
+            $query_delete->execute([':nombre_usuario' => $nombre_usuario]);
+        } else {
+            // Actualizar el usuario sin mover entre tablas
+            $sql_update = "UPDATE usuarios SET correo=:correo, nombres_apellidos=:nombres_apellidos, contrasena=:contrasena,  
+                           area=:area, cargo=:cargo, rol=:rol
+                           WHERE nombre_usuario=:nombre_usuario";
+            $query_update = $dbConn->prepare($sql_update);
+            $query_update->bindParam(':correo', $correo);
+            $query_update->bindParam(':nombres_apellidos', $nombres_apellidos);
+            $query_update->bindParam(':nombre_usuario', $nombre_usuario);
+            $query_update->bindParam(':contrasena', $contrasena);
+            $query_update->bindParam(':area', $area);
+            $query_update->bindParam(':cargo', $cargo);
+            $query_update->bindParam(':rol', $rol);
+            $query_update->execute();
+        }
 
         header("Location: index_gestor.php");
         exit();
@@ -65,6 +86,7 @@ if (isset($_GET['nombre_usuario'])) {
     $rol = $row['rol'];
 }
 ?>
+
 
 <html>
 <head>
