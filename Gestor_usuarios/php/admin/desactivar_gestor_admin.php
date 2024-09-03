@@ -26,10 +26,10 @@ if (isset($_GET['nombre_usuario'])) {
             $stmtInsert->bindParam(':contrasena', $user['contrasena']);
             $stmtInsert->bindParam(':area', $user['area']);
             $stmtInsert->bindParam(':cargo', $user['cargo']);
-            $stmtInsert->bindParam(':rol', $user['rol']);
+            $stmtInsert->bindParam(':rol', $user['rol']);  // Asegúrate de que se está pasando el rol
             $stmtInsert->execute();
 
-            // Eliminar de la tabla usuarios
+            // Eliminar de la tabla administradores
             $sqlDelete = "DELETE FROM administradores WHERE nombre_usuario = :nombre_usuario";
             $stmtDelete = $dbConn->prepare($sqlDelete);
             $stmtDelete->bindParam(':nombre_usuario', $nombre_usuario);

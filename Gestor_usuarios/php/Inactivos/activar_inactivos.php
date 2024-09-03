@@ -16,12 +16,17 @@ if (isset($_GET['nombre_usuario'])) {
         $user = $stmtSelect->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
-            // Determinar la tabla en la que se debe insertar el usuario basado en el rol
-            $table = $user['rol'] == 'Administrador' ? 'administradores' : 'usuarios';
+            // Dependiendo del rol, insertar en la tabla correspondiente
+            if ($user['rol'] === 'Administrador') {
+                $sqlInsert = "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol, estado) 
+                              VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol, 'Activo')";
+            } elseif (in_array($user['rol'], ['Aprobador', 'Digitador', 'Observador'])) {
+                $sqlInsert = "INSERT INTO usuarios (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol, estado) 
+                              VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol, 'Activo')";
+            } else {
+                throw new Exception("Rol desconocido: " . $user['rol']);
+            }
 
-            // Insertar en la tabla correspondiente
-            $sqlInsert = "INSERT INTO $table (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol) 
-                          VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol)";
             $stmtInsert = $dbConn->prepare($sqlInsert);
             $stmtInsert->bindParam(':correo', $user['correo']);
             $stmtInsert->bindParam(':nombres_apellidos', $user['nombres_apellidos']);
@@ -42,10 +47,10 @@ if (isset($_GET['nombre_usuario'])) {
             $dbConn->commit();
 
             // Redirigir o mostrar un mensaje de éxito
-            header("Location: http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor.php?msg=Usuario activado correctamente");
+            header("Location: http://localhost/GateGourmet/Gestor_usuarios/php/Inactivos/index_inactivos.php?msg=Usuario activado correctamente");
             exit();
         } else {
-            throw new Exception("Usuario no encontrado");
+            throw new Exception("Usuario no encontrado en inactivos");
         }
     } catch (Exception $e) {
         // Revertir transacción en caso de error
