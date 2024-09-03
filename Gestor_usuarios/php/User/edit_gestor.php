@@ -125,7 +125,7 @@ if (isset($_GET['nombre_usuario'])) {
                     <label for="area">Área</label>
                 <select name="area" id="area">
                     <option value="">Seleccione una opción</option>
-                    <option value="Gestion corporativa" <?php if ($area == 'Gestion corporativa') echo 'selected'; ?>>Gestión corporativa</option>
+                    <option value="Gestión corporativa" <?php if ($area == 'Gestión corporativa') echo 'selected'; ?>>Gestión corporativa</option>
                     <option value="Compliance" <?php if ($area == 'Compliance') echo 'selected'; ?>>Compliance</option>
                     <option value="Supply chain" <?php if ($area == 'Supply chain') echo 'selected'; ?>>Supply Chain</option>
                     <option value="Culinary Excellence" <?php if ($area == 'Culinary Excellence') echo 'selected'; ?>>Culinary Excellence</option>
@@ -137,7 +137,7 @@ if (isset($_GET['nombre_usuario'])) {
                     <option value="Comunicaciones" <?php if ($area == 'Comunicaciones') echo 'selected'; ?>>Comunicaciones</option>
                     <option value="Tecnologia de la información" <?php if ($area == 'Tecnologia de la información') echo 'selected'; ?>>Tecnologia de la información</option>
                     <option value="Talento humano" <?php if ($area == 'Talento humano') echo 'selected'; ?>>Talento Humano</option>
-                    <option value="Mantenimiento" <?php if ($area == 'Mantenimiento') echo 'selected'; ?>>Mantenimiento</option>
+                    <option value="Facility service" <?php if ($area == 'Facility service') echo 'selected'; ?>>Facility service</option>
                     <option value="Servicio al cliente" <?php if ($area == 'Servicio al cliente') echo 'selected'; ?>>Servicio al cliente</option>
                     <option value="Security" <?php if ($area == 'Security') echo 'selected'; ?>>Security</option>
                 </select>
