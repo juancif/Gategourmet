@@ -10,7 +10,7 @@
 </head>
 <body>
 <header class="header">
-        <img src="../../Imagenes/logo_oficial_color.png" alt="Gate Gourmet Logo" class="logo">
+        <img src="../../../Imagenes/logo_oficial_color.png" alt="Gate Gourmet Logo" class="logo">
     </header>
 <div class="cuadro_mensaje">
         <h2 class="texto_cuadro">¡Registro exitoso!</h2>
