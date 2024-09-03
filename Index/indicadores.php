@@ -116,33 +116,61 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Indicadores de Documentación</title>
     <link rel="stylesheet" href="indicadores.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
         <img src="../Imagenes/Logo_oficial_B-N.png" alt="GateGourmet Logo" class="logo">
     </header>
     <div class="container">
+        <!-- Indicador de Porcentaje de Actualización por Área -->
         <div class="chart-container">
             <h2>Porcentaje de Actualización por Área</h2>
-            <canvas id="porcentajeActualizacionChart"></canvas>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Área</th>
+                        <th>Porcentaje de Actualización</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($data1 as $area => $porcentaje_vigentes) {
+                        $class = $porcentaje_vigentes < 50 ? 'low' : ($porcentaje_vigentes < 75 ? 'medium' : 'high');
+                        echo "<tr>
+                                <td>$area</td>
+                                <td>
+                                    <div class='progress-bar'>
+                                        <div class='progress $class' style='width: $porcentaje_vigentes%;'>
+                                            " . round($porcentaje_vigentes, 2) . "%
+                                        </div>
+                                    </div>
+                                </td>
+                              </tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
 
+        <!-- Gráfico 2: Estado de Documentación por Área -->
         <div class="chart-container">
             <h2>Estado de Documentación por Área</h2>
             <canvas id="estadoDocumentacionChart"></canvas>
         </div>
 
+        <!-- Gráfico 3: Tipo de Documentación Desactualizada -->
         <div class="chart-container">
             <h2>Tipo de Documentación Desactualizada</h2>
             <canvas id="tipoDocumentacionDesactualizadaChart"></canvas>
         </div>
 
+        <!-- Gráfico 4: Actualización Mensual por Área -->
         <div class="chart-container">
             <h2>Actualización Mensual por Área</h2>
             <canvas id="actualizacionMensualChart"></canvas>
         </div>
 
+        <!-- Gráfico 5: Cantidad de Documentación Desactualizada por Área -->
         <div class="chart-container">
             <h2>Cantidad de Documentación Desactualizada por Área</h2>
             <canvas id="cantidadDesactualizadaChart"></canvas>
@@ -153,41 +181,9 @@ $conn->close();
         <p>&copy; 2024 GateGourmet. Todos los derechos reservados.</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Gráfico 1: Porcentaje de Actualización por Área
-        var ctx1 = document.getElementById('porcentajeActualizacionChart').getContext('2d');
-        var data1 = {
-            labels: <?php echo json_encode(array_keys($data1)); ?>,
-            datasets: [{
-                label: 'Porcentaje de Actualización',
-                data: <?php echo json_encode(array_values($data1)); ?>,
-                backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 2
-            }]
-        };
-        var myChart1 = new Chart(ctx1, {
-            type: 'bar',
-            data: data1,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100,
-                        ticks: {
-                            callback: function(value) { return value + '%'; }
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: 'rgba(0, 0, 0, 0.8)'
-                        }
-                    }
-                }
-            }
-        });
+        // Aquí se mantienen los demás gráficos como estaban en tu código original
 
         // Gráfico 2: Estado de Documentación por Área
         var ctx2 = document.getElementById('estadoDocumentacionChart').getContext('2d');
@@ -238,8 +234,8 @@ $conn->close();
             }
         });
 
-        // Gráfico 3: Tipo de Documentación Desactualizada
-        var ctx3 = document.getElementById('tipoDocumentacionDesactualizadaChart').getContext('2d');
+         // Gráfico 3: Tipo de Documentación Desactualizada
+         var ctx3 = document.getElementById('tipoDocumentacionDesactualizadaChart').getContext('2d');
         var data3 = {
             labels: <?php echo json_encode($tipos); ?>,
             datasets: [{
@@ -271,25 +267,25 @@ $conn->close();
 
         // Gráfico 4: Actualización Mensual por Área
         var ctx4 = document.getElementById('actualizacionMensualChart').getContext('2d');
-        var datasets4 = [];
-        <?php foreach ($areas4 as $area): ?>
-        datasets4.push({
-            label: '<?php echo $area; ?>',
-            data: <?php echo json_encode(array_values($cantidadActualizacionMensual[$area])); ?>,
-            fill: false,
-            borderColor: getRandomColor(),
-            tension: 0.1
-        });
-        <?php endforeach; ?>
-
-        var data4 = {
-            labels: <?php echo json_encode($meses); ?>,
-            datasets: datasets4
-        };
-
         var myChart4 = new Chart(ctx4, {
             type: 'line',
-            data: data4,
+            data: {
+                labels: <?php echo json_encode($meses); ?>,
+                datasets: <?php
+                $datasets = [];
+                foreach ($areas4 as $area) {
+                    $datasets[] = [
+                        'label' => $area,
+                        'data' => array_values($cantidadActualizacionMensual[$area]),
+                        'fill' => false,
+                        'borderColor' => 'rgba(' . rand(0,255) . ',' . rand(0,255) . ',' . rand(0,255) . ', 0.8)',
+                        'backgroundColor' => 'rgba(' . rand(0,255) . ',' . rand(0,255) . ',' . rand(0,255) . ', 0.6)',
+                        'borderWidth' => 2
+                    ];
+                }
+                echo json_encode($datasets);
+                ?>
+            },
             options: {
                 scales: {
                     y: {
@@ -305,15 +301,6 @@ $conn->close();
                 }
             }
         });
-
-        function getRandomColor() {
-            var letters = '0123456789ABCDEF';
-            var color = '#';
-            for (var i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
 
         // Gráfico 5: Cantidad de Documentación Desactualizada por Área
         var ctx5 = document.getElementById('cantidadDesactualizadaChart').getContext('2d');

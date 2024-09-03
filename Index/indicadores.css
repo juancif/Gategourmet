@@ -50,7 +50,7 @@ tr:hover {
 
 /* Estilo para el encabezado y pie de página */
 header, footer {
-   background: #1117;
+    background: rgba(17, 17, 17, 0.7); /* Ajustado para un color más oscuro */
     backdrop-filter: blur(10px);
     padding: 20px 40px;
     text-align: center;
@@ -71,7 +71,6 @@ h1 {
 footer p {
     backdrop-filter: blur(10px);
     text-align: center;
-    text-align: center;
     padding: 10px;
     color: #fff;
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
@@ -87,4 +86,33 @@ footer p {
     width: 100%;
     max-width: 900px; /* Limita el ancho máximo de los gráficos */
     margin: 0 auto; /* Centra los gráficos */
+}
+
+/* Estilo para las barras de progreso en el gráfico de "Porcentaje de Actualización por Área" */
+.progress-bar {
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+    height: 25px;
+}
+
+.progress {
+    height: 100%;
+    color: white;
+    text-align: center;
+    line-height: 25px;
+    border-radius: 5px;
+}
+
+.progress.low {
+    background-color: rgba(230, 98, 98, 0.945);
+}
+
+.progress.medium {
+    background-color: rgba(243, 190, 92, 0.863);
+}
+
+.progress.high {
+    background-color: rgba(58, 228, 58, 0.678);
 }
