@@ -112,10 +112,10 @@ if (isset($_POST['Submit'])) {
             <div class="register-box">
                 <h2>Registro de Usuarios</h2>
                 <form method="post" action="">
-                    <div class="input-group">
+                <div class="input-group tooltip">
                         <label for="correo">Correo Electrónico</label>
-                        <input type="email" id="correo" name="correo" required>
-                        <!-- <div id="email-error" class="error-message">Recuerda, que para registrarte debes ingresar un correo con el dominio "@gategroup.com".</div> -->
+                        <input type="email" id="correo" name="correo" required placeholder="example@gategroup.com">
+                        <span class="tooltiptext">Recuerda, que para registrarte debes ingresar un correo con el dominio "@gategroup.com".</span>
                     </div>
                     <div class="input-group">
                         <label for="nombres_apellidos">Nombres y Apellidos</label>
@@ -125,10 +125,11 @@ if (isset($_POST['Submit'])) {
                         <label for="nombre_usuario">Nombre de Usuario</label>
                         <input type="text" id="nombre_usuario" name="nombre_usuario" required>
                     </div>
-                    <div class="input-group">
+                    <div class="input-group tooltip">
                         <label for="contrasena">Contraseña</label>
-                        <input type="password" id="contrasena" name="contrasena" 
-                        required >
+                        <input type="password" id="contrasena" name="contrasena" required >
+                        <span class="tooltiptext">Recuerda que la contraseña debe tener minimo 12 caracteres, un caracter especial y una mayuscula.</span>
+                    </div>
                     <div class="input-group">
                         <label for="area">Área</label>
                         <select name="area" id="area">
@@ -207,21 +208,18 @@ if (isset($_POST['Submit'])) {
     </main>
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
-            <!-- <script>
+        <script>
             document.querySelector('form').addEventListener('submit', function(event) {
                 var emailField = document.getElementById('correo');
                 var emailValue = emailField.value;
-                var errorMessage = document.getElementById('email-error');
 
                 // Verificar si el correo electrónico tiene el dominio específico
                 if (!emailValue.endsWith('@gategroup.com')) {
-                    errorMessage.style.display = 'block'; // Mostrar el mensaje de error
+                    alert('El correo electrónico debe tener el dominio "@gategroup.com".');
                     event.preventDefault(); // Evita el envío del formulario
-                } else {
-                    errorMessage.style.display = 'none'; // Ocultar el mensaje de error si es válido
                 }
             });
-            </script> -->
+        </script>
         <script src="/script_prueba/script.js"></script>
     </footer>
 </body>

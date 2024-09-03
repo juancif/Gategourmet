@@ -81,9 +81,10 @@ if (isset($_GET['nombre_usuario'])) {
             <div class="register-box">
                 <h2>Edición de Usuarios</h2>
                 <form method="post" action="edit_gestor.php">
-                    <div class="input-group">
+                <div class="input-group tooltip">
                         <label for="correo">Correo Electrónico</label>
-                        <input type="email" id="correo" name="correo" required value="<?php echo htmlspecialchars($correo, ENT_QUOTES); ?>">
+                        <input type="email" id="correo" name="correo" required placeholder="example@gategroup.com" value="<?php echo htmlspecialchars($correo, ENT_QUOTES); ?>">
+                        <span class="tooltiptext">Recuerda, que para registrarte debes ingresar un correo con el dominio "@gategroup.com".</span>
                     </div>
                     <div class="input-group">
                         <label for="nombres_apellidos">Nombres y Apellidos</label>
@@ -93,9 +94,10 @@ if (isset($_GET['nombre_usuario'])) {
                         <label for="nombre_usuario">Nombre de Usuario</label>
                         <input type="text" id="nombre_usuario" name="nombre_usuario" required value="<?php echo htmlspecialchars($nombre_usuario, ENT_QUOTES); ?>">
                     </div>
-                    <div class="input-group">
+                    <div class="input-group tooltip">
                         <label for="contrasena">Contraseña</label>
                         <input type="password" id="contrasena" name="contrasena" required value="<?php echo htmlspecialchars($contrasena, ENT_QUOTES); ?>">
+                        <span class="tooltiptext">Recuerda que la contraseña debe tener minimo 12 caracteres, un caracter especial y una mayuscula.</span>
                     </div>
                     <div class="input-group">
                         <label for="area">Área</label>
@@ -176,6 +178,18 @@ if (isset($_GET['nombre_usuario'])) {
     </main>
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
+        <script>
+            document.querySelector('form').addEventListener('submit', function(event) {
+                var emailField = document.getElementById('correo');
+                var emailValue = emailField.value;
+
+                // Verificar si el correo electrónico tiene el dominio específico
+                if (!emailValue.endsWith('@gategroup.com')) {
+                    alert('El correo electrónico debe tener el dominio "@gategroup.com".');
+                    event.preventDefault(); // Evita el envío del formulario
+                }
+            });
+        </script>
     </footer>
 </body>
 </html>
