@@ -1,4 +1,3 @@
-
 <?php
 include_once("config_gestor.php");
 
@@ -33,55 +32,19 @@ if (isset($_POST['update'])) {
         $row_check = $query_check->fetch(PDO::FETCH_ASSOC);
         $current_rol = $row_check['rol'];
 
-        if ($current_rol != $rol) {
-            if ($rol == 'Administrador') {
-                // Mover el registro a la tabla 'administradores'
-                $sql_move = "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol)
-                             SELECT correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, :rol
-                             FROM usuarios
-                             WHERE nombre_usuario = :nombre_usuario";
-                $query_move = $dbConn->prepare($sql_move);
-                $query_move->bindParam(':nombre_usuario', $nombre_usuario);
-                $query_move->bindParam(':rol', $rol);
-                $query_move->execute();
-                
-                // Eliminar el registro de la tabla 'usuarios'
-                $sql_delete = "DELETE FROM usuarios WHERE nombre_usuario = :nombre_usuario";
-                $query_delete = $dbConn->prepare($sql_delete);
-                $query_delete->bindParam(':nombre_usuario', $nombre_usuario);
-                $query_delete->execute();
-            } else {
-                // Mover el registro a la tabla 'usuarios'
-                $sql_move = "INSERT INTO usuarios (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol)
-                             SELECT correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, :rol
-                             FROM administradores
-                             WHERE nombre_usuario = :nombre_usuario";
-                $query_move = $dbConn->prepare($sql_move);
-                $query_move->bindParam(':nombre_usuario', $nombre_usuario);
-                $query_move->bindParam(':rol', $rol);
-                $query_move->execute();
-                
-                // Eliminar el registro de la tabla 'administradores'
-                $sql_delete = "DELETE FROM administradores WHERE nombre_usuario = :nombre_usuario";
-                $query_delete = $dbConn->prepare($sql_delete);
-                $query_delete->bindParam(':nombre_usuario', $nombre_usuario);
-                $query_delete->execute();
-            }
-        } else {
-            // Si el rol no cambia, solo actualizar la tabla correspondiente
-            $sql_update = "UPDATE usuarios SET correo=:correo, nombres_apellidos=:nombres_apellidos, contrasena=:contrasena,  
-                           area=:area, cargo=:cargo, rol=:rol
-                           WHERE nombre_usuario=:nombre_usuario";
-            $query_update = $dbConn->prepare($sql_update);
-            $query_update->bindParam(':correo', $correo);
-            $query_update->bindParam(':nombres_apellidos', $nombres_apellidos);
-            $query_update->bindParam(':nombre_usuario', $nombre_usuario);
-            $query_update->bindParam(':contrasena', $contrasena);
-            $query_update->bindParam(':area', $area);
-            $query_update->bindParam(':cargo', $cargo);
-            $query_update->bindParam(':rol', $rol);
-            $query_update->execute();
-        }
+        // Actualizar el usuario sin mover entre tablas
+        $sql_update = "UPDATE usuarios SET correo=:correo, nombres_apellidos=:nombres_apellidos, contrasena=:contrasena,  
+                       area=:area, cargo=:cargo, rol=:rol
+                       WHERE nombre_usuario=:nombre_usuario";
+        $query_update = $dbConn->prepare($sql_update);
+        $query_update->bindParam(':correo', $correo);
+        $query_update->bindParam(':nombres_apellidos', $nombres_apellidos);
+        $query_update->bindParam(':nombre_usuario', $nombre_usuario);
+        $query_update->bindParam(':contrasena', $contrasena);
+        $query_update->bindParam(':area', $area);
+        $query_update->bindParam(':cargo', $cargo);
+        $query_update->bindParam(':rol', $rol);
+        $query_update->execute();
 
         header("Location: index_gestor.php");
         exit();
@@ -103,8 +66,6 @@ if (isset($_GET['nombre_usuario'])) {
 }
 ?>
 
-
-
 <html>
 <head>
     <title>Editar Datos</title>
@@ -118,7 +79,7 @@ if (isset($_GET['nombre_usuario'])) {
     <main class="main-content">
         <div class="register-container">
             <div class="register-box">
-                <h2>Registro de Usuarios</h2>
+                <h2>Edición de Usuarios</h2>
                 <form method="post" action="edit_gestor.php">
                     <div class="input-group">
                         <label for="correo">Correo Electrónico</label>
@@ -207,7 +168,7 @@ if (isset($_GET['nombre_usuario'])) {
                     </div>
                     <div class="buttons">
                         <input type="submit" name="update" value="Editar" class="Registrarse">
-                        <a href="http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor.php" class="regresar">Volver</a>
+                        <a href="index_gestor.php" class="regresar">Volver</a>
                     </div>
                 </form>
             </div>
