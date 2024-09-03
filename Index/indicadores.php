@@ -73,7 +73,7 @@ $sql = "SELECT areas, MONTH(fecha_aprobacion) AS mes, COUNT(*) AS cantidad
 $result = $conn->query($sql);
 
 $areas4 = [];
-$meses = range(1, 12);
+$meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 $cantidadActualizacionMensual = [];
 
 while($row = $result->fetch_assoc()) {
@@ -83,9 +83,9 @@ while($row = $result->fetch_assoc()) {
 
 // Rellenar datos faltantes con ceros para Actualización Mensual por Área
 foreach ($areas4 as $area) {
-    foreach ($meses as $mes) {
-        if (!isset($cantidadActualizacionMensual[$area][$mes])) {
-            $cantidadActualizacionMensual[$area][$mes] = 0;
+    foreach ($meses as $index => $mes) {
+        if (!isset($cantidadActualizacionMensual[$area][$index + 1])) {
+            $cantidadActualizacionMensual[$area][$index + 1] = 0;
         }
     }
 }
@@ -150,30 +150,35 @@ $conn->close();
                     ?>
                 </tbody>
             </table>
+            <!-- Aquí no necesitamos gráfico, solo tabla -->
         </div>
 
         <!-- Gráfico 2: Estado de Documentación por Área -->
         <div class="chart-container">
             <h2>Estado de Documentación por Área</h2>
             <canvas id="estadoDocumentacionChart"></canvas>
+            <button onclick="downloadPDF('estadoDocumentacionChart')">Descargar PDF</button>
         </div>
 
         <!-- Gráfico 3: Tipo de Documentación Desactualizada -->
         <div class="chart-container">
             <h2>Tipo de Documentación Desactualizada</h2>
             <canvas id="tipoDocumentacionDesactualizadaChart"></canvas>
+            <button onclick="downloadPDF('tipoDocumentacionDesactualizadaChart')">Descargar PDF</button>
         </div>
 
         <!-- Gráfico 4: Actualización Mensual por Área -->
         <div class="chart-container">
             <h2>Actualización Mensual por Área</h2>
             <canvas id="actualizacionMensualChart"></canvas>
+            <button onclick="downloadPDF('actualizacionMensualChart')">Descargar PDF</button>
         </div>
 
         <!-- Gráfico 5: Cantidad de Documentación Desactualizada por Área -->
         <div class="chart-container">
             <h2>Cantidad de Documentación Desactualizada por Área</h2>
             <canvas id="cantidadDesactualizadaChart"></canvas>
+            <button onclick="downloadPDF('cantidadDesactualizadaChart')">Descargar PDF</button>
         </div>
     </div>
 
@@ -182,8 +187,33 @@ $conn->close();
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-        // Aquí se mantienen los demás gráficos como estaban en tu código original
+        // Función para descargar gráfico en PDF
+        async function downloadPDF(chartId) {
+            const { jsPDF } = window.jspdf;
+            const chartElement = document.getElementById(chartId);
+            let imgData;
+
+            if (chartElement.tagName === 'CANVAS') {
+                const canvas = chartElement;
+                imgData = canvas.toDataURL('image/png');
+            } else {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                const width = chartElement.offsetWidth;
+                const height = chartElement.offsetHeight;
+                canvas.width = width;
+                canvas.height = height;
+                context.drawImage(chartElement, 0, 0, width, height);
+                imgData = canvas.toDataURL('image/png');
+            }
+
+            const pdf = new jsPDF();
+            pdf.addImage(imgData, 'PNG', 10, 10, 180, 160); // Ajusta las dimensiones según sea necesario
+            pdf.save(chartId + '.pdf');
+        }
 
         // Gráfico 2: Estado de Documentación por Área
         var ctx2 = document.getElementById('estadoDocumentacionChart').getContext('2d');
@@ -234,8 +264,8 @@ $conn->close();
             }
         });
 
-         // Gráfico 3: Tipo de Documentación Desactualizada
-         var ctx3 = document.getElementById('tipoDocumentacionDesactualizadaChart').getContext('2d');
+        // Gráfico 3: Tipo de Documentación Desactualizada
+        var ctx3 = document.getElementById('tipoDocumentacionDesactualizadaChart').getContext('2d');
         var data3 = {
             labels: <?php echo json_encode($tipos); ?>,
             datasets: [{
@@ -267,25 +297,25 @@ $conn->close();
 
         // Gráfico 4: Actualización Mensual por Área
         var ctx4 = document.getElementById('actualizacionMensualChart').getContext('2d');
+        var data4 = {
+            labels: <?php echo json_encode($meses); ?>,
+            datasets: <?php
+            $dataset = [];
+            foreach ($areas4 as $area) {
+                $dataset[] = [
+                    'label' => $area,
+                    'data' => array_values($cantidadActualizacionMensual[$area]),
+                    'backgroundColor' => 'rgba(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ', 0.6)',
+                    'borderColor' => 'rgba(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ', 1)',
+                    'borderWidth' => 2
+                ];
+            }
+            echo json_encode($dataset);
+            ?>
+        };
         var myChart4 = new Chart(ctx4, {
-            type: 'line',
-            data: {
-                labels: <?php echo json_encode($meses); ?>,
-                datasets: <?php
-                $datasets = [];
-                foreach ($areas4 as $area) {
-                    $datasets[] = [
-                        'label' => $area,
-                        'data' => array_values($cantidadActualizacionMensual[$area]),
-                        'fill' => false,
-                        'borderColor' => 'rgba(' . rand(0,255) . ',' . rand(0,255) . ',' . rand(0,255) . ', 0.8)',
-                        'backgroundColor' => 'rgba(' . rand(0,255) . ',' . rand(0,255) . ',' . rand(0,255) . ', 0.6)',
-                        'borderWidth' => 2
-                    ];
-                }
-                echo json_encode($datasets);
-                ?>
-            },
+            type: 'bar',
+            data: data4,
             options: {
                 scales: {
                     y: {
@@ -307,7 +337,7 @@ $conn->close();
         var data5 = {
             labels: <?php echo json_encode($areas5); ?>,
             datasets: [{
-                label: 'Cantidad',
+                label: 'Cantidad Desactualizada',
                 data: <?php echo json_encode($cantidadDesactualizada); ?>,
                 backgroundColor: 'rgba(255, 99, 132, 0.6)',
                 borderColor: 'rgba(255, 99, 132, 1)',

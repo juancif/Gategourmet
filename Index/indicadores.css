@@ -58,7 +58,7 @@ header, footer {
 }
 
 header .logo {
-    width: 500px; /* Ajustado para una apariencia más equilibrada */
+    width: 400px; /* Ajustado para una apariencia más equilibrada */
     display: block;
     margin: 0 auto;
 }
@@ -66,6 +66,7 @@ header .logo {
 h1 {
     font-size: 2rem;
     margin: 0;
+    color: #333;
 }
 
 footer p {
