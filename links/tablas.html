@@ -61,7 +61,7 @@ CREATE TABLE inactivos (
     contrasena VARCHAR(255) NOT NULL,
     area VARCHAR(50) NOT NULL,
     cargo VARCHAR(50) NOT NULL,
-    rol ENUM('Aprobador', 'Digitador', 'Observador') NOT NULL,
+    rol ENUM('Administrador','Aprobador', 'Digitador', 'Observador') NOT NULL,
     estado ENUM('Activo', 'Inactivo') DEFAULT 'Inactivo'
 );
 

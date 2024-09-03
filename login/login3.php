@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -13,54 +15,84 @@ if ($connect->connect_error) {
 
 // Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Verificar si los campos del formulario fueron enviados
     if (isset($_POST['nombre_usuario']) && isset($_POST['contrasena'])) {
-        // Recuperar los datos del formulario
         $nombre_usuario = $_POST['nombre_usuario'];
         $contrasena = $_POST['contrasena'];
 
-        // Preparar la consulta para verificar las credenciales
-        $stmt = $connect->prepare("SELECT * FROM usuarios WHERE nombre_usuario = ? AND contrasena = ?");
-        $stmt->bind_param("ss", $nombre_usuario, $contrasena);
-        $stmt->execute(); 
+        // Buscar en la tabla de usuarios
+        $stmt = $connect->prepare("SELECT * FROM usuarios WHERE nombre_usuario = ?");
+        $stmt->bind_param("s", $nombre_usuario);
+        $stmt->execute();
         $result = $stmt->get_result();
 
-        // Verificar si se encontraron resultados
         if ($result->num_rows > 0) {
-            // Las credenciales son correctas, redirigir al usuario a la página principal
-            // Registrar el inicio de sesión en la tabla de movimientos
-            $sql = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (?, 'Inicio de sesión', NOW())";
-            $stmt = $connect->prepare($sql);
-            $stmt->bind_param("s", $nombre_usuario);
-            $stmt->execute();
+            $usuario = $result->fetch_assoc();
 
-            header("Location: http://localhost/GateGourmet/Index/index5.html");
-            exit(); // Terminar el script después de la redirección
-        } else {
-            // Verificar en la tabla de administradores
-            $stmt = $connect->prepare("SELECT * FROM administradores WHERE nombre_usuario = ? AND contrasena = ?");
-            $stmt->bind_param("ss", $nombre_usuario, $contrasena);
-            $stmt->execute(); 
-            $result = $stmt->get_result();
-            
-            // Verificar si se encontraron resultados
-            if ($result->num_rows > 0) {
-                // Las credenciales son correctas, redirigir al usuario a la página principal
+            // Verifica si las contraseñas están hasheadas
+            $hash_contrasena = $usuario['contrasena'];
+
+            // Mostrar para depuración
+            echo "Contraseña ingresada: " . $contrasena . "<br>";
+            echo "Contraseña en BD: " . $hash_contrasena . "<br>";
+
+            if (password_verify($contrasena, $hash_contrasena) || $contrasena === $hash_contrasena) {
+                $area = $usuario['area'];
+
                 // Registrar el inicio de sesión en la tabla de movimientos
-                $sql = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (?, 'Inicio de sesión como administrador', NOW())";
+                $sql = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (?, 'Inicio de sesión', NOW())";
                 $stmt = $connect->prepare($sql);
                 $stmt->bind_param("s", $nombre_usuario);
                 $stmt->execute();
 
-                header("Location: http://localhost/GateGourmet/Index/index_admin.html");
-                exit(); // Terminar el script después de la redirección
+                // Guardar el área en la sesión
+                $_SESSION['area'] = $area;
+                $_SESSION['nombre_usuario'] = $nombre_usuario;
+
+                // Redirigir al dashboard con el área del usuario
+                header("Location: http://localhost/GateGourmet/Index/index_user.php");
+                exit();
             } else {
-                // Si las credenciales no son correctas
+                echo "Nombre de usuario o contraseña incorrectos.";
+            }
+        } else {
+            // Verificar en la tabla de administradores
+            $stmt = $connect->prepare("SELECT * FROM administradores WHERE nombre_usuario = ?");
+            $stmt->bind_param("s", $nombre_usuario);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $admin = $result->fetch_assoc();
+                $hash_contrasena = $admin['contrasena'];
+
+                // Mostrar para depuración
+                echo "Contraseña ingresada: " . $contrasena . "<br>";
+                echo "Contraseña en BD: " . $hash_contrasena . "<br>";
+
+                if (password_verify($contrasena, $hash_contrasena) || $contrasena === $hash_contrasena) {
+                    $area = $admin['area'];
+
+                    // Registrar el inicio de sesión en la tabla de movimientos
+                    $sql = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (?, 'Inicio de sesión como administrador', NOW())";
+                    $stmt = $connect->prepare($sql);
+                    $stmt->bind_param("s", $nombre_usuario);
+                    $stmt->execute();
+
+                    // Guardar el área en la sesión
+                    $_SESSION['area'] = $area;
+                    $_SESSION['nombre_usuario'] = $nombre_usuario;
+
+                    // Redirigir al dashboard con el área del administrador
+                    header("Location: http://localhost/GateGourmet/Index/index_admin.html");
+                    exit();
+                } else {
+                    echo "Nombre de usuario o contraseña incorrectos.";
+                }
+            } else {
                 echo "Nombre de usuario o contraseña incorrectos.";
             }
         }
     } else {
-        // Si no se enviaron los campos del formulario, mostrar un mensaje de error
         echo "Por favor, ingrese nombre de usuario y contraseña.";
     }
 }
@@ -68,7 +100,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Cerrar la conexión
 $connect->close();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">

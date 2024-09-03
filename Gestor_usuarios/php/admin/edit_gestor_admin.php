@@ -134,64 +134,64 @@ if (isset($_GET['nombre_usuario'])) {
                         <span class="tooltiptext">Recuerda que la contraseña debe tener minimo 12 caracteres, un caracter especial y una mayuscula.</span>
                     </div>
                     <div class="input-group">
-                        <label for="area">Área</label>
-                        <select name="area" id="area">
-                            <option value="">Seleccione una opción</option>
-                            <option value="Gestion_corporativa" <?php if ($area == 'Gestion_corporativa') echo 'selected'; ?>>Gestión corporativa</option>
-                            <option value="Compliance" <?php if ($area == 'Compliance') echo 'selected'; ?>>Compliance</option>
-                            <option value="Supply_chain" <?php if ($area == 'Supply_chain') echo 'selected'; ?>>Supply Chain</option>
-                            <option value="Culinary_Excellence" <?php if ($area == 'Culinary_Excellence') echo 'selected'; ?>>Culinary Excellence</option>
-                            <option value="Supervisor" <?php if ($area == 'Supervisor') echo 'selected'; ?>>Service Delivery</option>
-                            <option value="Assembly" <?php if ($area == 'Assembly') echo 'selected'; ?>>Assembly</option>
-                            <option value="Servicios_institucionales" <?php if ($area == 'Servicios_institucionales') echo 'selected'; ?>>Servicios institucionales</option>
-                            <option value="Financiera" <?php if ($area == 'Financiera') echo 'selected'; ?>>Financiera</option>
-                            <option value="Costos" <?php if ($area == 'Costos') echo 'selected'; ?>>Costos</option>
-                            <option value="Comunicaciones" <?php if ($area == 'Comunicaciones') echo 'selected'; ?>>Comunicaciones</option>
-                            <option value="Tecnologia_de_la_información" <?php if ($area == 'Tecnologia_de_la_información') echo 'selected'; ?>>Tecnologia de la información</option>
-                            <option value="Talento_humano" <?php if ($area == 'Talento_humano') echo 'selected'; ?>>Talento Humano</option>
-                            <option value="Mateninimiento" <?php if ($area == 'Mateninimiento') echo 'selected'; ?>>Mateninimiento</option>
-                            <option value="Servicio_al_cliente" <?php if ($area == 'Servicio_al_cliente') echo 'selected'; ?>>Servicio al cliente</option>
-                            <option value="Security" <?php if ($area == 'Security') echo 'selected'; ?>>Security</option>
-                        </select>
+                    <label for="area">Área</label>
+                    <select name="area" id="area">
+                        <option value="">Seleccione una opción</option>
+                        <option value="Gestion corporativa" <?php if ($area == 'Gestion corporativa') echo 'selected'; ?>>Gestión corporativa</option>
+                        <option value="Compliance" <?php if ($area == 'Compliance') echo 'selected'; ?>>Compliance</option>
+                        <option value="Supply chain" <?php if ($area == 'Supply chain') echo 'selected'; ?>>Supply Chain</option>
+                        <option value="Culinary Excellence" <?php if ($area == 'Culinary Excellence') echo 'selected'; ?>>Culinary Excellence</option>
+                        <option value="Supervisor" <?php if ($area == 'Supervisor') echo 'selected'; ?>>Service Delivery</option>
+                        <option value="Assembly" <?php if ($area == 'Assembly') echo 'selected'; ?>>Assembly</option>
+                        <option value="Servicios institucionales" <?php if ($area == 'Servicios institucionales') echo 'selected'; ?>>Servicios institucionales</option>
+                        <option value="Financiera" <?php if ($area == 'Financiera') echo 'selected'; ?>>Financiera</option>
+                        <option value="Costos" <?php if ($area == 'Costos') echo 'selected'; ?>>Costos</option>
+                        <option value="Comunicaciones" <?php if ($area == 'Comunicaciones') echo 'selected'; ?>>Comunicaciones</option>
+                        <option value="Tecnologia de la información" <?php if ($area == 'Tecnologia de la información') echo 'selected'; ?>>Tecnologia de la información</option>
+                        <option value="Talento humano" <?php if ($area == 'Talento humano') echo 'selected'; ?>>Talento Humano</option>
+                        <option value="Mantenimiento" <?php if ($area == 'Mantenimiento') echo 'selected'; ?>>Mantenimiento</option>
+                        <option value="Servicio al cliente" <?php if ($area == 'Servicio al cliente') echo 'selected'; ?>>Servicio al cliente</option>
+                        <option value="Security" <?php if ($area == 'Security') echo 'selected'; ?>>Security</option>
+                    </select>
                     </div>
                     <div class="input-group">
                         <label for="cargo">Cargo</label>
                         <select name="cargo" id="cargo">
                             <option value="">Seleccione una opción</option>
-                            <option value="Auxiliar_Contable" <?php if ($cargo == 'Auxiliar_Contable') echo 'selected'; ?>>Auxiliar Contable</option>
-                            <option value="Continuous_Improvement_Manager" <?php if ($cargo == 'Continuous_Improvement_Manager') echo 'selected'; ?>>Continuous Improvement Manager</option>
-                            <option value="Coordinador_de_mejoramiento_Continuo" <?php if ($cargo == 'Coordinador_de_mejoramiento_Continuo') echo 'selected'; ?>>Coordinador de mejoramiento Continuo</option>
-                            <option value="Country_Manager" <?php if ($cargo == 'Country_Manager') echo 'selected'; ?>>Country Manager</option>
-                            <option value="CPC_Champion" <?php if ($cargo == 'CPC_Champion') echo 'selected'; ?>>CPC Champion</option>
-                            <option value="Director_Comercial" <?php if ($cargo == 'Director_Comercial') echo 'selected'; ?>>Director Comercial</option>
-                            <option value="EHS_Manager" <?php if ($cargo == 'EHS_Manager') echo 'selected'; ?>>EHS Manager</option>
-                            <option value="Especialista_de_Seguridad_en_Rampa" <?php if ($cargo == 'Especialista_de_Seguridad_en_Rampa') echo 'selected'; ?>>Especialista de Seguridad en Rampa</option>
-                            <option value="Especialista_en_Mantenimiento" <?php if ($cargo == 'Especialista_en_Mantenimiento') echo 'selected'; ?>>Especialista en Mantenimiento</option>
-                            <option value="Executive_Sous_Chef" <?php if ($cargo == 'Executive_Sous_Chef') echo 'selected'; ?>>Executive Sous Chef</option>
-                            <option value="Jefe_Control_de_Riesgos_Fisicos" <?php if ($cargo == 'Jefe_Control_de_Riesgos_Fisicos') echo 'selected'; ?>>Jefe Control de Riesgos Fisicos</option>
-                            <option value="Jefe_de_Costos" <?php if ($cargo == 'Jefe_de_Costos') echo 'selected'; ?>>Jefe de Costos</option>
-                            <option value="Junior_Section_Manager_OP&D" <?php if ($cargo == 'Junior_Section_Manager_OP&D') echo 'selected'; ?>>Junior Section Manager OP&D</option>
-                            <option value="Junior_Key_Account_Officer" <?php if ($cargo == 'Junior_Key_Account_Officer') echo 'selected'; ?>>Junior Key Account Officer</option>
-                            <option value="Manager_HR" <?php if ($cargo == 'Manager_HR') echo 'selected'; ?>>Manager HR</option>
-                            <option value="Manager_Ordering" <?php if ($cargo == 'Manager_Ordering') echo 'selected'; ?>>Manager, Ordering</option>
-                            <option value="Manager_Transport" <?php if ($cargo == 'Manager_Transport') echo 'selected'; ?>>Manager Transport</option>
-                            <option value="Manager_New_Operations" <?php if ($cargo == 'Manager_New_Operations') echo 'selected'; ?>>Manager New Operations</option>
-                            <option value="Manager_Finance" <?php if ($cargo == 'Manager_Finance') echo 'selected'; ?>>Manager Finance</option>
-                            <option value="Process_Owner_Assembly" <?php if ($cargo == 'Process_Owner_Assembly') echo 'selected'; ?>>Process Owner Assembly</option>
-                            <option value="Process_Owner_Planning_&_Supply_Chain" <?php if ($cargo == 'Process_Owner_Planning_&_Supply_Chain') echo 'selected'; ?>>Process Owner Planning & Supply Chain</option>
-                            <option value="Process_Owner_Service_Delivery" <?php if ($cargo == 'Process_Owner_Service_Delivery') echo 'selected'; ?>>Process Owner Service Delivery</option>
-                            <option value="Section_Manager_Pick_&_Pack" <?php if ($cargo == 'Section_Manager_Pick_&_Pack') echo 'selected'; ?>>Section Manager Pick & Pack</option>
-                            <option value="Section_Manager_Wash_&_Pack" <?php if ($cargo == 'Section_Manager_Wash_&_Pack') echo 'selected'; ?>>Section Manager Wash & Pack</option>
-                            <option value="Section_Manager_Laundry" <?php if ($cargo == 'Section_Manager_Laundry') echo 'selected'; ?>>Section Manager Laundry</option>
-                            <option value="Section_Manager_Make_&_Pack" <?php if ($cargo == 'Section_Manager_Make_&_Pack') echo 'selected'; ?>>Section Manager Make & Pack</option>
-                            <option value="Section_Manager_IDS" <?php if ($cargo == 'Section_Manager_IDS') echo 'selected'; ?>>Section Manager - IDS</option>
-                            <option value="Sous_Chef" <?php if ($cargo == 'Sous_Chef') echo 'selected'; ?>>Sous Chef</option>
-                            <option value="Senior_Manager_Facility_Services" <?php if ($cargo == 'Senior_Manager_Facility_Services') echo 'selected'; ?>>Senior Manager Facility Services</option>
-                            <option value="Superintendent_HR" <?php if ($cargo == 'Superintendent_HR') echo 'selected'; ?>>Superintendent HR</option>
-                            <option value="Superintendent_Development_And_Communications" <?php if ($cargo == 'Superintendent_Development_And_Communications') echo 'selected'; ?>>Superintendent Development And Communications</option>
-                            <option value="Supervisor_de_Calidad_y_Gestion_Ambiental" <?php if ($cargo == 'Supervisor_de_Calidad_y_Gestion_Ambiental') echo 'selected'; ?>>VIP Lounges Junior Section Manager</option>
+                            <option value="Auxiliar Contable" <?php if ($cargo == 'Auxiliar Contable') echo 'selected'; ?>>Auxiliar Contable</option>
+                            <option value="Continuous Improvement Manager" <?php if ($cargo == 'Continuous Improvement Manager') echo 'selected'; ?>>Continuous Improvement Manager</option>
+                            <option value="Coordinador de mejoramiento Continuo" <?php if ($cargo == 'Coordinador de mejoramiento Continuo') echo 'selected'; ?>>Coordinador de mejoramiento Continuo</option>
+                            <option value="Country Manager" <?php if ($cargo == 'Country Manager') echo 'selected'; ?>>Country Manager</option>
+                            <option value="CPC Champion" <?php if ($cargo == 'CPC Champion') echo 'selected'; ?>>CPC Champion</option>
+                            <option value="Director Comercial" <?php if ($cargo == 'Director Comercial') echo 'selected'; ?>>Director Comercial</option>
+                            <option value="EHS Manager" <?php if ($cargo == 'EHS Manager') echo 'selected'; ?>>EHS Manager</option>
+                            <option value="Especialista de Seguridad en Rampa" <?php if ($cargo == 'Especialista de Seguridad en Rampa') echo 'selected'; ?>>Especialista de Seguridad en Rampa</option>
+                            <option value="Especialista en Mantenimiento" <?php if ($cargo == 'Especialista en Mantenimiento') echo 'selected'; ?>>Especialista en Mantenimiento</option>
+                            <option value="Executive Sous Chef" <?php if ($cargo == 'Executive Sous Chef') echo 'selected'; ?>>Executive Sous Chef</option>
+                            <option value="Jefe Control de Riesgos Fisicos" <?php if ($cargo == 'Jefe Control de Riesgos Fisicos') echo 'selected'; ?>>Jefe Control de Riesgos Fisicos</option>
+                            <option value="Jefe de Costos" <?php if ($cargo == 'Jefe de Costos') echo 'selected'; ?>>Jefe de Costos</option>
+                            <option value="Junior Section Manager OP&D" <?php if ($cargo == 'Junior Section Manager OP&D') echo 'selected'; ?>>Junior Section Manager OP&D</option>
+                            <option value="Junior Key Account Officer" <?php if ($cargo == 'Junior Key Account Officer') echo 'selected'; ?>>Junior Key Account Officer</option>
+                            <option value="Manager HR" <?php if ($cargo == 'Manager HR') echo 'selected'; ?>>Manager HR</option>
+                            <option value="Manager Ordering" <?php if ($cargo == 'Manager Ordering') echo 'selected'; ?>>Manager, Ordering</option>
+                            <option value="Manager Transport" <?php if ($cargo == 'Manager Transport') echo 'selected'; ?>>Manager Transport</option>
+                            <option value="Manager New Operations" <?php if ($cargo == 'Manager New Operations') echo 'selected'; ?>>Manager New Operations</option>
+                            <option value="Manager Finance" <?php if ($cargo == 'Manager Finance') echo 'selected'; ?>>Manager Finance</option>
+                            <option value="Process Owner Assembly" <?php if ($cargo == 'Process Owner Assembly') echo 'selected'; ?>>Process Owner Assembly</option>
+                            <option value="Process Owner Planning & Supply Chain" <?php if ($cargo == 'Process Owner Planning & Supply Chain') echo 'selected'; ?>>Process Owner Planning & Supply Chain</option>
+                            <option value="Process Owner Service Delivery" <?php if ($cargo == 'Process Owner Service Delivery') echo 'selected'; ?>>Process Owner Service Delivery</option>
+                            <option value="Section Manager Pick & Pack" <?php if ($cargo == 'Section Manager Pick & Pack') echo 'selected'; ?>>Section Manager Pick & Pack</option>
+                            <option value="Section Manager Wash & Pack" <?php if ($cargo == 'Section Manager Wash & Pack') echo 'selected'; ?>>Section Manager Wash & Pack</option>
+                            <option value="Section Manager Laundry" <?php if ($cargo == 'Section Manager Laundry') echo 'selected'; ?>>Section Manager Laundry</option>
+                            <option value="Section Manager Make & Pack" <?php if ($cargo == 'Section Manager Make & Pack') echo 'selected'; ?>>Section Manager Make & Pack</option>
+                            <option value="Section Manager IDS" <?php if ($cargo == 'Section Manager IDS') echo 'selected'; ?>>Section Manager - IDS</option>
+                            <option value="Sous Chef" <?php if ($cargo == 'Sous Chef') echo 'selected'; ?>>Sous Chef</option>
+                            <option value="Senior Manager Facility Services" <?php if ($cargo == 'Senior Manager Facility Services') echo 'selected'; ?>>Senior Manager Facility Services</option>
+                            <option value="Superintendent HR" <?php if ($cargo == 'Superintendent HR') echo 'selected'; ?>>Superintendent HR</option>
+                            <option value="Superintendent Development And Communications" <?php if ($cargo == 'Superintendent Development And Communications') echo 'selected'; ?>>Superintendent Development And Communications</option>
+                            <option value="Supervisor de Calidad y Gestion Ambiental" <?php if ($cargo == 'Supervisor de Calidad y Gestion Ambiental') echo 'selected'; ?>>VIP Lounges Junior Section Manager</option>
                         </select>
-                    </div>
+                        </div>
                     <div class="input-group">
                         <label for="rol">Rol</label>
                         <select name="rol" id="rol">
