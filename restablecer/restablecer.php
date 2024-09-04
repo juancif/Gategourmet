@@ -64,7 +64,7 @@ if (isset($_POST['token']) && isset($_POST['password'])) {
         $resetLink = "http://localhost/GateGourmet/restablecer_contrasena.php?token=" . $token;
         $subject = "Restablecimiento de Contraseña";
         $message = "Haz clic en el siguiente enlace para restablecer tu contraseña: " . $resetLink;
-        $headers = "From: no-reply@gategourmet.com";
+        $headers = "From: no-reply@gmail.com";
 
         if (mail($correo, $subject, $message, $headers)) {
             echo "Se ha enviado un enlace de restablecimiento de contraseña a tu correo electrónico.";

@@ -36,10 +36,10 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY nombre_usuario ASC");
             <?php
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                 echo "<tr>";
-                echo "<td>" . str_repeat('*', strlen($row['contrasena']));
                 echo "<td>" . htmlspecialchars($row['correo']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['nombre_usuario']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['nombres_apellidos']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['nombre_usuario']) . "</td>";
+                echo "<td>" . str_repeat('*', strlen($row['contrasena']));
                 echo "<td>" . htmlspecialchars($row['area']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['cargo']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['rol']) . "</td>";
