@@ -1,3 +1,8 @@
+/* Ajuste global para box-sizing */
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
 /* Estilo para el fondo de la pantalla */
 body {
     font-family: Arial, sans-serif;
@@ -12,15 +17,15 @@ body {
     max-width: 1200px; /* Limita el ancho máximo para una mejor visualización */
     margin: 0 auto; /* Centra el contenedor */
     padding: 2rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Sombra más suave para el contenedor */
-    background: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente para mejor contraste */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra más suave para el contenedor */
+    background: rgba(255, 255, 255, 0.85); /* Fondo blanco semi-transparente */
     border-radius: 8px; /* Bordes redondeados */
 }
 
 /* Estilo para las tablas */
 .table-container {
-    max-width: 100%; /* Ajusta para ocupar todo el ancho disponible */
-    margin: 0 auto; /* Centra la tabla horizontalmente */
+    max-width: 100%;
+    margin: 0 auto;
     overflow-x: auto; /* Permite el desplazamiento horizontal en pantallas pequeñas */
     padding: 1rem;
 }
@@ -37,6 +42,7 @@ th, td {
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    word-wrap: break-word; /* Ajuste para evitar desbordamientos */
 }
 
 th {
@@ -45,12 +51,13 @@ th {
 }
 
 tr:hover {
-    background-color: #f9f9f9; /* Efecto hover para mejorar la interactividad */
+    background-color: #f0f0f0; /* Efecto hover mejorado */
+    cursor: pointer; /* Cambia el cursor para una mejor interacción */
 }
 
 /* Estilo para el encabezado y pie de página */
 header, footer {
-    background: rgba(17, 17, 17, 0.7); /* Ajustado para un color más oscuro */
+    background: rgba(17, 17, 17, 0.8); /* Fondo oscuro más accesible */
     backdrop-filter: blur(10px);
     padding: 20px 40px;
     text-align: center;
@@ -58,7 +65,7 @@ header, footer {
 }
 
 header .logo {
-    width: 400px; /* Ajustado para una apariencia más equilibrada */
+    width: 400px;
     display: block;
     margin: 0 auto;
 }
@@ -81,12 +88,12 @@ footer p {
 .chart-container {
     background: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     margin-bottom: 2rem;
     padding: 1rem;
     width: 100%;
-    max-width: 900px; /* Limita el ancho máximo de los gráficos */
-    margin: 0 auto; /* Centra los gráficos */
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 /* Estilo para las barras de progreso en el gráfico de "Porcentaje de Actualización por Área" */
@@ -116,4 +123,19 @@ footer p {
 
 .progress.high {
     background-color: rgba(58, 228, 58, 0.678);
+}
+
+/* Media queries para mejorar el diseño en dispositivos móviles */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .chart-container {
+        max-width: 100%;
+    }
 }
