@@ -18,19 +18,19 @@ if (isset($_POST['token']) && isset($_POST['password'])) {
     $nueva_contrasena = $_POST['password'];
 
     // Validar el token
-    $stmt = $connect->prepare("SELECT email FROM password_resets WHERE token = ?");
+    $stmt = $connect->prepare("SELECT correo FROM password_resets WHERE token = ?");
     $stmt->bind_param("s", $token);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
-        $email = $row['email'];
+        $correo = $row['correo'];
         
         // Actualizar la contraseña en la base de datos
         $hashed_password = password_hash($nueva_contrasena, PASSWORD_DEFAULT);
-        $stmt = $connect->prepare("UPDATE usuarios SET password = ? WHERE email = ?");
-        $stmt->bind_param("ss", $hashed_password, $email);
+        $stmt = $connect->prepare("UPDATE usuarios SET password = ? WHERE correo = ?");
+        $stmt->bind_param("ss", $hashed_password, $correo);
         $stmt->execute();
         
         // Eliminar el token usado
@@ -42,27 +42,37 @@ if (isset($_POST['token']) && isset($_POST['password'])) {
     } else {
         echo "Token de restablecimiento inválido.";
     }
-} elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'])) {
-    $email = $_POST['email'];
+} elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['correo'])) {
+    $correo = $_POST['correo'];
 
-    // Aquí debes agregar la lógica para generar el token de restablecimiento y enviarlo por correo
-    $token = bin2hex(random_bytes(50)); // Generar un token aleatorio
-
-    // Guardar el token y la dirección de correo en la base de datos
-    $stmt = $connect->prepare("INSERT INTO password_resets (email, token) VALUES (?, ?)");
-    $stmt->bind_param("ss", $email, $token);
+    // Verificar si el correo electrónico existe en la base de datos
+    $stmt = $connect->prepare("SELECT correo FROM usuarios WHERE correo = ?");
+    $stmt->bind_param("s", $correo);
     $stmt->execute();
+    $result = $stmt->get_result();
 
-    // Enviar el correo electrónico con el enlace de restablecimiento
-    $resetLink = "http://localhost/GateGourmet/restablecer_contrasena.php?token=" . $token;
-    $subject = "Restablecimiento de Contraseña";
-    $message = "Haz clic en el siguiente enlace para restablecer tu contraseña: " . $resetLink;
-    $headers = "From: no-reply@gategourmet.com";
+    if ($result->num_rows == 1) {
+        // Aquí debes agregar la lógica para generar el token de restablecimiento y enviarlo por correo
+        $token = bin2hex(random_bytes(50)); // Generar un token aleatorio
 
-    if (mail($email, $subject, $message, $headers)) {
-        echo "Se ha enviado un enlace de restablecimiento de contraseña a tu correo electrónico.";
+        // Guardar el token y la dirección de correo en la base de datos
+        $stmt = $connect->prepare("INSERT INTO password_resets (correo, token) VALUES (?, ?)");
+        $stmt->bind_param("ss", $correo, $token);
+        $stmt->execute();
+
+        // Enviar el correo electrónico con el enlace de restablecimiento
+        $resetLink = "http://localhost/GateGourmet/restablecer_contrasena.php?token=" . $token;
+        $subject = "Restablecimiento de Contraseña";
+        $message = "Haz clic en el siguiente enlace para restablecer tu contraseña: " . $resetLink;
+        $headers = "From: no-reply@gategourmet.com";
+
+        if (mail($correo, $subject, $message, $headers)) {
+            echo "Se ha enviado un enlace de restablecimiento de contraseña a tu correo electrónico.";
+        } else {
+            echo "Error al enviar el correo electrónico.";
+        }
     } else {
-        echo "Error al enviar el correo electrónico.";
+        echo "El correo electrónico no está registrado.";
     }
 } else {
     // Mostrar formulario de solicitud de restablecimiento
@@ -86,10 +96,10 @@ if (isset($_POST['token']) && isset($_POST['password'])) {
                 <h2>Restablecer Contraseña</h2>
                 <form method="post" action="">
                     <div class="input-group">
-                        <label for="email" class="texto_correo">Correo Electrónico</label>
+                        <label for="correo" class="texto_correo">Correo Electrónico</label>
                         <div class="input-icon">
                             <i class="fas fa-envelope"></i>
-                            <input type="email" id="email" name="email" required placeholder="Correo Electrónico"/>
+                            <input type="correo" id="correo" name="correo" required placeholder="Correo Electrónico"/>
                         </div>
                     </div>
                     <div class="buttons">

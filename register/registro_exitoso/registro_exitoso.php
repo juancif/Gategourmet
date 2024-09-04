@@ -15,7 +15,8 @@
     </header>
 <div class="cuadro_mensaje">
         <h2 class="texto_cuadro">¡Registro exitoso!</h2>
-    
+            <!-- <h3>Recuerda tu nombre de usuario siempre va a ser la primera letra del nombre y el primer apellido</h3>
+            <p>O en caso de que ya exista este, el usuario va a ser las dos primeras letras del nombre y el primer apellido</p> -->
     <button class="boton_volver">
     <a href="http://localhost/GateGourmet/login/login3.php" class="link_volver">Volver al inicio</a></button>
 </div>

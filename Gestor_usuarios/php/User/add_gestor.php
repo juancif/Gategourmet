@@ -216,7 +216,7 @@ if (isset($_POST['Submit'])) {
                 var emailValue = emailField.value;
 
                 // Verificar si el correo electrónico tiene el dominio específico
-                if (!emailValue.endsWith('@gategroup.com')) {
+                if (!emailValue.endsWith('@gmail.com')) {
                     alert('El correo electrónico debe tener el dominio "@gategroup.com".');
                     event.preventDefault(); // Evita el envío del formulario
                 }
