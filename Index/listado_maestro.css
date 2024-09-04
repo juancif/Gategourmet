@@ -25,7 +25,7 @@ body {
     padding: 1rem 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin-top: -30px;
+    margin-top: -60px;
 }
 
 .container {
@@ -53,13 +53,15 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 280px;
-    max-width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
     margin: 0 auto;
+    transition: all 0.3s ease;
+    position: relative;
     z-index: 20;
 }
 
@@ -68,6 +70,7 @@ body {
     margin-bottom: 0.5rem;
     color: #0b8b0f;
     text-align: center;
+    font-size: 1.1rem;
 }
 
 .search-bar form {
@@ -80,27 +83,103 @@ body {
 .search-bar input[type="text"],
 .search-bar select {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.7rem;
     border: 2px solid #0b8b0f;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 1rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+}
+
+.search-bar input[type="text"]:focus,
+.search-bar select:focus {
+    border-color: #085f05;
+    outline: none;
 }
 
 .search-bar button {
-    padding: 0.5rem 1rem;
+    padding: 0.7rem 1.2rem;
     background-color: #0b8b0f;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 1rem;
     cursor: pointer;
     width: 100%;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .search-bar button:hover {
     background-color: #085f05;
+    transform: translateY(-2px);
+}
+
+.search-bar button:active {
+    transform: translateY(1px);
+}
+
+/* Estilos para el botón de "Más Filtros" */
+.more-filters-button {
+    padding: 0.7rem 1.2rem;
+    background-color: #0b8b0f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 1rem;
+    display: block;
+    width: 300%;
+    max-width: 300px;
+    text-align: center;
+}
+
+.more-filters-button:hover {
+    background-color: #085f05;
+    transform: translateY(-2px);
+}
+
+.more-filters-button:active {
+    transform: translateY(1px);
+}
+
+/* Estilos para opciones desplegables */
+.dropdown {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    width: 300%;
+    max-width: 400px;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 20;
+}
+
+.dropdown.open {
+    display: flex;
+}
+
+.dropdown-option {
+    width: 100%;
+    padding: 0.7rem;
+    border: 2px solid #0b8b0f;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+}
+
+.dropdown-option:focus {
+    border-color: #085f05;
+    outline: none;
 }
 
 .table-wrapper {
@@ -170,5 +249,12 @@ tr.obsoleto td {
     }
     .search-bar {
         width: 90%;
+        padding: 1rem;
+    }
+    .more-filters-button {
+        max-width: 90%;
+    }
+    .dropdown {
+        max-width: 90%;
     }
 }
