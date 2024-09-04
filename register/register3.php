@@ -1,6 +1,40 @@
 <?php
 include_once("config_register.php");
 
+function generarNombreUsuario($nombre, $apellido, $dbConn) {
+    // Genera el nombre de usuario basado en la primera letra del nombre y el apellido
+    $nombre_usuario = strtolower(substr($nombre, 0, 1) . $apellido);
+
+    // Verifica si el nombre de usuario ya existe
+    $checkDocSql = "SELECT COUNT(*) FROM administradores WHERE nombre_usuario = :nombre_usuario";
+    $checkDocQuery = $dbConn->prepare($checkDocSql);
+    $checkDocQuery->bindparam(':nombre_usuario', $nombre_usuario);
+    $checkDocQuery->execute();
+    $count = $checkDocQuery->fetchColumn();
+
+    if ($count > 0) {
+        // Si el nombre de usuario ya existe, genera uno nuevo con las dos primeras letras del nombre
+        $nombre_usuario = strtolower(substr($nombre, 0, 2) . $apellido);
+
+        // Verifica nuevamente si el nombre de usuario generado existe
+        $checkDocQuery->bindparam(':nombre_usuario', $nombre_usuario);
+        $checkDocQuery->execute();
+        $count = $checkDocQuery->fetchColumn();
+
+        // Asegúrate de que el nombre de usuario sea único añadiendo un número si es necesario
+        $i = 1;
+        while ($count > 0) {
+            $nombre_usuario = strtolower(substr($nombre, 0, 2) . $apellido . $i);
+            $checkDocQuery->bindparam(':nombre_usuario', $nombre_usuario);
+            $checkDocQuery->execute();
+            $count = $checkDocQuery->fetchColumn();
+            $i++;
+        }
+    }
+
+    return $nombre_usuario;
+}
+
 if (isset($_POST['Submit'])) {
     $correo = $_POST['correo'];
     $nombres_apellidos = $_POST['nombres_apellidos'];
@@ -9,6 +43,14 @@ if (isset($_POST['Submit'])) {
     $area = $_POST['area'];
     $cargo = $_POST['cargo'];
     $rol = $_POST['rol'];
+
+    // Separar nombre y apellido
+    list($nombre, $apellido) = explode(' ', $nombres_apellidos, 2);
+
+    // Generar nombre de usuario si no está definido
+    if (empty($nombre_usuario)) {
+        $nombre_usuario = generarNombreUsuario($nombre, $apellido, $dbConn);
+    }
 
     // Verificar si algún campo está vacío
     if (empty($correo) || empty($nombres_apellidos) || empty($nombre_usuario) || empty($contrasena) ||  empty($area) || empty($cargo) || empty($rol)) {
@@ -91,6 +133,8 @@ if (isset($_POST['Submit'])) {
     }
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -118,10 +162,6 @@ if (isset($_POST['Submit'])) {
                     <div class="input-group">
                         <label for="nombres_apellidos">Nombres y Apellidos</label>
                         <input type="text" id="nombres_apellidos" name="nombres_apellidos" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="nombre_usuario">Nombre de Usuario</label>
-                        <input type="text" id="nombre_usuario" name="nombre_usuario" required>
                     </div>
                     <div class="input-group tooltip">
                         <label for="contrasena">Contraseña</label>
@@ -223,23 +263,6 @@ if (isset($_POST['Submit'])) {
 </body>
 </html>
 
-                       
-
-                                <!-- <script>
-            document.querySelector('form').addEventListener('submit', function(event) {
-                var emailField = document.getElementById('correo');
-                var emailValue = emailField.value;
-                var errorMessage = document.getElementById('email-error');
-
-                // Verificar si el correo electrónico tiene el dominio específico
-                if (!emailValue.endsWith('@gategroup.com')) {
-                    errorMessage.style.display = 'block'; // Mostrar el mensaje de error
-                    event.preventDefault(); // Evita el envío del formulario
-                } else {
-                    errorMessage.style.display = 'none'; // Ocultar el mensaje de error si es válido
-                }
-            });
-            </script> -->
 
 
 

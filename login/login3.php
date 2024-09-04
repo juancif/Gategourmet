@@ -31,10 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Verifica si las contraseñas están hasheadas
             $hash_contrasena = $usuario['contrasena'];
 
-            // Mostrar para depuración
-            echo "Contraseña ingresada: " . $contrasena . "<br>";
-            echo "Contraseña en BD: " . $hash_contrasena . "<br>";
-
             if (password_verify($contrasena, $hash_contrasena) || $contrasena === $hash_contrasena) {
                 $area = $usuario['area'];
 
@@ -64,10 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($result->num_rows > 0) {
                 $admin = $result->fetch_assoc();
                 $hash_contrasena = $admin['contrasena'];
-
-                // Mostrar para depuración
-                echo "Contraseña ingresada: " . $contrasena . "<br>";
-                echo "Contraseña en BD: " . $hash_contrasena . "<br>";
 
                 if (password_verify($contrasena, $hash_contrasena) || $contrasena === $hash_contrasena) {
                     $area = $admin['area'];
