@@ -1,6 +1,40 @@
 <?php
 include_once("config_gestor.php");
 
+function generarNombreUsuario($nombre, $apellido, $dbConn) {
+    // Genera el nombre de usuario basado en la primera letra del nombre y el apellido
+    $nombre_usuario = strtolower(substr($nombre, 0, 1) . $apellido);
+
+    // Verifica si el nombre de usuario ya existe
+    $checkDocSql = "SELECT COUNT(*) FROM administradores WHERE nombre_usuario = :nombre_usuario";
+    $checkDocQuery = $dbConn->prepare($checkDocSql);
+    $checkDocQuery->bindparam(':nombre_usuario', $nombre_usuario);
+    $checkDocQuery->execute();
+    $count = $checkDocQuery->fetchColumn();
+
+    if ($count > 0) {
+        // Si el nombre de usuario ya existe, genera uno nuevo con las dos primeras letras del nombre
+        $nombre_usuario = strtolower(substr($nombre, 0, 2) . $apellido);
+
+        // Verifica nuevamente si el nombre de usuario generado existe
+        $checkDocQuery->bindparam(':nombre_usuario', $nombre_usuario);
+        $checkDocQuery->execute();
+        $count = $checkDocQuery->fetchColumn();
+
+        // Asegúrate de que el nombre de usuario sea único añadiendo un número si es necesario
+        $i = 1;
+        while ($count > 0) {
+            $nombre_usuario = strtolower(substr($nombre, 0, 2) . $apellido . $i);
+            $checkDocQuery->bindparam(':nombre_usuario', $nombre_usuario);
+            $checkDocQuery->execute();
+            $count = $checkDocQuery->fetchColumn();
+            $i++;
+        }
+    }
+
+    return $nombre_usuario;
+}
+
 if (isset($_POST['Submit'])) {
     $correo = $_POST['correo'];
     $nombres_apellidos = $_POST['nombres_apellidos'];
@@ -123,7 +157,7 @@ if (isset($_POST['Submit'])) {
                     </div>
                     <div class="input-group">
                         <label for="nombre_usuario">Nombre de Usuario</label>
-                        <input type="text" id="nombre_usuario" name="nombre_usuario" required>
+                        <input type="text" id="nombre_usuario" name="nombre_usuario">
                     </div>
                     <div class="input-group tooltip">
                         <label for="contrasena">Contraseña</label>
