@@ -124,7 +124,7 @@ $conn->close();
     <div class="container">
         <!-- Indicador de Porcentaje de Actualización por Área -->
         <div class="chart-container">
-            <h2>Porcentaje de Actualización por Área</h2>
+            <center><h2>Porcentaje de Actualización por Área</h2></center>
             <table>
                 <thead>
                     <tr>
@@ -155,21 +155,21 @@ $conn->close();
 
         <!-- Gráfico 2: Estado de Documentación por Área -->
         <div class="chart-container">
-            <h2>Estado de Documentación por Área</h2>
+            <center><h2>Estado de Documentación por Área</h2></center>
             <canvas id="estadoDocumentacionChart"></canvas>
             <button onclick="downloadPDF('estadoDocumentacionChart')">Descargar PDF</button>
         </div>
 
         <!-- Gráfico 3: Tipo de Documentación Desactualizada -->
         <div class="chart-container">
-            <h2>Tipo de Documentación Desactualizada</h2>
+           <center><h2>Tipo de Documentación Desactualizada</h2></center> 
             <canvas id="tipoDocumentacionDesactualizadaChart"></canvas>
             <button onclick="downloadPDF('tipoDocumentacionDesactualizadaChart')">Descargar PDF</button>
         </div>
 
         <!-- Gráfico 4: Actualización Mensual por Área -->
         <div class="chart-container">
-            <h2>Actualización Mensual por Área</h2>
+            <center><h2>Actualización Mensual por Área</h2></center>
             <canvas id="actualizacionMensualChart"></canvas>
             <button onclick="downloadPDF('actualizacionMensualChart')">Descargar PDF</button>
         </div>
