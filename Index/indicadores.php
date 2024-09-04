@@ -147,7 +147,7 @@ $conn->close();
                                 </td>
                               </tr>";
                     }
-                    ?>
+                    ?> 
                 </tbody>
             </table>
             <button onclick="downloadPDF('PorcentajedeActualizaciónChart')">Descargar PDF</button>
@@ -295,42 +295,72 @@ $conn->close();
             }
         });
 
-        // Gráfico 4: Actualización Mensual por Área
-        var ctx4 = document.getElementById('actualizacionMensualChart').getContext('2d');
-        var data4 = {
-            labels: <?php echo json_encode($meses); ?>,
-            datasets: <?php
-            $dataset = [];
-            foreach ($areas4 as $area) {
-                $dataset[] = [
-                    'label' => $area,
-                    'data' => array_values($cantidadActualizacionMensual[$area]),
-                    'backgroundColor' => 'rgba(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ', 0.6)',
-                    'borderColor' => 'rgba(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ', 1)',
-                    'borderWidth' => 2
-                ];
-            }
-            echo json_encode($dataset);
-            ?>
-        };
-        var myChart4 = new Chart(ctx4, {
-            type: 'bar',
-            data: data4,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: 'rgba(0, 0, 0, 0.8)'
-                        }
-                    }
+      // Gráfico 4: Actualización Mensual por Área
+var ctx4 = document.getElementById('actualizacionMensualChart').getContext('2d');
+var data4 = {
+    labels: <?php echo json_encode($meses); ?>,
+    datasets: <?php
+    $dataset = [];
+    foreach ($areas4 as $area) {
+        $dataset[] = [
+            'label' => $area,
+            'data' => array_values($cantidadActualizacionMensual[$area]),
+            'fill' => true, // Esto rellena el área bajo la línea
+            'backgroundColor' => 'rgba(0, 123, 255, 0.6)', // Ajusta el color según la imagen
+            'borderColor' => 'rgba(0, 123, 255, 1)',
+            'borderWidth' => 2,
+            'pointBackgroundColor' => 'rgba(0, 123, 255, 1)', // Color de los puntos
+            'pointBorderColor' => '#fff', // Borde de los puntos
+            'pointHoverBackgroundColor' => '#fff',
+            'pointHoverBorderColor' => 'rgba(0, 123, 255, 1)'
+        ];
+    }
+    echo json_encode($dataset);
+    ?>
+};
+
+var myChart4 = new Chart(ctx4, {
+    type: 'line', // Cambiar a gráfico de líneas
+    data: data4,
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 0.5 // Ajusta la escala del eje y
+                }
+            },
+            x: {
+                ticks: {
+                    maxRotation: 45, // Rotación de las etiquetas en el eje x
+                    minRotation: 45
                 }
             }
-        });
+        },
+        plugins: {
+            legend: {
+                display: false, // Ocultar leyenda si no es necesaria
+            },
+            title: {
+                display: true,
+                text: 'ACTUALIZACIÓN MENSUAL POR ÁREA.', // Título del gráfico
+                font: {
+                    size: 18
+                },
+                padding: {
+                    top: 10,
+                    bottom: 30
+                }
+            }
+        },
+        elements: {
+            line: {
+                tension: 0.4 // Suaviza la línea para que se vea mejor
+            }
+        }
+    }
+});
+
 
         // Gráfico 5: Cantidad de Documentación Desactualizada por Área
         var ctx5 = document.getElementById('cantidadDesactualizadaChart').getContext('2d');
