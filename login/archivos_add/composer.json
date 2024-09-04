@@ -1,0 +1,7 @@
+{
+    "name": "gategourmet",
+    "description": "Un proyecto PHP con PHPMailer",
+    "require": {
+        "phpmailer/phpmailer": "^6.6"
+    }
+}

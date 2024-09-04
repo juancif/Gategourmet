@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    background: url('../Imagenes/fondogg6.jpg') no-repeat center center fixed;
+    background: url('../Imagenes/fondogg3.webp') no-repeat center center fixed;
     background-size: cover;
     display: flex;
     flex-direction: column;
@@ -57,11 +57,40 @@ body {
     width: 100%;
 }
 
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 350px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the input */
+    left: 50%;
+    margin-left: -110px; /* Center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    margin-left: 300px;
+    position: absolute;
+    border-radius: 50px;
+}
 .input-group label {
     display: block;
     margin-bottom: 5px;
     color: #fff;
-    font-weight: 500;
+    font-weight: 500px;
 }
 
 .input-group input,
@@ -85,6 +114,38 @@ body {
     outline: none;
 }
 
+.error-message {
+    color: rgb(194, 194, 194);
+    font-size: 1.5em;
+    margin-top: 0.2em;
+    display: none; /* Ocultamos el mensaje por defecto */
+}
+
+.regresar{
+    background: #3d9970; /* Verde oliva */
+    color: white;
+    font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
+    font-size: 16px; /* Asegurando el mismo tamaño de letra */
+    padding: 15px 15px 1px 20px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    width: 44%;
+    height: 45px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.input[type="submit"]:hover, .regresar:hover {
+    background: #2d6e50; /* Verde oliva más oscuro */
+    transform: scale(1.05);
+}
+
+input[type="submit"]:active, .regresar:active {
+    transform: scale(1);
+}
+
 .buttons {
     display: flex;
     justify-content: space-between;
@@ -103,6 +164,7 @@ input[type="submit"], .button {
     text-decoration: none;
     text-align: center;
     width: 44%;
+    height: 60px;
     transition: background 0.3s ease, transform 0.3s ease;
 }
 
