@@ -14,8 +14,9 @@ if ($conn->connect_error) {
 // 1. Porcentaje de Actualización por Área
 $sql = "SELECT areas, 
                SUM(CASE WHEN estado = 'vigente' THEN 1 ELSE 0 END) AS documentos_vigentes,
-               COUNT(*) AS total_documentos
+               SUM(CASE WHEN estado IN ('vigente', 'desactualizado') THEN 1 ELSE 0 END) AS total_documentos
         FROM listado_maestro
+        WHERE estado IN ('vigente', 'desactualizado')
         GROUP BY areas";
 $result = $conn->query($sql);
 
