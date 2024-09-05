@@ -97,3 +97,8 @@ Registro Exitoso
 http://localhost/GateGourmet/Gestor_usuarios/php/admin/registro_exitoso_admin.php
 http://localhost/GateGourmet/Gestor_usuarios/php/Inactivos/registro_exitoso_inactivos.php
 http://localhost/GateGourmet/Gestor_usuarios/php/user/registro_exitoso.php
+
+
+Correos
+http://localhost/GateGourmet/correos/correos.php
+http://localhost/GateGourmet/correos/vista_correo.php
