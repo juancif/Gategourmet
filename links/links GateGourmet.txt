@@ -35,10 +35,12 @@ http://localhost/GateGourmet/Index/index_prueba/index1.html
 http://localhost/GateGourmet/Index/index_prueba/index2.html
 http://localhost/GateGourmet/Index/index_prueba/index3.html
 http://localhost/GateGourmet/Index/index_prueba/index4.html
+http://localhost/GateGourmet/Index/index_principal.html
+
 
 http://localhost/GateGourmet/Index/index_user.html
-http://localhost/GateGourmet/Index/index_principal.html
 http://localhost/GateGourmet/Index/index_admin.html
+http://localhost/GateGourmet/Index/index_comunicaciones.php
 
 
 Procesos

@@ -68,9 +68,9 @@ $area = isset($_SESSION['area']) ? $_SESSION['area'] : '';
         </div>
         <div class="circulo circulo8"><a href="https://1drv.ms/w/s!Aijf4XW5EsnbmQ0kfSuUy3leGNi0?e=M6FAKA" class="link1"><h3>Financiera</h3></a></div>
         <div class="circulo circulo9"><a href="https://1drv.ms/w/s!Aijf4XW5EsnbmQ0kfSuUy3leGNi0?e=M6FAKAb" class="link1"><h3>Costos</h3></a></div>
-        <div class="circulo circulo10"><a href="https://workdrive.zoho.com/file/hpbd780390dcd8e964441a13bc568d214fb30" class="link1"><h3 class="h3__3">Comunicaciónes</h3></a></div>
+        <div class="circulo circulo10"><a href="http://localhost/GateGourmet/Index/index_comunicaciones.php" class="link1"><h3 class="h3__3">Comunicaciones</h3></a></div>
         <div class="circulo circulo11"><a href="https://show.zoho.com/show/open/hpbd733318fd8b4834fcebcbc508ace6b9c64" class="link1"><h3>IT</h3></a></div>
-        <div class="circulo circulo12"><a href="https://show.zoho.com/show/open/hpbd733318fd8b4834fcebcbc508ace6b9c64" class="link1"><h3>Security</h3></a></div>
+        <div class="circulo circulo12"><a href="http://localhost/GateGourmet/Index/index_security.php" class="link1"><h3>Security</h3></a></div>
         <div class="circulo circulo13"><a href="https://workdrive.zoho.com/file/hpbd780390dcd8e964441a13bc568d214fb30" class="link1"><h3 class="h3__2">Servicio al cliente</h3></a></div>
         <div class="circulo circulo14"><a href="https://show.zoho.com/show/open/hpbd733318fd8b4834fcebcbc508ace6b9c64" class="link1"><h3 class="h3__2">Facilty service</h3></a></div>
         <div class="circulo circulo15"><a href="https://show.zoho.com/show/open/hpbd733318fd8b4834fcebcbc508ace6b9c64" class="link1"><h3 class="h3__2">Talento humano</h3></a></div>
