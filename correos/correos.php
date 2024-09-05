@@ -1,6 +1,6 @@
 <?php
 // Configurar conexión IMAP
-$inbox = imap_open("{imap.servidor.com:993/imap/ssl}INBOX", "tu_email@ejemplo.com", "tu_password") or die('No se pudo conectar al servidor de correo: ' . imap_last_error());
+$inbox = imap_open("{imap.gmail.com:993/imap/ssl}INBOX", "ngestordocumental@gmail.com", "tu_contraseña") or die('No se pudo conectar al servidor de correo: ' . imap_last_error());
 
 // Obtener todos los correos
 $emails = imap_search($inbox, 'ALL');
@@ -10,7 +10,7 @@ if ($emails) {
     rsort($emails);
 
     // Conectarse a la base de datos
-    $conexion = new mysqli('localhost', 'usuario_bd', 'password_bd', 'nombre_bd');
+    $conexion = new mysqli('localhost', 'root', '', 'gategourmet');
 
     if ($conexion->connect_error) {
         die("Error de conexión a la base de datos: " . $conexion->connect_error);
