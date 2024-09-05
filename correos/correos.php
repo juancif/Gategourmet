@@ -1,52 +1,97 @@
-<?php
-// Configurar conexión IMAP
-$inbox = imap_open("{imap.gmail.com:993/imap/ssl}INBOX", "ngestordocumental@gmail.com", "tu_contraseña") or die('No se pudo conectar al servidor de correo: ' . imap_last_error());
-
-// Obtener todos los correos
-$emails = imap_search($inbox, 'ALL');
-
-if ($emails) {
-    // Ordenar correos del más nuevo al más antiguo
-    rsort($emails);
-
-    // Conectarse a la base de datos
-    $conexion = new mysqli('localhost', 'root', '', 'gategourmet');
-
-    if ($conexion->connect_error) {
-        die("Error de conexión a la base de datos: " . $conexion->connect_error);
-    }
-
-    foreach ($emails as $email_number) {
-        // Obtener información del correo
-        $overview = imap_fetch_overview($inbox, $email_number, 0);
-        $message = imap_fetchbody($inbox, $email_number, 1.1);
-        
-        // Datos del correo a almacenar
-        $asunto = $overview[0]->subject;
-        $remitente = $overview[0]->from;
-        $fecha = $overview[0]->date;
-        $cuerpo = imap_qprint($message); // Decodificar el cuerpo si es necesario
-
-        // Insertar datos en la base de datos
-        $sql = "INSERT INTO correos (asunto, remitente, fecha, cuerpo) VALUES (?, ?, ?, ?)";
-        $stmt = $conexion->prepare($sql);
-        $stmt->bind_param("ssss", $asunto, $remitente, $fecha, $cuerpo);
-
-        if ($stmt->execute()) {
-            echo "Correo almacenado con éxito<br>";
-        } else {
-            echo "Error al almacenar el correo: " . $stmt->error . "<br>";
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correos Electrónicos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
         }
 
-        $stmt->close();
-    }
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-    // Cerrar la conexión a la base de datos
-    $conexion->close();
-} else {
-    echo "No hay correos para procesar.";
-}
+        h1 {
+            text-align: center;
+            color: #333;
+        }
 
-// Cerrar la conexión IMAP
-imap_close($inbox);
-?>
+        .email-list {
+            margin-top: 20px;
+        }
+
+        .email-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .email-item h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        .email-item p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .email-item hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Correos Electrónicos Almacenados</h1>
+        <div class="email-list">
+            <?php
+                // Aquí va el código PHP para mostrar los correos
+                // Conectarse a la base de datos
+                $conexion = new mysqli('localhost', 'root', '', 'gategourmet');
+
+                if ($conexion->connect_error) {
+                    die("Error de conexión a la base de datos: " . $conexion->connect_error);
+                }
+
+                // Consultar los correos almacenados
+                $sql = "SELECT asunto, remitente, fecha, cuerpo FROM correos ORDER BY fecha DESC";
+                $resultado = $conexion->query($sql);
+
+                if ($resultado->num_rows > 0) {
+                    while ($fila = $resultado->fetch_assoc()) {
+                        echo '<div class="email-item">';
+                        echo '<h2>Asunto: ' . $fila['asunto'] . '</h2>';
+                        echo '<p><strong>De:</strong> ' . $fila['remitente'] . '</p>';
+                        echo '<p><strong>Fecha:</strong> ' . $fila['fecha'] . '</p>';
+                        echo '<hr>';
+                        echo '<p>' . nl2br($fila['cuerpo']) . '</p>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo '<p>No hay correos almacenados.</p>';
+                }
+
+                // Cerrar la conexión
+                $conexion->close();
+            ?>
+        </div>
+    </div>
+
+</body>
+</html>
+
