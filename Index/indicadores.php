@@ -106,6 +106,21 @@ while($row = $result->fetch_assoc()) {
     $cantidadDesactualizada[] = $row['cantidad'];
 }
 
+// 6. Documentos Obsoletos por Área
+$sql = "SELECT areas, COUNT(*) AS cantidad
+        FROM listado_maestro
+        WHERE estado = 'obsoleto'
+        GROUP BY areas";
+$result = $conn->query($sql);
+
+$areas6 = [];
+$cantidadObsoleta = [];
+
+while($row = $result->fetch_assoc()) {
+    $areas6[] = $row['areas'];
+    $cantidadObsoleta[] = $row['cantidad'];
+}
+
 // Cerrar conexión
 $conn->close();
 ?>
@@ -180,6 +195,14 @@ $conn->close();
             <h2>Cantidad de Documentación Desactualizada por Área</h2>
             <canvas id="cantidadDesactualizadaChart"></canvas>
             <button onclick="downloadPDF('cantidadDesactualizadaChart')">Descargar PDF</button>
+        </div>
+    </div>
+
+    <!-- Gráfico 6: Documentos Obsoletos por Área -->
+    <div class="chart-container">
+            <center><h2>Documentos Obsoletos por Área</h2></center>
+            <canvas id="documentosObsoletosChart"></canvas>
+            <button onclick="downloadPDF('documentosObsoletosChart')">Descargar PDF</button>
         </div>
     </div>
 
@@ -389,6 +412,32 @@ var myChart4 = new Chart(ctx4, {
                         labels: {
                             color: 'rgba(0, 0, 0, 0.8)'
                         }
+                    }
+                }
+            }
+        });
+    
+  // Gráfico 6: Documentos Obsoletos por Área
+        var ctx6 = document.getElementById('documentosObsoletosChart').getContext('2d');
+        var data6 = {
+            labels: <?php echo json_encode($areas6); ?>,
+            datasets: [{
+                label: 'Cantidad Obsoleta',
+                data: <?php echo json_encode($cantidadObsoleta); ?>,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        var documentosObsoletosChart = new Chart(ctx6, {
+            type: 'bar',
+            data: data6,
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true
                     }
                 }
             }
