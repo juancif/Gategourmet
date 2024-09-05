@@ -42,6 +42,15 @@ CREATE TABLE roles (
     UNIQUE (nombre_rol)
 );
 
+CREATE TABLE correos (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    asunto VARCHAR(255),
+    remitente VARCHAR(255),
+    fecha VARCHAR(100),
+    cuerpo TEXT
+);
+
+
 -- Crear tabla documentos
 CREATE TABLE documentos (
     id INT(11) NOT NULL AUTO_INCREMENT,
