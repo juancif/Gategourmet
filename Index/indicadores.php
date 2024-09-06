@@ -296,7 +296,6 @@ $conn->close();
             }
         });
 
-
         // Gráfico 4: Actualización Mensual por Área
         new Chart(document.getElementById('actualizacionMensualChart'), {
             type: 'line',
@@ -378,3 +377,4 @@ $conn->close();
     </script>
 </body>
 </html>
+
