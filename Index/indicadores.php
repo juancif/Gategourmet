@@ -192,14 +192,13 @@ $conn->close();
 
         <!-- Gráfico 5: Cantidad de Documentación Desactualizada por Área -->
         <div class="chart-container">
-            <h2>Cantidad de Documentación Desactualizada por Área</h2>
+            <center><h2>Cantidad de Documentación Desactualizada por Área</h2></center>
             <canvas id="cantidadDesactualizadaChart"></canvas>
             <button onclick="downloadPDF('cantidadDesactualizadaChart')">Descargar PDF</button>
         </div>
-    </div>
 
-    <!-- Gráfico 6: Documentos Obsoletos por Área -->
-    <div class="chart-container">
+        <!-- Gráfico 6: Documentos Obsoletos por Área -->
+        <div class="chart-container">
             <center><h2>Documentos Obsoletos por Área</h2></center>
             <canvas id="documentosObsoletosChart"></canvas>
             <button onclick="downloadPDF('documentosObsoletosChart')">Descargar PDF</button>
@@ -211,78 +210,56 @@ $conn->close();
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+
     <script>
-        // Función para descargar gráfico en PDF
-        async function downloadPDF(chartId) {
-            const { jsPDF } = window.jspdf;
-            const chartElement = document.getElementById(chartId);
-            let imgData;
-
-            if (chartElement.tagName === 'CANVAS') {
-                const canvas = chartElement;
-                imgData = canvas.toDataURL('image/png');
-            } else {
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                const width = chartElement.offsetWidth;
-                const height = chartElement.offsetHeight;
-                canvas.width = width;
-                canvas.height = height;
-                context.drawImage(chartElement, 0, 0, width, height);
-                imgData = canvas.toDataURL('image/png');
-            }
-
-            const pdf = new jsPDF();
-            pdf.addImage(imgData, 'PNG', 10, 10, 180, 160); // Ajusta las dimensiones según sea necesario
-            pdf.save(chartId + '.pdf');
+        // Función para descargar un gráfico específico en PDF
+        function downloadPDF(chartId) {
+            const canvas = document.getElementById(chartId);
+            const canvasImage = canvas.toDataURL("image/png", 1.0);
+            const pdf = new jsPDF('landscape');
+            pdf.addImage(canvasImage, 'PNG', 10, 10, 280, 150);
+            pdf.save(`${chartId}.pdf`);
         }
 
         // Gráfico 2: Estado de Documentación por Área
-        var ctx2 = document.getElementById('estadoDocumentacionChart').getContext('2d');
-        var data2 = {
-            labels: <?php echo json_encode($areas2); ?>,
-            datasets: [{
-                label: 'Vigente',
-                data: <?php echo json_encode($vigente); ?>,
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 2
-            }, {
-                label: 'Desactualizado',
-                data: <?php echo json_encode($desactualizado); ?>,
-                backgroundColor: 'rgba(255, 206, 86, 0.6)',
-                borderColor: 'rgba(255, 206, 86, 1)',
-                borderWidth: 2
-            }, {
-                label: 'Obsoleto',
-                data: <?php echo json_encode($obsoleto); ?>,
-                backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 2
-            }, {
-                label: 'Anulado',
-                data: <?php echo json_encode($anulado); ?>,
-                backgroundColor: 'rgba(153, 102, 255, 0.6)',
-                borderColor: 'rgba(153, 102, 255, 1)',
-                borderWidth: 2
-            }]
-        };
-        var myChart2 = new Chart(ctx2, {
+        new Chart(document.getElementById('estadoDocumentacionChart'), {
             type: 'bar',
-            data: data2,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+            data: {
+                labels: <?php echo json_encode($areas2); ?>,
+                datasets: [
+                    {
+                        label: 'Vigente',
+                        data: <?php echo json_encode($vigente); ?>,
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    },
+                    {
+                        label: 'Desactualizado',
+                        data: <?php echo json_encode($desactualizado); ?>,
+                        backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                    },
+                    {
+                        label: 'Obsoleto',
+                        data: <?php echo json_encode($obsoleto); ?>,
+                        backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                    },
+                    {
+                        label: 'Anulado',
+                        data: <?php echo json_encode($anulado); ?>,
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)',
                     }
-                },
+                ]
+            },
+            options: {
+                responsive: true,
                 plugins: {
                     legend: {
-                        labels: {
-                            color: 'rgba(0, 0, 0, 0.8)'
-                        }
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Estado de Documentación por Área'
                     }
                 }
             }
@@ -319,125 +296,81 @@ $conn->close();
             }
         });
 
-      // Gráfico 4: Actualización Mensual por Área
-var ctx4 = document.getElementById('actualizacionMensualChart').getContext('2d');
-var data4 = {
-    labels: <?php echo json_encode($meses); ?>,
-    datasets: <?php
-    $dataset = [];
-    foreach ($areas4 as $area) {
-        $dataset[] = [
-            'label' => $area,
-            'data' => array_values($cantidadActualizacionMensual[$area]),
-            'fill' => true, // Esto rellena el área bajo la línea
-            'backgroundColor' => 'rgba(0, 123, 255, 0.6)', // Ajusta el color según la imagen
-            'borderColor' => 'rgba(0, 123, 255, 1)',
-            'borderWidth' => 2,
-            'pointBackgroundColor' => 'rgba(0, 123, 255, 1)', // Color de los puntos
-            'pointBorderColor' => '#fff', // Borde de los puntos
-            'pointHoverBackgroundColor' => '#fff',
-            'pointHoverBorderColor' => 'rgba(0, 123, 255, 1)'
-        ];
-    }
-    echo json_encode($dataset);
-    ?>
-};
 
-var myChart4 = new Chart(ctx4, {
-    type: 'line', // Cambiar a gráfico de líneas
-    data: data4,
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    stepSize: 0.5 // Ajusta la escala del eje y
-                }
+        // Gráfico 4: Actualización Mensual por Área
+        new Chart(document.getElementById('actualizacionMensualChart'), {
+            type: 'line',
+            data: {
+                labels: <?php echo json_encode($meses); ?>,
+                datasets: <?php echo json_encode(array_map(function($area, $data) {
+                    return [
+                        'label' => $area,
+                        'data' => array_values($data),
+                        'fill' => false,
+                        'borderColor' => 'rgba(75, 192, 192, 1)',
+                        'tension' => 0.1
+                    ];
+                }, array_keys($cantidadActualizacionMensual), $cantidadActualizacionMensual)); ?>
             },
-            x: {
-                ticks: {
-                    maxRotation: 45, // Rotación de las etiquetas en el eje x
-                    minRotation: 45
-                }
-            }
-        },
-        plugins: {
-            legend: {
-                display: false, // Ocultar leyenda si no es necesaria
-            },
-            title: {
-                display: true,
-                text: 'ACTUALIZACIÓN MENSUAL POR ÁREA.', // Título del gráfico
-                font: {
-                    size: 18
-                },
-                padding: {
-                    top: 10,
-                    bottom: 30
-                }
-            }
-        },
-        elements: {
-            line: {
-                tension: 0.4 // Suaviza la línea para que se vea mejor
-            }
-        }
-    }
-});
-
-
-        // Gráfico 5: Cantidad de Documentación Desactualizada por Área
-        var ctx5 = document.getElementById('cantidadDesactualizadaChart').getContext('2d');
-        var data5 = {
-            labels: <?php echo json_encode($areas5); ?>,
-            datasets: [{
-                label: 'Cantidad Desactualizada',
-                data: <?php echo json_encode($cantidadDesactualizada); ?>,
-                backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 2
-            }]
-        };
-        var myChart5 = new Chart(ctx5, {
-            type: 'bar',
-            data: data5,
             options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
+                responsive: true,
                 plugins: {
                     legend: {
-                        labels: {
-                            color: 'rgba(0, 0, 0, 0.8)'
-                        }
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Actualización Mensual por Área'
                     }
                 }
             }
         });
-    
-  // Gráfico 6: Documentos Obsoletos por Área
-        var ctx6 = document.getElementById('documentosObsoletosChart').getContext('2d');
-        var data6 = {
-            labels: <?php echo json_encode($areas6); ?>,
-            datasets: [{
-                label: 'Cantidad Obsoleta',
-                data: <?php echo json_encode($cantidadObsoleta); ?>,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
-            }]
-        };
 
-        var documentosObsoletosChart = new Chart(ctx6, {
+        // Gráfico 5: Cantidad de Documentación Desactualizada por Área
+        new Chart(document.getElementById('cantidadDesactualizadaChart'), {
             type: 'bar',
-            data: data6,
+            data: {
+                labels: <?php echo json_encode($areas5); ?>,
+                datasets: [{
+                    label: 'Cantidad Desactualizada',
+                    data: <?php echo json_encode($cantidadDesactualizada); ?>,
+                    backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                }]
+            },
             options: {
                 responsive: true,
-                scales: {
-                    x: {
-                        beginAtZero: true
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Cantidad de Documentación Desactualizada por Área'
+                    }
+                }
+            }
+        });
+
+        // Gráfico 6: Documentos Obsoletos por Área
+        new Chart(document.getElementById('documentosObsoletosChart'), {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode($areas6); ?>,
+                datasets: [{
+                    label: 'Cantidad Obsoleta',
+                    data: <?php echo json_encode($cantidadObsoleta); ?>,
+                    backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Documentos Obsoletos por Área'
                     }
                 }
             }
