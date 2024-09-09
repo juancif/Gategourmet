@@ -91,7 +91,7 @@
             ?>
         </div>
     </div>
-
+    <p><a href="logout.php" >Desconectar</a></p>
 </body>
 </html>
 
