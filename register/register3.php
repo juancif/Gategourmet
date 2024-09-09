@@ -40,6 +40,7 @@ if (isset($_POST['Submit'])) {
     $nombres_apellidos = $_POST['nombres_apellidos'];
     $nombre_usuario = $_POST['nombre_usuario'];
     $contrasena = $_POST['contrasena'];
+    $confirmar_contrasena = $_POST['confirmar_contrasena'];
     $area = $_POST['area'];
     $cargo = $_POST['cargo'];
     $rol = $_POST['rol'];
@@ -53,7 +54,7 @@ if (isset($_POST['Submit'])) {
     }
 
     // Verificar si algún campo está vacío
-    if (empty($correo) || empty($nombres_apellidos) || empty($nombre_usuario) || empty($contrasena) ||  empty($area) || empty($cargo) || empty($rol)) {
+    if (empty($correo) || empty($nombres_apellidos) || empty($nombre_usuario) || empty($contrasena) || empty($confirmar_contrasena) || empty($area) || empty($cargo) || empty($rol)) {
         if (empty($correo)) {
             echo "<font color='red'>Campo: correo está vacío.</font><br/>";
         }
@@ -66,6 +67,9 @@ if (isset($_POST['Submit'])) {
         if (empty($contrasena)) {
             echo "<font color='red'>Campo: contrasena está vacío.</font><br/>";
         }
+        if (empty($confirmar_contrasena)) {
+            echo "<font color='red'>Campo: confirmar_contrasena está vacío.</font><br/>";
+        }
         if (empty($area)) {
             echo "<font color='red'>Campo: área está vacío.</font><br/>";
         }
@@ -77,6 +81,13 @@ if (isset($_POST['Submit'])) {
         }
         echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
     } else {
+        // Verificar si las contraseñas coinciden
+        if ($contrasena !== $confirmar_contrasena) {
+            echo "<font color='red'>Las contraseñas no coinciden.</font><br/>";
+            echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
+            exit();
+        }
+
         try {
             // Iniciar la transacción
             $dbConn->beginTransaction();
@@ -101,7 +112,7 @@ if (isset($_POST['Submit'])) {
             $query->bindparam(':correo', $correo);
             $query->bindparam(':nombres_apellidos', $nombres_apellidos);
             $query->bindparam(':nombre_usuario', $nombre_usuario);
-            $query->bindparam(':contrasena', $contrasena); // Hash de la contraseña
+            $query->bindparam(':contrasena', password_hash($contrasena, PASSWORD_BCRYPT)); // Hash de la contraseña
             $query->bindparam(':area', $area);
             $query->bindparam(':cargo', $cargo);
             $query->bindparam(':rol', $rol);
@@ -128,7 +139,7 @@ if (isset($_POST['Submit'])) {
             if ($dbConn->inTransaction()) {
                 $dbConn->rollBack();
             }
-            echo "<font color='black', font-size='40',>Error: El nombre de usuario ya esta registrado</font><br/>";
+            echo "<font color='black', font-size='40',>Error: El nombre de usuario ya está registrado.</font><br/>";
         }
     }
 }
@@ -166,7 +177,12 @@ if (isset($_POST['Submit'])) {
                     <div class="input-group tooltip">
                         <label for="contrasena">Contraseña</label>
                         <input type="password" id="contrasena" name="contrasena" required>
-                        <span class="tooltiptext">Recuerda que la contraseña debe tener minimo 12 caracteres, un caracter especial y una mayuscula.</span>
+                        <span class="tooltiptext">Recuerda que la contraseña debe tener mínimo 12 caracteres, un carácter especial y una mayúscula.</span>
+                    </div>
+                    <div class="input-group tooltip">
+                        <label for="confirmar_contrasena">Confirmar Contraseña</label>
+                        <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" required>
+                        <span class="tooltiptext">Confirma tu contraseña.</span>
                     </div>
                     <div class="input-group">
                         <label for="area">Área</label>
