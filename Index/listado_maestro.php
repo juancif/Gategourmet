@@ -82,34 +82,7 @@ $result = $stmt->get_result();
     <title>Listado Maestro</title>
     <link rel="stylesheet" href="listado_maestro.css">
     <style>
-        .search-bar {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-        .dropdown-toggle {
-            cursor: pointer;
-            color: #0b8b0f;
-            padding: 0.5rem 1rem;
-            border: 1px solid #0b8b0f;
-            border-radius: 4px;
-            background-color: #fff;
-        }
-        .search-dropdown {
-            display: none;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-        .active .search-dropdown {
-            display: flex;
-        }
-        select {
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            width: 100%;
-        }
+       
     </style>
 </head>
 <body>

@@ -124,13 +124,15 @@ CREATE TABLE password_resets (
 
 <!-- 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro6.csv' -->
 
-LOAD DATA INFILE 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro1.csv'
+LOAD DATA INFILE 'C:/Users/lrodriguezcorrea/Desktop/Listado_maestro.csv'
 INTO TABLE listado_maestro
-FIELDS TERMINATED BY ';'
+FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS
+IGNORE 1 LINES
 (proceso, codigo, titulo_documento, tipo, version, estado, fecha_aprobacion, areas, motivo_del_cambio, tiempo_de_retencion, responsable_de_retencion, lugar_de_almacenamiento_fisico, lugar_de_almacenamiento_magnetico, conservacion, disposicion_final, copias_controladas, fecha_de_vigencia, dias, senal_alerta, obsoleto, anulado, en_actualizacion);
+
+
 
 CREATE TABLE procesos (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -144,7 +146,7 @@ CREATE TABLE procesos (
 
 <!-- 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro4.csv' -->
 
-LOAD DATA LOCAL INFILE 'C:/xampp/htdocs/Gategourmet/documentos/Libro1.csv'
+LOAD DATA LOCAL INFILE 'C:/Users/lrodriguezcorrea/Desktop/procesos.csv'
 INTO TABLE procesos
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'

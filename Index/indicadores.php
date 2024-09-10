@@ -265,65 +265,128 @@ $conn->close();
             }
         });
 
-        // Gráfico 3: Tipo de Documentación Desactualizada
         var ctx3 = document.getElementById('tipoDocumentacionDesactualizadaChart').getContext('2d');
-        var data3 = {
-            labels: <?php echo json_encode($tipos); ?>,
-            datasets: [{
-                label: 'Cantidad',
-                data: <?php echo json_encode($cantidadTipos); ?>,
-                backgroundColor: 'rgba(153, 102, 255, 0.6)',
-                borderColor: 'rgba(153, 102, 255, 1)',
-                borderWidth: 2
-            }]
-        };
-        var myChart3 = new Chart(ctx3, {
-            type: 'bar',
-            data: data3,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+var data3 = {
+    labels: [
+        'INSTRUCTIVO',
+        'PROGRAMA',
+        'FORMATO',
+        'LEYOUT',
+        'MANUAL',
+        'PROCEDIMIENTO',
+        'MAPA DE CADENA VOLUTIVA',
+        'SUBPROGRAMA'
+    ],
+    datasets: [{
+        label: 'Cantidad',
+        data: <?php echo json_encode($cantidadTipos); ?>,
+        backgroundColor: <?php echo json_encode(array_map(function() {
+            return 'rgba(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ', 0.6)';
+        }, $cantidadTipos)); ?>,
+        borderColor: <?php echo json_encode(array_map(function() {
+            return 'rgba(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ', 1)';
+        }, $cantidadTipos)); ?>,
+        borderWidth: 2
+    }]
+};
+var myChart3 = new Chart(ctx3, {
+    type: 'bar',
+    data: data3,
+    options: {
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Tipos de Documentación'
                 },
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: 'rgba(0, 0, 0, 0.8)'
-                        }
-                    }
+                ticks: {
+                    autoSkip: false,
+                    maxRotation: 90,
+                    minRotation: 45
                 }
-            }
-        });
-
-        // Gráfico 4: Actualización Mensual por Área
-        new Chart(document.getElementById('actualizacionMensualChart'), {
-            type: 'line',
-            data: {
-                labels: <?php echo json_encode($meses); ?>,
-                datasets: <?php echo json_encode(array_map(function($area, $data) {
-                    return [
-                        'label' => $area,
-                        'data' => array_values($data),
-                        'fill' => false,
-                        'borderColor' => 'rgba(75, 192, 192, 1)',
-                        'tension' => 0.1
-                    ];
-                }, array_keys($cantidadActualizacionMensual), $cantidadActualizacionMensual)); ?>
             },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Actualización Mensual por Área'
-                    }
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Cantidad'
                 }
             }
-        });
+        },
+        plugins: {
+            legend: {
+                labels: {
+                    color: 'rgba(0, 0, 0, 0.8)'
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
+                    }
+                }
+            },
+            datalabels: {
+                display: true,
+                color: 'black',
+                anchor: 'end',
+                align: 'top',
+                formatter: function(value) {
+                    return value;
+                }
+            }
+        }
+    }
+});
+
+
+        // Gráfico 4: Actualizacion Mensaul por Area
+
+        new Chart(document.getElementById('actualizacionMensualChart'), {
+    type: 'line',
+    data: {
+        labels: <?php echo json_encode($meses); ?>,
+        datasets: <?php echo json_encode(array_map(function($area, $data) {
+            // Generar un color aleatorio para cada área
+            $color = sprintf('rgba(%d, %d, %d, 1)', rand(0, 255), rand(0, 255), rand(0, 255));
+            return [
+                'label' => $area,
+                'data' => array_values($data),
+                'fill' => false,
+                'borderColor' => $color,
+                'tension' => 0.1
+            ];
+        }, array_keys($cantidadActualizacionMensual), $cantidadActualizacionMensual)); ?>
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Actualización Mensual por Área'
+            }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Meses'
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Actualización'
+                },
+                beginAtZero: true
+            }
+        }
+    }
+});
+
 
         // Gráfico 5: Cantidad de Documentación Desactualizada por Área
         new Chart(document.getElementById('cantidadDesactualizadaChart'), {
