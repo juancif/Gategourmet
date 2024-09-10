@@ -63,6 +63,9 @@ foreach ($searchValues as $campo => $valor) {
 
 // Preparar la consulta
 $stmt = $conn->prepare($sql);
+if ($stmt === false) {
+    die("Error al preparar la consulta: " . $conn->error);
+}
 
 // Vincular los parámetros si hay filtros
 if (!empty($params)) {
@@ -82,7 +85,7 @@ $result = $stmt->get_result();
     <title>Listado Maestro</title>
     <link rel="stylesheet" href="listado_maestro.css">
     <style>
-       
+        
     </style>
 </head>
 <body>
@@ -93,23 +96,21 @@ $result = $stmt->get_result();
     <div class="container">
         <div class="search-bar">
             <form method="post">
-                <span class="dropdown-toggle" onclick="toggleDropdown()">Buscar por Filtros</span>
-                <div class="search-dropdown">
+                <div class="search-fields">
                     <?php foreach ($campos as $campo): ?>
-                        <label for="<?php echo $campo; ?>"><?php echo ucwords(str_replace('_', ' ', $campo)); ?></label>
-                        <select name="<?php echo $campo; ?>" id="<?php echo $campo; ?>">
-                            <option value="">Selecciona una opción...</option>
+                        <label for="<?php echo htmlspecialchars($campo); ?>"><?php echo ucwords(str_replace('_', ' ', $campo)); ?></label>
+                        <input type="text" id="<?php echo htmlspecialchars($campo); ?>" name="<?php echo htmlspecialchars($campo); ?>" autocomplete="off" 
+                            oninput="filterOptions(this, '<?php echo htmlspecialchars($campo); ?>')">
+                        <div class="search-dropdown" id="<?php echo htmlspecialchars($campo); ?>-options">
                             <?php if (!empty($options[$campo])): ?>
                                 <?php foreach ($options[$campo] as $option): ?>
-                                    <option value="<?php echo htmlspecialchars($option); ?>" <?php echo ($$campo == $option) ? 'selected' : ''; ?>>
-                                        <?php echo htmlspecialchars($option); ?>
-                                    </option>
+                                    <div data-value="<?php echo htmlspecialchars($option); ?>"><?php echo htmlspecialchars($option); ?></div>
                                 <?php endforeach; ?>
                             <?php endif; ?>
-                        </select>
+                        </div>
                     <?php endforeach; ?>
-                    <button type="submit">Buscar</button>
                 </div>
+                <button type="submit">Buscar</button>
             </form>
         </div>
 
@@ -128,15 +129,19 @@ $result = $stmt->get_result();
                             $rowClass = '';
 
                             // Definir la clase de la fila basada en el estado
-                            if (strtolower($row['estado']) == 'vigente') {
-                                $rowClass = 'vigente';
-                            } elseif (strtolower($row['estado']) == 'desactualizado') {
-                                $rowClass = 'desactualizado';
-                            } elseif (strtolower($row['estado']) == 'obsoleto') {
-                                $rowClass = 'obsoleto';
+                            switch (strtolower($row['estado'])) {
+                                case 'vigente':
+                                    $rowClass = 'vigente';
+                                    break;
+                                case 'desactualizado':
+                                    $rowClass = 'desactualizado';
+                                    break;
+                                case 'obsoleto':
+                                    $rowClass = 'obsoleto';
+                                    break;
                             }
                         ?>
-                        <tr class="<?php echo $rowClass; ?>">
+                        <tr class="<?php echo htmlspecialchars($rowClass); ?>">
                             <?php foreach ($campos as $campo): ?>
                                 <td><?php echo htmlspecialchars($row[$campo]); ?></td>
                             <?php endforeach; ?>
@@ -154,8 +159,39 @@ $result = $stmt->get_result();
 
     <script>
         function toggleDropdown() {
-            document.querySelector('.search-bar').classList.toggle('active');
+            document.querySelector('.search-dropdown').classList.toggle('active');
         }
+
+        function filterOptions(input, field) {
+            const query = input.value.toLowerCase();
+            const optionsList = document.getElementById(field + '-options');
+            const options = optionsList.querySelectorAll('div');
+
+            options.forEach(option => {
+                const text = option.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    option.style.display = 'block';
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+
+            // Mostrar el menú desplegable si hay opciones que coinciden
+            optionsList.style.display = query ? 'block' : 'none';
+        }
+
+        // Seleccionar una opción y actualizar el campo de entrada
+        document.addEventListener('click', function(event) {
+            const target = event.target;
+            if (target && target.hasAttribute('data-value')) {
+                const field = target.parentElement.id.replace('-options', '');
+                const inputField = document.getElementById(field);
+                inputField.value = target.getAttribute('data-value');
+                target.parentElement.style.display = 'none';
+            } else if (!event.target.closest('.search-bar')) {
+                document.querySelectorAll('.search-dropdown').forEach(list => list.style.display = 'none');
+            }
+        });
     </script>
 </body>
 </html>
