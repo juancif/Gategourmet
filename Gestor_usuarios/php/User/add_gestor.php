@@ -10,6 +10,7 @@ function generarNombreUsuario($nombre, $apellido, $dbConn) {
     $checkDocQuery->bindparam(':nombre_usuario', $nombre_usuario);
     $checkDocQuery->execute();
     $count = $checkDocQuery->fetchColumn();
+    
 
     if ($count > 0) {
         // Si el nombre de usuario ya existe, genera uno nuevo con las dos primeras letras del nombre
@@ -39,12 +40,13 @@ if (isset($_POST['Submit'])) {
     $nombres_apellidos = $_POST['nombres_apellidos'];
     $nombre_usuario = $_POST['nombre_usuario'];
     $contrasena = $_POST['contrasena'];
+    $confirmar_contrasena = $_POST['confirmar_contrasena'];
     $area = $_POST['area'];
     $cargo = $_POST['cargo'];
     $rol = $_POST['rol'];
 
     // Verificar si algún campo está vacío
-    if (empty($correo) || empty($nombres_apellidos) || empty($nombre_usuario) || empty($contrasena) ||  empty($area) || empty($cargo) || empty($rol)) {
+    if (empty($correo) || empty($nombres_apellidos) || empty($nombre_usuario) || empty($contrasena) || empty($confirmar_contrasena) ||  empty($area) || empty($cargo) || empty($rol)) {
         if (empty($correo)) {
             echo "<font color='red'>Campo: correo está vacío.</font><br/>";
         }
@@ -56,6 +58,9 @@ if (isset($_POST['Submit'])) {
         }
         if (empty($contrasena)) {
             echo "<font color='red'>Campo: contrasena está vacío.</font><br/>";
+        }
+        if (empty($confirmar_contrasena)) {
+            echo "<font color='red'>Campo: confirmar_contrasena está vacío.</font><br/>";
         }
         if (empty($area)) {
             echo "<font color='red'>Campo: área está vacío.</font><br/>";
@@ -160,8 +165,13 @@ if (isset($_POST['Submit'])) {
                     </div>
                     <div class="input-group tooltip">
                         <label for="contrasena">Contraseña</label>
-                        <input type="password" id="contrasena" name="contrasena" required >
-                        <span class="tooltiptext">Recuerda que la contraseña debe tener minimo 12 caracteres, un caracter especial y una mayuscula.</span>
+                        <input type="password" id="contrasena" name="contrasena" required>
+                        <span class="tooltiptext">Recuerda que la contraseña debe tener mínimo 12 caracteres, un carácter especial y una mayúscula.</span>
+                    </div>
+                    <div class="input-group tooltip">
+                        <label for="confirmar_contrasena">Confirmar Contraseña</label>
+                        <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" required>
+                        <span class="tooltiptext">Confirma tu contraseña.</span>
                     </div>
                     <div class="input-group">
                     <div class="input-group">
@@ -244,17 +254,28 @@ if (isset($_POST['Submit'])) {
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
         <script>
-            document.querySelector('form').addEventListener('submit', function(event) {
-                var emailField = document.getElementById('correo');
-                var emailValue = emailField.value;
+    document.querySelector('form').addEventListener('submit', function(event) {
+        var emailField = document.getElementById('correo');
+        var emailValue = emailField.value;
+        var passwordField = document.getElementById('contrasena');
+        var confirmPasswordField = document.getElementById('confirmar_contrasena');
+        var passwordValue = passwordField.value;
+        var confirmPasswordValue = confirmPasswordField.value;
 
-                // Verificar si el correo electrónico tiene el dominio específico
-                if (!emailValue.endsWith('@gategroup.com')) {
-                    alert('El correo electrónico debe tener el dominio "@gategroup.com".');
-                    event.preventDefault(); // Evita el envío del formulario
-                }
-            });
-        </script>
+        // Verificar si el correo electrónico tiene el dominio específico
+        if (!emailValue.endsWith('@gategroup.com')) {
+            alert('El correo electrónico debe tener el dominio "@gategroup.com".');
+            event.preventDefault(); // Evita el envío del formulario
+        }
+
+        // Verificar si las contraseñas coinciden
+        if (passwordValue !== confirmPasswordValue) {
+            alert('Las contraseñas no coinciden.');
+            event.preventDefault(); // Evita el envío del formulario
+        }
+    });
+</script>
+
         <script src="/script_prueba/script.js"></script>
     </footer>
 </body>

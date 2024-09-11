@@ -118,8 +118,13 @@ if (isset($_GET['nombre_usuario'])) {
                     </div>
                     <div class="input-group tooltip">
                         <label for="contrasena">Contraseña</label>
-                        <input type="password" id="contrasena" name="contrasena" required value="<?php echo htmlspecialchars($contrasena, ENT_QUOTES); ?>">
-                        <span class="tooltiptext">Recuerda que la contraseña debe tener minimo 12 caracteres, un caracter especial y una mayuscula.</span>
+                        <input type="password" id="contrasena" name="contrasena" required>
+                        <span class="tooltiptext">Recuerda que la contraseña debe tener mínimo 12 caracteres, un carácter especial y una mayúscula.</span>
+                    </div>
+                    <div class="input-group tooltip">
+                        <label for="confirmar_contrasena">Confirmar Contraseña</label>
+                        <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" required>
+                        <span class="tooltiptext">Confirma tu contraseña.</span>
                     </div>
                     <div class="input-group">
                     <label for="area">Área</label>

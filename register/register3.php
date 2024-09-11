@@ -1,3 +1,5 @@
+
+
 <?php
 include_once("config_register.php");
 
@@ -54,15 +56,13 @@ if (isset($_POST['Submit'])) {
     }
 
     // Verificar si algún campo está vacío
-    if (empty($correo) || empty($nombres_apellidos) || empty($nombre_usuario) || empty($contrasena) || empty($confirmar_contrasena) || empty($area) || empty($cargo) || empty($rol)) {
+    if (empty($correo) || empty($nombres_apellidos) || empty($contrasena) || empty($confirmar_contrasena) || empty($area) || empty($cargo) || empty($rol)) {
+        // Mostrar errores para campos vacíos
         if (empty($correo)) {
             echo "<font color='red'>Campo: correo está vacío.</font><br/>";
         }
         if (empty($nombres_apellidos)) {
             echo "<font color='red'>Campo: nombres_apellidos está vacío.</font><br/>";
-        }
-        if (empty($nombre_usuario)) {
-            echo "<font color='red'>Campo: nombre_usuario está vacío.</font><br/>";
         }
         if (empty($contrasena)) {
             echo "<font color='red'>Campo: contrasena está vacío.</font><br/>";
@@ -253,6 +253,7 @@ if (isset($_POST['Submit'])) {
                             <option value="Digitador">Digitador</option>
                             <option value="Observador">Observador</option>
                          </select>  
+                    </div>
                     <div class="buttons">
                         <input type="submit" name="Submit" value="Registrarse" class="Registrarse">
                         <a href="http://localhost/GateGourmet/login/login3.php" class="regresar">Regresar</a>
@@ -263,23 +264,33 @@ if (isset($_POST['Submit'])) {
     </main>
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
-        <script>
-            document.querySelector('form').addEventListener('submit', function(event) {
-                var emailField = document.getElementById('correo');
-                var emailValue = emailField.value;
-
-                // Verificar si el correo electrónico tiene el dominio específico
-                if (!emailValue.endsWith('@gategroup.com')) {
-                    alert('El correo electrónico debe tener el dominio "@gategroup.com".');
-                    event.preventDefault(); // Evita el envío del formulario
-                }
-            });
-        </script>
     </footer>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('form').addEventListener('submit', function(event) {
+            var emailField = document.getElementById('correo');
+            var emailValue = emailField.value;
+            var passwordField = document.getElementById('contrasena');
+            var confirmPasswordField = document.getElementById('confirmar_contrasena');
+            var passwordValue = passwordField.value;
+            var confirmPasswordValue = confirmPasswordField.value;
+
+            // Verificar si el correo electrónico tiene el dominio específico
+            if (!emailValue.endsWith('@gategroup.com')) {
+                alert('El correo electrónico debe tener el dominio "@gategroup.com".');
+                event.preventDefault(); // Evita el envío del formulario
+            }
+
+            // Verificar si las contraseñas coinciden
+            if (passwordValue !== confirmPasswordValue) {
+                alert('Las contraseñas no coinciden.');
+                event.preventDefault(); // Evita el envío del formulario
+            }
+        });
+    });
+    </script>
 </body>
 </html>
-
-
 
 
 
