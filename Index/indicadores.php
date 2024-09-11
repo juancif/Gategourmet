@@ -166,8 +166,6 @@ $conn->close();
                     ?> 
                 </tbody>
             </table>
-            <button onclick="downloadPDF('PorcentajedeActualizaciónChart')">Descargar PDF</button>
-        </div>
 
         <!-- Gráfico 2: Estado de Documentación por Área -->
         <div class="chart-container">

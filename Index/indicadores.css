@@ -77,11 +77,11 @@ h1 {
 }
 
 footer p {
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(50px);
     text-align: center;
     padding: 10px;
     color: #fff;
-    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+    background: rgba(17, 17, 17, 0.8); /* Fondo oscuro más accesible */
 }
 
 /* Estilo de los gráficos */
