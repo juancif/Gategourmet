@@ -84,9 +84,6 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado Maestro</title>
     <link rel="stylesheet" href="listado_maestro.css">
-    <style>
-        
-    </style>
 </head>
 <body>
     <header class="header">
@@ -158,10 +155,6 @@ $result = $stmt->get_result();
     </div>
 
     <script>
-        function toggleDropdown() {
-            document.querySelector('.search-dropdown').classList.toggle('active');
-        }
-
         function filterOptions(input, field) {
             const query = input.value.toLowerCase();
             const optionsList = document.getElementById(field + '-options');
@@ -176,11 +169,9 @@ $result = $stmt->get_result();
                 }
             });
 
-            // Mostrar el menú desplegable si hay opciones que coinciden
             optionsList.style.display = query ? 'block' : 'none';
         }
 
-        // Seleccionar una opción y actualizar el campo de entrada
         document.addEventListener('click', function(event) {
             const target = event.target;
             if (target && target.hasAttribute('data-value')) {
