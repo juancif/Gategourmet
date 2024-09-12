@@ -67,6 +67,13 @@ if (isset($_POST['update'])) {
             $query_update->execute();
         }
 
+        $accion = "Edición de usuario: $nombre_usuario";
+        $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, accion) VALUES (:nombre_usuario, :accion)";
+        $stmt_movimiento = $dbConn->prepare($sql_movimiento);
+        $stmt_movimiento->bindParam(':nombre_usuario', $nombre_usuario);
+        $stmt_movimiento->bindParam(':accion', $accion);
+        $stmt_movimiento->execute();
+
         header("Location: index_gestor.php");
         exit();
     }
