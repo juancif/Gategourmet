@@ -119,7 +119,7 @@ if (isset($_GET['nombre_usuario'])) {
                     <div class="input-group tooltip">
                     <label for="contrasena">Contraseña</label>
                     <div class="input-wrapper">
-                        <input type="password" id="contrasena" name="contrasena" required>
+                        <input type="password" id="contrasena" name="contrasena" readonly value="<?php echo $contrasena;?>">
                         <span class="toggle-password" onclick="togglePassword('contrasena', 'eye_contrasena')">
                             <img src="../../../Imagenes/ojo_invisible.png" id="eye_contrasena" alt="Mostrar contraseña" />
                         </span>
@@ -130,7 +130,7 @@ if (isset($_GET['nombre_usuario'])) {
                 <div class="input-group tooltip">
                     <label for="confirmar_contrasena">Confirmar Contraseña</label>
                     <div class="input-wrapper">
-                        <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" required>
+                        <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" readonly value="<?php echo $contrasena;?>">
                         <span class="toggle-password" onclick="togglePassword('confirmar_contrasena', 'eye_confirmar_contrasena')">
                             <img src="../../../Imagenes/ojo_invisible.png" id="eye_confirmar_contrasena" alt="Mostrar contraseña" />
                         </span>
@@ -145,7 +145,7 @@ if (isset($_GET['nombre_usuario'])) {
                     <option value="Compliance" <?php if ($area == 'Compliance') echo 'selected'; ?>>Compliance</option>
                     <option value="Supply chain" <?php if ($area == 'Supply chain') echo 'selected'; ?>>Supply Chain</option>
                     <option value="Culinary Excellence" <?php if ($area == 'Culinary Excellence') echo 'selected'; ?>>Culinary Excellence</option>
-                    <option value="Supervisor" <?php if ($area == 'Supervisor') echo 'selected'; ?>>Service Delivery</option>
+                    <option value="Servide delivery" <?php if ($area == 'Servide delivery') echo 'selected'; ?>>Service Delivery</option>
                     <option value="Assembly" <?php if ($area == 'Assembly') echo 'selected'; ?>>Assembly</option>
                     <option value="Servicios institucionales" <?php if ($area == 'Servicios institucionales') echo 'selected'; ?>>Servicios institucionales</option>
                     <option value="Financiera" <?php if ($area == 'Financiera') echo 'selected'; ?>>Financiera</option>

@@ -99,6 +99,12 @@ if (isset($_POST['Submit'])) {
             $query->bindparam(':rol', $rol);
             $query->execute();
         
+            $accion = "Adición de usuario: $nombre_usuario";
+            $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, accion) VALUES (:nombre_usuario, :accion)";
+            $stmt_movimiento = $dbConn->prepare($sql_movimiento);
+            $stmt_movimiento->bindParam(':nombre_usuario', $nombre_usuario);
+            $stmt_movimiento->bindParam(':accion', $accion);
+            $stmt_movimiento->execute();
             // Cometer la transacción
             $dbConn->commit();
         
