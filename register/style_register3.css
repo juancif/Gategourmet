@@ -43,6 +43,31 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+input[type="password"] {
+    width: 100%;
+    padding-right: 40px; /* Espacio para el icono del ojo */
+}
+
+/* Estilo del ícono del ojo */
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.toggle-password img {
+    width: 20px;
+    height: 20px;
+}
+
 .register-box h2 {
     margin: 0 0 20px;
     color: #fff;
