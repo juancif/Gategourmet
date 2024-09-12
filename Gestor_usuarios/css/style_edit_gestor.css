@@ -65,6 +65,30 @@ body {
     border-radius: 50px;
 }
 
+.input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+input[type="password"] {
+    width: 100%;
+    padding-right: 40px; /* Espacio para el icono del ojo */
+}
+
+/* Estilo del ícono del ojo */
+.toggle-password {
+    position: absolute;
+    right: 3vh;
+    top: 45%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.toggle-password img {
+    width: 20px;
+    height: 20px;
+}
 .register-container {
     background: #1117;
     backdrop-filter: blur(10px);

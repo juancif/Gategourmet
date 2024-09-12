@@ -102,6 +102,8 @@ $connect->close();
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style_login3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 </head>
 <body>
     <header class="header">
@@ -125,6 +127,9 @@ $connect->close();
                         <div class="input-icon password-group">
                             <i class="fas fa-lock"></i>
                             <input type="password" id="contrasena" name="contrasena" required placeholder="Contraseña" />
+                    <span class="toggle-password" onclick="togglePassword('confirmar_contrasena', 'eye_confirmar_contrasena')">
+                        <img src="../Imagenes/ojo_invisible.png" id="eye_confirmar_contrasena" alt="Mostrar contraseña" />
+                    </span>
                         </div>
                     </div>
                     <div class="buttons">
@@ -139,6 +144,19 @@ $connect->close();
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
     </footer>
-    <script src="script2.js"></script>
+    <script>document.addEventListener("DOMContentLoaded", function() {
+    const togglePassword = document.querySelector("#togglePassword");
+    const password = document.querySelector("#password");
+
+    togglePassword.addEventListener("click", function() {
+        // Toggle the type attribute using getAttribute() method
+        const type = password.getAttribute("type") === "password" ? "text" : "password";
+        password.setAttribute("type", type);
+        
+        // Toggle the eye icon
+        this.classList.toggle("fa-eye");
+        this.classList.toggle("fa-eye-slash");
+    });
+});</script>
 </body>
 </html>
