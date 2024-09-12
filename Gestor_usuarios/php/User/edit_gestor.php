@@ -118,12 +118,12 @@ if (isset($_GET['nombre_usuario'])) {
                     </div>
                     <div class="input-group tooltip">
                         <label for="contrasena">Contraseña</label>
-                        <input type="password" id="contrasena" name="contrasena" required>
+                        <input type="password" id="contrasena" name="contrasena" readonly value="<?php echo htmlspecialchars($contrasena, ENT_QUOTES); ?>">
                         <span class="tooltiptext">Recuerda que la contraseña debe tener mínimo 12 caracteres, un carácter especial y una mayúscula.</span>
                     </div>
                     <div class="input-group tooltip">
                         <label for="confirmar_contrasena">Confirmar Contraseña</label>
-                        <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" required>
+                        <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" readonly value="<?php echo htmlspecialchars($contrasena, ENT_QUOTES); ?>">
                         <span class="tooltiptext">Confirma tu contraseña.</span>
                     </div>
                     <div class="input-group">
@@ -184,7 +184,7 @@ if (isset($_GET['nombre_usuario'])) {
                         <option value="Superintendent Development And Communications" <?php if ($cargo == 'Superintendent Development And Communications') echo 'selected'; ?>>Superintendent Development And Communications</option>
                         <option value="Supervisor de Calidad y Gestion Ambiental" <?php if ($cargo == 'Supervisor de Calidad y Gestion Ambiental') echo 'selected'; ?>>VIP Lounges Junior Section Manager</option>
                     </select>
-</div>
+                    </div>
 
                     <div class="input-group">
                         <label for="rol">Rol</label>
