@@ -166,6 +166,7 @@ $conn->close();
                     ?> 
                 </tbody>
             </table>
+        </div>
 
         <!-- Gráfico 2: Estado de Documentación por Área -->
         <div class="chart-container">
@@ -438,4 +439,3 @@ var myChart3 = new Chart(ctx3, {
     </script>
 </body>
 </html>
-

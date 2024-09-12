@@ -1,4 +1,20 @@
-/* Estilos Generales */
+/* Variables CSS */
+:root {
+    --color-verde: #0b8b0f;
+    --color-verde-oscuro: #085f05;
+    --color-gris: #ccc;
+    --color-gris-claro: #f9f9f9;
+    --color-azul: #51a0d5;
+    --color-rojo: #f83b3b;
+    --color-gris-oscuro: #8d8d8d;
+    --color-blanco: #fff;
+    --color-naranja: #f59b42;
+    --color-morado: #6a0dad;
+    --color-rosa: #f5a6b1;
+    --color-purpura: #9c5a9b;
+}
+
+/* Estilos generales */
 body {
     margin: 0;
     padding: 0;
@@ -8,304 +24,235 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    align-items: center;
-    justify-content: center;
-    color: #333;
 }
 
-/* Encabezado */
+/* Estilos para el header */
 .header {
     text-align: center;
+    margin: 2rem auto;
+    position: relative;
     width: 90%;
-    max-width: 1900px;
-    margin-bottom: 2rem;
+    max-width: 1800px;
 }
 
 .header h1 {
     font-size: 2.5rem;
-    color: #0b8b0f;
-    background: rgba(223, 223, 223, 0.938);;
-    padding: 1.5rem 2rem;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    font-weight: 700;
-    margin: 0;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    color: var(--color-verde);
+    background: rgba(255, 249, 249, 0.9);
+    display: inline-block;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: -60px;
 }
 
-/* Contenedor Principal */
+/* Contenedor general */
 .container {
     width: 90%;
     max-width: 2400px;
     margin: 2rem auto;
-    background: rgba(223, 223, 223, 0.877);
+    background: rgba(255, 249, 249, 0.9);
     padding: 2rem;
-    border-radius: 20px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 10;
+    margin-top: -50px;
 }
 
-/* Sección de Búsqueda */
-.search-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.98);
-    border-radius: 15px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+/* Diseño de grid para organizar las search-fields */
+.search-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Distribuir inputs de forma simétrica */
+    gap: 1.5rem; /* Espacio entre los elementos */
     margin-bottom: 2rem;
 }
 
-/* Contenedor de Elementos de Búsqueda */
-.search-item {
-    flex: 1 1 calc(20% - 1rem); /* Ancho ajustado para mayor simetría */
-    min-width: 200px; /* Ajuste de ancho mínimo para más uniformidad */
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-/* Estilo de Inputs y Selects */
-.search-container input[type="text"],
-.search-container select {
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 12px;
+/* Estilos generales para los inputs */
+.search-input {
+    padding: 0.75rem;
+    border: 1px solid var(--color-gris);
+    border-radius: 8px;
+    width: 90%;
+    background-color: var(--color-gris-claro);
     font-size: 1rem;
-    background: #fff;
-    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    transition: all 0.3s ease;
+    outline: none; /* Remover bordes cuando están enfocados */
 }
 
-/* Efecto Hover y Focus para Inputs */
-.search-container input[type="text"]:hover,
-.search-container select:hover {
-    border-color: #0b8b0f;
-}
-
-.search-container input[type="text"]:focus,
-.search-container select:focus {
-    border-color: #0b8b0f;
+.search-input:focus {
+    border-color: var(--color-verde);
     box-shadow: 0 0 8px rgba(11, 139, 15, 0.3);
-    outline: none;
 }
 
-/* Etiquetas (Labels) */
-.search-container label {
-    font-size: 0.95rem;
-    color: #555;
-    margin-bottom: 6px;
-    display: block;
-    font-weight: 600;
+/* Estilos de hover para los inputs */
+.search-input:hover {
+    background-color: #f0f9f0;
+    border-color: var(--color-verde);
 }
 
-/* Botón de Búsqueda */
-.search-container button {
-    padding: 14px;
-    background-color: #0b8b0f;
-    color: white;
+/* Ajuste visual de los placeholders */
+.search-input::placeholder {
+    color: #888; /* Color gris sutil para los placeholders */
+}
+
+/* Estilos específicos para cada campo de búsqueda */
+#proceso, #codigo, #titulo_documento, #tipo, #version, #estado, #fecha_aprobacion, #areas, #motivo_del_cambio, #tiempo_de_retencion, #responsable_de_retencion, #lugar_de_almacenamiento_fisico, #lugar_de_almacenamiento_magnetico, #conservacion, #disposicion_final, #copias_controladas, #fecha_de_vigencia, #dias, #senal_alerta, #obsoleto, #anulado, #en_actualizacion {
+    border-color: var(--color-verde-oscuro);
+}
+
+/* Botón de búsqueda */
+.search-bar button {
+    padding: 0.7rem 1.2rem;
+    background-color: var(--color-verde);
+    color: var(--color-blanco);
     border: none;
-    border-radius: 12px;
-    cursor: pointer;
+    border-radius: 6px;
     font-size: 1rem;
-    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    max-width: 200px; /* Limitar el ancho del botón */
     transition: background-color 0.3s ease, transform 0.3s ease;
-    width: 100%; /* Botón ocupa el ancho completo del contenedor de búsqueda */
-    box-sizing: border-box;
+    margin-top: -5rem; /* Separar el botón de los campos */
 }
 
-.search-container button:hover {
-    background-color: #086c0d;
+.search-bar button:hover {
+    background-color: var(--color-verde-oscuro);
     transform: translateY(-2px);
 }
 
-.search-container button:active {
-    transform: translateY(0);
+.search-bar button:active {
+    transform: translateY(1px);
 }
 
-/* Opciones Desplegables */
-.dropdown {
-    display: none;
-    flex-direction: column;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 100%;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 20;
-    opacity: 0;
-    transform: scale(0.95);
-}
-
-.dropdown.open {
-    display: flex;
-    opacity: 1;
-    transform: scale(1);
-}
-
-/* Estilo para Tablas */
+/* Estilos para tablas */
 .table-wrapper {
     overflow-x: auto;
+    overflow-y: auto;
     max-height: calc(100vh - 8rem);
-    border: 1px solid #ddd;
-    border-radius: 15px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
+    border: 2px solid #000;
+    padding-bottom: 1rem;
 }
 
-/* Tablas */
 table {
     width: 100%;
     border-collapse: collapse;
-    border-radius: 15px;
-    overflow: hidden;
+    margin: 0;
 }
 
 table, th, td {
-    border: 1px solid #ddd;
-    background: #fff;
+    border: 1px solid #000; /* Borde más sutil */
+    background: rgba(255, 249, 249, 0.9);
 }
 
 th, td {
-    padding: 12px;
+    padding: 14px; /* Ajuste de padding */
     text-align: left;
-    font-size: 1rem;
-    color: #333;
+    font-size: 16px; /* Tamaño de texto mejorado */
+    color: #000;
 }
 
 th {
     background-color: #0b8b0f;
     color: white;
-    font-weight: 600;
 }
 
 tr:nth-child(even) {
-    background: #f9f9f9;
+    background: rgba(240, 240, 240, 0.9); /* Color más claro */
 }
 
 tr:nth-child(odd) {
-    background: #f2f2f2;
+    background: rgba(255, 255, 255, 0.9);
 }
 
 tr:hover td {
-    background-color: #f0f0f0;
-    transition: background-color 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.08); /* Hover más sutil */
 }
 
-
-/* Estilos por Estado */
 tr.vigente td {
-    background-color: rgba(28, 179, 255, 0.705);
-    border: 1px solid #1cb3ff;
+    background-color: rgba(51, 187, 255, 0.4); /* Azul */
+    color: #000;
 }
 
 tr.desactualizado td {
-    background-color: rgba(248, 95, 95, 0.692);
-    border: 1px solid #d65c5c;
+    background-color: rgba(248, 59, 59, 0.4); /* Rojo */
+    color: #000;
 }
 
 tr.obsoleto td {
-    background-color: rgba(175, 173, 173, 0.8);
-    border: 1px solid #afadad;
+    background-color: rgba(141, 139, 139, 0.63); /* Gris */
+    color: #000;
 }
-
-
-/* Adaptabilidad para Pantallas Más Pequeñas */
-@media (max-width: 1024px) {
-    .search-container .search-item {
-        flex: 1 1 calc(50% - 1rem);
+/* Adaptabilidad para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .search-fields {
+        grid-template-columns: 1fr; /* Hacer que los inputs ocupen toda la pantalla en dispositivos móviles */
     }
 
-    .search-container .search-item {
-        flex: 1 1 100%;
-        min-width: auto;
-    }
-
-    .search-container input[type="text"],
-    .search-container select,
-    .search-container button {
-        width: 100%;
+    table, th, td {
+        font-size: 14px; /* Reducción en pantallas pequeñas */
     }
 }
-
-/* Barra de Búsqueda */
-.search-bar {
+/* Estilos para el contenedor del autocompletado */
+.autocomplete-container {
     position: relative;
-    margin: 30px 0;
-    display: flex;
-    align-items: center;
-    max-width: 100%;
-    background: rgba(223, 223, 223, 0.952);
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    margin-top: 10px;
+    display: inline-block;
 }
 
-.search-bar input[type="text"] {
-    flex: 1;
-    padding: 12px 16px;
-    border: 1px solid #ddd;
-    border-radius: 12px 0 0 12px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.search-bar button {
-    padding: 12px 16px;
-    background-color: #0b8b0f;
-    color: rgb(255, 255, 255);
-    border: none;
-    border-radius: 0 12px 12px 0;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.search-bar button:hover {
-    background-color: #086c0d;
-    transform: translateY(-2px);
-}
-
-.search-bar button:active {
-    transform: translateY(0);
-}
-
-/* Opciones Desplegables en la Barra de Búsqueda */
-.search-dropdown {
-    display: none;
+/* Estilos para el dropdown */
+.autocomplete-dropdown {
     position: absolute;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    z-index: 900;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
-    top: 100%;
-    left: 0;
+    max-height: 300px; /* Limitar altura para scroll */
+    overflow-y: auto; /* Scroll vertical si es necesario */
+    z-index: 1000; /* Asegurarse de que se muestre sobre otros elementos */
+    margin-top: 0.25rem;
 }
 
-.search-dropdown div {
-    padding: 12px;
+/* Estilos para el contenedor del autocompletado */
+.autocomplete-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Estilos para el dropdown */
+.autocomplete-dropdown {
+    position: absolute;
+    background-color: var(--color-blanco);
+    border: 1px solid var(--color-gris);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-height: 300px; /* Limitar altura para scroll */
+    overflow-y: auto; /* Scroll vertical si es necesario */
+    z-index: 1000; /* Asegurarse de que se muestre sobre otros elementos */
+    margin-top: 0.25rem;
+    display: none; /* Ocultar por defecto */
+}
+
+/* Estilos para los elementos de sugerencia */
+.suggestion-item {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--color-gris);
     cursor: pointer;
-    transition: background 0.3s ease;
+    background-color: var(--color-blanco);
+    font-size: 1rem;
+    color: #000;
+    transition: background-color 0.3s ease;
 }
 
-.search-dropdown div:hover {
-    background: #f0f0f0;
+/* Estilos de hover para los elementos de sugerencia */
+.suggestion-item:hover {
+    background-color: var(--color-gris-claro);
 }
 
-.search-dropdown.active {
-    display: block;
-}
-
-button:focus,
-input[type="text"]:focus {
-    outline: 3px solid #0b8b0f;
-    outline-offset: 2px;
+/* Estilos de selección para el elemento de sugerencia */
+.suggestion-item.selected {
+    background-color: var(--color-verde);
+    color: var(--color-blanco);
 }

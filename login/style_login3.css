@@ -35,6 +35,7 @@ body {
     backdrop-filter: blur(10px);
     text-align: center;
     padding: 40px;
+    padding-bottom: 100px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
     max-width: 400px;
@@ -122,7 +123,37 @@ input[type="text"]:focus, input[type="password"]:focus {
     margin-top: 20px;
 }
 
-input[type="submit"], .button, .button-small {
+input[type="submit"], .button, .button-reestablecer {
+    background: #3d9970; /* Cambiado a verde oliva */
+    color: white;
+    font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
+    font-size: 16px; /* Asegurando el mismo tamaño de letra */
+    padding: 12px 20px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    width: 170px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.button {
+    background: #3d9970; /* Cambiado a verde oliva */
+    color: white;
+    font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
+    font-size: 16px; /* Asegurando el mismo tamaño de letra */
+    padding: 12px 20px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    width: 150px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.button-reestablecer {
     background: #3d9970; /* Cambiado a verde oliva */
     color: white;
     font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
@@ -135,10 +166,12 @@ input[type="submit"], .button, .button-small {
     text-align: center;
     width: 44%;
     transition: background 0.3s ease, transform 0.3s ease;
+    position: absolute;
+    margin-top: 80px;
+    margin-left: 75px;
 }
 
-
-input[type="submit"]:hover, .button-small, .button:hover {
+input[type="submit"]:hover, .button:hover {
     background: #2d6e50; /* Verde oliva más oscuro */
     transform: scale(1.05);
 }
@@ -146,6 +179,16 @@ input[type="submit"]:hover, .button-small, .button:hover {
 input[type="submit"]:active, .button-small, .button:active {
     transform: scale(1);
 }
+
+
+input[type="submit"]:active, .button-reestablecer , .button:active {
+    transform: scale(1);
+}
+.button-reestablecer:hover {
+    background: #2d6e50; /* Verde oliva más oscuro */
+    transform: scale(1.05);
+}
+
 
 .footer {
     background: #1117;

@@ -22,19 +22,6 @@ $campos = [
     'obsoleto', 'anulado', 'en_actualizacion'
 ];
 
-// Obtener opciones únicas para cada campo
-$options = [];
-foreach ($campos as $campo) {
-    $query = "SELECT DISTINCT $campo FROM listado_maestro WHERE $campo IS NOT NULL AND $campo != ''";
-    $result = $conn->query($query);
-    if ($result && $result->num_rows > 0) {
-        $options[$campo] = [];
-        while ($row = $result->fetch_assoc()) {
-            $options[$campo][] = $row[$campo];
-        }
-    }
-}
-
 $params = [];
 $types = '';
 $searchValues = [];
@@ -87,23 +74,20 @@ $result = $stmt->get_result();
 </head>
 <body>
     <header class="header">
-        <h1>LISTADO MAESTRO</h1>
+        <h1>Listado Maestro</h1>
     </header>
 
     <div class="container">
+        <!-- Barra de búsqueda -->
         <div class="search-bar">
             <form method="post">
                 <div class="search-fields">
                     <?php foreach ($campos as $campo): ?>
-                        <label for="<?php echo htmlspecialchars($campo); ?>"><?php echo ucwords(str_replace('_', ' ', $campo)); ?></label>
-                        <input type="text" id="<?php echo htmlspecialchars($campo); ?>" name="<?php echo htmlspecialchars($campo); ?>" autocomplete="off" 
-                            oninput="filterOptions(this, '<?php echo htmlspecialchars($campo); ?>')">
-                        <div class="search-dropdown" id="<?php echo htmlspecialchars($campo); ?>-options">
-                            <?php if (!empty($options[$campo])): ?>
-                                <?php foreach ($options[$campo] as $option): ?>
-                                    <div data-value="<?php echo htmlspecialchars($option); ?>"><?php echo htmlspecialchars($option); ?></div>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
+                        <div class="search-field">
+                            <label for="<?php echo htmlspecialchars($campo); ?>"><?php echo ucwords(str_replace('_', ' ', $campo)); ?></label>
+                            <input type="text" class="search-input" id="<?php echo htmlspecialchars($campo); ?>" 
+                                   name="<?php echo htmlspecialchars($campo); ?>" autocomplete="off">
+                            <div class="search-dropdown" id="<?php echo htmlspecialchars($campo); ?>-options"></div>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -111,7 +95,8 @@ $result = $stmt->get_result();
             </form>
         </div>
 
-        <?php if ($result->num_rows > 0): ?>
+        <!-- Resultados de la búsqueda -->
+        <?php if ($result && $result->num_rows > 0): ?>
             <div class="table-wrapper">
                 <table>
                     <thead>
@@ -154,35 +139,53 @@ $result = $stmt->get_result();
         <?php $conn->close(); ?>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function filterOptions(input, field) {
-            const query = input.value.toLowerCase();
-            const optionsList = document.getElementById(field + '-options');
-            const options = optionsList.querySelectorAll('div');
+    $(document).ready(function() {
+        $('.search-input').on('input', function() {
+            let input = $(this);
+            let query = input.val().trim();
+            let filtro = input.attr('name'); // Usamos el nombre del campo como filtro
 
-            options.forEach(option => {
-                const text = option.textContent.toLowerCase();
-                if (text.includes(query)) {
-                    option.style.display = 'block';
-                } else {
-                    option.style.display = 'none';
-                }
-            });
+            if (query.length > 1) {
+                $.ajax({
+                    url: 'autocomplete.php',
+                    method: 'GET',
+                    data: { query: query, filtro: filtro },
+                    success: function(data) {
+                        let suggestions = JSON.parse(data);
+                        let suggestionsList = input.next('.search-dropdown');
 
-            optionsList.style.display = query ? 'block' : 'none';
-        }
+                        suggestionsList.empty(); // Limpiar las sugerencias anteriores
 
-        document.addEventListener('click', function(event) {
-            const target = event.target;
-            if (target && target.hasAttribute('data-value')) {
-                const field = target.parentElement.id.replace('-options', '');
-                const inputField = document.getElementById(field);
-                inputField.value = target.getAttribute('data-value');
-                target.parentElement.style.display = 'none';
-            } else if (!event.target.closest('.search-bar')) {
-                document.querySelectorAll('.search-dropdown').forEach(list => list.style.display = 'none');
+                        if (suggestions.length > 0) {
+                            suggestions.forEach(function(suggestion) {
+                                suggestionsList.append(`<div class="suggestion-item" data-value="${suggestion}">${suggestion}</div>`);
+                            });
+                            suggestionsList.show();
+                        } else {
+                            suggestionsList.hide();
+                        }
+
+                        // Mostrar y manejar el clic en las sugerencias
+                        suggestionsList.find('.suggestion-item').on('click', function() {
+                            input.val($(this).data('value'));
+                            suggestionsList.hide();
+                        });
+                    }
+                });
+            } else {
+                input.next('.search-dropdown').hide();
             }
         });
+
+        // Ocultar sugerencias si se hace clic fuera del campo
+        $(document).on('click', function(e) {
+            if (!$(e.target).closest('.search-input, .search-dropdown').length) {
+                $('.search-dropdown').hide();
+            }
+        });
+    });
     </script>
 </body>
 </html>
