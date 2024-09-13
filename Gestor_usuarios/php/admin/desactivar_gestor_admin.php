@@ -35,6 +35,15 @@ if (isset($_GET['nombre_usuario'])) {
             $stmtDelete->bindParam(':nombre_usuario', $nombre_usuario);
             $stmtDelete->execute();
 
+            $accion = ($user['rol'] === 'Administrador') 
+            ? "Desactivación de administrador: $nombre_usuario"
+            : "Desactivación de usuario con rol {$user['rol']}: $nombre_usuario";
+            
+            $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, accion) VALUES (:nombre_usuario, :accion)";
+            $stmt_movimiento = $dbConn->prepare($sql_movimiento);
+            $stmt_movimiento->bindParam(':nombre_usuario', $nombre_usuario);
+            $stmt_movimiento->bindParam(':accion', $accion);
+            $stmt_movimiento->execute();
             // Cometer transacción
             $dbConn->commit();
 

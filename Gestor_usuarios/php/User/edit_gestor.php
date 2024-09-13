@@ -8,7 +8,7 @@ if (isset($_POST['update'])) {
     $contrasena = $_POST['contrasena'];
     $area = $_POST['area'];
     $cargo = $_POST['cargo'];
-    $rol = $_POST['rol'];
+    $nuevo_rol = $_POST['rol']; // El nuevo rol al que se va a cambiar el usuario
 
     // Validación de campos
     $errors = [];
@@ -18,25 +18,67 @@ if (isset($_POST['update'])) {
     if (empty($contrasena)) $errors[] = "Campo: contrasena está vacío.";
     if (empty($area)) $errors[] = "Campo: area está vacío.";
     if (empty($cargo)) $errors[] = "Campo: cargo está vacío.";
-    if (empty($rol)) $errors[] = "Campo: rol está vacío.";
+    if (empty($nuevo_rol)) $errors[] = "Campo: rol está vacío.";
     
     if (!empty($errors)) {
         foreach ($errors as $error) {
             echo "<font color='red'>{$error}</font><br/>";
         }
     } else {
-        // Verificar el rol actual
-        $sql_check_rol = "SELECT rol FROM usuarios WHERE nombre_usuario = :nombre_usuario";
-        $query_check = $dbConn->prepare($sql_check_rol);
+        // Obtener los datos actuales del usuario antes de la actualización
+        $sql_check = "SELECT * FROM usuarios WHERE nombre_usuario = :nombre_usuario";
+        $query_check = $dbConn->prepare($sql_check);
         $query_check->execute([':nombre_usuario' => $nombre_usuario]);
         $row_check = $query_check->fetch(PDO::FETCH_ASSOC);
-        $current_rol = $row_check['rol'];
 
-        // Si el rol ha cambiado a Administrador
-        if ($rol === 'Administrador') {
-            // Insertar en la tabla administradores
+        // Guardar los valores antiguos
+        $correo_anterior = $row_check['correo'];
+        $nombres_apellidos_anterior = $row_check['nombres_apellidos'];
+        $contrasena_anterior = $row_check['contrasena'];
+        $area_anterior = $row_check['area'];
+        $cargo_anterior = $row_check['cargo'];
+        $rol_anterior = $row_check['rol'];
+
+        // Crear una lista para registrar los cambios
+        $cambios = [];
+
+        // Comparar los valores antiguos con los nuevos para detectar cambios
+        if ($correo_anterior != $correo) {
+            $cambios[] = "Cambio de correo: $correo_anterior a $correo";
+        }
+        if ($nombres_apellidos_anterior != $nombres_apellidos) {
+            $cambios[] = "Cambio de nombres y apellidos: $nombres_apellidos_anterior a $nombres_apellidos";
+        }
+        if ($contrasena_anterior != $contrasena) {
+            $cambios[] = "Cambio de contraseña";
+        }
+        if ($area_anterior != $area) {
+            $cambios[] = "Cambio de área: $area_anterior a $area";
+        }
+        if ($cargo_anterior != $cargo) {
+            $cambios[] = "Cambio de cargo: $cargo_anterior a $cargo";
+        }
+        if ($rol_anterior != $nuevo_rol) {
+            $cambios[] = "Cambio de rol: $rol_anterior a $nuevo_rol";
+        }
+
+        // Registrar cada cambio en la tabla de movimientos
+        if (!empty($cambios)) {
+            foreach ($cambios as $cambio) {
+                $accion = "Edición de usuario: $nombre_usuario, $cambio";
+                $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, accion) VALUES (:nombre_usuario, :accion)";
+                $stmt_movimiento = $dbConn->prepare($sql_movimiento);
+                $stmt_movimiento->bindParam(':nombre_usuario', $nombre_usuario);
+                $stmt_movimiento->bindParam(':accion', $accion);
+                $stmt_movimiento->execute();
+            }
+        }
+
+        // Si el rol ha cambiado a Administrador, mover el usuario a la tabla 'administradores'
+        if ($nuevo_rol === 'Administrador') {
+            // Insertar en la tabla 'administradores'
             $sql_insert_admin = "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol)
-                                 VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol)";
+                                 VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :nuevo_rol)";
             $query_insert = $dbConn->prepare($sql_insert_admin);
             $query_insert->bindParam(':correo', $correo);
             $query_insert->bindParam(':nombres_apellidos', $nombres_apellidos);
@@ -44,17 +86,18 @@ if (isset($_POST['update'])) {
             $query_insert->bindParam(':contrasena', $contrasena);
             $query_insert->bindParam(':area', $area);
             $query_insert->bindParam(':cargo', $cargo);
-            $query_insert->bindParam(':rol', $rol);
+            $query_insert->bindParam(':nuevo_rol', $nuevo_rol);
             $query_insert->execute();
 
-            // Eliminar del usuario
+            // Eliminar de la tabla 'usuarios'
             $sql_delete_user = "DELETE FROM usuarios WHERE nombre_usuario = :nombre_usuario";
             $query_delete = $dbConn->prepare($sql_delete_user);
-            $query_delete->execute([':nombre_usuario' => $nombre_usuario]);
+            $query_delete->bindParam(':nombre_usuario', $nombre_usuario);
+            $query_delete->execute();
         } else {
-            // Actualizar el usuario sin mover entre tablas
+            // Actualizar el usuario en la tabla 'usuarios'
             $sql_update = "UPDATE usuarios SET correo=:correo, nombres_apellidos=:nombres_apellidos, contrasena=:contrasena,  
-                           area=:area, cargo=:cargo, rol=:rol
+                           area=:area, cargo=:cargo, rol=:nuevo_rol
                            WHERE nombre_usuario=:nombre_usuario";
             $query_update = $dbConn->prepare($sql_update);
             $query_update->bindParam(':correo', $correo);
@@ -63,17 +106,11 @@ if (isset($_POST['update'])) {
             $query_update->bindParam(':contrasena', $contrasena);
             $query_update->bindParam(':area', $area);
             $query_update->bindParam(':cargo', $cargo);
-            $query_update->bindParam(':rol', $rol);
+            $query_update->bindParam(':nuevo_rol', $nuevo_rol);
             $query_update->execute();
         }
 
-        $accion = "Edición de usuario: $nombre_usuario";
-        $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, accion) VALUES (:nombre_usuario, :accion)";
-        $stmt_movimiento = $dbConn->prepare($sql_movimiento);
-        $stmt_movimiento->bindParam(':nombre_usuario', $nombre_usuario);
-        $stmt_movimiento->bindParam(':accion', $accion);
-        $stmt_movimiento->execute();
-
+        // Redirigir a la página de gestor
         header("Location: index_gestor.php");
         exit();
     }
@@ -90,7 +127,7 @@ if (isset($_GET['nombre_usuario'])) {
     $contrasena = $row['contrasena'];
     $area = $row['area'];
     $cargo = $row['cargo'];
-    $rol = $row['rol'];
+    $rol = $row['rol']; // Este es el rol actual que se mostrará en el formulario
 }
 ?>
 
@@ -146,7 +183,7 @@ if (isset($_GET['nombre_usuario'])) {
                 </div>
                     <div class="input-group">
                     <label for="area">Área</label>
-                <select name="area" id="area">
+                <select name="area" id="area" >
                     <option value="">Seleccione una opción</option>
                     <option value="Gestión corporativa" <?php if ($area == 'Gestión corporativa') echo 'selected'; ?>>Gestión corporativa</option>
                     <option value="Compliance" <?php if ($area == 'Compliance') echo 'selected'; ?>>Compliance</option>

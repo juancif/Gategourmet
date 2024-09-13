@@ -99,7 +99,10 @@ if (isset($_POST['Submit'])) {
             $query->bindparam(':rol', $rol);
             $query->execute();
         
-            $accion = "Adición de usuario: $nombre_usuario";
+            $accion = ($rol === 'Administrador') 
+            ? "Adición de administrador: $nombre_usuario"
+            : "Adición de usuario con rol $rol: $nombre_usuario";
+
             $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, accion) VALUES (:nombre_usuario, :accion)";
             $stmt_movimiento = $dbConn->prepare($sql_movimiento);
             $stmt_movimiento->bindParam(':nombre_usuario', $nombre_usuario);
@@ -186,8 +189,6 @@ if (isset($_POST['Submit'])) {
                         </div>
                         <span class="tooltiptext">Confirma tu contraseña.</span>
                     </div>
-                    <div class="input-group">
-                        <label for="area">Área</label>
                         <div class="input-group">
                         <label for="area">Área</label>
                         <select name="area" id="area">

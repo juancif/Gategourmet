@@ -106,11 +106,15 @@ if (isset($_POST['Submit'])) {
             // Cometer la transacción
             $dbConn->commit();
         
-            $ipAddress = $_SERVER['REMOTE_ADDR'];
-            $movimientoSql = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (:nombre_usuario, 'Registro exitoso', NOW())";
-            $movimientoQuery = $dbConn->prepare($movimientoSql);
-            $movimientoQuery->bindparam(':nombre_usuario', $nombre_usuario);
-            $movimientoQuery->execute();
+            $accion = ($rol === 'Administrador') 
+            ? "Adición de administrador: $nombre_usuario"
+            : "Adición de usuario con rol $rol: $nombre_usuario";
+            
+            $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, accion) VALUES (:nombre_usuario, :accion)";
+            $stmt_movimiento = $dbConn->prepare($sql_movimiento);
+            $stmt_movimiento->bindParam(':nombre_usuario', $nombre_usuario);
+            $stmt_movimiento->bindParam(':accion', $accion);
+            $stmt_movimiento->execute();
 
             if ($query->rowCount() > 0) {
                 // Redirigir a la página deseada después del registro exitoso

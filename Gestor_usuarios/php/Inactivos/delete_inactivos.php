@@ -22,6 +22,21 @@ if (isset($_GET['nombre_usuario'])) {
             $stmtDelete->bindParam(':nombre_usuario', $nombre_usuario);
             $stmtDelete->execute();
 
+            $accion = '';
+            if ($user['rol'] === 'Administrador') {
+                $accion = "Eliminación de administrador: $nombre_usuario";
+            } elseif (in_array($user['rol'], ['Aprobador', 'Digitador', 'Observador'])) {
+                $accion = "Eliminación de usuario con rol {$user['rol']}: $nombre_usuario";
+            } else {
+                $accion = "Eliminación de usuario con rol desconocido: $nombre_usuario";
+            }
+            
+            $sqlMovimiento = "INSERT INTO movimientos (nombre_usuario, accion) VALUES (:nombre_usuario, :accion)";
+            $stmtMovimiento = $dbConn->prepare($sqlMovimiento);
+            $stmtMovimiento->bindParam(':nombre_usuario', $nombre_usuario);
+            $stmtMovimiento->bindParam(':accion', $accion);
+            $stmtMovimiento->execute();
+
             // Cometer transacción
             $dbConn->commit();
 
