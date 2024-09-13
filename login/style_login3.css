@@ -107,13 +107,29 @@ input[type="text"]:focus, input[type="password"]:focus {
     outline: none;
 }
 
+.input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+input[type="password"] {
+    width: 82%;
+    padding-right: 40px; /* Espacio para el icono del ojo */
+}
+
+/* Estilo del ícono del ojo */
 .toggle-password {
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #999;
+}
+
+.toggle-password img {
+    width: 20px;
+    height: 20px;
 }
 
 .buttons {

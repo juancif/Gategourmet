@@ -171,8 +171,8 @@ if (isset($_POST['Submit'])) {
                         <input type="text" id="nombres_apellidos" name="nombres_apellidos" required>
                     </div>
                     <div class="input-group">
-                        <label for="nombre_usuario">Nombre de Usuario</label>
-                        <input type="text" id="nombre_usuario" name="nombre_usuario" >
+                        <label for="nombre_usuario">Nombre de Usuario (Opcional)</label>
+                        <input type="text" id="nombre_usuario" name="nombre_usuario" placeholder="Campo no obligatorio">
                     </div>
                     <div class="input-group tooltip">
     <label for="contrasena">Contraseña</label>
