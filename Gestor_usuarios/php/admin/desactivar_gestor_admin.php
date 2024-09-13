@@ -1,5 +1,12 @@
 <?php
 include_once("config_gestor.php");
+session_start(); // Asegúrate de iniciar sesión para poder usar variables de sesión
+
+if (!isset($_SESSION['nombre_usuario'])) {
+    die("Usuario no autenticado.");
+}
+
+$usuario_logueado = $_SESSION['nombre_usuario']; // El usuario que está realizando la acción
 
 if (isset($_GET['nombre_usuario'])) {
     $nombre_usuario = $_GET['nombre_usuario'];
@@ -8,12 +15,21 @@ if (isset($_GET['nombre_usuario'])) {
         // Iniciar transacción
         $dbConn->beginTransaction();
 
-        // Obtener datos del usuario a desactivar
-        $sqlSelect = "SELECT * FROM administradores WHERE nombre_usuario = :nombre_usuario";
-        $stmtSelect = $dbConn->prepare($sqlSelect);
-        $stmtSelect->bindParam(':nombre_usuario', $nombre_usuario);
-        $stmtSelect->execute();
-        $user = $stmtSelect->fetch(PDO::FETCH_ASSOC);
+        // Buscar el usuario en la tabla de administradores
+        $sqlSelectAdmin = "SELECT * FROM administradores WHERE nombre_usuario = :nombre_usuario";
+        $stmtSelectAdmin = $dbConn->prepare($sqlSelectAdmin);
+        $stmtSelectAdmin->bindParam(':nombre_usuario', $nombre_usuario);
+        $stmtSelectAdmin->execute();
+        $user = $stmtSelectAdmin->fetch(PDO::FETCH_ASSOC);
+
+        if (!$user) {
+            // Si no se encuentra en administradores, buscar en usuarios
+            $sqlSelectUser = "SELECT * FROM usuarios WHERE nombre_usuario = :nombre_usuario";
+            $stmtSelectUser = $dbConn->prepare($sqlSelectUser);
+            $stmtSelectUser->bindParam(':nombre_usuario', $nombre_usuario);
+            $stmtSelectUser->execute();
+            $user = $stmtSelectUser->fetch(PDO::FETCH_ASSOC);
+        }
 
         if ($user) {
             // Insertar en la tabla inactivos
@@ -29,26 +45,38 @@ if (isset($_GET['nombre_usuario'])) {
             $stmtInsert->bindParam(':rol', $user['rol']);  // Asegúrate de que se está pasando el rol
             $stmtInsert->execute();
 
-            // Eliminar de la tabla administradores
-            $sqlDelete = "DELETE FROM administradores WHERE nombre_usuario = :nombre_usuario";
+            // Eliminar de la tabla correspondiente
+            if ($user['rol'] === 'Administrador') {
+                $sqlDelete = "DELETE FROM administradores WHERE nombre_usuario = :nombre_usuario";
+            } else {
+                $sqlDelete = "DELETE FROM usuarios WHERE nombre_usuario = :nombre_usuario";
+            }
             $stmtDelete = $dbConn->prepare($sqlDelete);
             $stmtDelete->bindParam(':nombre_usuario', $nombre_usuario);
             $stmtDelete->execute();
 
-            $accion = ($user['rol'] === 'Administrador') 
-            ? "Desactivación de administrador: $nombre_usuario"
-            : "Desactivación de usuario con rol {$user['rol']}: $nombre_usuario";
+            // Registrar la acción en la tabla movimientos
+            $accion = '';
+            if ($user['rol'] === 'Administrador') {
+                $accion = "Desactivación de administrador: $nombre_usuario";
+            } elseif (in_array($user['rol'], ['Aprobador', 'Digitador', 'Observador'])) {
+                $accion = "Desactivación de usuario con rol {$user['rol']}: $nombre_usuario";
+            } else {
+                $accion = "Desactivación de usuario con rol desconocido: $nombre_usuario";
+            }
             
-            $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, accion) VALUES (:nombre_usuario, :accion)";
+            $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, rol, accion, fecha) VALUES (:nombre_usuario, :rol, :accion, NOW())";
             $stmt_movimiento = $dbConn->prepare($sql_movimiento);
-            $stmt_movimiento->bindParam(':nombre_usuario', $nombre_usuario);
+            $stmt_movimiento->bindParam(':nombre_usuario', $usuario_logueado); // Nombre de usuario que realizó el cambio
+            $stmt_movimiento->bindParam(':rol', $user['rol']);  // Insertar el rol en la tabla movimientos
             $stmt_movimiento->bindParam(':accion', $accion);
             $stmt_movimiento->execute();
+
             // Cometer transacción
             $dbConn->commit();
 
             // Redirigir o mostrar un mensaje de éxito
-            header("Location: http://localhost/GateGourmet/Gestor_usuarios/php/admin/index_gestor_admin.php?msg=Usuario desactivado correctamente ");
+            header("Location: index_gestor_admin.php?msg=Usuario desactivado correctamente");
             exit();
         } else {
             throw new Exception("Usuario no encontrado");

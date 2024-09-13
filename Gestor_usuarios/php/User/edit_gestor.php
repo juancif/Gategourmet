@@ -1,5 +1,12 @@
 <?php
 include_once("config_gestor.php");
+session_start(); // Asegúrate de iniciar sesión para poder usar variables de sesión
+
+if (!isset($_SESSION['nombre_usuario'])) {
+    die("Usuario no autenticado.");
+}
+
+$usuario_logueado = $_SESSION['nombre_usuario']; // El usuario que está realizando la acción
 
 if (isset($_POST['update'])) {
     $correo = $_POST['correo'];
@@ -15,7 +22,6 @@ if (isset($_POST['update'])) {
     if (empty($correo)) $errors[] = "Campo: correo está vacío.";
     if (empty($nombres_apellidos)) $errors[] = "Campo: nombres_apellidos está vacío.";
     if (empty($nombre_usuario)) $errors[] = "Campo: nombre_usuario está vacío.";
-    if (empty($contrasena)) $errors[] = "Campo: contrasena está vacío.";
     if (empty($area)) $errors[] = "Campo: area está vacío.";
     if (empty($cargo)) $errors[] = "Campo: cargo está vacío.";
     if (empty($nuevo_rol)) $errors[] = "Campo: rol está vacío.";
@@ -24,95 +30,110 @@ if (isset($_POST['update'])) {
         foreach ($errors as $error) {
             echo "<font color='red'>{$error}</font><br/>";
         }
+        echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
     } else {
-        // Obtener los datos actuales del usuario antes de la actualización
-        $sql_check = "SELECT * FROM usuarios WHERE nombre_usuario = :nombre_usuario";
-        $query_check = $dbConn->prepare($sql_check);
-        $query_check->execute([':nombre_usuario' => $nombre_usuario]);
-        $row_check = $query_check->fetch(PDO::FETCH_ASSOC);
+        try {
+            // Iniciar la transacción
+            $dbConn->beginTransaction();
 
-        // Guardar los valores antiguos
-        $correo_anterior = $row_check['correo'];
-        $nombres_apellidos_anterior = $row_check['nombres_apellidos'];
-        $contrasena_anterior = $row_check['contrasena'];
-        $area_anterior = $row_check['area'];
-        $cargo_anterior = $row_check['cargo'];
-        $rol_anterior = $row_check['rol'];
+            // Obtener los datos actuales del usuario antes de la actualización
+            $sql_check = "SELECT * FROM usuarios WHERE nombre_usuario = :nombre_usuario";
+            $query_check = $dbConn->prepare($sql_check);
+            $query_check->execute([':nombre_usuario' => $nombre_usuario]);
+            $row_check = $query_check->fetch(PDO::FETCH_ASSOC);
 
-        // Crear una lista para registrar los cambios
-        $cambios = [];
+            // Guardar los valores antiguos
+            $correo_anterior = $row_check['correo'];
+            $nombres_apellidos_anterior = $row_check['nombres_apellidos'];
+            $contrasena_anterior = $row_check['contrasena'];
+            $area_anterior = $row_check['area'];
+            $cargo_anterior = $row_check['cargo'];
+            $rol_anterior = $row_check['rol'];
 
-        // Comparar los valores antiguos con los nuevos para detectar cambios
-        if ($correo_anterior != $correo) {
-            $cambios[] = "Cambio de correo: $correo_anterior a $correo";
-        }
-        if ($nombres_apellidos_anterior != $nombres_apellidos) {
-            $cambios[] = "Cambio de nombres y apellidos: $nombres_apellidos_anterior a $nombres_apellidos";
-        }
-        if ($contrasena_anterior != $contrasena) {
-            $cambios[] = "Cambio de contraseña";
-        }
-        if ($area_anterior != $area) {
-            $cambios[] = "Cambio de área: $area_anterior a $area";
-        }
-        if ($cargo_anterior != $cargo) {
-            $cambios[] = "Cambio de cargo: $cargo_anterior a $cargo";
-        }
-        if ($rol_anterior != $nuevo_rol) {
-            $cambios[] = "Cambio de rol: $rol_anterior a $nuevo_rol";
-        }
+            // Crear una lista para registrar los cambios
+            $cambios = [];
 
-        // Registrar cada cambio en la tabla de movimientos
-        if (!empty($cambios)) {
-            foreach ($cambios as $cambio) {
-                $accion = "Edición de usuario: $nombre_usuario, $cambio";
-                $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, accion) VALUES (:nombre_usuario, :accion)";
-                $stmt_movimiento = $dbConn->prepare($sql_movimiento);
-                $stmt_movimiento->bindParam(':nombre_usuario', $nombre_usuario);
-                $stmt_movimiento->bindParam(':accion', $accion);
-                $stmt_movimiento->execute();
+            // Comparar los valores antiguos con los nuevos para detectar cambios
+            if ($correo_anterior != $correo) {
+                $cambios[] = "Cambio de correo: $correo_anterior a $correo";
             }
+            if ($nombres_apellidos_anterior != $nombres_apellidos) {
+                $cambios[] = "Cambio de nombres y apellidos: $nombres_apellidos_anterior a $nombres_apellidos";
+            }
+            if ($contrasena_anterior != $contrasena) {
+                $cambios[] = "Cambio de contraseña";
+            }
+            if ($area_anterior != $area) {
+                $cambios[] = "Cambio de área: $area_anterior a $area";
+            }
+            if ($cargo_anterior != $cargo) {
+                $cambios[] = "Cambio de cargo: $cargo_anterior a $cargo";
+            }
+            if ($rol_anterior != $nuevo_rol) {
+                $cambios[] = "Cambio de rol: $rol_anterior a $nuevo_rol";
+            }
+
+            // Registrar cada cambio en la tabla de movimientos
+            if (!empty($cambios)) {
+                foreach ($cambios as $cambio) {
+                    $accion = "Edición de usuario: $nombre_usuario, $cambio";
+                    $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (:usuario_logueado, :accion, NOW())";
+                    $stmt_movimiento = $dbConn->prepare($sql_movimiento);
+                    $stmt_movimiento->bindParam(':usuario_logueado', $usuario_logueado); // Usuario que realizó la acción
+                    $stmt_movimiento->bindParam(':accion', $accion);
+                    $stmt_movimiento->execute();
+                }
+            }
+
+            // Si el rol ha cambiado a Administrador, mover el usuario a la tabla 'administradores'
+            if ($nuevo_rol === 'Administrador') {
+                // Insertar en la tabla 'administradores'
+                $sql_insert_admin = "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol)
+                                     VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :nuevo_rol)";
+                $query_insert = $dbConn->prepare($sql_insert_admin);
+                $query_insert->bindParam(':correo', $correo);
+                $query_insert->bindParam(':nombres_apellidos', $nombres_apellidos);
+                $query_insert->bindParam(':nombre_usuario', $nombre_usuario);
+                $query_insert->bindParam(':contrasena', password_hash($contrasena, PASSWORD_DEFAULT)); // Hash de la contraseña
+                $query_insert->bindParam(':area', $area);
+                $query_insert->bindParam(':cargo', $cargo);
+                $query_insert->bindParam(':nuevo_rol', $nuevo_rol);
+                $query_insert->execute();
+
+                // Eliminar de la tabla 'usuarios'
+                $sql_delete_user = "DELETE FROM usuarios WHERE nombre_usuario = :nombre_usuario";
+                $query_delete = $dbConn->prepare($sql_delete_user);
+                $query_delete->bindParam(':nombre_usuario', $nombre_usuario);
+                $query_delete->execute();
+            } else {
+                // Actualizar el usuario en la tabla 'usuarios'
+                $sql_update = "UPDATE usuarios SET correo=:correo, nombres_apellidos=:nombres_apellidos, contrasena=:contrasena,  
+                               area=:area, cargo=:cargo, rol=:nuevo_rol
+                               WHERE nombre_usuario=:nombre_usuario";
+                $query_update = $dbConn->prepare($sql_update);
+                $query_update->bindParam(':correo', $correo);
+                $query_update->bindParam(':nombres_apellidos', $nombres_apellidos);
+                $query_update->bindParam(':nombre_usuario', $nombre_usuario);
+                $query_update->bindParam(':contrasena', password_hash($contrasena, PASSWORD_DEFAULT)); // Hash de la contraseña
+                $query_update->bindParam(':area', $area);
+                $query_update->bindParam(':cargo', $cargo);
+                $query_update->bindParam(':nuevo_rol', $nuevo_rol);
+                $query_update->execute();
+            }
+
+            // Cometer la transacción
+            $dbConn->commit();
+
+            // Redirigir a la página de gestor
+            header("Location: index_gestor.php");
+            exit();
+        } catch (Exception $e) {
+            // Revertir los cambios si ocurre un error
+            if ($dbConn->inTransaction()) {
+                $dbConn->rollBack();
+            }
+            echo "<font color='red'>Error: " . $e->getMessage() . "</font><br/>";
         }
-
-        // Si el rol ha cambiado a Administrador, mover el usuario a la tabla 'administradores'
-        if ($nuevo_rol === 'Administrador') {
-            // Insertar en la tabla 'administradores'
-            $sql_insert_admin = "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol)
-                                 VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :nuevo_rol)";
-            $query_insert = $dbConn->prepare($sql_insert_admin);
-            $query_insert->bindParam(':correo', $correo);
-            $query_insert->bindParam(':nombres_apellidos', $nombres_apellidos);
-            $query_insert->bindParam(':nombre_usuario', $nombre_usuario);
-            $query_insert->bindParam(':contrasena', $contrasena);
-            $query_insert->bindParam(':area', $area);
-            $query_insert->bindParam(':cargo', $cargo);
-            $query_insert->bindParam(':nuevo_rol', $nuevo_rol);
-            $query_insert->execute();
-
-            // Eliminar de la tabla 'usuarios'
-            $sql_delete_user = "DELETE FROM usuarios WHERE nombre_usuario = :nombre_usuario";
-            $query_delete = $dbConn->prepare($sql_delete_user);
-            $query_delete->bindParam(':nombre_usuario', $nombre_usuario);
-            $query_delete->execute();
-        } else {
-            // Actualizar el usuario en la tabla 'usuarios'
-            $sql_update = "UPDATE usuarios SET correo=:correo, nombres_apellidos=:nombres_apellidos, contrasena=:contrasena,  
-                           area=:area, cargo=:cargo, rol=:nuevo_rol
-                           WHERE nombre_usuario=:nombre_usuario";
-            $query_update = $dbConn->prepare($sql_update);
-            $query_update->bindParam(':correo', $correo);
-            $query_update->bindParam(':nombres_apellidos', $nombres_apellidos);
-            $query_update->bindParam(':nombre_usuario', $nombre_usuario);
-            $query_update->bindParam(':contrasena', $contrasena);
-            $query_update->bindParam(':area', $area);
-            $query_update->bindParam(':cargo', $cargo);
-            $query_update->bindParam(':nuevo_rol', $nuevo_rol);
-            $query_update->execute();
-        }
-
-        // Redirigir a la página de gestor
-        header("Location: index_gestor.php");
-        exit();
     }
 }
 

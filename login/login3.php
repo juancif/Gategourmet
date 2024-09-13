@@ -19,6 +19,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nombre_usuario = $_POST['nombre_usuario'];
         $contrasena = $_POST['contrasena'];
 
+        // Inicializar variable para el rol
+        $rol = null;
+
         // Buscar en la tabla de usuarios
         $stmt = $connect->prepare("SELECT * FROM usuarios WHERE nombre_usuario = ?");
         $stmt->bind_param("s", $nombre_usuario);
@@ -27,17 +30,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result->num_rows > 0) {
             $usuario = $result->fetch_assoc();
-
-            // Verifica si las contraseñas están hasheadas
             $hash_contrasena = $usuario['contrasena'];
+            $rol = $usuario['rol'];
 
             if (password_verify($contrasena, $hash_contrasena) || $contrasena === $hash_contrasena) {
                 $area = $usuario['area'];
 
                 // Registrar el inicio de sesión en la tabla de movimientos
-                $sql = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (?, 'Inicio de sesión', NOW())";
+                $sql = "INSERT INTO movimientos (nombre_usuario, rol, accion, fecha) VALUES (?, ?, 'Inicio de sesión como: $rol', NOW())";
                 $stmt = $connect->prepare($sql);
-                $stmt->bind_param("s", $nombre_usuario);
+                $stmt->bind_param("ss", $nombre_usuario, $rol);
                 $stmt->execute();
 
                 // Guardar el área en la sesión
@@ -60,14 +62,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($result->num_rows > 0) {
                 $admin = $result->fetch_assoc();
                 $hash_contrasena = $admin['contrasena'];
+                $rol = 'Administrador'; // Asignar el rol de administrador
 
                 if (password_verify($contrasena, $hash_contrasena) || $contrasena === $hash_contrasena) {
                     $area = $admin['area'];
 
                     // Registrar el inicio de sesión en la tabla de movimientos
-                    $sql = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (?, 'Inicio de sesión como administrador', NOW())";
+                    $sql = "INSERT INTO movimientos (nombre_usuario, rol, accion, fecha) VALUES (?, ?, 'Inicio de sesión como administrador', NOW())";
                     $stmt = $connect->prepare($sql);
-                    $stmt->bind_param("s", $nombre_usuario);
+                    $stmt->bind_param("ss", $nombre_usuario, $rol);
                     $stmt->execute();
 
                     // Guardar el área en la sesión
@@ -102,8 +105,6 @@ $connect->close();
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style_login3.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
 </head>
 <body>
     <header class="header">
@@ -127,15 +128,15 @@ $connect->close();
                         <div class="input-icon password-group">
                             <i class="fas fa-lock"></i>
                             <input type="password" id="contrasena" name="contrasena" required placeholder="Contraseña" />
-                    <span class="toggle-password" onclick="togglePassword('confirmar_contrasena', 'eye_confirmar_contrasena')">
-                        <img src="../Imagenes/ojo_invisible.png" id="eye_confirmar_contrasena" alt="Mostrar contraseña" />
-                    </span>
+                            <span class="toggle-password" onclick="togglePassword('contrasena', 'eye_contrasena')">
+                                <img src="../Imagenes/ojo_invisible.png" id="eye_contrasena" alt="Mostrar contraseña" />
+                            </span>
                         </div>
                     </div>
                     <div class="buttons">
                         <input type="submit" value="Ingresar">
                         <a href="http://localhost/GateGourmet/register/register3.php" class="button">Registrarse</a>
-                        <a href="http://localhost/GateGourmet/restablecer/restablecer.php" class="button-reestablecer">Restablecer Contraseña</a> <!-- Botón pequeño y sutil -->
+                        <a href="http://localhost/GateGourmet/restablecer/restablecer.php" class="button-reestablecer">Restablecer Contraseña</a>
                     </div>
                 </form>
             </div>
@@ -144,19 +145,21 @@ $connect->close();
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
     </footer>
-    <script>document.addEventListener("DOMContentLoaded", function() {
-    const togglePassword = document.querySelector("#togglePassword");
-    const password = document.querySelector("#password");
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const togglePassword = document.querySelector("#eye_contrasena");
+            const password = document.querySelector("#contrasena");
 
-    togglePassword.addEventListener("click", function() {
-        // Toggle the type attribute using getAttribute() method
-        const type = password.getAttribute("type") === "password" ? "text" : "password";
-        password.setAttribute("type", type);
-        
-        // Toggle the eye icon
-        this.classList.toggle("fa-eye");
-        this.classList.toggle("fa-eye-slash");
-    });
-});</script>
+            togglePassword.addEventListener("click", function() {
+                // Toggle the type attribute using getAttribute() method
+                const type = password.getAttribute("type") === "password" ? "text" : "password";
+                password.setAttribute("type", type);
+                
+                // Toggle the eye icon
+                this.classList.toggle("fa-eye");
+                this.classList.toggle("fa-eye-slash");
+            });
+        });
+    </script>
 </body>
 </html>
