@@ -60,11 +60,23 @@ $result = $conn->query($sql);
 
 $tipos = [];
 $cantidadTipos = [];
+$tiposCompleto = [
+    'F' => 'Formato',
+    'G' => 'Programa',
+    'I' => 'Instructivo',
+    'L' => 'Leyout',
+    'M' => 'Manual',
+    'MCV' => 'Mapa de Cadena Evolutiva',
+    'P' => 'Procedimiento',
+    'S' => 'Subprograma'
+];
 
 while($row = $result->fetch_assoc()) {
-    $tipos[] = $row['tipo'];
+    $tipo = $row['tipo'];
+    $tipos[] = $tiposCompleto[$tipo] ?? $tipo; // Usar nombre completo
     $cantidadTipos[] = $row['cantidad'];
 }
+
 
 // 4. Obtener datos de actualización mensual por área
 $sql = "SELECT areas, MONTH(fecha_aprobacion) AS mes, COUNT(*) AS cantidad
@@ -274,70 +286,71 @@ $conn->close();
             }
         });
 
-        // Gráfico 3: Tipo de Documentación Desactualizada
-        new Chart(document.getElementById('tipoDocumentacionDesactualizadaChart'), {
-            type: 'bar',
-            data: {
-                labels: <?php echo json_encode($tipos); ?>,
-                datasets: [{
-                    label: 'Cantidad',
-                    data: <?php echo json_encode($cantidadTipos); ?>,
-                    backgroundColor: <?php echo json_encode(array_map(function() {
-                        return 'rgba(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ', 0.6)';
-                    }, $cantidadTipos)); ?>,
-                    borderColor: <?php echo json_encode(array_map(function() {
-                        return 'rgba(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ', 1)';
-                    }, $cantidadTipos)); ?>,
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Tipos de Documentación'
-                        },
-                        ticks: {
-                            autoSkip: false,
-                            maxRotation: 90,
-                            minRotation: 45
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Cantidad'
-                        }
-                    }
+        var ctx3 = document.getElementById('tipoDocumentacionDesactualizadaChart').getContext('2d');
+var data3 = {
+    labels: <?php echo json_encode($tipos); ?>, // Nombres completos
+    datasets: [{
+        label: 'Cantidad',
+        data: <?php echo json_encode($cantidadTipos); ?>,
+        backgroundColor: <?php echo json_encode(array_map(function() {
+            return 'rgba(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ', 0.6)';
+        }, $cantidadTipos)); ?>,
+        borderColor: <?php echo json_encode(array_map(function() {
+            return 'rgba(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ', 1)';
+        }, $cantidadTipos)); ?>,
+        borderWidth: 2
+    }]
+};
+var myChart3 = new Chart(ctx3, {
+    type: 'bar',
+    data: data3,
+    options: {
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Tipos de Documentación'
                 },
-                plugins: {
-                    legend: {
-                        labels: {
-                            color: 'rgba(0, 0, 0, 0.8)'
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(tooltipItem) {
-                                return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
-                            }
-                        }
-                    },
-                    datalabels: {
-                        display: true,
-                        color: 'black',
-                        anchor: 'end',
-                        align: 'top',
-                        formatter: function(value) {
-                            return value;
-                        }
-                    }
+                ticks: {
+                    autoSkip: false,
+                    maxRotation: 90,
+                    minRotation: 45
+                }
+            },
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Cantidad'
                 }
             }
-        });
+        },
+        plugins: {
+            legend: {
+                labels: {
+                    color: 'rgba(0, 0, 0, 0.8)'
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
+                    }
+                }
+            },
+            datalabels: {
+                display: true,
+                color: 'black',
+                anchor: 'end',
+                align: 'top',
+                formatter: function(value) {
+                    return value;
+                }
+            }
+        }
+    }
+});
+
 
         // Gráfico 4: Actualización Mensual por Área
         const actualizacionMensualData = <?php echo json_encode($actualizacionMensualData); ?>;
