@@ -1,13 +1,12 @@
 <?php
 require '../vendor/autoload.php';
-
 session_start();
 
 // Configuración del cliente de Google
 $client = new Google_Client();
 $client->setAuthConfig('credentials.json');
 $client->addScope(Google_Service_Gmail::GMAIL_READONLY);
-$client->setRedirectUri('http://localhost/GateGourmet/index.php'); // Cambiar a la URL correcta si es necesario
+$client->setRedirectUri('http://localhost/GateGourmet/index.php');
 $client->setAccessType('offline');
 $client->setPrompt('select_account consent');
 
@@ -16,7 +15,7 @@ if (isset($_GET['code'])) {
     try {
         $accessToken = $client->fetchAccessTokenWithAuthCode($_GET['code']);
         $_SESSION['access_token'] = $accessToken;
-        header('Location: index.php'); // Redirige a la misma página para evitar reenvíos del formulario
+        header('Location: index.php');
         exit();
     } catch (Exception $e) {
         echo 'Error fetching access token: ' . $e->getMessage();
@@ -46,21 +45,46 @@ try {
 
 // Obtener detalles de los correos electrónicos
 $emailData = [];
-foreach ($messages as $message) {
-    $msg = $service->users_messages->get('me', $message->getId());
-    $payload = $msg->getPayload();
-    $headers = $payload->getHeaders();
-    $parts = $payload->getParts();
 
-    $emailDetails = [
-        'subject' => '',
-        'from' => '',
-        'to' => '',
-        'cc' => '',
-        'bcc' => '',
-        'date' => '',
-        'body' => '',
-    ];
+function getBody($message) {
+    global $service;
+    $message = $service->users_messages->get('me', $message->getId());
+    $payload = $message->getPayload();
+    $parts = $payload->getParts();
+    
+    $body = '';
+    
+    if ($payload->getMimeType() == 'text/plain') {
+        $body = base64url_decode($payload->getBody()->getData());
+    } elseif ($payload->getMimeType() == 'text/html') {
+        $body = base64url_decode($payload->getBody()->getData());
+    } elseif ($parts) {
+        foreach ($parts as $part) {
+            if ($part->getMimeType() == 'text/plain') {
+                $body .= base64url_decode($part->getBody()->getData());
+            } elseif ($part->getMimeType() == 'text/html') {
+                $body .= base64url_decode($part->getBody()->getData());
+            }
+        }
+    }
+
+    return $body;
+}
+
+// Función para decodificar base64url
+function base64url_decode($data) {
+    $data = str_replace(['-', '_'], ['+', '/'], $data);
+    $mod4 = strlen($data) % 4;
+    if ($mod4) {
+        $data .= substr('====', $mod4);
+    }
+    return base64_decode($data);
+}
+
+foreach ($messages as $message) {
+    $messageDetail = $service->users_messages->get('me', $message->getId());
+    $headers = $messageDetail->getPayload()->getHeaders();
+    $emailDetails = [];
 
     foreach ($headers as $header) {
         switch ($header->getName()) {
@@ -85,25 +109,11 @@ foreach ($messages as $message) {
         }
     }
 
-    foreach ($parts as $part) {
-        if ($part->getMimeType() == 'text/plain') {
-            $emailDetails['body'] = base64url_decode($part->getBody()->getData());
-        } elseif ($part->getMimeType() == 'text/html') {
-            $emailDetails['body'] = base64url_decode($part->getBody()->getData());
-        }
-    }
+    // Obtener el cuerpo del mensaje
+    $emailDetails['body'] = getBody($messageDetail);
 
+    // Agregar el correo electrónico al array de correos
     $emailData[] = $emailDetails;
-}
-
-// Función para decodificar base64url
-function base64url_decode($data) {
-    $data = str_replace(['-', '_'], ['+', '/'], $data);
-    $mod4 = strlen($data) % 4;
-    if ($mod4) {
-        $data .= substr('====', $mod4);
-    }
-    return base64_decode($data);
 }
 ?>
 <!DOCTYPE html>
@@ -148,34 +158,36 @@ function base64url_decode($data) {
     <div id="abirMenu" class="desplegar">
       <span id="cerrarMenu">X</span>
       <div class="container">
-        <h1>Correos Electrónicos</h1>
-        <div class="email-list">
-            <?php
-            if (empty($emailData)) {
-                echo '<p>No hay correos electrónicos disponibles.</p>';
-            } else {
-                foreach ($emailData as $email) {
-                    echo '<div class="email-item">';
-                    echo '<h2>Asunto: ' . htmlspecialchars($email['subject']) . '</h2>';
-                    echo '<p><strong>De:</strong> ' . htmlspecialchars($email['from']) . '</p>';
-                    if (!empty($email['to'])) {
-                        echo '<p><strong>Para:</strong> ' . htmlspecialchars($email['to']) . '</p>';
-                    }
-                    if (!empty($email['cc'])) {
-                        echo '<p><strong>Cc:</strong> ' . htmlspecialchars($email['cc']) . '</p>';
-                    }
-                    echo '<p class="date"><strong>Fecha:</strong> ' . htmlspecialchars($email['date']) . '</p>';
-                    echo '<div class="body">';
-                    echo '<strong>Contenido:</strong><br>';
-                    echo '</div>';
-                    echo '</div>';
-                }
-            }
-            ?>
-        </div>
-        <div class="logout">
-            <p><a href="logout.php">Desconectar</a></p>
-        </div>
+    <h1>Correos Electrónicos</h1>
+    <div class="email-list">
+        <?php if (empty($emailData)) { ?>
+            <p>No hay correos electrónicos disponibles.</p>
+        <?php } else { ?>
+            <?php foreach ($emailData as $email) { ?>
+                <div class="email-item">
+                    <h2>Asunto: <?php echo htmlspecialchars($email['subject']); ?></h2>
+                    <p><strong>De:</strong> <?php echo htmlspecialchars($email['from']); ?></p>
+                    <?php if (!empty($email['to'])) { ?>
+                        <p><strong>Para:</strong> <?php echo htmlspecialchars($email['to']); ?></p>
+                    <?php } ?>
+                    <?php if (!empty($email['cc'])) { ?>
+                        <p><strong>Cc:</strong> <?php echo htmlspecialchars($email['cc']); ?></p>
+                    <?php } ?>
+                    <p class="date"><strong>Fecha:</strong> <?php echo htmlspecialchars($email['date']); ?></p>
+                    <div class="body">
+                        <strong>Contenido:</strong><br>
+                        <p><?php echo htmlspecialchars_decode($email['body']); ?></p>
+                    </div>
+                    <div class="email-actions">
+                        <button>Responder</button>
+                        <button>Eliminar</button>
+                    </div>
+                </div>
+            <?php } ?>
+        <?php } ?>
+    </div>
+</div>
+
     </div>
     </div>
   
