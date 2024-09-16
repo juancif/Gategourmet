@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION['nombre_usuario'] = $nombre_usuario;
 
                     // Redirigir al dashboard con el área del administrador
-                    header("Location: http://localhost/GateGourmet/Index/index_admin.html");
+                    header("Location: http://localhost/GateGourmet/Index/index_admin.php");
                     exit();
                 } else {
                     echo "Nombre de usuario o contraseña incorrectos.";
