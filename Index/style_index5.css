@@ -177,6 +177,7 @@ body{
     background: #1117;
     backdrop-filter: blur(10px); /* Color de fondo del menú */
     padding: 25px 20px; /* Espaciado interno del menú */
+    z-index: 30;
 }
 
 /* Lista del menú */
@@ -190,7 +191,7 @@ body{
 
 /* Elemento del menú */
 .nav__item {
-    margin: 0 20px; /* Margen horizontal entre elementos del menú */
+    margin: 0 12px; /* Margen horizontal entre elementos del menú */
     font-size: 25px;
 }
 
@@ -221,6 +222,75 @@ body{
 .nav__item__user {
     margin-left: auto; /* Alinear a la derecha */
 }
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  #alarmas {
+    padding: 20px 20px;
+    border-radius: 20px;
+    width: 12vw;
+    background-color: #111c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-left: 86vw;
+    margin-top: 1vh;
+    font-size: 22px;
+}
+
+#alarmas:hover{
+    transform: scale(1.05);
+    background-color: #222b;
+}
+  
+  #abirMenu {
+    position: absolute;
+    top: 5vh;
+    left: 85.9vw;
+    width: 12vw;
+    height: 105vh;
+    background: #1117;
+    backdrop-filter: blur(30px); 
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 40;
+    margin-top: 5vh;
+    color: white;
+  }
+  
+  #abirMenu ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #abirMenu ul li {
+    padding: 8px;
+  }
+  
+  #abirMenu ul li a {
+    text-decoration: none;
+    color: white;
+  }
+  
+  #abirMenu ul li a:hover {
+    background-color: #ddd;
+  }
+  
+  #abirMenu #cerrarMenu {
+    float: right;
+    cursor: pointer;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+  }
+  
+  .desplegar {
+    display: none;
+    margin-top: 20vh;
+  }
+  
 
 .cerrar__sesion__link {
     display: flex; /* Usar flexbox para alinear imagen y texto */
