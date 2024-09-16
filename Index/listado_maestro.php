@@ -13,7 +13,7 @@ if ($conn->connect_error) {
     die("La conexión falló: " . $conn->connect_error);
 }
 
-
+// Inicializar variables para cada campo de filtro (excluyendo 'motivo_del_cambio' hasta 'en_actualizacion')
 $campos = [
     'proceso', 'codigo', 'titulo_documento', 'tipo', 'version', 'estado', 'fecha_aprobacion', 
     'areas'
@@ -77,9 +77,8 @@ if (!$result) {
     <link rel="stylesheet" href="listado_maestro.css">
 </head>
 <body>
-    <!-- Header con el logo de Gate Gourmet -->
     <header class="header">
-        <img src="../Imagenes/Logo_oficial_B-N.png" alt="Logo Gate Gourmet" class="logo"> <!-- Cambia la ruta del logo según sea necesario -->
+        <h1>Listado Maestro</h1>
     </header>
 
     <div class="container">
@@ -176,11 +175,6 @@ if (!$result) {
             <?php $conn->close(); ?>
         <?php endif; ?>
     </div>
-
-    <!-- Footer con el copyright -->
-    <footer>
-        <p>&copy; 2024 Gate Gourmet. Todos los derechos reservados.</p>
-    </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
