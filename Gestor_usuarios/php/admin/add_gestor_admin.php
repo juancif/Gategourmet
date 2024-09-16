@@ -1,6 +1,7 @@
 <?php
 include_once("config_gestor.php");
 
+<<<<<<< HEAD
 // Iniciar sesión
 session_start();
 $usuario_sesion = $_SESSION['nombre_usuario']; // Cambia 'nombre_usuario' según cómo guardas el nombre de usuario en la sesión
@@ -27,6 +28,38 @@ function generarNombreUsuario($nombre, $apellido, $dbConn) {
             $i++;
         }
     } while ($count > 0);
+=======
+function generarNombreUsuario($nombre, $apellido, $dbConn) {
+    // Genera el nombre de usuario basado en la primera letra del nombre y el apellido
+    $nombre_usuario = strtolower(substr($nombre, 0, 1) . $apellido);
+
+    // Verifica si el nombre de usuario ya existe
+    $checkDocSql = "SELECT COUNT(*) FROM administradores WHERE nombre_usuario = :nombre_usuario";
+    $checkDocQuery = $dbConn->prepare($checkDocSql);
+    $checkDocQuery->bindparam(':nombre_usuario', $nombre_usuario);
+    $checkDocQuery->execute();
+    $count = $checkDocQuery->fetchColumn();
+
+    if ($count > 0) {
+        // Si el nombre de usuario ya existe, genera uno nuevo con las dos primeras letras del nombre
+        $nombre_usuario = strtolower(substr($nombre, 0, 2) . $apellido);
+
+        // Verifica nuevamente si el nombre de usuario generado existe
+        $checkDocQuery->bindparam(':nombre_usuario', $nombre_usuario);
+        $checkDocQuery->execute();
+        $count = $checkDocQuery->fetchColumn();
+
+        // Asegúrate de que el nombre de usuario sea único añadiendo un número si es necesario
+        $i = 1;
+        while ($count > 0) {
+            $nombre_usuario = strtolower(substr($nombre, 0, 2) . $apellido . $i);
+            $checkDocQuery->bindparam(':nombre_usuario', $nombre_usuario);
+            $checkDocQuery->execute();
+            $count = $checkDocQuery->fetchColumn();
+            $i++;
+        }
+    }
+>>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
 
     return $nombre_usuario;
 }
@@ -34,12 +67,17 @@ function generarNombreUsuario($nombre, $apellido, $dbConn) {
 if (isset($_POST['Submit'])) {
     $correo = $_POST['correo'];
     $nombres_apellidos = $_POST['nombres_apellidos'];
+<<<<<<< HEAD
     $nombre_usuario = !empty($_POST['nombre_usuario']) ? $_POST['nombre_usuario'] : null;
+=======
+    $nombre_usuario = $_POST['nombre_usuario'];
+>>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
     $contrasena = $_POST['contrasena'];
     $area = $_POST['area'];
     $cargo = $_POST['cargo'];
     $rol = $_POST['rol'];
 
+<<<<<<< HEAD
     // Verificar si algún campo está vacío (excepto nombre_usuario)
     if (empty($correo) || empty($nombres_apellidos) || empty($contrasena) || empty($area) || empty($cargo) || empty($rol)) {
         echo "<font color='red'>Por favor, completa todos los campos.</font><br/>";
@@ -49,11 +87,37 @@ if (isset($_POST['Submit'])) {
         if (empty($area)) echo "<font color='red'>Campo: área está vacío.</font><br/>";
         if (empty($cargo)) echo "<font color='red'>Campo: cargo está vacío.</font><br/>";
         if (empty($rol)) echo "<font color='red'>Campo: rol está vacío.</font><br/>";
+=======
+    // Verificar si algún campo está vacío
+    if (empty($correo) || empty($nombres_apellidos) || empty($nombre_usuario) || empty($contrasena) ||  empty($area) || empty($cargo) || empty($rol)) {
+        if (empty($correo)) {
+            echo "<font color='red'>Campo: correo está vacío.</font><br/>";
+        }
+        if (empty($nombres_apellidos)) {
+            echo "<font color='red'>Campo: nombres_apellidos está vacío.</font><br/>";
+        }
+        if (empty($nombre_usuario)) {
+            echo "<font color='red'>Campo: nombre_usuario está vacío.</font><br/>";
+        }
+        if (empty($contrasena)) {
+            echo "<font color='red'>Campo: contrasena está vacío.</font><br/>";
+        }
+        if (empty($area)) {
+            echo "<font color='red'>Campo: área está vacío.</font><br/>";
+        }
+        if (empty($cargo)) {
+            echo "<font color='red'>Campo: cargo está vacío.</font><br/>";
+        }
+        if (empty($rol)) {
+            echo "<font color='red'>Campo: rol está vacío.</font><br/>";
+        }
+>>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
         echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
     } else {
         try {
             // Iniciar la transacción
             $dbConn->beginTransaction();
+<<<<<<< HEAD
 
             // Generar un nombre de usuario si no se proporcionó
             if (is_null($nombre_usuario)) {
@@ -95,17 +159,70 @@ if (isset($_POST['Submit'])) {
             // Redirigir a la página deseada después del registro exitoso
             header("Location: http://localhost/GateGourmet/Gestor_usuarios/php/admin/registro_exitoso_admin.php");
             exit();
+=======
+        
+            // Verificar si el nombre_usuario ya existe en la base de datos
+            $checkDocSql = "SELECT COUNT(*) FROM administradores WHERE nombre_usuario = :nombre_usuario";
+            $checkDocQuery = $dbConn->prepare($checkDocSql);
+            $checkDocQuery->bindparam(':nombre_usuario', $nombre_usuario);
+            $checkDocQuery->execute();
+            $count = $checkDocQuery->fetchColumn();
+        
+            // Verificar el campo cargo y definir la tabla correspondiente
+            if ($rol === 'Administrador') {
+                $sql = "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol) 
+                        VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol)";
+            } else {
+                $sql = "INSERT INTO usuarios (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol) 
+                        VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol)";
+            }
+        
+            $query = $dbConn->prepare($sql);
+            $query->bindparam(':correo', $correo);
+            $query->bindparam(':nombres_apellidos', $nombres_apellidos);
+            $query->bindparam(':nombre_usuario', $nombre_usuario);
+            $query->bindparam(':contrasena', $contrasena); // Hash de la contraseña
+            $query->bindparam(':area', $area);
+            $query->bindparam(':cargo', $cargo);
+            $query->bindparam(':rol', $rol);
+            $query->execute();
+        
+            // Cometer la transacción
+            $dbConn->commit();
+        
+            $ipAddress = $_SERVER['REMOTE_ADDR'];
+            $movimientoSql = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (:nombre_usuario, 'Registro exitoso', NOW())";
+            $movimientoQuery = $dbConn->prepare($movimientoSql);
+            $movimientoQuery->bindparam(':nombre_usuario', $nombre_usuario);
+            $movimientoQuery->execute();
+
+            if ($query->rowCount() > 0) {
+                // Redirigir a la página deseada después del registro exitoso
+                header("Location: http://localhost/GateGourmet/Gestor_usuarios/php/admin/registro_exitoso_admin.php");
+                exit();
+            } else {
+                echo "<font color='red'>Error al registrar el usuario o administrador.</font><br/>";
+            }
+>>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
         } catch (Exception $e) {
             // Revertir los cambios si ocurre un error
             if ($dbConn->inTransaction()) {
                 $dbConn->rollBack();
             }
+<<<<<<< HEAD
             echo "<font color='red'>Error: " . $e->getMessage() . "</font><br/>";
+=======
+            echo "<font color='red', font-size='30'>Error: El usuario ya se encuentra registrado</font><br/>";
+>>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
         }
     }
 }
 ?>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -125,7 +242,11 @@ if (isset($_POST['Submit'])) {
             <div class="register-box">
                 <h2>Registro de Administradores</h2>
                 <form method="post" action="">
+<<<<<<< HEAD
                     <div class="input-group tooltip">
+=======
+                <div class="input-group tooltip">
+>>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
                         <label for="correo">Correo Electrónico</label>
                         <input type="email" id="correo" name="correo" required placeholder="example@gategroup.com">
                         <span class="tooltiptext">Recuerda, que para registrarte debes ingresar un correo con el dominio "@gategroup.com".</span>
@@ -135,6 +256,7 @@ if (isset($_POST['Submit'])) {
                         <input type="text" id="nombres_apellidos" name="nombres_apellidos" required>
                     </div>
                     <div class="input-group">
+<<<<<<< HEAD
                         <label for="nombre_usuario">Nombre de Usuario (Opcional)</label>
                         <input type="text" id="nombre_usuario" name="nombre_usuario" placeholder="Campo no obligatorio">
                     </div>
@@ -160,6 +282,20 @@ if (isset($_POST['Submit'])) {
                     </div>
                     <div class="input-group">
                         <label for="area">Área</label>
+=======
+                        <label for="nombre_usuario">Nombre de Usuario</label>
+                        <input type="text" id="nombre_usuario" name="nombre_usuario">
+                    </div>
+                    <div class="input-group tooltip">
+                        <label for="contrasena">Contraseña</label>
+                        <input type="password" id="contrasena" name="contrasena" required >
+                        <span class="tooltiptext">Recuerda que la contraseña debe tener minimo 12 caracteres, un caracter especial y una mayuscula.</span>
+                        </div>
+                    <div class="input-group">
+                        <label for="area">Área</label>
+                        <div class="input-group">
+                        <label for="area">Área</label>
+>>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
                         <select name="area" id="area">
                             <option value="">Seleccione una opción</option>
                             <option value="Gestión corporativa">Gestión corporativa</option>
@@ -167,7 +303,11 @@ if (isset($_POST['Submit'])) {
                             <option value="Supply chain">Supply Chain</option>
                             <option value="Culinary">Culinary</option>
                             <option value="Assembly">Assembly</option>
+<<<<<<< HEAD
                             <option value="Service delivery">Service Delivery</option>
+=======
+                            <option value="Service delivery"  >Service Delivery</option>
+>>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
                             <option value="Servicios institucionales">Servicios institucionales</option>
                             <option value="Financiera">Financiera</option>
                             <option value="Costos">Costos</option>
@@ -222,7 +362,11 @@ if (isset($_POST['Submit'])) {
                         <label for="rol">Rol</label>
                         <select name="rol" id="rol">
                             <option value="Administrador">Administrador</option>
+<<<<<<< HEAD
                         </select>
+=======
+                         </select>                    
+>>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
                     </div>
                     <div class="buttons">
                         <input type="submit" name="Submit" value="Registrarse" class="Registrarse">
@@ -235,6 +379,7 @@ if (isset($_POST['Submit'])) {
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
         <script>
+<<<<<<< HEAD
             document.addEventListener('DOMContentLoaded', function() {
                 document.querySelector('form').addEventListener('submit', function(event) {
                     var emailField = document.getElementById('correo');
@@ -275,3 +420,20 @@ if (isset($_POST['Submit'])) {
     </footer>
 </body>
 </html>
+=======
+            document.querySelector('form').addEventListener('submit', function(event) {
+                var emailField = document.getElementById('correo');
+                var emailValue = emailField.value;
+
+                // Verificar si el correo electrónico tiene el dominio específico
+                if (!emailValue.endsWith('@gategroup.com')) {
+                    alert('El correo electrónico debe tener el dominio "@gategroup.com".');
+                    event.preventDefault(); // Evita el envío del formulario
+                }
+            });
+        </script>
+        <script src="/script_prueba/script.js"></script>
+    </footer>
+</body>
+</html>
+>>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734

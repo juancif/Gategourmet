@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -13,55 +15,83 @@ if ($connect->connect_error) {
 
 // Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Verificar si los campos del formulario fueron enviados
     if (isset($_POST['nombre_usuario']) && isset($_POST['contrasena'])) {
-        // Recuperar los datos del formulario
         $nombre_usuario = $_POST['nombre_usuario'];
         $contrasena = $_POST['contrasena'];
 
-        // Preparar la consulta para verificar las credenciales
-        $stmt = $connect->prepare("SELECT * FROM usuarios WHERE nombre_usuario = ? AND contrasena = ?");
-        $stmt->bind_param("ss", $nombre_usuario, $contrasena);
-        $stmt->execute(); 
+        // Buscar en la tabla de usuarios
+        $stmt = $connect->prepare("SELECT * FROM usuarios WHERE nombre_usuario = ?");
+        $stmt->bind_param("s", $nombre_usuario);
+        $stmt->execute();
         $result = $stmt->get_result();
 
-        // Verificar si se encontraron resultados
         if ($result->num_rows > 0) {
-            // Las credenciales son correctas, redirigir al usuario a la página principal
-            header("Location: http://localhost/GateGourmet/Index/index5.html");
-            exit(); // Terminar el script después de la redirección
-        } 
-    }
-}
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Verificar si los campos del formulario fueron enviados
-            if (isset($_POST['nombre_usuario']) && isset($_POST['contrasena'])) {
-                // Recuperar los datos del formulario
-                $nombre_usuario = $_POST['nombre_usuario'];
-                $contrasena = $_POST['contrasena'];
-        
-                // Preparar la consulta para verificar las credenciales
-                $stmt = $connect->prepare("SELECT * FROM administradores WHERE nombre_usuario = ? AND contrasena = ?");
-                $stmt->bind_param("ss", $nombre_usuario, $contrasena);
-                $stmt->execute(); 
-                $result = $stmt->get_result();
-                // Verificar si se encontraron resultados
-                if ($result->num_rows > 0) {
-                    // Las credenciales son correctas, redirigir al usuario a la página principal
+            $usuario = $result->fetch_assoc();
+
+            // Verifica si las contraseñas están hasheadas
+            $hash_contrasena = $usuario['contrasena'];
+
+            if (password_verify($contrasena, $hash_contrasena) || $contrasena === $hash_contrasena) {
+                $area = $usuario['area'];
+
+                // Registrar el inicio de sesión en la tabla de movimientos
+                $sql = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (?, 'Inicio de sesión', NOW())";
+                $stmt = $connect->prepare($sql);
+                $stmt->bind_param("s", $nombre_usuario);
+                $stmt->execute();
+
+                // Guardar el área en la sesión
+                $_SESSION['area'] = $area;
+                $_SESSION['nombre_usuario'] = $nombre_usuario;
+
+                // Redirigir al dashboard con el área del usuario
+                header("Location: http://localhost/GateGourmet/Index/index_user.php");
+                exit();
+            } else {
+                echo "Nombre de usuario o contraseña incorrectos.";
+            }
+        } else {
+            // Verificar en la tabla de administradores
+            $stmt = $connect->prepare("SELECT * FROM administradores WHERE nombre_usuario = ?");
+            $stmt->bind_param("s", $nombre_usuario);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $admin = $result->fetch_assoc();
+                $hash_contrasena = $admin['contrasena'];
+
+                if (password_verify($contrasena, $hash_contrasena) || $contrasena === $hash_contrasena) {
+                    $area = $admin['area'];
+
+                    // Registrar el inicio de sesión en la tabla de movimientos
+                    $sql = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (?, 'Inicio de sesión como administrador', NOW())";
+                    $stmt = $connect->prepare($sql);
+                    $stmt->bind_param("s", $nombre_usuario);
+                    $stmt->execute();
+
+                    // Guardar el área en la sesión
+                    $_SESSION['area'] = $area;
+                    $_SESSION['nombre_usuario'] = $nombre_usuario;
+
+                    // Redirigir al dashboard con el área del administrador
                     header("Location: http://localhost/GateGourmet/Index/index_admin.html");
-                    exit(); // Terminar el script después de la redirección
-                } 
+                    exit();
+                } else {
+                    echo "Nombre de usuario o contraseña incorrectos.";
+                }
+            } else {
+                echo "Nombre de usuario o contraseña incorrectos.";
+            }
+        }
     } else {
-        // Si no se enviaron los campos del formulario, mostrar un mensaje de error
-        echo "Por favor, ingrese nombre de usuario y contrasena.";
+        echo "Por favor, ingrese nombre de usuario y contraseña.";
     }
-    
 }
 
 // Cerrar la conexión
 $connect->close();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -87,20 +117,20 @@ $connect->close();
                         <label for="nombre_usuario">Nombre de usuario</label>
                         <div class="input-icon">
                             <i class="fas fa-user"></i>
-                            <input type="text" id="nombre_usuario" name="nombre_usuario" required placeholder="Nombres de usuario" value="<?php if(isset($_POST['nombre_usuario'])) echo $_POST['nombre_usuario'] ?>"/>
+                            <input type="text" id="nombre_usuario" name="nombre_usuario" required placeholder="Nombre de usuario" value="<?php if(isset($_POST['nombre_usuario'])) echo htmlspecialchars($_POST['nombre_usuario']); ?>"/>
                         </div>
                     </div>
                     <div class="input-group">
                         <label for="contrasena">Contraseña</label>
                         <div class="input-icon password-group">
                             <i class="fas fa-lock"></i>
-                            <input type="password" id="contrasena" name="contrasena" required placeholder="Contraseña" value="<?php if(isset($_POST['contrasena'])) echo $_POST['contrasena'] ?>" class="campo_contrasena" />
+                            <input type="password" id="contrasena" name="contrasena" required placeholder="Contraseña" />
                         </div>
                     </div>
                     <div class="buttons">
                         <input type="submit" value="Ingresar">
                         <a href="http://localhost/GateGourmet/register/register3.php" class="button">Registrarse</a>
-                        <a href="restablecer.php" class="button-small">Restablecer Contraseña</a> <!-- Botón pequeño y sutil -->
+                        <a href="http://localhost/GateGourmet/restablecer/restablecer.php" class="button-reestablecer">Restablecer Contraseña</a> <!-- Botón pequeño y sutil -->
                     </div>
                 </form>
             </div>
