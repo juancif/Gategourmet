@@ -60,33 +60,46 @@ $result = $conn->query($sql);
 
 $tipos = [];
 $cantidadTipos = [];
+$tiposCompleto = [
+    'F' => 'Formato',
+    'G' => 'Programa',
+    'I' => 'Instructivo',
+    'L' => 'Leyout',
+    'M' => 'Manual',
+    'MCV' => 'Mapa de Cadena Evolutiva',
+    'P' => 'Procedimiento',
+    'S' => 'Subprograma'
+];
 
 while($row = $result->fetch_assoc()) {
-    $tipos[] = $row['tipo'];
+    $tipo = $row['tipo'];
+    $tipos[] = $tiposCompleto[$tipo] ?? $tipo; // Usar nombre completo
     $cantidadTipos[] = $row['cantidad'];
 }
 
-// 4. Actualización Mensual por Área
+
+// 4. Obtener datos de actualización mensual por área
 $sql = "SELECT areas, MONTH(fecha_aprobacion) AS mes, COUNT(*) AS cantidad
         FROM listado_maestro
         WHERE estado = 'vigente'
         GROUP BY areas, mes";
 $result = $conn->query($sql);
 
-$areas4 = [];
+$actualizacionMensualData = [];
 $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-$cantidadActualizacionMensual = [];
 
-while($row = $result->fetch_assoc()) {
-    $areas4[] = $row['areas'];
-    $cantidadActualizacionMensual[$row['areas']][$row['mes']] = $row['cantidad'];
+while ($row = $result->fetch_assoc()) {
+    $area = $row['areas'];
+    $mes = $row['mes'];
+    $cantidad = $row['cantidad'];
+    $actualizacionMensualData[$area][$mes] = $cantidad;
 }
 
-// Rellenar datos faltantes con ceros para Actualización Mensual por Área
-foreach ($areas4 as $area) {
-    foreach ($meses as $index => $mes) {
-        if (!isset($cantidadActualizacionMensual[$area][$index + 1])) {
-            $cantidadActualizacionMensual[$area][$index + 1] = 0;
+// Rellenar meses faltantes con ceros
+foreach ($actualizacionMensualData as $area => &$data) {
+    foreach (range(1, 12) as $mes) {
+        if (!isset($data[$mes])) {
+            $data[$mes] = 0;
         }
     }
 }
@@ -166,7 +179,6 @@ $conn->close();
                     ?> 
                 </tbody>
             </table>
-            <button onclick="downloadPDF('PorcentajedeActualizaciónChart')">Descargar PDF</button>
         </div>
 
         <!-- Gráfico 2: Estado de Documentación por Área -->
@@ -186,6 +198,15 @@ $conn->close();
         <!-- Gráfico 4: Actualización Mensual por Área -->
         <div class="chart-container">
             <center><h2>Actualización Mensual por Área</h2></center>
+            <label for="area-select">Seleccionar Área:</label>
+            <select id="area-select">
+                <option value="Todas">Todas las Áreas</option>
+                <?php
+                foreach ($areas2 as $area) {
+                    echo "<option value='$area'>$area</option>";
+                }
+                ?>
+            </select>
             <canvas id="actualizacionMensualChart"></canvas>
             <button onclick="downloadPDF('actualizacionMensualChart')">Descargar PDF</button>
         </div>
@@ -267,16 +288,7 @@ $conn->close();
 
         var ctx3 = document.getElementById('tipoDocumentacionDesactualizadaChart').getContext('2d');
 var data3 = {
-    labels: [
-        'INSTRUCTIVO',
-        'PROGRAMA',
-        'FORMATO',
-        'LEYOUT',
-        'MANUAL',
-        'PROCEDIMIENTO',
-        'MAPA DE CADENA VOLUTIVA',
-        'SUBPROGRAMA'
-    ],
+    labels: <?php echo json_encode($tipos); ?>, // Nombres completos
     datasets: [{
         label: 'Cantidad',
         data: <?php echo json_encode($cantidadTipos); ?>,
@@ -340,53 +352,60 @@ var myChart3 = new Chart(ctx3, {
 });
 
 
-        // Gráfico 4: Actualizacion Mensaul por Area
+        // Gráfico 4: Actualización Mensual por Área
+        const actualizacionMensualData = <?php echo json_encode($actualizacionMensualData); ?>;
+        const meses = <?php echo json_encode($meses); ?>;
 
-        new Chart(document.getElementById('actualizacionMensualChart'), {
-    type: 'line',
-    data: {
-        labels: <?php echo json_encode($meses); ?>,
-        datasets: <?php echo json_encode(array_map(function($area, $data) {
-            // Generar un color aleatorio para cada área
-            $color = sprintf('rgba(%d, %d, %d, 1)', rand(0, 255), rand(0, 255), rand(0, 255));
-            return [
-                'label' => $area,
-                'data' => array_values($data),
-                'fill' => false,
-                'borderColor' => $color,
-                'tension' => 0.1
-            ];
-        }, array_keys($cantidadActualizacionMensual), $cantidadActualizacionMensual)); ?>
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: true,
-                text: 'Actualización Mensual por Área'
-            }
-        },
-        scales: {
-            x: {
-                title: {
-                    display: true,
-                    text: 'Meses'
+        function actualizarGrafica(areaSeleccionada) {
+            let dataset = [];
+            if (areaSeleccionada === "Todas") {
+                for (let area in actualizacionMensualData) {
+                    dataset.push({
+                        label: area,
+                        data: Object.values(actualizacionMensualData[area]),
+                        fill: false,
+                        borderColor: getRandomColor()
+                    });
                 }
-            },
-            y: {
-                title: {
-                    display: true,
-                    text: 'Actualización'
-                },
-                beginAtZero: true
+            } else {
+                dataset.push({
+                    label: areaSeleccionada,
+                    data: Object.values(actualizacionMensualData[areaSeleccionada]),
+                    fill: false,
+                    borderColor: getRandomColor()
+                });
             }
-        }
-    }
-});
 
+            actualizacionMensualChart.data.datasets = dataset;
+            actualizacionMensualChart.update();
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        var actualizacionMensualChart = new Chart(document.getElementById('actualizacionMensualChart'), {
+            type: 'line',
+            data: {
+                labels: meses,
+                datasets: []
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        document.getElementById('area-select').addEventListener('change', function() {
+            let areaSeleccionada = this.value;
+            actualizarGrafica(areaSeleccionada);
+        });
+
+        actualizarGrafica("Todas");
 
         // Gráfico 5: Cantidad de Documentación Desactualizada por Área
         new Chart(document.getElementById('cantidadDesactualizadaChart'), {
@@ -440,4 +459,3 @@ var myChart3 = new Chart(ctx3, {
     </script>
 </body>
 </html>
-
