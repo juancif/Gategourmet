@@ -12,10 +12,68 @@ body {
     background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
 }
 
+.header {
+    background: #1117;
+    backdrop-filter: blur(10px);
+    padding: 20px 40px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
+}
+
+
+.cerrar__sesion__link{
+    margin: 0;
+    margin-left: 150px;
+    text-decoration: none;
+    text-decoration:#1117;
+    color:white ;
+    list-style-type: none;
+    z-index: 20;
+}
+
+.cerrar__sesion{
+    margin-left: 250px;
+    list-style-type: none;
+    z-index: 20;
+}
+
+.nav__item__user{
+    background-color: transparent;
+    position: absolute;
+    display: inline-block;
+    margin: auto;
+    margin-left: 1500px;
+    margin-top: -10vh;
+    z-index: 20;
+}
+
+.img__usuario{
+    width: 80px;
+    height: 60px;
+    margin-left: 100px;
+    margin-top: 0px;
+    position:relative;
+    background-color: transparent;
+    list-style-type: none;
+    z-index: 20;
+}
+.img__usuario:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+.logo {
+    max-width: 400px;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
 /* Estilo para el contenedor principal */
 .container {
     max-width: 1200px; /* Limita el ancho máximo para una mejor visualización */
     margin: 0 auto; /* Centra el contenedor */
+    margin-top: 2vh;
     padding: 2rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra más suave para el contenedor */
     background: rgba(255, 255, 255, 0.85); /* Fondo blanco semi-transparente */
