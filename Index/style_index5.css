@@ -247,8 +247,8 @@ body {
   #abirMenu {
     position: absolute;
     top: 5vh;
-    left: 85.9vw;
-    width: 12vw;
+    left: 76vw;
+    width: 22vw;
     height: 105vh;
     background: #1117;
     backdrop-filter: blur(30px); 
@@ -294,7 +294,7 @@ body {
   .container {
     width: 90%;
     margin: 30px auto;
-    background-color: #fff;
+    background-color: #8f8f8f;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -302,7 +302,7 @@ body {
 
 h1 {
     text-align: center;
-    color: #333;
+    color: #000000;
     margin-bottom: 20px;
 }
 
@@ -311,27 +311,27 @@ h1 {
 }
 
 .email-item {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: #c5c5c5;
+    border: 1px solid #707070;
     padding: 15px;
+    height: 40vh;
     margin-bottom: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .email-item h2 {
-    margin: 0;
-    color: #333;
+    color: #000000;
 }
 
 .email-item p {
     margin: 5px 0;
-    color: #666;
+    color: #000000;
 }
 
 .email-item .date {
     font-size: 0.9em;
-    color: #999;
+    color: #000000;
 }
 
 .email-item .body {
@@ -340,6 +340,7 @@ h1 {
     border-top: 1px solid #ddd;
     padding-top: 10px;
     margin-top: 10px;
+    color: #000000;
 }
 
 .logout {
