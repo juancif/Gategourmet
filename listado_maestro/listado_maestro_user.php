@@ -22,6 +22,7 @@ $campos_visibles = [
     'areas'
 ];
 
+// Campos internos, no visibles en la búsqueda pero necesarios en la consulta
 $campos_internos = [
     'motivo_del_cambio', 'tiempo_de_retencion', 'responsable_de_retencion', 
     'lugar_de_almacenamiento_fisico', 'lugar_de_almacenamiento_magnetico', 'conservacion', 
@@ -29,7 +30,7 @@ $campos_internos = [
     'obsoleto', 'anulado', 'en_actualizacion'
 ];
 
-// Campos completos para la consulta
+// Combinar todos los campos para la consulta
 $campos = array_merge($campos_visibles, $campos_internos);
 
 $params = [];
@@ -38,79 +39,61 @@ $searchValues = [];
 
 // Recopilar los valores de los filtros enviados por POST
 foreach ($campos_visibles as $campo) {
-    $$campo = $_POST[$campo] ?? '';
+    $$campo = $_POST[$campo] ?? ''; // Usar variable dinámica para cada campo
     if (!empty($$campo) && $campo !== 'areas') {
-        $searchValues[$campo] = $$campo;
+        $searchValues[$campo] = $$campo; // Solo agregar si no está vacío
         $params[] = "%" . $$campo . "%";
         $types .= 's';
     }
 }
 
-// Agregar filtro para el área del usuario
-$searchValues['areas'] = $area; // Establece el área del usuario como filtro
+// Agregar filtro de área
+$searchValues['areas'] = $area;
 $params[] = "%" . $area . "%";
 $types .= 's';
 
-// Construir la consulta SQL base hasta 'areas'
+// Construir la consulta SQL solo con campos visibles
 $sql = "SELECT " . implode(", ", $campos) . " FROM listado_maestro WHERE areas LIKE ?";
 
-// Añadir filtros adicionales a la consulta de manera dinámica
+// Añadir filtros adicionales basados solo en los campos visibles
 foreach ($searchValues as $campo => $valor) {
-    if ($campo !== 'areas') {
+    if ($campo !== 'areas' && !empty($valor)) {
         $sql .= " AND $campo LIKE ?";
     }
 }
 
-// Preparar la consulta para buscar documentos
+// Preparar y ejecutar la consulta
 $stmt = $conn->prepare($sql);
 if ($stmt === false) {
     die("Error al preparar la consulta: " . $conn->error);
 }
 
-// Vincular los parámetros si hay filtros
+// Vincular parámetros
 if (!empty($params)) {
-    // Convertir los parámetros en un array de referencias
     $ref_params = [];
     foreach ($params as $key => $value) {
-        $ref_params[$key] = &$params[$key]; // Usar referencia
+        $ref_params[$key] = &$params[$key];
     }
 
-    // Usar call_user_func_array para pasar los parámetros por referencia
     call_user_func_array([$stmt, 'bind_param'], array_merge([$types], $ref_params));
 }
 
-// Ejecutar la consulta y obtener los resultados
-if (!$stmt->execute()) {
-    die("Error al ejecutar la consulta: " . $stmt->error);
-}
-
+// Ejecutar la consulta
+$stmt->execute();
 $result = $stmt->get_result();
-if (!$result) {
-    die("Error al obtener los resultados: " . $stmt->error);
-}
 
-// Preparar la consulta para obtener un registro de ejemplo
+// Obtener el primer registro para autocompletar
 $sql_for_example = "SELECT " . implode(", ", $campos) . " FROM listado_maestro WHERE areas LIKE ? LIMIT 1";
-
 $stmt_example = $conn->prepare($sql_for_example);
-if ($stmt_example === false) {
-    die("Error al preparar la consulta de ejemplo: " . $conn->error);
-}
-
-// Vincular el parámetro para la consulta de ejemplo
-$stmt_example->bind_param('s', $params[count($params) - 1]); // Último parámetro es el filtro de área
-
-if (!$stmt_example->execute()) {
-    die("Error al ejecutar la consulta de ejemplo: " . $stmt_example->error);
-}
-
+$stmt_example->bind_param('s', $params[count($params) - 1]);
+$stmt_example->execute();
 $result_example = $stmt_example->get_result();
 $defaultValues = [];
 if ($result_example && $result_example->num_rows > 0) {
     $defaultValues = $result_example->fetch_assoc();
 }
 
-// Ahora puedes usar $defaultValues para autocompletar los campos
+// Autocompletado ahora usa $defaultValues, pero estos valores no son obligatorios para la búsqueda
 ?>
 
 <!DOCTYPE html>
@@ -177,7 +160,7 @@ if ($result_example && $result_example->num_rows > 0) {
                         <input type="text" class="search-input" id="<?php echo htmlspecialchars($campo); ?>" 
                                name="<?php echo htmlspecialchars($campo); ?>" 
                                value="<?php echo htmlspecialchars($searchValues[$campo] ?? ($defaultValues[$campo] ?? '')); ?>" 
-                               autocomplete="off" <?php echo $campo === 'areas' ? 'readonly' : ''; ?>>
+                               autocomplete="off" <?php echo $campo === 'areas' ? 'readonly' : ''; ?> />
                         <div class="search-dropdown" id="<?php echo htmlspecialchars($campo); ?>-options"></div>
                     </div>
                 <?php endforeach; ?>
@@ -256,13 +239,14 @@ if ($result_example && $result_example->num_rows > 0) {
         });
 
         $(document).on('click', '.dropdown-item', function() {
-            let selectedText = $(this).text();
             let input = $(this).closest('.search-field').find('.search-input');
-            input.val(selectedText);
-            $('#' + input.attr('name') + '-options').hide();
+            input.val($(this).text());
+            $('.search-dropdown').hide();
         });
     });
     </script>
-</div>
 </body>
 </html>
+
+
+
