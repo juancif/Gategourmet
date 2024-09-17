@@ -74,6 +74,7 @@ body {
     max-width: 1200px; /* Limita el ancho máximo para una mejor visualización */
     margin: 0 auto; /* Centra el contenedor */
     margin-top: 2vh;
+    margin-bottom: 2vh;
     padding: 2rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra más suave para el contenedor */
     background: rgba(255, 255, 255, 0.85); /* Fondo blanco semi-transparente */
