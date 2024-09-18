@@ -52,7 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['correo'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Restablecer Contraseña</title>
-    <link rel="stylesheet" href="restablecer.css">
+    <link rel="stylesheet" href="restablecer.css"> <!-- Aquí enlazamos la hoja de estilos mejorada -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome para los íconos -->
 </head>
 <body>
     <header class="header">
@@ -63,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['correo'])) {
             <h2>Restablecer Contraseña</h2>
             <form method="post" action="">
                 <div class="input-group">
-                    <label for="correo">Correo Electrónico</label>
+                    <i class="fa fa-envelope"></i> <!-- Icono de correo -->
                     <input type="email" id="correo" name="correo" required placeholder="Correo Electrónico"/>
                 </div>
                 <div class="buttons">
