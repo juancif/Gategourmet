@@ -13,6 +13,9 @@ if ($connect->connect_error) {
     die("Error de conexión: " . $connect->connect_error);
 }
 
+// Variable para el mensaje de error
+$error_message = '';
+
 // Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['nombre_usuario']) && isset($_POST['contrasena'])) {
@@ -50,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: http://localhost/GateGourmet/Index/index_user.php");
                 exit();
             } else {
-                echo "Nombre de usuario o contraseña incorrectos.";
+                $error_message = "Nombre de usuario o contraseña incorrectos.";
             }
         } else {
             // Verificar en la tabla de administradores
@@ -81,14 +84,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("Location: http://localhost/GateGourmet/Index/index_admin.php");
                     exit();
                 } else {
-                    echo "Nombre de usuario o contraseña incorrectos.";
+                    $error_message = "Nombre de usuario o contraseña incorrectos.";
                 }
             } else {
-                echo "Nombre de usuario o contraseña incorrectos.";
+                $error_message = "Nombre de usuario o contraseña incorrectos.";
             }
         }
     } else {
-        echo "Por favor, ingrese nombre de usuario y contraseña.";
+        $error_message = "Por favor, ingrese nombre de usuario y contraseña.";
     }
 }
 
@@ -140,6 +143,12 @@ $connect->close();
                         <a href="http://localhost/GateGourmet/restablecer/restablecer.php" class="button-reestablecer">Restablecer Contraseña</a>
                     </div>
                 </form>
+
+                <?php if (!empty($error_message)): ?>
+                <div class="error-message">
+                    <?php echo $error_message; ?>
+                </div>
+                <?php endif; ?>
             </div>
         </div>
     </main>
@@ -147,20 +156,17 @@ $connect->close();
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
     </footer>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const togglePassword = document.querySelector("#eye_contrasena");
-            const password = document.querySelector("#contrasena");
-
-            togglePassword.addEventListener("click", function() {
-                // Toggle the type attribute using getAttribute() method
-                const type = password.getAttribute("type") === "password" ? "text" : "password";
-                password.setAttribute("type", type);
-                
-                // Toggle the eye icon
-                this.classList.toggle("fa-eye");
-                this.classList.toggle("fa-eye-slash");
-            });
-        });
+        function togglePassword(inputId, eyeId) {
+            const input = document.getElementById(inputId);
+            const eye = document.getElementById(eyeId);
+            if (input.type === "password") {
+                input.type = "text";
+                eye.src = "../Imagenes/ojo_visible.png";
+            } else {
+                input.type = "password";
+                eye.src = "../Imagenes/ojo_invisible.png";
+            }
+        }
     </script>
 </body>
 </html>
