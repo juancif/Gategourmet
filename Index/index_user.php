@@ -9,7 +9,7 @@ $area = isset($_SESSION['area']) ? $_SESSION['area'] : '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GateGourmet</title>
-    <link rel="stylesheet" href="style_index5.css">
+    <link rel="stylesheet" href="style_index_user.css">
     <style>
         .hidden {
             display: none;
