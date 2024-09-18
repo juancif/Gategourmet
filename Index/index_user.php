@@ -32,8 +32,11 @@ $area = isset($_SESSION['area']) ? $_SESSION['area'] : '';
                 <a href="http://localhost/GateGourmet/procesos/procesos.php" class="nav__link"><img src="../Imagenes/macroprocesos2.png" alt="macroprocesos" class="imgs__menu">Procesos</a>
             </li>
             <li class="nav__item">
-                <a href="" class="nav__link"><img src="../Imagenes/macroprocesos2.png" alt="macroprocesos" class="imgs__menu">Reportes</a>
+                <a href="http://localhost/GateGourmet/Index/generar_pdf.php" class="nav__link">
+                    <img src="../Imagenes/macroprocesos2.png" alt="macroprocesos" class="imgs__menu">Reportes
+                </a>
             </li>
+
             <li class="nav__item__user">
                 <a href="http://localhost/GateGourmet/Movimientos/logout.php" class="cerrar__sesion__link"><img src="../Imagenes/image.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Cerrar sesión</div></a>
             </li>

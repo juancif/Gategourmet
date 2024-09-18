@@ -1,7 +1,14 @@
+/* Reinicio básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background: url('../../Imagenes/fondogg3.webp') no-repeat center center fixed;
     background-size: cover;
     display: flex;
@@ -9,78 +16,95 @@ body {
     min-height: 100vh;
 }
 
-
 .header {
     background: #1117;
     backdrop-filter: blur(10px);
-    padding: 20px 40px;
+    padding: 20px;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .logo {
-    max-width: 400px;
+    max-width: 350px;
 }
 
-.cuadro_mensaje{
-    width: 450px;
-    height: 300px;
-    background: #1117;
-    backdrop-filter: blur(10px);
-    position: absolute;
-    margin-left: 80vh;
-    margin-top: 350px;
-    border-radius: 20px;
-}
-
-.texto_cuadro{
-    font-size: 40px;
-    margin-left: 50px;
-    margin-top:70px;
-    color: #dddf;
-}
-
-.boton_volver{
-    background-color: #dddf;
-    width: 150px;
-    height: 40px;
-    border-radius: 10px;
-    position: absolute;
-    margin-left: 150px;
-    margin-top: 10px;
-}
-
-
-
-.link_volver{
-    text-decoration: none;
-    color: black;
+.cuadro_mensaje {
+    width: 550px;
+    background: rgba(17, 17, 17, 0.85);
+    backdrop-filter: blur(10px); /* Fondo más oscuro y elegante */
+    margin: auto;
+    margin-top: 60px;
+    padding: 60px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Sombra más suave */
     text-align: center;
-    margin-left: -12px;
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    color: #f1f1f1;
+    backdrop-filter: blur(15px); /* Efecto de desenfoque en el fondo */
 }
 
- .boton_volver:hover{
-    margin-top: 20px;
-    background-color: rgb(183, 202, 183);
+.texto_cuadro {
+    font-size: 40px;
+    font-weight: 700;
+    color: #f1f1f1; /* Color blanco más brillante */
+    letter-spacing: 1.2px; /* Espaciado de letras para mayor elegancia */
+    margin-bottom: 20px;
 }
+
+.subtitulo {
+    font-size: 22px;
+    font-weight: 500;
+    color: #c1c1c1; /* Texto secundario más claro */
+    margin-bottom: 50px;
+}
+
+.info {
+    font-size: 20px;
+    color: #aaaaaa;
+    margin-bottom: 30px;
+}
+
+.boton_volver {
+    background-color: #000000;
+    color: black;
+    width: 180px;
+    height: 45px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+.boton_volver:hover {
+    background-color: #474747;
+}
+
+.link_volver {
+    text-decoration: none;
+    color: white;
+    display: block;
+    line-height: 45px;
+    font-weight: 500;
+}
+
+
 .footer {
     background: #1117;
     backdrop-filter: blur(10px);
     text-align: center;
-    text-align: center;
-    padding: 10px;
-    color: #fff;
-    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-    margin-top:82.9cqmin
+    padding: 15px;
+    color: #f1f1f1;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.15);
+    margin-top: auto;
 }
+
 .footer a {
-    color: #fff;
+    color: #f1f1f1;
     text-decoration: none;
     margin: 0 10px;
+    font-weight: 500;
 }
 
 .footer a:hover {

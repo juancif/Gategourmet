@@ -116,11 +116,12 @@ $connect->close();
                 <img src="../Imagenes/image.png" alt="User Icon" class="user-icon">
                 <h2>BIENVENIDO</h2>
                 <form method="post" action="">
-                    <div class="input-group">
+                    <div class="input-group tooltip">
                         <label for="nombre_usuario">Nombre de usuario</label>
                         <div class="input-icon">
                             <i class="fas fa-user"></i>
                             <input type="text" id="nombre_usuario" name="nombre_usuario" required placeholder="Nombre de usuario" value="<?php if(isset($_POST['nombre_usuario'])) echo htmlspecialchars($_POST['nombre_usuario']); ?>"/>
+                            <span class="tooltiptext">Recuerda, que el nombre de usuario es la primera letra de tu nombre y primer apellido completo".</span>
                         </div>
                     </div>
                     <div class="input-group">
