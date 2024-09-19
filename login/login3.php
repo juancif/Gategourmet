@@ -81,11 +81,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION['nombre_usuario'] = $nombre_usuario;
 
                     // Redirigir al dashboard con el área del administrador
-<<<<<<< HEAD
+
                     header("Location: http://10.24.217.100/GateGourmet/Index/index_admin.html");
-=======
+
                     header("Location: http://localhost/GateGourmet/Index/index_admin.php");
->>>>>>> 444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
+
                     exit();
                 } else {
                     $error_message = "Nombre de usuario o contraseña incorrectos.";
@@ -143,13 +143,12 @@ $connect->close();
                     </div>
                     <div class="buttons">
                         <input type="submit" value="Ingresar">
-<<<<<<< HEAD
+
                         <a href="http://10.24.217.100/GateGourmet/register/register3.php" class="button">Registrarse</a>
                         <a href="http://10.24.217.100/GateGourmet/restablecer/restablecer.php" class="button-reestablecer">Restablecer Contraseña</a> <!-- Botón pequeño y sutil -->
-=======
                         <a href="http://localhost/GateGourmet/register/register3.php" class="button">Registrarse</a>
                         <a href="http://localhost/GateGourmet/restablecer/restablecer.php" class="button-reestablecer">Restablecer Contraseña</a>
->>>>>>> 444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
+
                     </div>
                 </form>
 
