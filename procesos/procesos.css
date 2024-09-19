@@ -9,16 +9,17 @@ body {
     min-height: 100vh;
 }
 
-header {
+.header {
     background: #1117;
     backdrop-filter: blur(10px);
-    text-align: center;
     padding: 20px 40px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
-    margin-bottom: 50px;
+    height: 6vh;
     color: white;
+    font-size: 40px;    
 }
+
 
 .cerrar__sesion__link{
     margin: 0;
@@ -27,11 +28,13 @@ header {
     text-decoration:#1117;
     color:white ;
     list-style-type: none;
+    z-index: 20;
 }
 
 .cerrar__sesion{
     margin-left: 250px;
     list-style-type: none;
+    z-index: 20;
 }
 
 .nav__item__user{
@@ -39,8 +42,9 @@ header {
     position: absolute;
     display: inline-block;
     margin: auto;
-    margin-left: 1500px;
-    margin-top: 15px;
+    margin-left: 75vw;
+    margin-top: 10px;
+    z-index: 20;
 }
 
 .img__usuario{
@@ -51,9 +55,18 @@ header {
     position:relative;
     background-color: transparent;
     list-style-type: none;
+    z-index: 20;
+}
+.img__usuario:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+.logo {
+    max-width: 400px;
+    margin-left: -5vw;
 }
 
-.img__usuario:hover {
+.logo:hover {
     transform: scale(1.1);
     filter: brightness(1.2);
 }
@@ -66,7 +79,7 @@ header {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
     position: relative;
-    margin-top: -20px;
+    margin-top: 8vh;
 }
 
 .table-wrapper {
