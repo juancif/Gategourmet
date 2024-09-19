@@ -238,7 +238,7 @@ if (isset($_POST['Submit'])) {
                     </div> -->
                     <div class="buttons">
                         <input type="submit" name="Submit" value="Agregar" class="Registrarse">
-                        <a href="http://localhost/GateGourmet/Index/index_admin.html" class="regresar">Regresar</a>
+                        <a href="http://localhost/GateGourmet/Index/index_admin.php" class="regresar">Regresar</a>
                     </div>
                 </form>
             </div>
