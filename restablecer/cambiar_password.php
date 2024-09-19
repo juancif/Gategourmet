@@ -124,8 +124,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token']) && isset($_P
                 margin: 0 auto;
                 padding: 20px;
                 border-radius: 10px;
-                background-color: rgb(82, 82, 82);
-                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                background: #1117;
+    backdrop-filter: blur(10px);
             }
 
             .input-group {
@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token']) && isset($_P
             .buttons input {
                 width: 100%;
                 padding: 12px;
-                background-color: rgb(82, 82, 82);
+                background: #1117;
                 color: white;
                 border: none;
                 border-radius: 5px;
@@ -163,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token']) && isset($_P
             }
 
             .buttons input:hover {
-                background-color: #003f7f;
+                background: #1117;
             }
         </style>
     </head>

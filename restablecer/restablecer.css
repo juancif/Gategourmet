@@ -91,9 +91,9 @@ h2 {
 
 /* Efecto cuando el campo está en foco */
 .input-group input[type="email"]:focus {
-    border-color: #377739; /* Verde claro para indicar foco */
+    border-color: #4cbe50; /* Verde claro para indicar foco */
     background-color: #fff;
-    box-shadow: 0 0 10px rgba(76, 175, 80, 0.3); /* Efecto de sombra */
+    box-shadow: 0 0 10px rgba(81, 218, 86, 0.3); /* Efecto de sombra */
     outline: none;
 }
 
@@ -115,7 +115,7 @@ h2 {
 input[type="submit"] {
     width: 100%;
     padding: 15px;
-    background-color: #2d612f;
+    background-color: #33966d;
     color: #fff;
     border: none;
     border-radius: 30px;
