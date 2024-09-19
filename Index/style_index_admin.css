@@ -294,8 +294,8 @@ h1 {
     max-width: 1250px;
     height: 180px;
     margin-bottom: 20px;   
-    margin-left: 20cqmin;
-    margin-left: 27cqmax;
+    margin-left: 15cqmin;
+    margin-left: 15cqmax;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
     position: absolute;
@@ -369,6 +369,21 @@ h1 {
     transition: all 0.3s ease; /* Agrega una transición suave */
     position: absolute;
 }
+
+.circulo_user {
+    font-family:Arial, Helvetica, sans-serif ;
+    width: 200px;
+    height: 120px;
+    background-color: #1117;
+    backdrop-filter: blur(10px);
+    margin-left: 200px;
+    margin-top: 20px;
+    border-radius: 50px; /* Crea un círculo perfecto */
+    box-shadow: 0 8px 16px rgba(136, 42, 42, 0.1); /* Añade una sombra suave */
+    transition: all 0.3s ease; /* Agrega una transición suave */
+    position: absolute;
+}
+
 
 p{
     margin-top: -100px;
