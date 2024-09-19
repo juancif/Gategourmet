@@ -140,16 +140,17 @@ CREATE TABLE procesos (
 );
 
 -- Cargar datos en la tabla listado_maestro
-LOAD DATA INFILE 'C:/Users/Juan David Cifuentes/Downloads/Libro1.csv' 
+LOAD DATA INFILE 'C:/Users/Administrator/Desktop/listado_maestro.csv'
 INTO TABLE listado_maestro
-FIELDS TERMINATED BY ';'
+FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
-IGNORE 1 ROWS
+IGNORE 1 LINES
 (proceso, codigo, titulo_documento, tipo, version, estado, fecha_aprobacion, areas, motivo_del_cambio, tiempo_de_retencion, responsable_de_retencion, lugar_de_almacenamiento_fisico, lugar_de_almacenamiento_magnetico, conservacion, disposicion_final, copias_controladas, fecha_de_vigencia, dias, senal_alerta, obsoleto, anulado, en_actualizacion);
 
+
 -- Cargar datos en la tabla procesos
-LOAD DATA INFILE 'C:/Usurs/Juan David Cifuentes/Downloads/Libro6.csv
+LOAD DATA INFILE 'C:/Users/Administrator/Desktop/Libro6.csv'
 INTO TABLE procesos
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'

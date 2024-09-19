@@ -175,15 +175,26 @@ if (isset($_POST['Submit'])) {
                         <input type="text" id="nombres_apellidos" name="nombres_apellidos" required>
                     </div>
                     <div class="input-group tooltip">
-                        <label for="contrasena">Contraseña</label>
-                        <input type="password" id="contrasena" name="contrasena" required>
-                        <span class="tooltiptext">Recuerda que la contraseña debe tener mínimo 12 caracteres, un carácter especial y una mayúscula.</span>
-                    </div>
-                    <div class="input-group tooltip">
-                        <label for="confirmar_contrasena">Confirmar Contraseña</label>
-                        <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" required>
-                        <span class="tooltiptext">Confirma tu contraseña.</span>
-                    </div>
+    <label for="contrasena">Contraseña</label>
+    <div class="input-wrapper">
+        <input type="password" id="contrasena" name="contrasena" required>
+        <span class="toggle-password" onclick="togglePassword('contrasena', 'eye_contrasena')">
+            <img src="../Imagenes/ojo_visible.png" id="eye_contrasena" alt="Mostrar contraseña" />
+        </span>
+    </div>
+    <span class="tooltiptext">Recuerda que la contraseña debe tener mínimo 12 caracteres, un carácter especial y una mayúscula.</span>
+</div>
+
+<div class="input-group tooltip">
+    <label for="confirmar_contrasena">Confirmar Contraseña</label>
+    <div class="input-wrapper">
+        <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" required>
+        <span class="toggle-password" onclick="togglePassword('confirmar_contrasena', 'eye_confirmar_contrasena')">
+            <img src="../Imagenes/ojo_invisible.png" id="eye_confirmar_contrasena" alt="Mostrar contraseña" />
+        </span>
+    </div>
+    <span class="tooltiptext">Confirma tu contraseña.</span>
+</div>
                     <div class="input-group">
                         <label for="area">Área</label>
                         <select name="area" id="area">
@@ -288,6 +299,21 @@ if (isset($_POST['Submit'])) {
             }
         });
     });
+    </script>
+    <script>
+        function togglePassword(fieldId, eyeId) {
+        var passwordField = document.getElementById(fieldId);
+        var eyeIcon = document.getElementById(eyeId);
+                                                                      
+    // Alternar el tipo de input entre 'password' y 'text'
+        if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        eyeIcon.src = '../Imagenes/ojo_visible.png'; // Cambia el ícono a "ocultar"
+        } else {
+        passwordField.type = 'password';
+        eyeIcon.src = '../Imagenes/ojo_invisible.png'; // Cambia el ícono a "mostrar"
+        }
+            }
     </script>
 </body>
 </html>

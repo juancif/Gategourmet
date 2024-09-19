@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
 /* Variables CSS */
 :root {
     --color-verde: #0b8b0f;
@@ -16,8 +19,11 @@
 }
 
 /* Estilos generales */
+<<<<<<< HEAD
 =======
 >>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
+=======
+>>>>>>> 444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
 body {
     margin: 0;
     padding: 0;
@@ -30,10 +36,14 @@ body {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
 /* Estilos para el header */
 /* Estilos para el header */
 /* Estilos para el header */
 /* Estilos para el header */
+<<<<<<< HEAD
 .header {
     text-align: center;
     padding: 2rem;
@@ -75,15 +85,14 @@ body {
     max-width: 2000px;
     margin: 2rem auto;
 =======
+=======
+>>>>>>> 444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
 .header {
     background: #1117;
     backdrop-filter: blur(10px);
-    text-align: center;
     padding: 20px 40px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
-    margin-bottom: 60px;
-    color: white;
 }
 
 
@@ -94,11 +103,13 @@ body {
     text-decoration:#1117;
     color:white ;
     list-style-type: none;
+    z-index: 20;
 }
 
 .cerrar__sesion{
     margin-left: 250px;
     list-style-type: none;
+    z-index: 20;
 }
 
 .nav__item__user{
@@ -106,8 +117,9 @@ body {
     position: absolute;
     display: inline-block;
     margin: auto;
-    margin-left: 1500px;
-    margin-top: 15px;
+    margin-left: 75vw;
+    margin-top: 10px;
+    z-index: 20;
 }
 
 .img__usuario{
@@ -118,13 +130,25 @@ body {
     position:relative;
     background-color: transparent;
     list-style-type: none;
+    z-index: 20;
 }
-
 .img__usuario:hover {
     transform: scale(1.1);
     filter: brightness(1.2);
 }
+.logo {
+    max-width: 400px;
+    margin-left: -5vw;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+/* Contenedor general */
 .container {
+<<<<<<< HEAD
     width: 90%;
     max-width: 4500px;
     margin: 1rem auto;
@@ -211,14 +235,96 @@ body {
 =======
     position: relative;
     margin-top: -30px;
+=======
+    width: 95%;
+    max-width: 2000px;
+    margin: 2rem auto;
+    background: #1117;
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    flex: 1; /* Para hacer que el footer se empuje al fondo */
+>>>>>>> 444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
 }
 
+/* Diseño de grid para organizar las search-fields */
+.search-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Ajuste de tamaño para inputs */
+    gap: 1.5rem; /* Espacio entre los elementos */
+    margin-bottom: 2rem;
+}
+
+/* Estilos generales para los inputs */
+.search-input {
+    padding: 0.75rem;
+    border: 1px solid var(--color-gris);
+    border-radius: 8px;
+    width: 100%; /* Ajuste completo al contenedor */
+    background-color: var(--color-gris-claro);
+    font-size: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    transition: all 0.3s ease;
+    outline: none; /* Remover bordes cuando están enfocados */
+}
+
+.search-input:focus {
+    border-color: var(--color-verde);
+    box-shadow: 0 0 8px rgba(11, 139, 15, 0.3);
+}
+
+/* Estilos de hover para los inputs */
+.search-input:hover {
+    background-color: #f0f9f0;
+    border-color: var(--color-verde);
+}
+
+/* Ajuste visual de los placeholders */
+.search-input::placeholder {
+    color: #888; /* Color gris sutil para los placeholders */
+}
+
+/* Estilos específicos para cada campo de búsqueda */
+#proceso, #codigo, #titulo_documento, #tipo, #version, #estado, #fecha_aprobacion, #areas, #motivo_del_cambio, #tiempo_de_retencion, #responsable_de_retencion, #lugar_de_almacenamiento_fisico, #lugar_de_almacenamiento_magnetico, #conservacion, #disposicion_final, #copias_controladas, #fecha_de_vigencia, #dias, #senal_alerta, #obsoleto, #anulado, #en_actualizacion {
+    border-color: var(--color-verde-oscuro);
+}
+
+/* Botón de búsqueda */
+.search-bar button {
+    padding: 0.7rem 1.2rem;
+    background-color: var(--color-verde);
+    color: var(--color-blanco);
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    max-width: 180px; /* Ajustar el ancho del botón */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.search-bar button:hover {
+    background-color: var(--color-verde-oscuro);
+    transform: translateY(-2px);
+}
+
+.search-bar button:active {
+    transform: translateY(1px);
+}
+
+/* Estilos para tablas */
 .table-wrapper {
     overflow-x: auto;
     overflow-y: auto;
+<<<<<<< HEAD
     max-height: calc(100vh - 8rem);
     border: 2px solid #000;
 >>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
+=======
+    max-height: calc(100vh - 10rem); /* Ajustar para que el footer no cubra el contenido */
+    border: 1px solid var(--color-gris);
+>>>>>>> 444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
     padding-bottom: 1rem;
 }
 
@@ -230,14 +336,19 @@ table {
 
 table, th, td {
 <<<<<<< HEAD
+<<<<<<< HEAD
     border: 1px solid var(--color-gris); /* Borde sutil */
 =======
     border: 2px solid #000;
 >>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
+=======
+    border: 1px solid var(--color-gris); /* Borde sutil */
+>>>>>>> 444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
     background: rgba(255, 249, 249, 0.9);
 }
 
 th, td {
+<<<<<<< HEAD
 <<<<<<< HEAD
     padding: 12px; /* Ajuste de padding */
     text-align: left;
@@ -247,10 +358,16 @@ th, td {
     text-align: left;
     font-size: 14px;
 >>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
+=======
+    padding: 12px; /* Ajuste de padding */
+    text-align: left;
+    font-size: 14px; /* Tamaño de texto más pequeño para mejor lectura */
+>>>>>>> 444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
     color: #000;
 }
 
 th {
+<<<<<<< HEAD
 <<<<<<< HEAD
     background-color: var(--color-verde);
     color: var(--color-blanco);
@@ -361,80 +478,49 @@ footer a:hover {
 =======
     background-color: #0b8b0f;
     color: white;
+=======
+    background-color: var(--color-verde);
+    color: var(--color-blanco);
+>>>>>>> 444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
 }
 
 tr:nth-child(even) {
-    background: rgba(255, 249, 249, 0.9);
+    background: rgba(240, 240, 240, 0.9); /* Color más claro */
 }
 
 tr:nth-child(odd) {
-    background: rgba(255, 249, 249, 0.95);
+    background: rgba(255, 255, 255, 0.9);
 }
 
 tr:hover td {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.05); /* Hover más sutil */
 }
 
-/* Estilos para filas con clases especiales */
-/* Estilos para filas con clases especiales */
 tr.vigente td {
-background-color: rgba(51, 187, 255, 0.4); /* Azul claro con transparencia */
-color: #000; /* Texto negro para contraste */
+    background-color: rgba(51, 187, 255, 0.4); /* Azul */
+    color: #000;
 }
 
 tr.desactualizado td {
-background-color: rgba(248, 59, 59, 0.4); /* Rojo claro con transparencia */
-color: #000; /* Texto negro para contraste */
+    background-color: rgba(248, 59, 59, 0.4); /* Rojo */
+    color: #000;
 }
 
 tr.obsoleto td {
-background-color: rgba(141, 139, 139, 0.63); /* Gris claro con transparencia */
-color: #000; /* Texto negro para contraste */
+    background-color: rgba(141, 139, 139, 0.63); /* Gris */
+    color: #000;
 }
 
-
-.search-bar {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2rem;
-}
-
-.search-bar form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: -50px;
-}
-
-
-.search-bar input[type="text"] {
-    width: 300px;
-    padding: 0.5rem;
-    border: 2px solid #0b8b0f;
-    border-radius: 4px;
-    font-size: 1rem;
-    margin-right: 0.5rem;
-}
-
-.search-bar button {
-    padding: 0.5rem 1rem;
-    background-color: #0b8b0f;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
+/* Adaptabilidad para pantallas más pequeñas */
 @media (max-width: 768px) {
-    table, th, td {
-        display: block;
-        width: 100%;
+    .search-fields {
+        grid-template-columns: 1fr; /* Hacer que los inputs ocupen toda la pantalla en dispositivos móviles */
     }
+
+    table, th, td {
+        font-size: 12px; /* Reducción en pantallas pequeñas */
+    }
+<<<<<<< HEAD
     th {
         display: none;
     }
@@ -457,3 +543,71 @@ color: #000; /* Texto negro para contraste */
     }
 }
 >>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
+=======
+}
+
+/* Estilos para el contenedor del autocompletado */
+.autocomplete-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Estilos para el dropdown */
+.autocomplete-dropdown {
+    position: absolute;
+    background-color: var(--color-blanco);
+    border: 1px solid var(--color-gris);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-height: 300px; /* Limitar altura para scroll */
+    overflow-y: auto; /* Scroll vertical si es necesario */
+    z-index: 1000; /* Asegurarse de que se muestre sobre otros elementos */
+    margin-top: 0.25rem;
+    display: none; /* Ocultar por defecto */
+}
+
+/* Estilos para los elementos de sugerencia */
+.suggestion-item {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--color-gris);
+    cursor: pointer;
+    background-color: var(--color-blanco);
+    font-size: 1rem;
+    color: #000;
+    transition: background-color 0.3s ease;
+}
+
+/* Estilos de hover para los elementos de sugerencia */
+.suggestion-item:hover {
+    background-color: var(--color-gris-claro);
+}
+
+/* Estilos de selección para el elemento de sugerencia */
+.suggestion-item.selected {
+    background-color: var(--color-verde);
+    color: var(--color-blanco);
+}
+
+/* Estilos para el footer */
+footer {
+    background: rgba(17, 17, 17, 0.8); /* Fondo oscuro más accesible */
+    color: var(--color-blanco);
+    padding: 1rem 2rem;
+    text-align: center;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
+    margin-top: auto;
+    width: 100%; /* Ocupa todo el ancho */
+    font-size: 1rem; /* Tamaño del texto */
+}
+
+footer a {
+    color: var(--color-blanco); /* Color de los enlaces */
+    text-decoration: none;
+    transition: color 0.3s ease; /* Suavizar el cambio de color */
+}
+
+footer a:hover {
+    color: var(--color-azul); /* Cambiar el color de los enlaces al pasar el cursor */
+}
+>>>>>>> 444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
