@@ -77,7 +77,8 @@ body {
     margin-bottom: 2vh;
     padding: 2rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra más suave para el contenedor */
-    background: rgba(255, 255, 255, 0.85); /* Fondo blanco semi-transparente */
+    background: #1117;
+    backdrop-filter: blur(10px);
     border-radius: 8px; /* Bordes redondeados */
 }
 
@@ -95,6 +96,7 @@ table {
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+    padding-bottom: 100vh;
 }
 
 th, td {
@@ -152,7 +154,7 @@ footer p {
     padding: 1rem;
     width: 100%;
     max-width: 900px;
-    margin: 0 auto;
+    margin: 2vh auto;
 }
 
 /* Estilo para las barras de progreso en el gráfico de "Porcentaje de Actualización por Área" */
