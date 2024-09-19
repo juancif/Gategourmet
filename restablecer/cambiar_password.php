@@ -1,4 +1,4 @@
-<?php
+<?php 
 $servername = "localhost"; // Cambiar si es necesario
 $username = "root"; // Cambiar si es necesario
 $password = ""; // Cambiar si es necesario
@@ -36,54 +36,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token']) && isset($_P
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Si el token es válido
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
         $correo = $row['correo'];
         $token_expiry = $row['token_expiry'];
 
-        // Verificar si el token ha expirado comparando la fecha de expiración en la base de datos
-        $current_time = time(); // Tiempo actual en formato UNIX
-        $token_expiry_time = strtotime($token_expiry); // Convertir la fecha de expiración a formato UNIX
-
+        // Verificar si el token ha expirado
+        $current_time = time();
+        $token_expiry_time = strtotime($token_expiry);
         if ($current_time > $token_expiry_time) {
             echo "<script>alert('El token ha expirado.');window.history.back();</script>";
             exit();
         }
 
-        // Verificar si la nueva contraseña es diferente a la actual
+        // Verificar si el correo está en la tabla usuarios o administradores
         $stmt = $connect->prepare("SELECT contrasena FROM usuarios WHERE correo = ?");
         $stmt->bind_param("s", $correo);
         $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
+        $result_usuarios = $stmt->get_result();
 
-        if (password_verify($nueva_contrasena, $row['contrasena'])) {
-            echo "<script>alert('La nueva contraseña no puede ser la misma que la actual.');window.history.back();</script>";
+        $stmt = $connect->prepare("SELECT contrasena FROM administradores WHERE correo = ?");
+        $stmt->bind_param("s", $correo);
+        $stmt->execute();
+        $result_administradores = $stmt->get_result();
+
+        if ($result_usuarios->num_rows == 1) {
+            // Si el correo pertenece a un usuario
+            $row = $result_usuarios->fetch_assoc();
+
+            if (password_verify($nueva_contrasena, $row['contrasena'])) {
+                echo "<script>alert('La nueva contraseña no puede ser la misma que la actual.');window.history.back();</script>";
+                exit();
+            }
+
+            // Actualizar la nueva contraseña en usuarios
+            $hashed_password = password_hash($nueva_contrasena, PASSWORD_DEFAULT);
+            $stmt = $connect->prepare("UPDATE usuarios SET contrasena = ? WHERE correo = ?");
+            $stmt->bind_param("ss", $hashed_password, $correo);
+            $stmt->execute();
+        } elseif ($result_administradores->num_rows == 1) {
+            // Si el correo pertenece a un administrador
+            $row = $result_administradores->fetch_assoc();
+
+            if (password_verify($nueva_contrasena, $row['contrasena'])) {
+                echo "<script>alert('La nueva contraseña no puede ser la misma que la actual.');window.history.back();</script>";
+                exit();
+            }
+
+            // Actualizar la nueva contraseña en administradores
+            $hashed_password = password_hash($nueva_contrasena, PASSWORD_DEFAULT);
+            $stmt = $connect->prepare("UPDATE administradores SET contrasena = ? WHERE correo = ?");
+            $stmt->bind_param("ss", $hashed_password, $correo);
+            $stmt->execute();
+        } else {
+            echo "<script>alert('Correo no encontrado.');window.history.back();</script>";
             exit();
         }
 
-        // Actualizar la nueva contraseña en la base de datos
-        $hashed_password = password_hash($nueva_contrasena, PASSWORD_DEFAULT);
-        $stmt = $connect->prepare("UPDATE usuarios SET contrasena = ? WHERE correo = ?");
-        $stmt->bind_param("ss", $hashed_password, $correo);
-        $stmt->execute();
-
-        // Eliminar el token una vez que la contraseña haya sido actualizada
+        // Eliminar el token después de actualizar la contraseña
         $stmt = $connect->prepare("DELETE FROM password_resets WHERE token = ?");
         $stmt->bind_param("s", $token);
         $stmt->execute();
 
-        // Verificar que el token fue eliminado correctamente
         if ($stmt->affected_rows > 0) {
-            // Redirigir al login después de actualizar la contraseña
             echo "<script>alert('Contraseña actualizada exitosamente. El enlace ya no puede ser utilizado.');window.location.href='http://10.24.217.100/Gategourmet/login/login3.php';</script>";
         } else {
             echo "<script>alert('Error al eliminar el token de restablecimiento. Inténtalo de nuevo.');window.history.back();</script>";
         }
-
     } else {
-        // Si el token no es válido o ya ha sido utilizado
         echo "<script>alert('Token de restablecimiento inválido o ya utilizado.');window.location.href='http://10.24.217.100/Gategourmet/login/login3.php';</script>";
     }
 } elseif (isset($_GET['token'])) {

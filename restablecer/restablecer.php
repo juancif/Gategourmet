@@ -19,24 +19,31 @@ if ($connect->connect_error) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['correo'])) {
     $correo = $_POST['correo'];
 
-    // Verificar si el correo electrónico existe en la base de datos
+    // Verificar si el correo electrónico existe en la tabla usuarios
     $stmt = $connect->prepare("SELECT correo FROM usuarios WHERE correo = ?");
     $stmt->bind_param("s", $correo);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $result_usuarios = $stmt->get_result();
 
-    if ($result->num_rows == 1) {
+    // Verificar si el correo electrónico existe en la tabla administradores
+    $stmt = $connect->prepare("SELECT correo FROM administradores WHERE correo = ?");
+    $stmt->bind_param("s", $correo);
+    $stmt->execute();
+    $result_administradores = $stmt->get_result();
+
+    if ($result_usuarios->num_rows == 1 || $result_administradores->num_rows == 1) {
         // Generar el token aleatorio y su fecha de expiración (1 hora)
         $token = bin2hex(random_bytes(50));
         $token_expiry = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
-        // Guardar el token y la dirección de correo en la base de datos
+        // Insertar el token en password_resets solo si el correo existe en una tabla
         $stmt = $connect->prepare("INSERT INTO password_resets (correo, token, token_expiry) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $correo, $token, $token_expiry);
         $stmt->execute();
 
         // Enviar el correo electrónico con el enlace de restablecimiento
         enviarCorreo($correo, $token);
+
         // Redirigir a la página de éxito
         header('Location: reestablecer_exitoso.php');
         exit();
