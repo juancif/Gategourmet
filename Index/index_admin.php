@@ -179,8 +179,8 @@ foreach ($messages as $message) {
                         <p><?php echo htmlspecialchars_decode($email['body']); ?></p>
                     </div>
                     <div class="email-actions">
-                        <button>Responder</button>
-                        <button>Eliminar</button>
+                        <button>Verificar</button>
+                        <button>Devolver</button>
                     </div>
                 </div>
             <?php } ?>

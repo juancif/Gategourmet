@@ -42,8 +42,8 @@ body {
     position: absolute;
     display: inline-block;
     margin: auto;
-    margin-left: 1500px;
-    margin-top: -10vh;
+    margin-left: 75vw;
+    margin-top: -9vh;
     z-index: 20;
 }
 
