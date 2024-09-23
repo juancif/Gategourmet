@@ -1,5 +1,12 @@
 <?php
 include_once("config_inactivos.php");
+session_start(); // Asegúrate de iniciar sesión para poder usar variables de sesión
+
+if (!isset($_SESSION['nombre_usuario'])) {
+    die("Usuario no autenticado.");
+}
+
+$usuario_logueado = $_SESSION['nombre_usuario']; // El usuario que está realizando la acción
 
 if (isset($_GET['nombre_usuario'])) {
     $nombre_usuario = $_GET['nombre_usuario'];
@@ -17,15 +24,17 @@ if (isset($_GET['nombre_usuario'])) {
 
         if ($user) {
             // Dependiendo del rol, insertar en la tabla correspondiente
+            $table = '';
             if ($user['rol'] === 'Administrador') {
-                $sqlInsert = "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol, estado) 
-                              VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol, 'Activo')";
+                $table = 'administradores';
             } elseif (in_array($user['rol'], ['Aprobador', 'Digitador', 'Observador'])) {
-                $sqlInsert = "INSERT INTO usuarios (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol, estado) 
-                              VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol, 'Activo')";
+                $table = 'usuarios';
             } else {
                 throw new Exception("Rol desconocido: " . $user['rol']);
             }
+
+            $sqlInsert = "INSERT INTO $table (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol, estado) 
+                          VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol, 'Activo')";
 
             $stmtInsert = $dbConn->prepare($sqlInsert);
             $stmtInsert->bindParam(':correo', $user['correo']);
@@ -42,6 +51,17 @@ if (isset($_GET['nombre_usuario'])) {
             $stmtDelete = $dbConn->prepare($sqlDelete);
             $stmtDelete->bindParam(':nombre_usuario', $nombre_usuario);
             $stmtDelete->execute();
+
+            // Registrar acción en la tabla de movimientos
+            $accion = ($user['rol'] === 'Administrador') 
+                      ? "Activación de administrador: $nombre_usuario" 
+                      : "Activación de usuario con rol {$user['rol']}: $nombre_usuario";
+            
+            $sqlMovimiento = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (:nombre_usuario, :accion, NOW())";
+            $stmtMovimiento = $dbConn->prepare($sqlMovimiento);
+            $stmtMovimiento->bindParam(':nombre_usuario', $usuario_logueado); // Nombre de usuario que realizó la acción
+            $stmtMovimiento->bindParam(':accion', $accion);
+            $stmtMovimiento->execute();
 
             // Cometer transacción
             $dbConn->commit();

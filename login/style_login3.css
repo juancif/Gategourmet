@@ -85,6 +85,36 @@ h2 {
     color: #999;
 }
 
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 400px;
+    background-color: #555f;
+    backdrop-filter: blur(30px);
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 15px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the input */
+    left: 50%;
+    margin-left: -110px; /* Center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    margin-left: 300px;
+    position: absolute;
+    border-radius: 50px;
+}
 .password-group i.toggle-password {
     left: auto;
     right: 10px;
@@ -107,13 +137,29 @@ input[type="text"]:focus, input[type="password"]:focus {
     outline: none;
 }
 
+.input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+input[type="password"] {
+    width: 82%;
+    padding-right: 40px; /* Espacio para el icono del ojo */
+}
+
+/* Estilo del ícono del ojo */
 .toggle-password {
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #999;
+}
+
+.toggle-password img {
+    width: 20px;
+    height: 20px;
 }
 
 .buttons {
@@ -221,5 +267,35 @@ input[type="submit"]:active, .button-reestablecer , .button:active {
     .buttons .button, .buttons input[type="submit"] {
         width: 100%;
         margin-bottom: 10px;
+    }
+}
+
+/* Mensaje de error*/
+.error-message {
+    background-color: #000000;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: 500;
+    text-align: center;
+    position: fixed;
+    top: -60px;
+    right: 35px;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeOut 5s forwards; /* Desaparece después de 5 segundos */
+    position: absolute;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        display: none;
     }
 }

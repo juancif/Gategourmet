@@ -1,58 +1,49 @@
 <?php
-
-include_once("config_mov.php");
 session_start();
+include_once("config_mov.php");
 
-// Asegúrate de que la sesión esté iniciada
+// Verificar si hay una sesión activa
 if (isset($_SESSION['nombre_usuario'])) {
-    // Registra el evento de cierre de sesión en el log
     $nombre_usuario = $_SESSION['nombre_usuario'];
-    $log_message = "User $nombre_usuario logged out";
 
-    // Conecta a la base de datos
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "gategourmet";
+    // Inicializar variable para el rol
+    $rol = null;
 
-    // Crear conexión
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    // Verificar el rol en la tabla de usuarios
+    $sql_check_user = "SELECT rol FROM usuarios WHERE nombre_usuario = :nombre_usuario";
+    $query_check_user = $dbConn->prepare($sql_check_user);
+    $query_check_user->execute([':nombre_usuario' => $nombre_usuario]);
+    $row_user = $query_check_user->fetch(PDO::FETCH_ASSOC);
 
-    // Verificar conexión
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    if ($row_user) {
+        $rol = $row_user['rol'];
+    } else {
+        // Si no se encuentra en usuarios, verificar en la tabla de administradores
+        $sql_check_admin = "SELECT rol FROM administradores WHERE nombre_usuario = :nombre_usuario";
+        $query_check_admin = $dbConn->prepare($sql_check_admin);
+        $query_check_admin->execute([':nombre_usuario' => $nombre_usuario]);
+        $row_admin = $query_check_admin->fetch(PDO::FETCH_ASSOC);
+        
+        if ($row_admin) {
+            $rol = $row_admin['rol'];
+        }
     }
 
-    // Preparar la consulta
-    $stmt = $conn->prepare("INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (?, ?, NOW())");
-    if ($stmt === false) {
-        die("Prepare failed: " . $conn->error);
+    if ($rol) {
+        // Registrar el cierre de sesión en la tabla de movimientos
+        $accion = "Cierre de sesión: Usuario $nombre_usuario con rol $rol";
+        $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, accion) VALUES (:nombre_usuario, :accion)";
+        $stmt_movimiento = $dbConn->prepare($sql_movimiento);
+        $stmt_movimiento->bindParam(':nombre_usuario', $nombre_usuario);
+        $stmt_movimiento->bindParam(':accion', $accion);
+        $stmt_movimiento->execute();
     }
-
-    // Vincular los parámetros
-    $stmt->bind_param("ss", $nombre_usuario, $log_message);
-
-    // Ejecutar la consulta
-    if (!$stmt->execute()) {
-        die("Execute failed: " . $stmt->error);
-    }
-
-    // Cerrar la declaración y la conexión
-    $stmt->close();
-    $conn->close();
 
     // Destruir la sesión
     session_destroy();
-
-    // Confirmar el cierre de sesión
-    echo "Cierre de sesión exitoso y registro en el log.";
-
-    // Redirigir al usuario al inicio de sesión
-    header("Location: http://localhost/GateGourmet/login/login3.php");
-    exit();
-} else {
-    // Si no hay sesión activa, redirige a la página de inicio de sesión
-    header("Location: http://localhost/GateGourmet/login/login3.php");
-    exit();
 }
+
+// Redirigir al usuario a la página de inicio de sesión
+header("Location: http://localhost/GateGourmet/login/login3.php");
+exit();
 ?>

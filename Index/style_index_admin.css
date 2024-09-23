@@ -1,0 +1,518 @@
+body{
+    background-image: url("../Imagenes/fondogg3.webp");
+    margin: 0;
+    background-size:2100px ;
+    /*
+    background-position: -500px;
+    background-repeat: no-repeat;
+    box-sizing: border-box
+    */
+    margin: 0;
+}
+
+
+.imgs__menu{
+    width: 20px;
+    height: 20px;
+    padding-right:5px;
+    padding-left:0px;
+}
+
+
+.img__usuario{
+    width: 60px;
+    height: 50px;
+    margin-left: 150px;
+    margin-top: 0px;
+    position:relative;
+    background-color: transparent;
+}
+
+.img__usuario:hover{
+    padding-left: 5px;
+}
+
+/* Contenedor del menú */
+.nav__principal {
+    background: #1117;
+    backdrop-filter: blur(10px); /* Color de fondo del menú */
+    padding: 25px 20px; /* Espaciado interno del menú */
+    z-index: 30;
+}
+
+/* Lista del menú */
+.nav__list {
+    list-style: none; /* Quitar puntos de lista */
+    padding: 0; /* Quitar padding de la lista */
+    margin: 0; /* Quitar margin de la lista */
+    display: flex; /* Usar flexbox para alinear horizontalmente */
+    flex-wrap: wrap; /* Permitir que los elementos se ajusten a múltiples líneas si es necesario */
+}
+
+/* Elemento del menú */
+.nav__item {
+    margin: 0 12px; /* Margen horizontal entre elementos del menú */
+    font-size: 20px;
+}
+
+/* Enlace del menú */
+.nav__link {
+    text-decoration: none; /* Quitar subrayado */
+    color:white; /* Color del texto */
+    display: flex; /* Usar flexbox para alinear imagen y texto */
+    align-items: center; /* Centrar verticalmente */
+    padding: 8px 2px; /* Padding interno para el enlace */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Transición suave para el hover */
+}
+
+/* Imagen del menú */
+.imgs__menu {
+    width: 20px; /* Ajustar el tamaño de las imágenes */
+    height: 20px;
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
+}
+
+/* Hover del enlace del menú */
+.nav__link:hover {
+    background-color: #303030; /* Color de fondo al hacer hover */
+}
+
+/* Estilo para cerrar sesión */
+.nav__item__user {
+    margin-left: auto; /* Alinear a la derecha */
+}
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  #alarmas {
+    padding: 20px 20px;
+    border-radius: 20px;
+    width: 12vw;
+    background-color: #111c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-left: 86vw;
+    margin-top: 1vh;
+    font-size: 22px;
+}
+
+#alarmas:hover{
+    transform: scale(1.05);
+    background-color: #222b;
+}
+  
+  #abirMenu {
+    max-width: 600px; /* Ajusta este valor según el tamaño deseado */
+    max-height: 1000px; /* Altura máxima para el contenedor */
+    overflow-y: auto; /* Activa el scroll si el contenido excede la altura */
+    position: absolute;
+    top: 5vh;
+    left: 76vw;
+    width: 22vw;
+    height: 105vh;
+    background: #1117;
+    backdrop-filter: blur(30px); 
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 40;
+    margin-top: 5vh;
+    color: white;
+  }
+  
+  #abirMenu ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #abirMenu ul li {
+    padding: 8px;
+  }
+  
+  #abirMenu ul li a {
+    text-decoration: none;
+    color: white;
+  }
+  
+  #abirMenu ul li a:hover {
+    background-color: #ddd;
+  }
+  
+  #abirMenu #cerrarMenu {
+    float: right;
+    cursor: pointer;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+  }
+  
+  .desplegar {
+    display: none;
+    margin-top: 20vh;
+  }
+  
+/* Estilo principal del contenedor */
+.container {
+    width: 85%;
+    margin: 30px auto;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Estilo para cada correo electrónico */
+.email-item {
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.email-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Título de cada correo (Asunto) */
+.email-item h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Información del remitente, destinatario y fecha */
+.email-item p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.email-item .date {
+    font-size: 12px;
+    color: #888;
+    margin-top: 10px;
+}
+
+/* Contenido del correo */
+.email-item .body {
+    margin-top: 15px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Separador entre los correos */
+.email-list {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilo para los botones de acción */
+.email-item .email-actions {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.email-item .email-actions button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.email-item .email-actions button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para los títulos de sección */
+h1 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.cerrar__sesion__link {
+    display: flex; /* Usar flexbox para alinear imagen y texto */
+    align-items: center; /* Centrar verticalmente */
+    text-decoration: none; /* Quitar subrayado */
+    color: #ffffff;/* Color del texto */
+    font-size: 25px; 
+    margin-top: -20px;
+    position:absolute;
+}
+
+.cerrar__sesion__link:hover{
+    padding-left: 5px;
+}
+/* Imagen del usuario */
+.img__usuario {
+    width: 70px; /* Ajustar el tamaño de la imagen del usuario */
+    height: 70px;
+    margin-top: 0px;
+    margin-left: -180px;
+    padding-right: 20px;
+}
+
+/* Botón de cerrar sesión */
+.cerrar__sesion {
+    font-weight: bold; /* Hacer el texto en negrita */
+}
+
+
+
+/* Estilos básicos del menú desplegable */
+.logoindex{
+    width: 600px;
+    height: 100px;
+    margin: 50px 50px;
+}
+
+.recuadroimagen{
+    position: relative;
+    width: 95%;
+    height: 180px;
+    background: linear-gradient(to left,transparent, rgb(10, 192, 146), rgb(67, 153, 82),transparent);
+    backdrop-filter: blur(10px);
+    margin-left: 40px;
+    border-radius: 50px;
+    margin-top: 30px;
+    z-index: 30;
+}
+
+.triangulo{
+    max-width: 1250px;
+    height: 180px;
+    margin-bottom: 20px;   
+    margin-left: 15cqmin;
+    margin-left: 15cqmax;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    position: absolute;
+}
+
+
+.cuadro1, .cuadro2, .cuadro3{
+    width: 98.5%;
+    height: 180px;
+    /*background:linear-gradient(#9997, #9997);*/
+    margin-left: 10px ;
+    margin-right: 10px;
+    position: relative;
+    border-radius: 50px;
+}
+
+.cuadro1{
+    margin-top: 45px;
+    /*background:linear-gradient(#9999, #9999);*/
+    background-color:transparent;
+    border: 2px solid transparent;
+}
+
+.cuadro2{
+    margin-top: 5px;
+    background-color:transparent;
+
+}
+
+.cuadro3{
+    height: 280px;
+    margin-bottom: 20px;
+    /*background:linear-gradient(#999b, #999b);*/
+    background-color:transparent;
+    margin-top: 5px;
+    border: 2px solid transparent;
+    /*background:linear-gradient(#999b, #999b);*/
+    /*background-color: rgba(94, 119, 64, 0.993);*/
+}
+
+.recuadro1, .recuadro2, .recuadro3{
+    font-family: Arial, Helvetica, sans-serif;
+    width: 320px;
+    height: 100%;
+    background: linear-gradient(to left, rgba(10, 192, 147, 0.50), rgb(67, 153, 82, 0.50));
+    backdrop-filter: blur(10px);
+    margin: auto;
+    margin-left: 0px;
+    margin-top: 0px;
+    position: absolute;
+    border-radius: 50px;
+}
+
+
+
+.recuadro3{
+    margin-top: 0px;
+}
+
+
+.circulo {
+    font-family:Arial, Helvetica, sans-serif ;
+    width: 200px;
+    height: 120px;
+    background-color: #1117;
+    backdrop-filter: blur(10px);
+    margin-left: 200px;
+    margin-top: 20px;
+    border-radius: 50px; /* Crea un círculo perfecto */
+    box-shadow: 0 8px 16px rgba(136, 42, 42, 0.1); /* Añade una sombra suave */
+    transition: all 0.3s ease; /* Agrega una transición suave */
+    position: absolute;
+}
+
+.circulo_user {
+    font-family:Arial, Helvetica, sans-serif ;
+    width: 200px;
+    height: 120px;
+    background-color: #1117;
+    backdrop-filter: blur(10px);
+    margin-left: 200px;
+    margin-top: 20px;
+    border-radius: 50px; /* Crea un círculo perfecto */
+    box-shadow: 0 8px 16px rgba(136, 42, 42, 0.1); /* Añade una sombra suave */
+    transition: all 0.3s ease; /* Agrega una transición suave */
+    position: absolute;
+}
+
+
+p{
+    margin-top: -100px;
+    margin-left: 50px;
+    font-size: 20px;
+    position: absolute;
+    color: white;
+}
+
+.title__estrag{
+    color: rgb(255, 255, 255);
+    margin-left: 30px;
+    margin-top: -40px;
+    position: relative;
+    font-size: 35px;
+}
+
+.parrafo_estrategicos{
+    white-space:initial;
+    word-break: break-all;
+    color: white;
+    margin-top: -70px;
+    margin-left: 35px;
+}
+
+.title_misionales {
+    margin-top: -40px;
+    margin-left: 50px;
+    font-size: 30px;
+    position: absolute;
+    color: #fff;
+}
+
+.parrafo_misionales{
+    margin-top: 60px;
+    margin-left: 40px;
+    font-size: 20px;
+    position: absolute;
+    color: white;
+    
+}
+
+.title_soporte{
+    color: rgb(255, 255, 255);
+    margin-top: -20px;
+    margin-left: 60px;
+    font-size:35px;
+}
+
+
+.parrafo_soporte{
+    margin-top: -60px;
+    margin-left: 50px;
+    font-size: 22px;
+    position: absolute;
+    color: white;
+}
+
+
+
+.circulo1, .circulo3, .circulo8, .circulo13 {
+    margin-left: 400px;
+    
+}
+
+.circulo:hover {
+    background-color: transparent;
+    /*background:linear-gradient(#9997, #9997);*//* Cambia el color de fondo al pasar el ratón sobre el círculo */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el ratón sobre el círculo */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2); /* Aumenta la intensidad de la sombra */
+}
+
+.circulo:hover a{
+
+    background-color: transparent;
+}
+.circulo2, .circulo4, .circulo9, .circulo14{
+    margin-left: 620px;
+}
+
+
+
+.circulo5, .circulo10, .circulo15{
+    margin-left: 850px;
+
+}
+
+.circulo6, .circulo11{
+    margin-left: 1080px;
+}
+
+.circulo7, .circulo12{
+    margin-left: 1300px;
+}
+.circulo13{
+    margin-top: 150px;
+}
+
+.circulo14{
+    margin-top: 150px;
+}
+
+.circulo15{
+    margin-top: 150px;
+}
+
+.link1{
+
+    text-decoration: none;
+    text-align: center
+}
+
+h3{
+    margin-top: -5px;
+    margin-left: -5px;
+    font-size: z0px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    padding-left: 40px;
+    padding-right: 40px;
+    color: white;
+}
+
+.h3__2{
+    margin-top: 0px;
+    padding-bottom:35px ;
+    padding-top: 38px;
+}
+
+.h3__3{
+    margin-left: -20px
+}
