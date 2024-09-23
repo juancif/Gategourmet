@@ -44,6 +44,6 @@ if (isset($_SESSION['nombre_usuario'])) {
 }
 
 // Redirigir al usuario a la página de inicio de sesión
-header("Location: http://10.24.217.62/GateGourmet/login/login3.php");
+header("Location: http://localhost/GateGourmet/login/login3.php");
 exit();
 ?>

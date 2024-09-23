@@ -24,7 +24,7 @@ $area = isset($_SESSION['area']) ? $_SESSION['area'] : '';
             </li>
             <li class="nav__item">
                 <a href="http://localhost/GateGourmet/Crear_documento/crear.php" class="nav__link"><img src="../imagenes/security.png" alt="Seguridad" class="imgs__menu">Crear documento</a>
-            </li>444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
+            </li>
             <li class="nav__item">
                 <a href="http://localhost/GateGourmet/Indicadores/indicadores_user.php" class="nav__link"><img src="../imagenes/config.png" alt="Configuracióm" class="imgs__menu">Indicadores</a>
             </li>

@@ -1,4 +1,3 @@
-
 <?php
 require '../vendor/autoload.php';
 session_start();
@@ -9,7 +8,7 @@ $client->setAuthConfig('credentials.json');
 $client->addScope(Google_Service_Gmail::GMAIL_READONLY);
 $client->setRedirectUri('http://localhost/GateGourmet/Index/index_admin.php');
 $client->setAccessType('offline');
-$client->setPrompt('consent select_account'); // Modificado
+$client->setPrompt('consent'); // Cambiado a 'consent'
 
 // Manejar el código de autorización
 if (isset($_GET['code'])) {
@@ -34,9 +33,6 @@ if (!isset($_SESSION['access_token']) || $_SESSION['access_token'] === null) {
 // Configurar el servicio de Gmail con el token de acceso
 $client->setAccessToken($_SESSION['access_token']);
 $service = new Google_Service_Gmail($client);
-
-// Código para obtener y mostrar los correos electrónicos...
-
 
 // Recuperar correos electrónicos
 try {
