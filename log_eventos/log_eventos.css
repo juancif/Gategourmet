@@ -1,0 +1,157 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: url('../Imagenes/fondogg3.webp') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background: #1117;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    width: 105vw;
+    padding: 20px 40px;
+    box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
+    margin-bottom: 20px;
+    color: white;
+}
+
+.cerrar__sesion__link {
+    margin-left: 8vw;
+    text-decoration: none;
+    color: white;
+    list-style-type: none;
+}
+
+.cerrar__sesion {
+    margin-left: 250px;
+    list-style-type: none;
+}
+
+.nav__item__user {
+    background-color: transparent;
+    position: absolute;
+    display: inline-block;
+    margin-left: 80vw;
+    margin-top: 5px;
+}
+
+.img__usuario {
+    width: 80px;
+    height: 60px;
+    margin-left: 100px;
+    margin-top: 10px;
+    position: relative;
+    background-color: transparent;
+    list-style-type: none;
+}
+
+.img__usuario:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+main {
+    background: #1117;
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    padding-bottom: 100px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    max-width: 1760px;
+    width: 100%;
+    margin-left: 40px;
+    margin-bottom: 60px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Estilo de tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #dddd;
+    color: black;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+thead {
+    background-color: #f4f4f4;
+}
+
+/* Estilo para el contenedor del formulario */
+.filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Espacio entre los elementos */
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.2); /* Fondo translúcido */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilo para los campos de entrada */
+.filter-container input[type="text"],
+.filter-container input[type="date"] {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    color: black;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: all 0.3s ease;
+}
+
+/* Efecto hover en los campos */
+.filter-container input[type="text"]:hover,
+.filter-container input[type="date"]:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Mayor sombra al pasar el cursor */
+    transform: scale(1.02); /* Ligero agrandamiento */
+}
+
+/* Efecto focus para mejorar accesibilidad */
+.filter-container input[type="text"]:focus,
+.filter-container input[type="date"]:focus {
+    outline: 2px solid #3d9970; /* Color verde del botón */
+}
+
+/* Estilo para los botones */
+button[type="submit"], .btn-reload {
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #3d9970;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Efecto hover en el botón */
+button[type="submit"]:hover, .btn-reload:hover {
+    background-color: #2c7d5e;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+}
+
+/* Estilo para el contenedor del botón de recargar */
+.btn-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
