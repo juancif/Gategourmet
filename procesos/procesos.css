@@ -14,59 +14,46 @@ header {
     backdrop-filter: blur(10px);
     text-align: center;
     padding: 20px 40px;
-    text-align: center;
     box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
     margin-bottom: 50px;
     color: white;
 }
 
-.cerrar__sesion__link{
-    margin: 0;
-    margin-left: 150px;
+.cerrar__sesion__link {
+    display: flex;
+    align-items: center;
     text-decoration: none;
-    text-decoration:#1117;
-    color:white ;
-    list-style-type: none;
+    color: white;
 }
 
-.cerrar__sesion{
-    margin-left: 250px;
-    list-style-type: none;
-}
-
-.nav__item__user{
-    background-color: transparent;
+.nav__item__user {
     position: absolute;
-    display: inline-block;
-    margin: auto;
-    margin-left: 1500px;
-    margin-top: 15px;
+    right: 20px;
+    top: 20px;
+    display: flex;
+    align-items: center;
 }
 
-.img__usuario{
-    width: 80px;
-    height: 60px;
-    margin-left: 100px;
-    margin-top: 0px;
-    position:relative;
-    background-color: transparent;
-    list-style-type: none;
+.img__usuario {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+    transition: transform 0.3s, filter 0.3s;
 }
 
 .img__usuario:hover {
     transform: scale(1.1);
     filter: brightness(1.2);
 }
+
 .container {
     width: 90%;
     max-width: 1800px;
-    margin: 0 auto;
+    margin: 20px auto;
     background: rgba(255, 249, 249, 0.8);
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
-    position: relative;
-    margin-top: -20px;
 }
 
 .table-wrapper {
@@ -103,21 +90,21 @@ tr:nth-child(even) {
 }
 
 tr:hover td {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .yellow-background {
     background-color: #ffff00; /* Amarillo */
+    font-weight: bold;
 }
 
-.red-background {
-    background-color: #ff0000; /* Rojo */
+td[rowspan] {
+    vertical-align: middle; /* Centrar verticalmente */
+    text-align: center; /* Centrar horizontalmente */
+    font-size: 14px;
 }
-
-.green-background {
-    background-color: #00ff00; /* Verde */
-}
-
 
 @media (max-width: 768px) {
     table, th, td {
