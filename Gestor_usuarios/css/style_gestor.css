@@ -97,6 +97,67 @@ body {
     transform: scale(1.1);
     filter: brightness(1.2);
 }
+
+/* Contenedor del filtro */
+.filter-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se ajusten en múltiples filas */
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Espacio entre los elementos */
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8); /* Fondo translúcido */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+/* Estilo para los campos de entrada */
+.filter-container input[type="text"],
+.filter-container input[type="date"],
+.filter-container select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    color: black;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: all 0.3s ease;
+    width: 200px; /* Ancho fijo para mantener la alineación */
+}
+
+/* Efecto hover en los campos */
+.filter-container input[type="text"]:hover,
+.filter-container input[type="date"]:hover,
+.filter-container select:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Mayor sombra al pasar el cursor */
+    transform: scale(1.02); /* Ligero agrandamiento */
+}
+
+/* Efecto focus para mejorar accesibilidad */
+.filter-container input[type="text"]:focus,
+.filter-container input[type="date"]:focus,
+.filter-container select:focus {
+    outline: 2px solid #3d9970; /* Color verde para el enfoque */
+}
+
+/* Estilo para los botones */
+.filter-container .filter-button {
+    background-color: #3d9970; /* Color verde */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.filter-container .filter-button:hover {
+    background-color: #2b7a54; /* Color más oscuro al pasar el cursor */
+}
+
+
+
 /* Título */
 .title_listados {
     text-align: center;
