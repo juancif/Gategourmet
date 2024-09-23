@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: url('Imagenes/fondogg3.webp') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header {
+    background: #1117;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    padding: 20px 40px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
+}
+
+.logo {
+    max-width: 600px;
+}
+
+
+
+.footer {
+    background: #1117;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .login-container {
+        padding: 20px;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    .buttons .button, .buttons input[type="submit"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Mensaje de error*/
+.error-message {
+    background-color: #000000;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: 500;
+    text-align: center;
+    position: fixed;
+    top: -60px;
+    right: 35px;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeOut 5s forwards; /* Desaparece después de 5 segundos */
+    position: absolute;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}

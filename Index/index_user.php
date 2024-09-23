@@ -20,30 +20,30 @@ $area = isset($_SESSION['area']) ? $_SESSION['area'] : '';
     <nav class="nav__principal">
         <ul class="nav__list">
             <li class="nav__item">
-                <a href="http://10.24.217.62/GateGourmet/listado_maestro/listado_maestro_user.php" class="nav__link"><img src="imagenes/security.png" alt="Seguridad" class="imgs__menu">Listado maestro</a>
+                <a href="http://localhost/GateGourmet/listado_maestro/listado_maestro_user.php" class="nav__link"><img src="../imagenes/security.png" alt="Seguridad" class="imgs__menu">Listado maestro</a>
             </li>
             <li class="nav__item">
-                <a href="http://10.24.217.62/GateGourmet/Crear_documento/crear.php" class="nav__link"><img src="imagenes/security.png" alt="Seguridad" class="imgs__menu">Crear documento</a>
+                <a href="http://localhost/GateGourmet/Crear_documento/crear.php" class="nav__link"><img src="../imagenes/security.png" alt="Seguridad" class="imgs__menu">Crear documento</a>
+            </li>444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
+            <li class="nav__item">
+                <a href="http://localhost/GateGourmet/Indicadores/indicadores_user.php" class="nav__link"><img src="../imagenes/config.png" alt="Configuracióm" class="imgs__menu">Indicadores</a>
             </li>
             <li class="nav__item">
-                <a href="http://10.24.217.62/GateGourmet/Indicadores/indicadores_user.php" class="nav__link"><img src="imagenes/config.png" alt="Configuracióm" class="imgs__menu">Indicadores</a>
+                <a href="http://localhost/GateGourmet/procesos/procesos.php" class="nav__link"><img src="../Imagenes/macroprocesos2.png" alt="macroprocesos" class="imgs__menu">Procesos</a>
             </li>
             <li class="nav__item">
-                <a href="http://10.24.217.62/GateGourmet/procesos/procesos.php" class="nav__link"><img src="Imagenes/macroprocesos2.png" alt="macroprocesos" class="imgs__menu">Procesos</a>
-            </li>
-            <li class="nav__item">
-                <a href="http://10.24.217.62/GateGourmet/Index/generar_pdf.php" class="nav__link">
-                    <img src="Imagenes/macroprocesos2.png" alt="macroprocesos" class="imgs__menu">Reportes
+                <a href="http://localhost/GateGourmet/Index/generar_pdf.php" class="nav__link">
+                    <img src="../Imagenes/macroprocesos2.png" alt="macroprocesos" class="imgs__menu">Reportes
                 </a>
             </li>
 
             <li class="nav__item__user">
-                <a href="http://10.24.217.62/GateGourmet/Movimientos/logout.php" class="cerrar__sesion__link"><img src="Imagenes/image.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Cerrar sesión</div></a>
+                <a href="http://localhost/GateGourmet/Movimientos/logout.php" class="cerrar__sesion__link"><img src="../Imagenes/image.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Cerrar sesión</div></a>
             </li>
         </ul>
     </nav>
-    <div class="recuadroimagen"><img src="Imagenes/Logo_oficial_B-N.png" class="logoindex">
-        <img src="Imagenes/logo__recuadro__gategourmet.png" alt="img4" class="triangulo">
+    <div class="recuadroimagen"><img src="../Imagenes/Logo_oficial_B-N.png" class="logoindex">
+        <img src="../Imagenes/logo__recuadro__gategourmet.png" alt="img4" class="triangulo">
     </div>
     <div class="cuadro1" id="cuadro1">
         <div class="recuadro1">
@@ -71,9 +71,9 @@ $area = isset($_SESSION['area']) ? $_SESSION['area'] : '';
         </div>
         <div class="circulo circulo8"><a href="https://1drv.ms/w/s!Aijf4XW5EsnbmQ0kfSuUy3leGNi0?e=M6FAKA" class="link1"><h3>Financiera</h3></a></div>
         <div class="circulo circulo9"><a href="https://1drv.ms/w/s!Aijf4XW5EsnbmQ0kfSuUy3leGNi0?e=M6FAKAb" class="link1"><h3>Costos</h3></a></div>
-        <div class="circulo circulo10"><a href="http://10.24.217.62/GateGourmet/Index/index_comunicaciones.php" class="link1"><h3 class="h3__3">Comunicaciones</h3></a></div>
+        <div class="circulo circulo10"><a href="http://localhost/GateGourmet/Index/index_comunicaciones.php" class="link1"><h3 class="h3__3">Comunicaciones</h3></a></div>
         <div class="circulo circulo11"><a href="https://show.zoho.com/show/open/hpbd733318fd8b4834fcebcbc508ace6b9c64" class="link1"><h3>IT</h3></a></div>
-        <div class="circulo circulo12"><a href="http://10.24.217.62/GateGourmet/Index/vista_usuarios/security.php" class="link1"><h3>Security</h3></a></div>
+        <div class="circulo circulo12"><a href="http://localhost/GateGourmet/Index/vista_usuarios/security.php" class="link1"><h3>Security</h3></a></div>
         <div class="circulo circulo13"><a href="https://workdrive.zoho.com/file/hpbd780390dcd8e964441a13bc568d214fb30" class="link1"><h3 class="h3__2">Servicio al cliente</h3></a></div>
         <div class="circulo circulo14"><a href="https://show.zoho.com/show/open/hpbd733318fd8b4834fcebcbc508ace6b9c64" class="link1"><h3 class="h3__2">Facilty service</h3></a></div>
         <div class="circulo circulo15"><a href="https://show.zoho.com/show/open/hpbd733318fd8b4834fcebcbc508ace6b9c64" class="link1"><h3 class="h3__2">Talento humano</h3></a></div>
@@ -103,4 +103,3 @@ $area = isset($_SESSION['area']) ? $_SESSION['area'] : '';
     </script>
 </body>
 </html>
-

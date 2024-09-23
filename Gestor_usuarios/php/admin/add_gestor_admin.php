@@ -93,7 +93,7 @@ if (isset($_POST['Submit'])) {
             $dbConn->commit();
 
             // Redirigir a la página deseada después del registro exitoso
-            header("Location: http://10.24.217.62/GateGourmet/Gestor_usuarios/php/admin/registro_exitoso_admin.php");
+            header("Location: http://localhost/GateGourmet/Gestor_usuarios/php/admin/registro_exitoso_admin.php");
             exit();
         } catch (Exception $e) {
             // Revertir los cambios si ocurre un error
@@ -226,7 +226,7 @@ if (isset($_POST['Submit'])) {
                     </div>
                     <div class="buttons">
                         <input type="submit" name="Submit" value="Registrarse" class="Registrarse">
-                        <a href="http://10.24.217.62/GateGourmet/Gestor_usuarios/php/admin/index_gestor_admin.php" class="regresar">Regresar</a>
+                        <a href="http://localhost/GateGourmet/Gestor_usuarios/php/admin/index_gestor_admin.php" class="regresar">Regresar</a>
                     </div>
                 </form>
             </div>

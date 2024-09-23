@@ -14,13 +14,13 @@ $result = $dbConn->query("SELECT * FROM inactivos ORDER BY nombre_usuario ASC");
 <header class="header">
     <img src=".././../../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
     <li class="nav__item__user">
-        <a href="http://10.24.217.62/GateGourmet/Index/index_admin.php" class="cerrar__sesion__link">
+        <a href="http://localhost/GateGourmet/Index/index_admin.php" class="cerrar__sesion__link">
             <img src="../../../Imagenes/regresar.png" alt="Usuario" class="img__usuario">
             <div class="cerrar__sesion">Volver al inicio</div>
         </a>
     </li>
 </header>
-<a href="http://10.24.217.62/GateGourmet/Gestor_usuarios/php/user/index_gestor.php" class="botones boton_volver">Volver</a>
+<a href="http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor.php" class="botones boton_volver">Volver</a>
 <div>
     <table class="tabla_principal">
         <thead>

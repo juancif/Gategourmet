@@ -129,7 +129,7 @@ if (isset($_POST['Submit'])) {
 
             if ($query->rowCount() > 0) {
                 // Redirigir a la página deseada después del registro exitoso
-                header("Location: http://10.24.217.62/GateGourmet/register/registro_exitoso/registro_exitoso.php");
+                header("Location: http://localhost/GateGourmet/register/registro_exitoso/registro_exitoso.php");
                 exit();
             } else {
                 echo "<font color='red'>Error al registrar el usuario o administrador.</font><br/>";
@@ -267,7 +267,7 @@ if (isset($_POST['Submit'])) {
                     </div>
                     <div class="buttons">
                         <input type="submit" name="Submit" value="Registrarse" class="Registrarse">
-                        <a href="http://10.24.217.62/GateGourmet/login/login3.php" class="regresar">Regresar</a>
+                        <a href="http://localhost/GateGourmet/login/login3.php" class="regresar">Regresar</a>
                     </div>
                 </form>
             </div>

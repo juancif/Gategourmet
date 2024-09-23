@@ -67,7 +67,7 @@ if (isset($_GET['nombre_usuario'])) {
             $dbConn->commit();
 
             // Redirigir o mostrar un mensaje de éxito
-            header("Location: http://10.24.217.62/GateGourmet/Gestor_usuarios/php/Inactivos/index_inactivos.php?msg=Usuario activado correctamente");
+            header("Location: http://localhost/GateGourmet/Gestor_usuarios/php/Inactivos/index_inactivos.php?msg=Usuario activado correctamente");
             exit();
         } else {
             throw new Exception("Usuario no encontrado en inactivos");

@@ -58,7 +58,7 @@ if (isset($_GET['nombre_usuario'])) {
             $dbConn->commit();
 
             // Redirigir o mostrar un mensaje de éxito
-            header("Location: http://10.24.217.62/GateGourmet/Gestor_usuarios/php/user/index_gestor.php?msg=Usuario desactivado correctamente");
+            header("Location: http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor.php?msg=Usuario desactivado correctamente");
             exit();
         } else {
             throw new Exception("Usuario no encontrado");

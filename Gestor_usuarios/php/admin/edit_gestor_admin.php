@@ -276,7 +276,7 @@ if (isset($_GET['nombre_usuario'])) {
 
                     <div class="buttons">
                         <input type="Submit" name="update" value="Editar" class="Registrarse">
-                        <a href="http://10.24.217.62/GateGourmet/Gestor_usuarios/php/admin/index_gestor_admin.php" class="regresar">Volver</a>
+                        <a href="http://localhost/GateGourmet/Gestor_usuarios/php/admin/index_gestor_admin.php" class="regresar">Volver</a>
                     </div>
                 </form>
             </div>

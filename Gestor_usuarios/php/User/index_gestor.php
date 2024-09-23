@@ -14,12 +14,12 @@ $result = $dbConn->query("SELECT * FROM usuarios ORDER BY nombre_usuario ASC");
 <header class="header">
         <img src=".././../../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
         <li class="nav__item__user">
-                <a href="http://10.24.217.62/GateGourmet/Index/index_admin.php" class="cerrar__sesion__link"><img src="../../../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
+                <a href="http://localhost/GateGourmet/Index/index_admin.php" class="cerrar__sesion__link"><img src="../../../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
             </li>
     </header>
     <a href="add_gestor.php" class="botones boton_adicionar">Adicionar usuario</a>
-    <a href="http://10.24.217.62/GateGourmet/Gestor_usuarios/php/Inactivos/index_inactivos.php" class="botones boton_inactivos">Ver inactivos</a>
-    <a href="http://10.24.217.62/GateGourmet/Gestor_usuarios/php/admin/index_gestor_admin.php" class="botones boton_volver">Ver administradores</a>
+    <a href="http://localhost/GateGourmet/Gestor_usuarios/php/Inactivos/index_inactivos.php" class="botones boton_inactivos">Ver inactivos</a>
+    <a href="http://localhost/GateGourmet/Gestor_usuarios/php/admin/index_gestor_admin.php" class="botones boton_volver">Ver administradores</a>
         <table class="tabla_principal">
         <th class="cuadro_titulo">Usuarios</th>
             <tr class="tabla_secundaria">
