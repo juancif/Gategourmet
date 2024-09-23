@@ -70,16 +70,11 @@ $conn->close();
         <link rel="stylesheet" href="crear.css">
     </header>
     <li class="nav__item__user">
-<<<<<<< HEAD
         <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link">
             <img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario">
             <div class="cerrar__sesion">Volver al inicio</div>
         </a>
     </li>
-=======
-                <a href="http://localhost/GateGourmet/Index/index_admin.php" class="cerrar__sesion__link"><img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
-            </li>
->>>>>>> 830c756f34f76d60d68e72cb1566acccfe4c2b48
     <main class="main-content">
         <div class="register-container">
             <div class="register-box">
