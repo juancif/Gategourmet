@@ -192,7 +192,31 @@ body {
     transform: scale(1.05);
 }
 
+.boton_excel {
+    background: #000c;
+    backdrop-filter: blur(10px);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    margin: 20px 10px;
+    transition: background 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.39);
+    width: 200px;
+    margin-left: 2vw;
+    margin-top: -10vh;
+    position: absolute;
+}
 
+.boton_excel:hover{
+    background: #111;
+    transform: scale(1.05);
+}
 
 /* Footer */
 .footer {
