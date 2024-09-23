@@ -111,7 +111,7 @@ $result = $dbConn->query($query);
         </tbody>
     </table>
 </div>    
-
+<a href="export_excel.php" class="botones boton_excel">Descargar usuarios activos en Excel</a>
 <footer class="footer">
     <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
 </footer>

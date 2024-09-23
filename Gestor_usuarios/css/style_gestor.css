@@ -98,6 +98,9 @@ body {
     filter: brightness(1.2);
 }
 
+a{
+    text-decoration: none;
+}
 /* Contenedor del filtro */
 .filter-container {
     display: flex;
