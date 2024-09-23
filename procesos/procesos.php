@@ -13,33 +13,25 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Consulta SQL para obtener los datos
-$sql = "SELECT id, macroproceso, proceso, usuario, cargo, email, rol FROM procesos";
+// Consulta SQL para obtener todos los campos de la tabla 'procesos'
+$sql = "SELECT macroproceso, proceso, usuario, cargo, email, rol FROM procesos";
 $result = $conn->query($sql);
 
-// Obtener el color según el macroproceso
-function obtenerColor($macroproceso) {
-    switch ($macroproceso) {
-        case 'GESTION CORPORATIVA':
-        case 'COMPLIANCE':
-            return 'yellow-background'; // Clase CSS para amarillo
-        case 'SUPPLY CHAIN':
-        case 'CULINARY EXCELLENCE':
-        case 'SERVICE DELIVERY':
-        case 'ASSEMBLY':
-        case 'SERVICIOS INSTITUCIONALES':
-            return 'red-background'; // Clase CSS para rojo
-        case 'FINANCIERA':
-        case 'COSTOS':
-        case 'COMUNICACIONES':
-        case 'TECNOLOGÍA DE LA INFORMACIÓN':
-        case 'TALENTO HUMANO':
-        case 'MANTENIMIENTO':
-        case 'SERVICIO AL CLIENTE':
-        case 'SECURITY':
-            return 'green-background'; // Clase CSS para verde
-        default:
-            return ''; // Sin color
+// Comprobar si la consulta fue exitosa
+if (!$result) {
+    die("Error en la consulta: " . $conn->error);
+}
+
+// Obtener el color según el índice de la fila
+function obtenerColorFila($index) {
+    if ($index >= 1 && $index <= 13) {
+        return 'yellow-background'; // Clase CSS para amarillo
+    } elseif ($index >= 14 && $index <= 44) {
+        return 'red-background'; // Clase CSS para rojo
+    } elseif ($index >= 45 && $index <= 76) {
+        return 'green-background'; // Clase CSS para verde
+    } else {
+        return ''; // Sin color
     }
 }
 ?>
@@ -52,14 +44,16 @@ function obtenerColor($macroproceso) {
     <title>Listado de Procesos</title>
     <link rel="stylesheet" href="procesos.css">
     <link rel="icon" href="/ruta/al/favicon.ico" type="image/x-icon">
-
 </head>
 <body>
     <header class="header">
         MAPEO DE PROCESOS
     </header>
     <li class="nav__item__user">
-        <a href="http://localhost/GateGourmet/Index/index_admin.php" class="cerrar__sesion__link"><img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
+        <a href="http://localhost/GateGourmet/Index/index_admin.php" class="cerrar__sesion__link">
+            <img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario">
+            <div class="cerrar__sesion">Volver al inicio</div>
+        </a>
     </li>
     <main>
         <section class="container">
@@ -67,7 +61,6 @@ function obtenerColor($macroproceso) {
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Macroproceso</th>
                             <th>Proceso</th>
                             <th>Usuario</th>
@@ -79,22 +72,25 @@ function obtenerColor($macroproceso) {
                     <tbody>
                         <?php
                         if ($result->num_rows > 0) {
+                            $rowIndex = 1; // Contador de filas
                             while ($row = $result->fetch_assoc()) {
-                                // Obtener la clase de color según el macroproceso
-                                $colorClass = obtenerColor($row['macroproceso']);
+                                // Obtener la clase de color según el índice de la fila
+                                $colorClass = obtenerColorFila($rowIndex);
+
+                                // Asignar cada valor a su columna correspondiente
                                 echo "<tr>";
-                                echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
-                                // Solo colorear las celdas de Macroproceso y Proceso usando la clase CSS
-                                echo "<td class='$colorClass'>" . htmlspecialchars($row["macroproceso"]) . "</td>";
-                                echo "<td class='$colorClass'>" . htmlspecialchars($row["proceso"]) . "</td>";
-                                echo "<td>" . htmlspecialchars($row["usuario"]) . "</td>";
-                                echo "<td>" . htmlspecialchars($row["cargo"]) . "</td>";
-                                echo "<td>" . htmlspecialchars($row["email"]) . "</td>";
-                                echo "<td>" . htmlspecialchars($row["rol"]) . "</td>";
+                                echo "<td class='$colorClass'>" . htmlspecialchars($row["macroproceso"]) . "</td>";  // Macroproceso
+                                echo "<td class='$colorClass'>" . htmlspecialchars($row["proceso"]) . "</td>";  // Proceso
+                                echo "<td>" . htmlspecialchars($row["usuario"]) . "</td>";  // Usuario
+                                echo "<td>" . htmlspecialchars($row["cargo"]) . "</td>";  // Cargo
+                                echo "<td>" . htmlspecialchars($row["email"]) . "</td>";  // Email
+                                echo "<td>" . htmlspecialchars($row["rol"]) . "</td>";  // Rol
                                 echo "</tr>";
+
+                                $rowIndex++; // Incrementar el contador de filas
                             }
                         } else {
-                            echo "<tr><td colspan='7'>No hay datos disponibles</td></tr>";
+                            echo "<tr><td colspan='6'>No hay datos disponibles</td></tr>";
                         }
                         ?>
                     </tbody>
