@@ -11,6 +11,9 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
+// Inicializa el mensaje de error
+$error_message = "";
+
 // Si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $proceso = $_POST['proceso'];
@@ -28,25 +31,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        echo "Error: Ya existe un documento con este proceso, código o título.";
+        $error_message = "Error: Ya existe un documento con este proceso, código o título.";
     } else {
         // Estado "Vigente" y fecha actual como fecha de creación
         $estado = 'Vigente';
-        $fecha_caducidad = date('Y-m-d', strtotime('+1 year', strtotime(date('Y-m-d')))); // Un año después de la creación
+        $fecha_vigencia = date('Y-m-d'); // Fecha de vigencia es la fecha actual
 
         // Insertar el nuevo documento en la base de datos
         $sql_insert = "INSERT INTO listado_maestro (proceso, codigo, titulo_documento, tipo, estado, fecha_aprobacion, fecha_de_vigencia, areas)
                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        
-        $fecha_vigencia = date('Y-m-d'); // Fecha de vigencia es la fecha actual
-        
+
         $stmt_insert = $conn->prepare($sql_insert);
         $stmt_insert->bind_param("ssssssss", $proceso, $codigo, $titulo_documento, $tipo, $estado, $fecha_aprobacion, $fecha_vigencia, $areas);
 
         if ($stmt_insert->execute()) {
-            echo "Documento creado exitosamente.";
+            echo "<script>alert('Documento creado exitosamente.');</script>";
         } else {
-            echo "Error: " . $stmt_insert->error;
+            $error_message = "Error: " . $stmt_insert->error;
         }
     }
 
@@ -63,8 +64,39 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Registro de Documentos</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .error-message {
+            background-color: #000000;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: 500;
+            text-align: center;
+            position: absolute;
+            top:10vh;
+            right: 30vw;
+            z-index: 1000;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            animation: fadeOut 5s forwards;
+            display: none; /* Ocultado por defecto */
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
+
     <header class="header">
         <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
         <link rel="stylesheet" href="crear.css">
@@ -129,10 +161,18 @@ $conn->close();
                 </form>
             </div>
         </div>
+        <div id="error-message" class="error-message"><?php echo $error_message; ?></div>
     </main>
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
         <script src="/script_prueba/script.js"></script>
     </footer>
+
+    <script>
+        // Mostrar el mensaje de error si hay uno
+        <?php if ($error_message): ?>
+            document.getElementById('error-message').style.display = 'block';
+        <?php endif; ?>
+    </script>
 </body>
 </html>
