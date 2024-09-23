@@ -175,8 +175,14 @@ foreach ($messages as $message) {
                     <?php } ?>
                     <p class="date"><strong>Fecha:</strong> <?php echo htmlspecialchars($email['date']); ?></p>
                     <div class="body">
-                        <strong>Contenido:</strong><br>
-                        <p><?php echo htmlspecialchars_decode($email['body']); ?></p>
+                    <strong>Contenido:</strong><br>
+                    <?php if (strpos($email['body'], '<html') !== false) { ?>
+                        <!-- Si el cuerpo del mensaje es HTML -->
+                        <div><?php echo $email['body']; ?></div>
+                    <?php } else { ?>
+                        <!-- Si es texto plano -->
+                        <p><?php echo nl2br(htmlspecialchars($email['body'])); ?></p>
+                    <?php } ?>
                     </div>
                     <div class="email-actions">
                         <button>Verificar</button>
