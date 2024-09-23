@@ -94,11 +94,7 @@ if (!$result) {
         <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
 </header>
 <li class="nav__item__user">
-<<<<<<< HEAD
-    <a href="http://localhost/GateGourmet/index_user.php" class="cerrar__sesion__link">
-=======
     <a href="http://localhost/GateGourmet/Index/index_user.php" class="cerrar__sesion__link">
->>>>>>> parent of 0a9a8dc4 (correciones adicionales)
         <img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario">
         <div class="cerrar__sesion">Volver al inicio</div>
     </a>
