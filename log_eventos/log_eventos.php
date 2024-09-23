@@ -29,7 +29,7 @@ $result = $connect->query($sql);
         <h1>Log de Eventos</h1>
     </header>
     <li class="nav__item__user">
-        <a href="http://localhost/GateGourmet/Index/index_admin.php" class="cerrar__sesion__link">
+        <a href="http://10.24.217.62/GateGourmet/Index/index_admin.php" class="cerrar__sesion__link">
             <img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario">
             <div class="cerrar__sesion">Volver al inicio</div>
         </a>

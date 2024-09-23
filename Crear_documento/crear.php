@@ -90,7 +90,7 @@ if (isset($_POST['Submit'])) {
         
             if ($query->rowCount() > 0) {
                 // Redirigir a la página deseada después del registro exitoso
-                header("Location: http://localhost/GateGourmet/register/registro_exitoso/registro_exitoso.php");
+                header("Location: http://10.24.217.62/GateGourmet/register/registro_exitoso/registro_exitoso.php");
                 exit();
             } else {
                 echo "<font color='red'>Error al registrar el documento.</font><br/>";
@@ -118,7 +118,7 @@ if (isset($_POST['Submit'])) {
         <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
     </header>
     <li class="nav__item__user">
-                <a href="http://localhost/GateGourmet/Index/index_admin.php" class="cerrar__sesion__link"><img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
+                <a href="http://10.24.217.62/GateGourmet/Index/index_admin.php" class="cerrar__sesion__link"><img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
             </li>
     <main class="main-content">
         <div class="register-container">
@@ -238,7 +238,7 @@ if (isset($_POST['Submit'])) {
                     </div> -->
                     <div class="buttons">
                         <input type="submit" name="Submit" value="Agregar" class="Registrarse">
-                        <a href="http://localhost/GateGourmet/Index/index_admin.php" class="regresar">Regresar</a>
+                        <a href="http://10.24.217.62/GateGourmet/Index/index_admin.php" class="regresar">Regresar</a>
                     </div>
                 </form>
             </div>

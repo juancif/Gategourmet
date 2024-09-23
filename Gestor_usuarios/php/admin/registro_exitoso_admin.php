@@ -17,7 +17,7 @@
         <h3 class="subtitulo">Tu nombre de usuario será: la primera letra de tu nombre y tu primer apellido.</h3>
         <p class="info">Si ya existe, será las dos primeras letras de tu nombre y tu primer apellido.</p>
         <button class="boton_volver">
-            <a href="http://localhost/GateGourmet/Gestor_usuarios/php/admin/index_gestor_admin.php" class="link_volver">Volver al inicio</a>
+            <a href="http://10.24.217.62/GateGourmet/Gestor_usuarios/php/admin/index_gestor_admin.php" class="link_volver">Volver al inicio</a>
         </button>
     </div>
     <footer class="footer">
