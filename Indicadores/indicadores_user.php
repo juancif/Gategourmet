@@ -308,7 +308,7 @@ $conn->close();
 
         // Gráfico 3: Tipo de Documentación Desactualizada (Circular)
         new Chart(document.getElementById('tipoDocumentacionDesactualizadaChart'), {
-            type: 'bar',
+            type: 'pie',
             data: {
                 labels: <?php echo json_encode($tipos); ?>, // Nombres completos
                 datasets: [{
@@ -445,7 +445,7 @@ $conn->close();
 
         // Gráfico 5: Cantidad de Documentación Desactualizada por Área (Circular)
         new Chart(document.getElementById('cantidadDesactualizadaChart'), {
-            type: 'bar',
+            type: 'doughnut',
             data: {
                 labels: <?php echo json_encode($areas5); ?>,
                 datasets: [{
@@ -472,7 +472,7 @@ $conn->close();
 
         // Gráfico 6: Documentos Obsoletos por Área (Polar Area)
         new Chart(document.getElementById('documentosObsoletosChart'), {
-            type: 'bar',
+            type: 'polarArea',
             data: {
                 labels: <?php echo json_encode($areas6); ?>,
                 datasets: [{
