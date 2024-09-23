@@ -1,8 +1,39 @@
 <?php
 include_once("config_inactivos.php");
 
-// Consulta a la base de datos
-$result = $dbConn->query("SELECT * FROM inactivos ORDER BY nombre_usuario ASC");
+// Obtener los valores de los filtros desde el formulario (si están definidos)
+$correo = isset($_GET['correo']) ? $_GET['correo'] : '';
+$nombres_apellidos = isset($_GET['nombres_apellidos']) ? $_GET['nombres_apellidos'] : '';
+$nombre_usuario = isset($_GET['nombre_usuario']) ? $_GET['nombre_usuario'] : '';
+$area = isset($_GET['area']) ? $_GET['area'] : '';
+$cargo = isset($_GET['cargo']) ? $_GET['cargo'] : '';
+$rol = isset($_GET['rol']) ? $_GET['rol'] : '';
+
+// Construir la consulta con los filtros
+$query = "SELECT * FROM inactivos WHERE 1=1";
+
+// Agregar condiciones de filtro dinámicamente según los valores del formulario
+if ($correo) {
+    $query .= " AND correo LIKE '%$correo%'";
+}
+if ($nombres_apellidos) {
+    $query .= " AND nombres_apellidos LIKE '%$nombres_apellidos%'";
+}
+if ($nombre_usuario) {
+    $query .= " AND nombre_usuario LIKE '%$nombre_usuario%'";
+}
+if ($area) {
+    $query .= " AND area LIKE '%$area%'";
+}
+if ($cargo) {
+    $query .= " AND cargo LIKE '%$cargo%'";
+}
+if ($rol) {
+    $query .= " AND rol LIKE '%$rol%'";
+}
+
+$query .= " ORDER BY nombre_usuario ASC";
+$result = $dbConn->query($query);
 ?>
 <html>
 <head>
@@ -20,6 +51,25 @@ $result = $dbConn->query("SELECT * FROM inactivos ORDER BY nombre_usuario ASC");
         </a>
     </li>
 </header>
+<!-- Filtros -->
+<form method="GET" action="">
+    <div class="filter-container">
+        <input type="text" id="correo" name="correo" placeholder="Correo Electrónico" value="<?= htmlspecialchars($correo) ?>">
+        <input type="text" id="nombres_apellidos" name="nombres_apellidos" placeholder="Nombres y Apellidos" value="<?= htmlspecialchars($nombres_apellidos) ?>">
+        <input type="text" id="nombre_usuario" name="nombre_usuario" placeholder="Nombre de Usuario" value="<?= htmlspecialchars($nombre_usuario) ?>">
+        <input type="text" id="area" name="area" placeholder="Área" value="<?= htmlspecialchars($area) ?>">
+        <input type="text" id="cargo" name="cargo" placeholder="Cargo" value="<?= htmlspecialchars($cargo) ?>">
+        <select id="rol" name="rol">
+            <option value="">Rol</option>
+            <option value="admin" <?= $rol === 'admin' ? 'selected' : '' ?>>Administrador</option>
+            <option value="aprobador" <?= $rol === 'aprobador' ? 'selected' : '' ?>>Aprobador</option>
+            <option value="digitador" <?= $rol === 'digitador' ? 'selected' : '' ?>>Digitador</option>
+            <option value="observador" <?= $rol === 'observador' ? 'selected' : '' ?>>Observador</option>
+        </select>
+        <button type="submit" class="filter-button">Filtrar</button>
+        <a href="index_inactivos.php" class="filter-button">Limpiar Filtros</a>
+    </div>
+</form>
 <a href="http://localhost/GateGourmet/Gestor_usuarios/php/user/index_gestor.php" class="botones boton_volver">Volver</a>
 <div>
     <table class="tabla_principal">
@@ -61,6 +111,7 @@ $result = $dbConn->query("SELECT * FROM inactivos ORDER BY nombre_usuario ASC");
         </tbody>
     </table>
 </div>    
+
 <footer class="footer">
     <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
 </footer>

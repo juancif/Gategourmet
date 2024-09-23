@@ -62,8 +62,9 @@ $result = $dbConn->query($query);
         <input type="text" id="cargo" name="cargo" placeholder="Cargo" value="<?= htmlspecialchars($cargo) ?>">
         <select id="rol" name="rol">
             <option value="">Rol</option>
-            <option value="admin" <?= $rol === 'admin' ? 'selected' : '' ?>>Administrador</option>
-            <option value="user" <?= $rol === 'user' ? 'selected' : '' ?>>Usuario</option>
+            <option value="aprobador" <?= $rol === 'aprobador' ? 'selected' : '' ?>>Aprobador</option>
+            <option value="digitador" <?= $rol === 'digitador' ? 'selected' : '' ?>>Digitador</option>
+            <option value="observador" <?= $rol === 'observador' ? 'selected' : '' ?>>Observador</option>
         </select>
         <button type="submit" class="filter-button">Filtrar</button>
         <a href="index_gestor.php" class="filter-button">Limpiar Filtros</a>

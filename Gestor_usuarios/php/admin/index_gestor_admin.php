@@ -63,7 +63,6 @@ $result = $dbConn->query($query);
         <select id="rol" name="rol">
             <option value="">Rol</option>
             <option value="admin" <?= $rol === 'admin' ? 'selected' : '' ?>>Administrador</option>
-            <option value="user" <?= $rol === 'user' ? 'selected' : '' ?>>Usuario</option>
         </select>
         <button type="submit" class="filter-button">Filtrar</button>
         <a href="index_gestor_admin.php" class="filter-button">Limpiar Filtros</a>
