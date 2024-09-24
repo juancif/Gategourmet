@@ -13,7 +13,7 @@ if ($conn->connect_error) {
     die("La conexión falló: " . $conn->connect_error);
 }
 
-
+// Inicializar variables para cada campo de filtro (excluyendo 'motivo_del_cambio' hasta 'en_actualizacion')
 $campos = [
     'proceso', 'codigo', 'titulo_documento', 'tipo', 'version', 'estado', 'fecha_aprobacion', 
     'areas'
@@ -75,6 +75,102 @@ if (!$result) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado Maestro</title>
     <link rel="stylesheet" href="listado_maestro.css">
+    <style>
+        /* Estilo específico para el botón de descarga de PDF */
+        footer form button.btn {
+            background-color: #007bff; /* Color azul */
+            color: white; /* Texto blanco */
+            border: none; /* Sin borde */
+            padding: 10px 20px; /* Espaciado */
+            font-size: 16px; /* Tamaño de la letra */
+            cursor: pointer; /* Cursor de mano */
+            border-radius: 5px; /* Bordes redondeados */
+            transition: background-color 0.3s ease; /* Efecto de transición */
+        }
+
+        footer form button.btn:hover {
+            background-color: #0056b3; /* Color azul más oscuro al pasar el mouse */
+        }
+
+        footer {
+            display: flex; /* Alinear el contenido dentro del footer */
+            justify-content: space-between; /* Alineación de los elementos del footer */
+            padding: 20px; /* Espaciado interno */
+            background-color: #f1f1f1; /* Color de fondo */
+            border-top: 2px solid #ccc; /* Línea superior */
+            position: fixed; /* Fijar el footer en la parte inferior */
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        footer form {
+            margin: 0;
+        }
+
+        /* Otros estilos del listado maestro */
+        .container {
+            padding-bottom: 100px; /* Asegura que el contenido no se superponga con el footer */
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Colores según el estado del documento */
+        tr.vigente {
+            background-color: #e0f7e9;
+        }
+
+        tr.desactualizado {
+            background-color: #ffebcc;
+        }
+
+        tr.obsoleto {
+            background-color: #f8d7da;
+        }
+
+        /* Estilo de las sugerencias */
+        .search-dropdown {
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            max-height: 200px;
+            overflow-y: auto;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .suggestion-item {
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .suggestion-item:hover {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <!-- Header con el logo de Gate Gourmet -->
@@ -89,7 +185,7 @@ if (!$result) {
                 <div class="search-fields">
                     <!-- Generación dinámica de los campos de búsqueda -->
                     <?php foreach ($campos as $campo): ?>
-                        <div class="search-field">
+                        <div class="search-field" style="position: relative;">
                             <label for="<?php echo htmlspecialchars($campo); ?>"><?php echo ucwords(str_replace('_', ' ', $campo)); ?></label>
                             <input type="text" class="search-input" id="<?php echo htmlspecialchars($campo); ?>" 
                                    name="<?php echo htmlspecialchars($campo); ?>" autocomplete="off">
@@ -177,9 +273,13 @@ if (!$result) {
         <?php endif; ?>
     </div>
 
-    <!-- Footer con el copyright -->
+    <!-- Footer con el botón de descarga de PDF -->
     <footer>
         <p>&copy; 2024 Gate Gourmet. Todos los derechos reservados.</p>
+        <!-- Botón de descarga de los 10 primeros documentos -->
+        <form method="post" action="descargar_documentos.php">
+            <button type="submit" name="descargar_10" class="btn btn-primary">Descargar 10 primeros documentos</button>
+        </form>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -214,25 +314,25 @@ if (!$result) {
                             // Mostrar y manejar el clic en las sugerencias
                             suggestionsList.find('.suggestion-item').on('click', function() {
                                 input.val($(this).data('value'));
-                                suggestionsList.hide();
+                                suggestionsList.empty().hide(); // Ocultar las sugerencias
                             });
-                        } catch (e) {
-                            console.error('Error al procesar la respuesta JSON:', e);
+                        } catch (error) {
+                            console.error("Error al analizar la respuesta JSON:", error);
                         }
                     },
                     error: function(xhr, status, error) {
-                        console.error('Error en la solicitud AJAX:', status, error);
+                        console.error("Error en la solicitud AJAX:", error);
                     }
                 });
             } else {
-                input.next('.search-dropdown').hide();
+                input.next('.search-dropdown').empty().hide(); // Ocultar sugerencias si el campo está vacío
             }
         });
 
-        // Ocultar sugerencias si se hace clic fuera del campo
+        // Ocultar sugerencias si se hace clic fuera de ellas
         $(document).on('click', function(e) {
-            if (!$(e.target).closest('.search-input, .search-dropdown').length) {
-                $('.search-dropdown').hide();
+            if (!$(e.target).closest('.search-field').length) {
+                $('.search-dropdown').empty().hide();
             }
         });
     });

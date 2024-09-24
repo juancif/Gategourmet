@@ -13,9 +13,33 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Consulta SQL para obtener los datos
-$sql = "SELECT id, macroproceso, proceso, usuario, cargo, email, rol FROM procesos";
-$result = $conn->query($sql);
+// Inicializar variables de búsqueda
+$busqueda_codigo = isset($_GET['codigo']) ? $_GET['codigo'] : '';
+$busqueda_proceso = isset($_GET['proceso']) ? $_GET['proceso'] : '';
+$busqueda_usuario = isset($_GET['usuario']) ? $_GET['usuario'] : '';
+$busqueda_cargo = isset($_GET['cargo']) ? $_GET['cargo'] : '';
+
+// Consulta SQL para obtener los datos filtrados
+$sql = "SELECT id, macroproceso, proceso, usuario, cargo, email, rol 
+        FROM procesos 
+        WHERE (codigo LIKE ? OR proceso LIKE ? OR usuario LIKE ?) 
+        AND cargo LIKE ?";
+
+// Preparar la consulta
+$stmt = $conn->prepare($sql);
+
+// Usar '%' para las búsquedas parciales
+$busqueda_codigo = "%$busqueda_codigo%";
+$busqueda_proceso = "%$busqueda_proceso%";
+$busqueda_usuario = "%$busqueda_usuario%";
+$busqueda_cargo = "%$busqueda_cargo%";
+
+// Vincular parámetros
+$stmt->bind_param('ssss', $busqueda_codigo, $busqueda_proceso, $busqueda_usuario, $busqueda_cargo);
+
+// Ejecutar la consulta
+$stmt->execute();
+$result = $stmt->get_result();
 
 // Obtener el color según el macroproceso
 function obtenerColor($macroproceso) {
@@ -52,7 +76,6 @@ function obtenerColor($macroproceso) {
     <title>Listado de Procesos</title>
     <link rel="stylesheet" href="procesos.css">
     <link rel="icon" href="/ruta/al/favicon.ico" type="image/x-icon">
-
 </head>
 <body>
     <header>
@@ -61,6 +84,24 @@ function obtenerColor($macroproceso) {
 
     <main>
         <section class="container">
+            <!-- Formulario de búsqueda -->
+            <form method="GET" action="">
+                <label for="codigo">Buscar por Código:</label>
+                <input type="text" id="codigo" name="codigo" value="<?php echo htmlspecialchars($busqueda_codigo); ?>">
+
+                <label for="proceso">Buscar por Proceso:</label>
+                <input type="text" id="proceso" name="proceso" value="<?php echo htmlspecialchars($busqueda_proceso); ?>">
+
+                <label for="usuario">Buscar por Usuario:</label>
+                <input type="text" id="usuario" name="usuario" value="<?php echo htmlspecialchars($busqueda_usuario); ?>">
+
+                <label for="cargo">Buscar por Cargo:</label>
+                <input type="text" id="cargo" name="cargo" value="<?php echo htmlspecialchars($busqueda_cargo); ?>">
+
+                <button type="submit">Buscar</button>
+            </form>
+
+            <!-- Tabla de procesos -->
             <div class="table-wrapper">
                 <table>
                     <thead>
@@ -77,12 +118,14 @@ function obtenerColor($macroproceso) {
                     <tbody>
                         <?php
                         if ($result->num_rows > 0) {
+                            // Iterar a través de los resultados de la consulta
                             while ($row = $result->fetch_assoc()) {
                                 // Obtener la clase de color según el macroproceso
                                 $colorClass = obtenerColor($row['macroproceso']);
+                                
+                                // Generar filas de la tabla
                                 echo "<tr>";
                                 echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
-                                // Solo colorear las celdas de Macroproceso y Proceso usando la clase CSS
                                 echo "<td class='$colorClass'>" . htmlspecialchars($row["macroproceso"]) . "</td>";
                                 echo "<td class='$colorClass'>" . htmlspecialchars($row["proceso"]) . "</td>";
                                 echo "<td>" . htmlspecialchars($row["usuario"]) . "</td>";
@@ -103,6 +146,7 @@ function obtenerColor($macroproceso) {
 
 <?php
 // Cerrar conexión
+$stmt->close();
 $conn->close();
 ?>
 </body>

@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 /* Variables CSS */
 :root {
     --color-verde: #0b8b0f;
@@ -16,8 +16,7 @@
 }
 
 /* Estilos generales */
-=======
->>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
+
 body {
     margin: 0;
     padding: 0;
@@ -29,11 +28,6 @@ body {
     min-height: 100vh;
 }
 
-<<<<<<< HEAD
-/* Estilos para el header */
-/* Estilos para el header */
-/* Estilos para el header */
-/* Estilos para el header */
 .header {
     text-align: center;
     padding: 2rem;
@@ -74,7 +68,7 @@ body {
     width: 95%;
     max-width: 2000px;
     margin: 2rem auto;
-=======
+
 .header {
     background: #1117;
     backdrop-filter: blur(10px);
@@ -128,12 +122,12 @@ body {
     width: 90%;
     max-width: 4500px;
     margin: 1rem auto;
->>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
+
     background: rgba(255, 249, 249, 0.9);
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-<<<<<<< HEAD
+
     flex: 1; /* Para hacer que el footer se empuje al fondo */
 }
 
@@ -208,7 +202,7 @@ body {
     overflow-y: auto;
     max-height: calc(100vh - 10rem); /* Ajustar para que el footer no cubra el contenido */
     border: 1px solid var(--color-gris);
-=======
+
     position: relative;
     margin-top: -30px;
 }
@@ -218,7 +212,7 @@ body {
     overflow-y: auto;
     max-height: calc(100vh - 8rem);
     border: 2px solid #000;
->>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
+
     padding-bottom: 1rem;
 }
 
@@ -229,29 +223,26 @@ table {
 }
 
 table, th, td {
-<<<<<<< HEAD
+
     border: 1px solid var(--color-gris); /* Borde sutil */
-=======
+
     border: 2px solid #000;
->>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
+
     background: rgba(255, 249, 249, 0.9);
 }
 
 th, td {
-<<<<<<< HEAD
+
     padding: 12px; /* Ajuste de padding */
     text-align: left;
     font-size: 14px; /* Tamaño de texto más pequeño para mejor lectura */
-=======
     padding: 12px;
     text-align: left;
     font-size: 14px;
->>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
     color: #000;
 }
 
 th {
-<<<<<<< HEAD
     background-color: var(--color-verde);
     color: var(--color-blanco);
 }
@@ -358,7 +349,7 @@ footer a {
 footer a:hover {
     color: var(--color-azul); /* Cambiar el color de los enlaces al pasar el cursor */
 }
-=======
+
     background-color: #0b8b0f;
     color: white;
 }
@@ -456,4 +447,4 @@ color: #000; /* Texto negro para contraste */
         color: #333;
     }
 }
->>>>>>> 3d2d342342e0e8c32d94ea439bfd5e7eb9423734
+

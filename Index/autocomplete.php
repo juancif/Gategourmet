@@ -21,11 +21,15 @@ if (empty($query) || empty($filtro)) {
     exit;
 }
 
-// Sanear el filtro para evitar inyecciones SQL
-$filtro = $conn->real_escape_string($filtro);
+// Validar el filtro contra una lista de campos permitidos
+$allowedFilters = ['proceso', 'codigo', 'titulo_documento', 'tipo', 'version', 'estado', 'fecha_aprobacion', 'areas'];
+if (!in_array($filtro, $allowedFilters)) {
+    echo json_encode([]); // Devolver una respuesta vacía si el filtro no es válido
+    exit;
+}
 
 // Consultar la base de datos
-$sql = "SELECT DISTINCT $filtro FROM listado_maestro WHERE $filtro LIKE ?";
+$sql = "SELECT DISTINCT $filtro FROM listado_maestro WHERE $filtro LIKE ? LIMIT 10";
 $stmt = $conn->prepare($sql);
 
 if ($stmt === false) {
@@ -51,6 +55,7 @@ while ($row = $result->fetch_assoc()) {
 $stmt->close();
 $conn->close();
 
-// Devolver los resultados en formato JSON
+// Configurar el encabezado y devolver los resultados en formato JSON
+header('Content-Type: application/json');
 echo json_encode($suggestions);
 ?>
