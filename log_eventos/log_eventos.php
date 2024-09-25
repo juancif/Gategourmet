@@ -11,28 +11,42 @@ if ($connect->connect_error) {
     die("Error de conexión: " . $connect->connect_error);
 }
 
+// Establecer el charset a utf8mb4 para manejar caracteres especiales
+$connect->set_charset("utf8mb4");
+
 // Variables para la búsqueda avanzada
 $search_usuario = isset($_GET['search_usuario']) ? $connect->real_escape_string($_GET['search_usuario']) : '';
 $search_accion = isset($_GET['search_accion']) ? $connect->real_escape_string($_GET['search_accion']) : '';
 $search_fecha = isset($_GET['search_fecha']) ? $connect->real_escape_string($_GET['search_fecha']) : '';
 
-// Consulta con filtro de búsqueda avanzada
+// Consulta con filtro de búsqueda avanzada utilizando consultas preparadas
 $sql = "SELECT * FROM movimientos WHERE 1=1";
+$params = [];
 
 if ($search_usuario) {
-    $sql .= " AND nombre_usuario LIKE '%$search_usuario%'";
+    $sql .= " AND nombre_usuario LIKE ?";
+    $params[] = '%' . $search_usuario . '%';
 }
 
 if ($search_accion) {
-    $sql .= " AND accion LIKE '%$search_accion%'";
+    $sql .= " AND accion LIKE ?";
+    $params[] = '%' . $search_accion . '%';
 }
 
 if ($search_fecha) {
-    $sql .= " AND DATE(fecha) = '$search_fecha'";
+    $sql .= " AND DATE(fecha) = ?";
+    $params[] = $search_fecha;
 }
 
 $sql .= " ORDER BY fecha DESC";
-$result = $connect->query($sql);
+
+$stmt = $connect->prepare($sql);
+if ($params) {
+    $types = str_repeat('s', count($params)); // Todos los parámetros son cadenas (strings)
+    $stmt->bind_param($types, ...$params);
+}
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +62,7 @@ $result = $connect->query($sql);
         <h1>Log de Eventos</h1>
     </header>
     <li class="nav__item__user">
-        <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link">
+        <a href="http://localhost/GateGourmet/Index/index_admin.php" class="cerrar__sesion__link">
             <img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario">
             <div class="cerrar__sesion">Volver al inicio</div>
         </a>
@@ -100,4 +114,7 @@ $result = $connect->query($sql);
 </body>
 </html>
 
-<?php $connect->close(); ?>
+<?php 
+$stmt->close();
+$connect->close();
+?>

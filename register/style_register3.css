@@ -43,6 +43,31 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+input[type="password"] {
+    width: 100%;
+    padding-right: 40px; /* Espacio para el icono del ojo */
+}
+
+/* Estilo del ícono del ojo */
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.toggle-password img {
+    width: 20px;
+    height: 20px;
+}
+
 .register-box h2 {
     margin: 0 0 20px;
     color: #fff;
@@ -208,5 +233,36 @@ input[type="submit"]:active, .button:active {
     .buttons .button, .buttons input[type="submit"] {
         width: 100%;
         margin-bottom: 10px;
+    }
+}
+
+
+/* Mensaje de error*/
+.error-message {
+    background-color: #000000;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: 500;
+    text-align: center;
+    position: fixed;
+    top: -60px;
+    right: 35px;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    animation: fadeOut 5s forwards; /* Desaparece después de 5 segundos */
+    position: absolute;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        display: none;
     }
 }

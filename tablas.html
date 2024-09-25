@@ -135,8 +135,6 @@ IGNORE 1 LINES
 
 
 CREATE TABLE procesos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    macroproceso VARCHAR(255),
     proceso VARCHAR(255),
     usuario VARCHAR(255),
     cargo VARCHAR(255),
@@ -146,15 +144,14 @@ CREATE TABLE procesos (
 
 <!-- 'C:\\Users\\lrodriguezcorrea\\Desktop\\Libro4.csv' -->
 
-LOAD DATA LOCAL INFILE 'C:/Users/lrodriguezcorrea/Desktop/procesos.csv'
+LOAD DATA INFILE 'C:/Users/lrodriguezcorrea/Desktop/Libro4.csv'
 INTO TABLE procesos
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(@macroproceso, @proceso, @usuario, @cargo, @email, @rol)
+(@proceso, @usuario, @cargo, @email, @rol)
 SET 
-    macroproceso = TRIM(BOTH FROM @macroproceso),
     proceso = TRIM(BOTH FROM @proceso),
     usuario = TRIM(BOTH FROM @usuario),
     cargo = TRIM(BOTH FROM @cargo),

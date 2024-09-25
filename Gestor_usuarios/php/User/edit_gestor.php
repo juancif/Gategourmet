@@ -1,5 +1,12 @@
 <?php
 include_once("config_gestor.php");
+session_start(); // Asegúrate de iniciar sesión para poder usar variables de sesión
+
+if (!isset($_SESSION['nombre_usuario'])) {
+    die("Usuario no autenticado.");
+}
+
+$usuario_logueado = $_SESSION['nombre_usuario']; // El usuario que está realizando la acción
 
 if (isset($_POST['update'])) {
     $correo = $_POST['correo'];
@@ -8,67 +15,125 @@ if (isset($_POST['update'])) {
     $contrasena = $_POST['contrasena'];
     $area = $_POST['area'];
     $cargo = $_POST['cargo'];
-    $rol = $_POST['rol'];
+    $nuevo_rol = $_POST['rol']; // El nuevo rol al que se va a cambiar el usuario
 
     // Validación de campos
     $errors = [];
     if (empty($correo)) $errors[] = "Campo: correo está vacío.";
     if (empty($nombres_apellidos)) $errors[] = "Campo: nombres_apellidos está vacío.";
     if (empty($nombre_usuario)) $errors[] = "Campo: nombre_usuario está vacío.";
-    if (empty($contrasena)) $errors[] = "Campo: contrasena está vacío.";
     if (empty($area)) $errors[] = "Campo: area está vacío.";
     if (empty($cargo)) $errors[] = "Campo: cargo está vacío.";
-    if (empty($rol)) $errors[] = "Campo: rol está vacío.";
+    if (empty($nuevo_rol)) $errors[] = "Campo: rol está vacío.";
     
     if (!empty($errors)) {
         foreach ($errors as $error) {
             echo "<font color='red'>{$error}</font><br/>";
         }
+        echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
     } else {
-        // Verificar el rol actual
-        $sql_check_rol = "SELECT rol FROM usuarios WHERE nombre_usuario = :nombre_usuario";
-        $query_check = $dbConn->prepare($sql_check_rol);
-        $query_check->execute([':nombre_usuario' => $nombre_usuario]);
-        $row_check = $query_check->fetch(PDO::FETCH_ASSOC);
-        $current_rol = $row_check['rol'];
+        try {
+            // Iniciar la transacción
+            $dbConn->beginTransaction();
 
-        // Si el rol ha cambiado a Administrador
-        if ($rol === 'Administrador') {
-            // Insertar en la tabla administradores
-            $sql_insert_admin = "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol)
-                                 VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol)";
-            $query_insert = $dbConn->prepare($sql_insert_admin);
-            $query_insert->bindParam(':correo', $correo);
-            $query_insert->bindParam(':nombres_apellidos', $nombres_apellidos);
-            $query_insert->bindParam(':nombre_usuario', $nombre_usuario);
-            $query_insert->bindParam(':contrasena', $contrasena);
-            $query_insert->bindParam(':area', $area);
-            $query_insert->bindParam(':cargo', $cargo);
-            $query_insert->bindParam(':rol', $rol);
-            $query_insert->execute();
+            // Obtener los datos actuales del usuario antes de la actualización
+            $sql_check = "SELECT * FROM usuarios WHERE nombre_usuario = :nombre_usuario";
+            $query_check = $dbConn->prepare($sql_check);
+            $query_check->execute([':nombre_usuario' => $nombre_usuario]);
+            $row_check = $query_check->fetch(PDO::FETCH_ASSOC);
 
-            // Eliminar del usuario
-            $sql_delete_user = "DELETE FROM usuarios WHERE nombre_usuario = :nombre_usuario";
-            $query_delete = $dbConn->prepare($sql_delete_user);
-            $query_delete->execute([':nombre_usuario' => $nombre_usuario]);
-        } else {
-            // Actualizar el usuario sin mover entre tablas
-            $sql_update = "UPDATE usuarios SET correo=:correo, nombres_apellidos=:nombres_apellidos, contrasena=:contrasena,  
-                           area=:area, cargo=:cargo, rol=:rol
-                           WHERE nombre_usuario=:nombre_usuario";
-            $query_update = $dbConn->prepare($sql_update);
-            $query_update->bindParam(':correo', $correo);
-            $query_update->bindParam(':nombres_apellidos', $nombres_apellidos);
-            $query_update->bindParam(':nombre_usuario', $nombre_usuario);
-            $query_update->bindParam(':contrasena', $contrasena);
-            $query_update->bindParam(':area', $area);
-            $query_update->bindParam(':cargo', $cargo);
-            $query_update->bindParam(':rol', $rol);
-            $query_update->execute();
+            // Guardar los valores antiguos
+            $correo_anterior = $row_check['correo'];
+            $nombres_apellidos_anterior = $row_check['nombres_apellidos'];
+            $contrasena_anterior = $row_check['contrasena'];
+            $area_anterior = $row_check['area'];
+            $cargo_anterior = $row_check['cargo'];
+            $rol_anterior = $row_check['rol'];
+
+            // Crear una lista para registrar los cambios
+            $cambios = [];
+
+            // Comparar los valores antiguos con los nuevos para detectar cambios
+            if ($correo_anterior != $correo) {
+                $cambios[] = "Cambio de correo: $correo_anterior a $correo";
+            }
+            if ($nombres_apellidos_anterior != $nombres_apellidos) {
+                $cambios[] = "Cambio de nombres y apellidos: $nombres_apellidos_anterior a $nombres_apellidos";
+            }
+            if ($contrasena_anterior != $contrasena) {
+                $cambios[] = "Cambio de contraseña";
+            }
+            if ($area_anterior != $area) {
+                $cambios[] = "Cambio de área: $area_anterior a $area";
+            }
+            if ($cargo_anterior != $cargo) {
+                $cambios[] = "Cambio de cargo: $cargo_anterior a $cargo";
+            }
+            if ($rol_anterior != $nuevo_rol) {
+                $cambios[] = "Cambio de rol: $rol_anterior a $nuevo_rol";
+            }
+
+            // Registrar cada cambio en la tabla de movimientos
+            if (!empty($cambios)) {
+                foreach ($cambios as $cambio) {
+                    $accion = "Edición de usuario: $nombre_usuario, $cambio";
+                    $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (:usuario_logueado, :accion, NOW())";
+                    $stmt_movimiento = $dbConn->prepare($sql_movimiento);
+                    $stmt_movimiento->bindParam(':usuario_logueado', $usuario_logueado); // Usuario que realizó la acción
+                    $stmt_movimiento->bindParam(':accion', $accion);
+                    $stmt_movimiento->execute();
+                }
+            }
+
+            // Si el rol ha cambiado a Administrador, mover el usuario a la tabla 'administradores'
+            if ($nuevo_rol === 'Administrador') {
+                // Insertar en la tabla 'administradores'
+                $sql_insert_admin = "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol)
+                                     VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :nuevo_rol)";
+                $query_insert = $dbConn->prepare($sql_insert_admin);
+                $query_insert->bindParam(':correo', $correo);
+                $query_insert->bindParam(':nombres_apellidos', $nombres_apellidos);
+                $query_insert->bindParam(':nombre_usuario', $nombre_usuario);
+                $query_insert->bindParam(':contrasena', password_hash($contrasena, PASSWORD_DEFAULT)); // Hash de la contraseña
+                $query_insert->bindParam(':area', $area);
+                $query_insert->bindParam(':cargo', $cargo);
+                $query_insert->bindParam(':nuevo_rol', $nuevo_rol);
+                $query_insert->execute();
+
+                // Eliminar de la tabla 'usuarios'
+                $sql_delete_user = "DELETE FROM usuarios WHERE nombre_usuario = :nombre_usuario";
+                $query_delete = $dbConn->prepare($sql_delete_user);
+                $query_delete->bindParam(':nombre_usuario', $nombre_usuario);
+                $query_delete->execute();
+            } else {
+                // Actualizar el usuario en la tabla 'usuarios'
+                $sql_update = "UPDATE usuarios SET correo=:correo, nombres_apellidos=:nombres_apellidos, contrasena=:contrasena,  
+                               area=:area, cargo=:cargo, rol=:nuevo_rol
+                               WHERE nombre_usuario=:nombre_usuario";
+                $query_update = $dbConn->prepare($sql_update);
+                $query_update->bindParam(':correo', $correo);
+                $query_update->bindParam(':nombres_apellidos', $nombres_apellidos);
+                $query_update->bindParam(':nombre_usuario', $nombre_usuario);
+                $query_update->bindParam(':contrasena', password_hash($contrasena, PASSWORD_DEFAULT)); // Hash de la contraseña
+                $query_update->bindParam(':area', $area);
+                $query_update->bindParam(':cargo', $cargo);
+                $query_update->bindParam(':nuevo_rol', $nuevo_rol);
+                $query_update->execute();
+            }
+
+            // Cometer la transacción
+            $dbConn->commit();
+
+            // Redirigir a la página de gestor
+            header("Location: index_gestor.php");
+            exit();
+        } catch (Exception $e) {
+            // Revertir los cambios si ocurre un error
+            if ($dbConn->inTransaction()) {
+                $dbConn->rollBack();
+            }
+            echo "<font color='red'>Error: " . $e->getMessage() . "</font><br/>";
         }
-
-        header("Location: index_gestor.php");
-        exit();
     }
 }
 
@@ -83,7 +148,7 @@ if (isset($_GET['nombre_usuario'])) {
     $contrasena = $row['contrasena'];
     $area = $row['area'];
     $cargo = $row['cargo'];
-    $rol = $row['rol'];
+    $rol = $row['rol']; // Este es el rol actual que se mostrará en el formulario
 }
 ?>
 
@@ -117,24 +182,35 @@ if (isset($_GET['nombre_usuario'])) {
                         <input type="text" id="nombre_usuario" name="nombre_usuario" required value="<?php echo htmlspecialchars($nombre_usuario, ENT_QUOTES); ?>">
                     </div>
                     <div class="input-group tooltip">
-                        <label for="contrasena">Contraseña</label>
-                        <input type="password" id="contrasena" name="contrasena" required>
-                        <span class="tooltiptext">Recuerda que la contraseña debe tener mínimo 12 caracteres, un carácter especial y una mayúscula.</span>
+                    <label for="contrasena">Contraseña</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="contrasena" name="contrasena" readonly value="<?php echo $contrasena;?>">
+                        <span class="toggle-password" onclick="togglePassword('contrasena', 'eye_contrasena')">
+                            <img src="../../../Imagenes/ojo_invisible.png" id="eye_contrasena" alt="Mostrar contraseña" />
+                        </span>
                     </div>
-                    <div class="input-group tooltip">
-                        <label for="confirmar_contrasena">Confirmar Contraseña</label>
-                        <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" required>
-                        <span class="tooltiptext">Confirma tu contraseña.</span>
+                    <span class="tooltiptext">Recuerda que la contraseña debe tener mínimo 12 caracteres, un carácter especial y una mayúscula.</span>
+                </div>
+
+                <div class="input-group tooltip">
+                    <label for="confirmar_contrasena">Confirmar Contraseña</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" readonly value="<?php echo $contrasena;?>">
+                        <span class="toggle-password" onclick="togglePassword('confirmar_contrasena', 'eye_confirmar_contrasena')">
+                            <img src="../../../Imagenes/ojo_invisible.png" id="eye_confirmar_contrasena" alt="Mostrar contraseña" />
+                        </span>
                     </div>
+                    <span class="tooltiptext">Confirma tu contraseña.</span>
+                </div>
                     <div class="input-group">
                     <label for="area">Área</label>
-                <select name="area" id="area">
+                <select name="area" id="area" >
                     <option value="">Seleccione una opción</option>
                     <option value="Gestión corporativa" <?php if ($area == 'Gestión corporativa') echo 'selected'; ?>>Gestión corporativa</option>
                     <option value="Compliance" <?php if ($area == 'Compliance') echo 'selected'; ?>>Compliance</option>
                     <option value="Supply chain" <?php if ($area == 'Supply chain') echo 'selected'; ?>>Supply Chain</option>
                     <option value="Culinary Excellence" <?php if ($area == 'Culinary Excellence') echo 'selected'; ?>>Culinary Excellence</option>
-                    <option value="Supervisor" <?php if ($area == 'Supervisor') echo 'selected'; ?>>Service Delivery</option>
+                    <option value="Servide delivery" <?php if ($area == 'Servide delivery') echo 'selected'; ?>>Service Delivery</option>
                     <option value="Assembly" <?php if ($area == 'Assembly') echo 'selected'; ?>>Assembly</option>
                     <option value="Servicios institucionales" <?php if ($area == 'Servicios institucionales') echo 'selected'; ?>>Servicios institucionales</option>
                     <option value="Financiera" <?php if ($area == 'Financiera') echo 'selected'; ?>>Financiera</option>
@@ -184,7 +260,7 @@ if (isset($_GET['nombre_usuario'])) {
                         <option value="Superintendent Development And Communications" <?php if ($cargo == 'Superintendent Development And Communications') echo 'selected'; ?>>Superintendent Development And Communications</option>
                         <option value="Supervisor de Calidad y Gestion Ambiental" <?php if ($cargo == 'Supervisor de Calidad y Gestion Ambiental') echo 'selected'; ?>>VIP Lounges Junior Section Manager</option>
                     </select>
-</div>
+                    </div>
 
                     <div class="input-group">
                         <label for="rol">Rol</label>
@@ -207,17 +283,44 @@ if (isset($_GET['nombre_usuario'])) {
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
         <script>
-            document.querySelector('form').addEventListener('submit', function(event) {
-                var emailField = document.getElementById('correo');
-                var emailValue = emailField.value;
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('form').addEventListener('submit', function(event) {
+            var emailField = document.getElementById('correo');
+            var emailValue = emailField.value;
+            var passwordField = document.getElementById('contrasena');
+            var confirmPasswordField = document.getElementById('confirmar_contrasena');
+            var passwordValue = passwordField.value;
+            var confirmPasswordValue = confirmPasswordField.value;
 
-                // Verificar si el correo electrónico tiene el dominio específico
-                if (!emailValue.endsWith('@gategroup.com')) {
-                    alert('El correo electrónico debe tener el dominio "@gategroup.com".');
-                    event.preventDefault(); // Evita el envío del formulario
-                }
-            });
-        </script>
+            // Verificar si el correo electrónico tiene el dominio específico
+            if (!emailValue.endsWith('@gategroup.com')) {
+                alert('El correo electrónico debe tener el dominio "@gategroup.com".');
+                event.preventDefault(); // Evita el envío del formulario
+            }
+
+            // Verificar si las contraseñas coinciden
+            if (passwordValue !== confirmPasswordValue) {
+                alert('Las contraseñas no coinciden.');
+                event.preventDefault(); // Evita el envío del formulario
+            }
+        });
+    });
+    </script>
+    <script>
+        function togglePassword(fieldId, eyeId) {
+        var passwordField = document.getElementById(fieldId);
+        var eyeIcon = document.getElementById(eyeId);
+                                                                      
+    // Alternar el tipo de input entre 'password' y 'text'
+        if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        eyeIcon.src = '../../../Imagenes/ojo_visible.png'; // Cambia el ícono a "ocultar"
+        } else {
+        passwordField.type = 'password';
+        eyeIcon.src = '../../../Imagenes/ojo_invisible.png'; // Cambia el ícono a "mostrar"
+        }
+            }
+    </script>
     </footer>
 </body>
 </html>

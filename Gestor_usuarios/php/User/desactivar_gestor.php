@@ -1,5 +1,13 @@
 <?php
 include_once("config_gestor.php");
+session_start(); // Asegúrate de iniciar sesión para poder usar variables de sesión
+
+// Verifica si el usuario está autenticado
+if (!isset($_SESSION['nombre_usuario'])) {
+    die("Usuario no autenticado.");
+}
+
+$usuario_logueado = $_SESSION['nombre_usuario']; // El usuario que está realizando la acción
 
 if (isset($_GET['nombre_usuario'])) {
     $nombre_usuario = $_GET['nombre_usuario'];
@@ -34,6 +42,17 @@ if (isset($_GET['nombre_usuario'])) {
             $stmtDelete = $dbConn->prepare($sqlDelete);
             $stmtDelete->bindParam(':nombre_usuario', $nombre_usuario);
             $stmtDelete->execute();
+
+            // Determinar el tipo de acción a registrar en la tabla movimientos
+            $accion = "Desactivación de usuario con rol {$user['rol']}: $nombre_usuario";
+
+            // Registrar la acción en la tabla movimientos
+            $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, rol, accion, fecha) VALUES (:usuario_logueado, :rol, :accion, NOW())";
+            $stmt_movimiento = $dbConn->prepare($sql_movimiento);
+            $stmt_movimiento->bindParam(':usuario_logueado', $usuario_logueado); // El usuario que realizó el cambio
+            $stmt_movimiento->bindParam(':rol', $user['rol']);  // Rol del usuario desactivado
+            $stmt_movimiento->bindParam(':accion', $accion);
+            $stmt_movimiento->execute();
 
             // Cometer transacción
             $dbConn->commit();

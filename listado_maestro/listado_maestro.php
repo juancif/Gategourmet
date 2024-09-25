@@ -13,7 +13,15 @@ if ($conn->connect_error) {
     die("La conexión falló: " . $conn->connect_error);
 }
 
+<<<<<<< HEAD
 // Inicializar variables para cada campo de filtro (excluyendo 'motivo_del_cambio' hasta 'en_actualizacion')
+=======
+<<<<<<< HEAD
+
+=======
+// Inicializar variables para cada campo de filtro (excluyendo 'motivo_del_cambio' hasta 'en_actualizacion')
+>>>>>>> 444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
+>>>>>>> e715bb7f9f3ae4644afaea3b314fa5668c511a57
 $campos = [
     'proceso', 'codigo', 'titulo_documento', 'tipo', 'version', 'estado', 'fecha_aprobacion', 
     'areas'
@@ -173,6 +181,7 @@ if (!$result) {
     </style>
 </head>
 <body>
+<<<<<<< HEAD
     <!-- Header con el logo de Gate Gourmet -->
     <header class="header">
         <img src="../Imagenes/Logo_oficial_B-N.png" alt="Logo Gate Gourmet" class="logo"> <!-- Cambia la ruta del logo según sea necesario -->
@@ -197,6 +206,33 @@ if (!$result) {
             </form>
         </div>
 
+=======
+<header class="header">
+        <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
+    </header>
+    <li class="nav__item__user">
+        <a href="http://localhost/GateGourmet/Index/index_admin.php" class="cerrar__sesion__link"><img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
+    </li>
+    <div class="container">
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <form method="post">
+                <div class="search-fields">
+                    <!-- Generación dinámica de los campos de búsqueda -->
+                    <?php foreach ($campos as $campo): ?>
+                        <div class="search-field">
+                            <label for="<?php echo htmlspecialchars($campo); ?>"><?php echo ucwords(str_replace('_', ' ', $campo)); ?></label>
+                            <input type="text" class="search-input" id="<?php echo htmlspecialchars($campo); ?>" 
+                                   name="<?php echo htmlspecialchars($campo); ?>" autocomplete="off">
+                            <div class="search-dropdown" id="<?php echo htmlspecialchars($campo); ?>-options"></div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <button type="submit">Buscar</button>
+            </form>
+        </div>
+
+>>>>>>> 444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
         <!-- Resultados de la búsqueda -->
         <?php if (isset($result) && $result->num_rows > 0): ?>
             <div class="table-wrapper">
@@ -273,7 +309,12 @@ if (!$result) {
         <?php endif; ?>
     </div>
 
+<<<<<<< HEAD
     <!-- Footer con el botón de descarga de PDF -->
+=======
+<<<<<<< HEAD
+    <!-- Footer con el copyright -->
+>>>>>>> e715bb7f9f3ae4644afaea3b314fa5668c511a57
     <footer>
         <p>&copy; 2024 Gate Gourmet. Todos los derechos reservados.</p>
         <!-- Botón de descarga de los 10 primeros documentos -->
@@ -282,6 +323,8 @@ if (!$result) {
         </form>
     </footer>
 
+=======
+>>>>>>> 444bc54761d2ec58a485d9eaa9f1a4b68f94ecd1
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
     $(document).ready(function() {

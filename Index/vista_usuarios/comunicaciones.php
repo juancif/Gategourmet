@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GateGourmet</title>
-    <link rel="stylesheet" href="style_index5.css">
+    <link rel="stylesheet" href="../style_index5.css">
     <style>
         .hidden {
             display: none;
@@ -21,27 +21,27 @@
     <nav class="nav__principal">
         <ul class="nav__list">
             <li class="nav__item">
-                <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="nav__link"><img src="../imagenes/security.png" alt="Seguridad" class="imgs__menu">Listado maestro</a>
+                <a href="http://localhost/GateGourmet/listado_maestro/listado_maestro.php" class="nav__link"><img src="../../imagenes/security.png" alt="Seguridad" class="imgs__menu">Listado maestro</a>
             </li>
             <li class="nav__item">
-                <a href="http://localhost/GateGourmet/Gestor_usuarios/index_gestor.php" class="nav__link"><img src="../imagenes/security.png" alt="Seguridad" class="imgs__menu">Crear documento</a>
+                <a href="http://localhost/GateGourmet/Crear_documento/crear.php" class="nav__link"><img src="../../imagenes/security.png" alt="Seguridad" class="imgs__menu">Crear documento</a>
             </li>
             <li class="nav__item">
-                <a href="https://gategrouphq.sharepoint.com/:x:/s/Prueba.gg/EbHH2VRCeqpDubiulAy5SMQBUjs9iZgN5-FTvMeLACBnWA?e=elWHnc" class="nav__link"><img src="../imagenes/config.png" alt="Configuracióm" class="imgs__menu">Indicadores</a>
+                <a href="http://localhost/GateGourmet/Indicadores/indicadores.php" class="nav__link"><img src="../../imagenes/config.png" alt="Configuracióm" class="imgs__menu">Indicadores</a>
             </li>
             <li class="nav__item">
-                <a href="" class="nav__link"><img src="../Imagenes/macroprocesos2.png" alt="macroprocesos" class="imgs__menu">Procesos</a>
+                <a href="http://localhost/GateGourmet/procesos/procesos.php" class="nav__link"><img src="../../Imagenes/macroprocesos2.png" alt="macroprocesos" class="imgs__menu">Procesos</a>
             </li>
             <li class="nav__item">
-                <a href="" class="nav__link"><img src="../Imagenes/macroprocesos2.png" alt="macroprocesos" class="imgs__menu">Reportes</a>
+                <a href="" class="nav__link"><img src="../../Imagenes/macroprocesos2.png" alt="macroprocesos" class="imgs__menu">Reportes</a>
             </li>
             <li class="nav__item__user">
-                <a href="http://localhost/GateGourmet/login/login3.php" class="cerrar__sesion__link"><img src="../Imagenes/image.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Cerrar sesión</div></a>
+                <a href="http://localhost/GateGourmet/login/login3.php" class="cerrar__sesion__link"><img src="../../Imagenes/image.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Cerrar sesión</div></a>
             </li>
         </ul>
     </nav>
     <div class="recuadroimagen"><img src="../Imagenes/Logo_oficial_B-N.png" class="logoindex">
-        <img src="../Imagenes/logo__recuadro__gategourmet.png" alt="img4" class="triangulo">
+        <img src="../../Imagenes/logo__recuadro__gategourmet.png" alt="img4" class="triangulo">
     </div>
     <div class="cuadro1" id="cuadro1">
         <div class="recuadro1">

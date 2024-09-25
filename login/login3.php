@@ -13,11 +13,17 @@ if ($connect->connect_error) {
     die("Error de conexión: " . $connect->connect_error);
 }
 
+// Variable para el mensaje de error
+$error_message = '';
+
 // Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['nombre_usuario']) && isset($_POST['contrasena'])) {
         $nombre_usuario = $_POST['nombre_usuario'];
         $contrasena = $_POST['contrasena'];
+
+        // Inicializar variable para el rol
+        $rol = null;
 
         // Buscar en la tabla de usuarios
         $stmt = $connect->prepare("SELECT * FROM usuarios WHERE nombre_usuario = ?");
@@ -27,17 +33,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result->num_rows > 0) {
             $usuario = $result->fetch_assoc();
-
-            // Verifica si las contraseñas están hasheadas
             $hash_contrasena = $usuario['contrasena'];
+            $rol = $usuario['rol'];
 
             if (password_verify($contrasena, $hash_contrasena) || $contrasena === $hash_contrasena) {
                 $area = $usuario['area'];
 
                 // Registrar el inicio de sesión en la tabla de movimientos
-                $sql = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (?, 'Inicio de sesión', NOW())";
+                $sql = "INSERT INTO movimientos (nombre_usuario, rol, accion, fecha) VALUES (?, ?, 'Inicio de sesión como: $rol', NOW())";
                 $stmt = $connect->prepare($sql);
-                $stmt->bind_param("s", $nombre_usuario);
+                $stmt->bind_param("ss", $nombre_usuario, $rol);
                 $stmt->execute();
 
                 // Guardar el área en la sesión
@@ -48,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: http://10.24.217.100/GateGourmet/Index/index_user.php");
                 exit();
             } else {
-                echo "Nombre de usuario o contraseña incorrectos.";
+                $error_message = "Nombre de usuario o contraseña incorrectos.";
             }
         } else {
             // Verificar en la tabla de administradores
@@ -60,14 +65,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($result->num_rows > 0) {
                 $admin = $result->fetch_assoc();
                 $hash_contrasena = $admin['contrasena'];
+                $rol = 'Administrador'; // Asignar el rol de administrador
 
                 if (password_verify($contrasena, $hash_contrasena) || $contrasena === $hash_contrasena) {
                     $area = $admin['area'];
 
                     // Registrar el inicio de sesión en la tabla de movimientos
-                    $sql = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (?, 'Inicio de sesión como administrador', NOW())";
+                    $sql = "INSERT INTO movimientos (nombre_usuario, rol, accion, fecha) VALUES (?, ?, 'Inicio de sesión como administrador', NOW())";
                     $stmt = $connect->prepare($sql);
-                    $stmt->bind_param("s", $nombre_usuario);
+                    $stmt->bind_param("ss", $nombre_usuario, $rol);
                     $stmt->execute();
 
                     // Guardar el área en la sesión
@@ -75,17 +81,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION['nombre_usuario'] = $nombre_usuario;
 
                     // Redirigir al dashboard con el área del administrador
+
                     header("Location: http://10.24.217.100/GateGourmet/Index/index_admin.html");
+
+                    header("Location: http://localhost/GateGourmet/Index/index_admin.php");
+
                     exit();
                 } else {
-                    echo "Nombre de usuario o contraseña incorrectos.";
+                    $error_message = "Nombre de usuario o contraseña incorrectos.";
                 }
             } else {
-                echo "Nombre de usuario o contraseña incorrectos.";
+                $error_message = "Nombre de usuario o contraseña incorrectos.";
             }
         }
     } else {
-        echo "Por favor, ingrese nombre de usuario y contraseña.";
+        $error_message = "Por favor, ingrese nombre de usuario y contraseña.";
     }
 }
 
@@ -113,11 +123,12 @@ $connect->close();
                 <img src="../Imagenes/image.png" alt="User Icon" class="user-icon">
                 <h2>BIENVENIDO</h2>
                 <form method="post" action="">
-                    <div class="input-group">
+                    <div class="input-group tooltip">
                         <label for="nombre_usuario">Nombre de usuario</label>
                         <div class="input-icon">
                             <i class="fas fa-user"></i>
                             <input type="text" id="nombre_usuario" name="nombre_usuario" required placeholder="Nombre de usuario" value="<?php if(isset($_POST['nombre_usuario'])) echo htmlspecialchars($_POST['nombre_usuario']); ?>"/>
+                            <span class="tooltiptext">Recuerda, que el nombre de usuario es la primera letra de tu nombre y primer apellido completo".</span>
                         </div>
                     </div>
                     <div class="input-group">
@@ -125,20 +136,44 @@ $connect->close();
                         <div class="input-icon password-group">
                             <i class="fas fa-lock"></i>
                             <input type="password" id="contrasena" name="contrasena" required placeholder="Contraseña" />
+                            <span class="toggle-password" onclick="togglePassword('contrasena', 'eye_contrasena')">
+                                <img src="../Imagenes/ojo_invisible.png" id="eye_contrasena" alt="Mostrar contraseña" />
+                            </span>
                         </div>
                     </div>
                     <div class="buttons">
                         <input type="submit" value="Ingresar">
+
                         <a href="http://10.24.217.100/GateGourmet/register/register3.php" class="button">Registrarse</a>
                         <a href="http://10.24.217.100/GateGourmet/restablecer/restablecer.php" class="button-reestablecer">Restablecer Contraseña</a> <!-- Botón pequeño y sutil -->
+                        <a href="http://localhost/GateGourmet/restablecer/restablecer.php" class="button-reestablecer">Restablecer Contraseña</a>
+
                     </div>
                 </form>
+
+                <?php if (!empty($error_message)): ?>
+                <div class="error-message">
+                    <?php echo $error_message; ?>
+                </div>
+                <?php endif; ?>
             </div>
         </div>
     </main>
     <footer class="footer">
         <p><a href="#">Ayuda</a> | <a href="#">Términos de servicio</a></p>
     </footer>
-    <script src="script2.js"></script>
+    <script>
+        function togglePassword(inputId, eyeId) {
+            const input = document.getElementById(inputId);
+            const eye = document.getElementById(eyeId);
+            if (input.type === "password") {
+                input.type = "text";
+                eye.src = "../Imagenes/ojo_visible.png";
+            } else {
+                input.type = "password";
+                eye.src = "../Imagenes/ojo_invisible.png";
+            }
+        }
+    </script>
 </body>
 </html>

@@ -71,7 +71,7 @@ body {
     margin-left: 350px;
     margin-top: -10px;
     z-index: 20;
-    margin-left: 300px;
+    margin-left: 10vw;
     margin-top: -10px
 }
 
@@ -121,7 +121,7 @@ body {
 
 
 .cuadro_titulo{
-    min-width: 88.37%;
+    min-width: 92.5vw;
     max-width: 100%;
     background: #1117;
     backdrop-filter: blur(10px);
@@ -176,14 +176,14 @@ body {
     position: absolute;
 }
 .boton_inactivos{
-    margin-left: 95vh;
+    margin-left: 40vw;
 }
 .boton_volver{
-    margin-left: 10vh;
+    margin-left: 2vw;
 }
 
 .boton_adicionar{
-    margin-left: 170vh;
+    margin-left: 80vw;
 }
 
 .boton_adicionar:hover,

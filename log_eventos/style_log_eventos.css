@@ -90,29 +90,82 @@ thead {
     background-color: #f4f4f4;
 }
 
+/* Colores de macroproceso */
+.macroproceso-estrategico {
+    background-color: yellow;
+    color: black;
+}
+
+.macroproceso-operativo {
+    background-color: red;
+    color: white;
+}
+
+/* Ajuste del proceso y los roles */
+.proceso {
+    font-weight: bold;
+}
+
+.rol {
+    text-transform: capitalize;
+}
+
 /* Estilo para el contenedor del formulario */
 .filter-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px; /* Espacio entre los elementos */
+    gap: 15px; /* Espacio entre los elementos */
     margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.2); /* Fondo translúcido */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilo para los campos de entrada */
+.filter-container input[type="text"],
+.filter-container input[type="date"] {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    color: black;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: all 0.3s ease;
+}
+
+/* Efecto hover en los campos */
+.filter-container input[type="text"]:hover,
+.filter-container input[type="date"]:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Mayor sombra al pasar el cursor */
+    transform: scale(1.02); /* Ligero agrandamiento */
+}
+
+/* Efecto focus para mejorar accesibilidad */
+.filter-container input[type="text"]:focus,
+.filter-container input[type="date"]:focus {
+    outline: 2px solid #3d9970; /* Color verde del botón */
 }
 
 /* Estilo para los botones */
 button[type="submit"], .btn-reload {
-    padding: 10px 15px;
+    padding: 12px 20px;
     font-size: 16px;
     background-color: #3d9970;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
+/* Efecto hover en el botón */
 button[type="submit"]:hover, .btn-reload:hover {
     background-color: #2c7d5e;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
 }
 
 /* Estilo para el contenedor del botón de recargar */

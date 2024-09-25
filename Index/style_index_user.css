@@ -10,146 +10,6 @@ body{
     margin: 0;
 }
 
-/*
-
-.logo__menu{
-    width: 180px;
-    height: 35px;
-    margin-left: -160px;
-    margin-top: 28px;
-    position: absolute;
-} 
- .img1__menu{
-    width: 20px;
-    height: 20px;
-} */
-
-
-/* .crear_documentos{
-    position: relative;
-    margin-left: 300px;
-    width: 25px;
-    height: 25px;
-}
-
-.procesos{
-    margin-left: -150px;
-    width: 25px;
-    height: 25px;
-}
-.listado_maestro {
-    margin-left: 400px;
-    width: 25px;
-    height: 25px;
-}
-
-.gestionar_usuarios{
-    margin-left: 100px;
-    width: 25px;
-    height: 25px;
-}
-
-.imgs__menu{
-    width: 20px;
-    height: 20px;
-    padding-right:10px;
-}
-
-.img__usuario{
-    width: 60px;
-    height: 50px;
-    margin-left: 100px;
-    margin-top: 0px;
-    position:relative;
-    background-color: transparent;
-}
-
-.link{
-    border: none;
-    text-decoration: none;
-    font-family: sans-serif;
-    background-color:#1110;
-    color: rgb(243, 238, 238);
-    padding: initial;
-    padding: 30px;
-    display: inline-block;
-    font-size: 20px;
-}
-
-.link_crear_documentos{
-    position: relative;
-    margin-top: -100px;
-    margin-left: -1050px;
-    }
-
-.link_procesos{
-    margin-left: 50px;
-    }
-
-.link_listado_maestro{
-    margin-left: -500px;
-    }
-
-.link_gestionar{
-    margin-left: -500px;
-    }
-
-.link:hover{
-    background-color:#1112;
-}
-
-
-.img__usuario:hover{
-    background-color:#1111;
-}
-
-.nav__principal{
-    background-color: #1117;
-    backdrop-filter: blur(10px);
-    z-index: 10;
-}
-
-.nav__list{ 
-    margin: 0;
-    text-align: center;
-    font-size: 20px;
-}
-
-.nav__item{
-    display: inline-block;
-    margin: auto;
-    margin-left: 50px;
-    margin-right: 100px;
-}
-
-
-
-.nav__item__user{
-    background-color: transparent;
-    position: absolute;
-    display: inline-block;
-    margin: auto;
-    margin-left: 300px;
-    margin-top: 5px;
-}
-
-.cerrar__sesion__link{
-    margin: 0;
-    text-decoration: none;
-    text-decoration:#1117;
-    color:black ;
-}
-
-.cerrar__sesion{
-    margin-left: 100px;
-}
- */
- 
-/* .img1__menu{
-    width: 20px;
-    height: 20px;
-    margin-left: -200px;
-} */
 
 .imgs__menu{
     width: 20px;
@@ -177,6 +37,7 @@ body{
     background: #1117;
     backdrop-filter: blur(10px); /* Color de fondo del menú */
     padding: 25px 20px; /* Espaciado interno del menú */
+    z-index: 30;
 }
 
 /* Lista del menú */
@@ -190,7 +51,7 @@ body{
 
 /* Elemento del menú */
 .nav__item {
-    margin: 0 20px; /* Margen horizontal entre elementos del menú */
+    margin: 0 12px; /* Margen horizontal entre elementos del menú */
     font-size: 25px;
 }
 
@@ -220,6 +81,165 @@ body{
 /* Estilo para cerrar sesión */
 .nav__item__user {
     margin-left: auto; /* Alinear a la derecha */
+}
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  #alarmas {
+    padding: 20px 20px;
+    border-radius: 20px;
+    width: 12vw;
+    background-color: #111c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-left: 86vw;
+    margin-top: 1vh;
+    font-size: 22px;
+}
+
+#alarmas:hover{
+    transform: scale(1.05);
+    background-color: #222b;
+}
+  
+  #abirMenu {
+    max-width: 600px; /* Ajusta este valor según el tamaño deseado */
+    max-height: 1000px; /* Altura máxima para el contenedor */
+    overflow-y: auto; /* Activa el scroll si el contenido excede la altura */
+    position: absolute;
+    top: 5vh;
+    left: 76vw;
+    width: 22vw;
+    height: 105vh;
+    background: #1117;
+    backdrop-filter: blur(30px); 
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 40;
+    margin-top: 5vh;
+    color: white;
+  }
+  
+  #abirMenu ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #abirMenu ul li {
+    padding: 8px;
+  }
+  
+  #abirMenu ul li a {
+    text-decoration: none;
+    color: white;
+  }
+  
+  #abirMenu ul li a:hover {
+    background-color: #ddd;
+  }
+  
+  #abirMenu #cerrarMenu {
+    float: right;
+    cursor: pointer;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+  }
+  
+  .desplegar {
+    display: none;
+    margin-top: 20vh;
+  }
+  
+/* Estilo principal del contenedor */
+.container {
+    width: 85%;
+    margin: 30px auto;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Estilo para cada correo electrónico */
+.email-item {
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.email-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Título de cada correo (Asunto) */
+.email-item h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Información del remitente, destinatario y fecha */
+.email-item p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.email-item .date {
+    font-size: 12px;
+    color: #888;
+    margin-top: 10px;
+}
+
+/* Contenido del correo */
+.email-item .body {
+    margin-top: 15px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Separador entre los correos */
+.email-list {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilo para los botones de acción */
+.email-item .email-actions {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.email-item .email-actions button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.email-item .email-actions button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para los títulos de sección */
+h1 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 .cerrar__sesion__link {
@@ -274,8 +294,8 @@ body{
     max-width: 1250px;
     height: 180px;
     margin-bottom: 20px;   
-    margin-left: 20cqmin;
-    margin-left: 27cqmax;
+    margin-left: 15cqmin;
+    margin-left: 15cqmax;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
     position: absolute;
@@ -329,7 +349,33 @@ body{
     border-radius: 50px;
 }
 
+.recuadro1_perso{
+    font-family: Arial, Helvetica, sans-serif;
+    width: 350px;
+    height: 100%;
+    background: linear-gradient(to left, rgba(10, 192, 147, 0.50), rgb(67, 153, 82, 0.50));
+    backdrop-filter: blur(10px);
+    margin: auto;
+    margin-left: 5vh;
+    margin-top: 0px;
+    position: absolute;
+    border-radius: 50px;
+    position: absolute;
+    font-size: 40px;
+    padding-top: 2vw;
+}
 
+.recuadro1_perso:hover {
+    background-color: transparent;
+    /*background:linear-gradient(#9997, #9997);*//* Cambia el color de fondo al pasar el ratón sobre el círculo */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el ratón sobre el círculo */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2); /* Aumenta la intensidad de la sombra */
+}
+
+.recuadro1_perso:hover a{
+
+    background-color: transparent;
+}
 
 .recuadro3{
     margin-top: 0px;
@@ -350,6 +396,35 @@ body{
     position: absolute;
 }
 
+.circulo_user {
+    font-family:Arial, Helvetica, sans-serif ;
+    width: 200px;
+    height: 120px;
+    background-color: #1117;
+    backdrop-filter: blur(10px);
+    margin-left: 30vw;
+    margin-top: -14vh;
+    border-radius: 50px; /* Crea un círculo perfecto */
+    box-shadow: 0 8px 16px rgba(136, 42, 42, 0.1); /* Añade una sombra suave */
+    transition: all 0.3s ease; /* Agrega una transición suave */
+    position: absolute;
+}
+
+.circulo_user2 {
+    margin-left: 44vw;
+}
+
+.circulo_user:hover {
+    background-color: transparent;
+    /*background:linear-gradient(#9997, #9997);*//* Cambia el color de fondo al pasar el ratón sobre el círculo */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el ratón sobre el círculo */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2); /* Aumenta la intensidad de la sombra */
+}
+
+.circulo_user:hover a{
+
+    background-color: transparent;
+}
 p{
     margin-top: -100px;
     margin-left: 50px;
