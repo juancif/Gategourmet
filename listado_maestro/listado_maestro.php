@@ -13,7 +13,7 @@ if ($conn->connect_error) {
     die("La conexión falló: " . $conn->connect_error);
 }
 
-// Inicializar variables para los filtros
+// Inicializar variables para cada campo de filtro
 $campos = ['proceso', 'codigo', 'titulo_documento', 'tipo', 'version', 'estado', 'fecha_aprobacion', 'areas'];
 $params = [];
 $types = '';
@@ -29,8 +29,13 @@ foreach ($campos as $campo) {
     }
 }
 
-// Construir la consulta SQL
-$sql = "SELECT proceso, codigo, titulo_documento, tipo, version, estado, fecha_aprobacion, areas FROM listado_maestro WHERE 1=1";
+// Construir la consulta SQL base
+$sql = "SELECT proceso, codigo, titulo_documento, tipo, version, estado, fecha_aprobacion, 
+        areas, motivo_del_cambio, tiempo_de_retencion, responsable_de_retencion, 
+        lugar_de_almacenamiento_fisico, lugar_de_almacenamiento_magnetico, conservacion, 
+        disposicion_final, copias_controladas, fecha_de_vigencia, dias, senal_alerta, 
+        obsoleto, anulado, en_actualizacion 
+        FROM listado_maestro WHERE 1=1";
 
 // Añadir filtros a la consulta de manera dinámica
 foreach ($searchValues as $campo => $valor) {
@@ -48,9 +53,15 @@ if (!empty($params)) {
     $stmt->bind_param($types, ...$params);
 }
 
-// Ejecutar la consulta
-$stmt->execute();
+// Ejecutar la consulta y obtener los resultados
+if (!$stmt->execute()) {
+    die("Error al ejecutar la consulta: " . $stmt->error);
+}
+
 $result = $stmt->get_result();
+if (!$result) {
+    die("Error al obtener los resultados: " . $stmt->error);
+}
 ?>
 
 <!DOCTYPE html>
@@ -61,35 +72,48 @@ $result = $stmt->get_result();
     <title>Listado Maestro</title>
     <link rel="stylesheet" href="listado_maestro.css">
     <style>
-        .btn-excel {
-            background-color: #28a745;
+        /* Estilos del botón de descarga */
+        .fixed-download {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
             color: white;
             border: none;
             padding: 10px 20px;
             font-size: 16px;
-            cursor: pointer;
             border-radius: 5px;
-            margin-bottom: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            z-index: 1000;
         }
-        .btn-excel:hover {
-            background-color: #218838;
+
+        .fixed-download:hover {
+            background-color: #0056b3;
         }
+
+        /* Otros estilos */
         .container {
-            padding-bottom: 100px;
+            padding-bottom: 80px; /* Espacio para el botón de descarga */
         }
+
         .table-wrapper {
             overflow-x: auto;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
+
         table th, table td {
             padding: 10px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
+
+        /* Estilos para el autocompletado */
         .search-dropdown {
             display: none;
             position: absolute;
@@ -100,10 +124,12 @@ $result = $stmt->get_result();
             width: 100%;
             z-index: 10;
         }
+
         .suggestion-item {
             padding: 5px;
             cursor: pointer;
         }
+
         .suggestion-item:hover {
             background-color: #007bff;
             color: white;
@@ -119,14 +145,12 @@ $result = $stmt->get_result();
         <!-- Barra de búsqueda -->
         <div class="search-bar">
             <form method="post">
-                <div class="search-fields">
-                    <!-- Generación dinámica de los campos de búsqueda con autocompletado -->
+                <div class="search-fields" style="position: relative;">
                     <?php foreach ($campos as $campo): ?>
-                        <div class="search-field" style="position: relative;">
+                        <div class="search-field">
                             <label for="<?php echo htmlspecialchars($campo); ?>"><?php echo ucwords(str_replace('_', ' ', $campo)); ?></label>
                             <input type="text" class="search-input" id="<?php echo htmlspecialchars($campo); ?>" 
-                                   name="<?php echo htmlspecialchars($campo); ?>" autocomplete="off"
-                                   onkeyup="fetchSuggestions('<?php echo $campo; ?>')">
+                                   name="<?php echo htmlspecialchars($campo); ?>" autocomplete="off">
                             <div class="search-dropdown" id="<?php echo htmlspecialchars($campo); ?>-options"></div>
                         </div>
                     <?php endforeach; ?>
@@ -135,13 +159,8 @@ $result = $stmt->get_result();
             </form>
         </div>
 
-        <!-- Botón de descarga Excel -->
-        <form method="post" action="descargar_excel.php">
-            <button type="submit" name="descargar_8" class="btn-excel">Descargar primeros 8 registros en Excel</button>
-        </form>
-
         <!-- Resultados de la búsqueda -->
-        <?php if ($result && $result->num_rows > 0): ?>
+        <?php if (isset($result) && $result->num_rows > 0): ?>
             <div class="table-wrapper">
                 <table>
                     <thead>
@@ -149,6 +168,20 @@ $result = $stmt->get_result();
                             <?php foreach ($campos as $campo): ?>
                                 <th><?php echo ucwords(str_replace('_', ' ', $campo)); ?></th>
                             <?php endforeach; ?>
+                            <th>Motivo del Cambio</th>
+                            <th>Tiempo de Retención</th>
+                            <th>Responsable de Retención</th>
+                            <th>Lugar de Almacenamiento Físico</th>
+                            <th>Lugar de Almacenamiento Magnético</th>
+                            <th>Conservación</th>
+                            <th>Disposición Final</th>
+                            <th>Copias Controladas</th>
+                            <th>Fecha de Vigencia</th>
+                            <th>Días</th>
+                            <th>Señal de Alerta</th>
+                            <th>Obsoleto</th>
+                            <th>Anulado</th>
+                            <th>En Actualización</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -157,58 +190,85 @@ $result = $stmt->get_result();
                             <?php foreach ($campos as $campo): ?>
                                 <td><?php echo htmlspecialchars($row[$campo]); ?></td>
                             <?php endforeach; ?>
+                            <td><?php echo htmlspecialchars($row['motivo_del_cambio']); ?></td>
+                            <td><?php echo htmlspecialchars($row['tiempo_de_retencion']); ?></td>
+                            <td><?php echo htmlspecialchars($row['responsable_de_retencion']); ?></td>
+                            <td><?php echo htmlspecialchars($row['lugar_de_almacenamiento_fisico']); ?></td>
+                            <td><?php echo htmlspecialchars($row['lugar_de_almacenamiento_magnetico']); ?></td>
+                            <td><?php echo htmlspecialchars($row['conservacion']); ?></td>
+                            <td><?php echo htmlspecialchars($row['disposicion_final']); ?></td>
+                            <td><?php echo htmlspecialchars($row['copias_controladas']); ?></td>
+                            <td><?php echo htmlspecialchars($row['fecha_de_vigencia']); ?></td>
+                            <td><?php echo htmlspecialchars($row['dias']); ?></td>
+                            <td><?php echo htmlspecialchars($row['senal_alerta']); ?></td>
+                            <td><?php echo htmlspecialchars($row['obsoleto']); ?></td>
+                            <td><?php echo htmlspecialchars($row['anulado']); ?></td>
+                            <td><?php echo htmlspecialchars($row['en_actualizacion']); ?></td>
                         </tr>
                         <?php endwhile; ?>
                     </tbody>
                 </table>
             </div>
         <?php else: ?>
-            <p>No se encontraron resultados.</p>
+            <p>No se encontraron documentos con los criterios de búsqueda proporcionados.</p>
+        <?php endif; ?>
+
+        <?php if (isset($conn)): ?>
+            <?php $conn->close(); ?>
         <?php endif; ?>
     </div>
 
-    <footer class="footer">
-        <p>&copy; 2023 Gate Gourmet</p>
-    </footer>
+    <!-- Botón de descarga fijo -->
+    <form method="post" action="descargar_documentos.php">
+        <button type="submit" name="descargar_8" class="fixed-download">Descargar 8 primeros documentos</button>
+    </form>
 
-    <!-- Script de autocompletado con AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function fetchSuggestions(campo) {
-            let input = document.getElementById(campo);
-            let dropdown = document.getElementById(campo + '-options');
-            let query = input.value;
+    $(document).ready(function() {
+        $('.search-input').on('input', function() {
+            let input = $(this);
+            let query = input.val().trim();
+            let filtro = input.attr('name');
 
-            if (query.length < 2) {
-                dropdown.style.display = 'none';
-                return;
-            }
+            if (query.length > 1) {
+                $.ajax({
+                    url: 'auto_complete.php',
+                    method: 'GET',
+                    data: { query: query, filtro: filtro },
+                    success: function(data) {
+                        try {
+                            let suggestions = JSON.parse(data);
+                            let suggestionsList = input.next('.search-dropdown');
+                            suggestions.forEach(function(item) {
+                                suggestionsList.append('<div class="suggestion-item">' + item + '</div>');
+                            });
 
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', 'autocomplete.php?campo=' + campo + '&query=' + query, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    let suggestions = JSON.parse(xhr.responseText);
-                    dropdown.innerHTML = '';
-
-                    if (suggestions.length > 0) {
-                        suggestions.forEach(function(suggestion) {
-                            let div = document.createElement('div');
-                            div.classList.add('suggestion-item');
-                            div.textContent = suggestion;
-                            div.onclick = function() {
-                                input.value = suggestion;
-                                dropdown.style.display = 'none';
-                            };
-                            dropdown.appendChild(div);
-                        });
-                        dropdown.style.display = 'block';
-                    } else {
-                        dropdown.style.display = 'none';
+                            // Manejar el clic en una sugerencia
+                            $('.suggestion-item').on('click', function() {
+                                input.val($(this).text());
+                                suggestionsList.hide();
+                            });
+                        } catch (e) {
+                            console.error("Error al procesar las sugerencias: ", e);
+                        }
+                    },
+                    error: function() {
+                        console.error("Error en la solicitud de autocompletado");
                     }
-                }
-            };
-            xhr.send();
-        }
+                });
+            } else {
+                input.next('.search-dropdown').hide();
+            }
+        });
+
+        // Ocultar las sugerencias al hacer clic fuera
+        $(document).on('click', function(event) {
+            if (!$(event.target).closest('.search-field').length) {
+                $('.search-dropdown').hide();
+            }
+        });
+    });
     </script>
 </body>
 </html>

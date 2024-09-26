@@ -71,23 +71,52 @@ function obtenerColor($macroproceso) {
 
     <main>
         <section class="container">
+            <!-- Formulario para agregar nuevo proceso -->
+            <form method="POST" action="agregar_proceso.php" class="form-agregar">
+                
+                <div class="form-group">
+                    <label for="macroproceso">Macroproceso:</label>
+                    <input type="text" id="macroproceso" name="macroproceso" required>
+                </div>
+                <div class="form-group">
+                    <label for="proceso">Proceso:</label>
+                    <input type="text" id="proceso" name="proceso" required>
+                </div>
+                <div class="form-group">
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" required>
+                </div>
+                <div class="form-group">
+                    <label for="cargo">Cargo:</label>
+                    <input type="text" id="cargo" name="cargo" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="rol">Rol:</label>
+                    <input type="text" id="rol" name="rol" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn"><i class="fas fa-plus"></i> Agregar Proceso</button>
+                </div>
+            </form>
+
             <!-- Formulario de búsqueda -->
-            <form method="GET" action="">
+            <form method="GET" action="" class="form-agregar">
                 <div class="form-group">
                     <label for="proceso">Buscar por Proceso:</label>
                     <input type="text" id="proceso" name="proceso" value="<?php echo htmlspecialchars($busqueda_proceso); ?>">
                 </div>
-
                 <div class="form-group">
                     <label for="usuario">Buscar por Usuario:</label>
                     <input type="text" id="usuario" name="usuario" value="<?php echo htmlspecialchars($busqueda_usuario); ?>">
                 </div>
-
                 <div class="form-group">
                     <label for="cargo">Buscar por Cargo:</label>
                     <input type="text" id="cargo" name="cargo" value="<?php echo htmlspecialchars($busqueda_cargo); ?>">
                 </div>
-
                 <div class="form-group">
                     <button type="submit" class="btn"><i class="fas fa-search"></i> Buscar</button>
                 </div>
@@ -112,10 +141,8 @@ function obtenerColor($macroproceso) {
                         if ($result->num_rows > 0) {
                             // Iterar a través de los resultados de la consulta
                             while ($row = $result->fetch_assoc()) {
-                                // Obtener la clase de color según el macroproceso
+                                // Obtener el color para la fila de la tabla
                                 $colorClass = obtenerColor($row['macroproceso']);
-                                
-                                // Generar filas de la tabla
                                 echo "<tr>";
                                 echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
                                 echo "<td class='$colorClass'>" . htmlspecialchars($row["macroproceso"]) . "</td>";
@@ -136,9 +163,9 @@ function obtenerColor($macroproceso) {
         </section>
     </main>
 
-<?php
-// Cerrar conexión
-$conn->close();
-?>
+    <?php
+    // Cerrar conexión
+    $conn->close();
+    ?>
 </body>
 </html>
