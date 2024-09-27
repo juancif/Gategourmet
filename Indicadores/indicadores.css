@@ -200,3 +200,52 @@ footer p {
         max-width: 100%;
     }
 }
+
+.chart-container {
+    margin: 20px auto;
+    max-width: 800px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.progress-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.progress-table th,
+.progress-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.progress-bar {
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    height: 20px;
+}
+
+.progress {
+    height: 100%;
+    color: white;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 5px;
+    transition: width 0.3s ease-in-out;
+}
+
+.low {
+    background-color: #e57373; /* Color rojo para bajo porcentaje */
+}
+
+.medium {
+    background-color: #ffb74d; /* Color amarillo para medio porcentaje */
+}
+
+.high {
+    background-color: #81c784; /* Color verde para alto porcentaje */
+}

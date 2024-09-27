@@ -239,11 +239,40 @@ $conn->close();
         </div>
 
         <!-- Gráfico 6: Documentos Obsoletos por Área (PolarArea) -->
-        <div class="chart-container">
-            <center><h2>Documentos Obsoletos por Área</h2></center>
-            <canvas id="documentosObsoletosChart"></canvas>
-            <button onclick="downloadPDF('documentosObsoletosChart')">Descargar PDF</button>
-        </div>
+<!-- Indicador de Documentos Obsoletos por Área -->
+<div class="chart-container">
+    <center><h2>Documentos Obsoletos por Área</h2></center>
+    <table class="progress-table">
+        <thead>
+            <tr>
+                <th>Área</th>
+                <th>Porcentaje de Obsolescencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Calcular porcentaje de obsolescencia
+            foreach ($areas6 as $index => $area) {
+                $cantidadTotal = $cantidadDesactualizada[$index] + $vigente[$index] + $obsoleto[$index] + $anulado[$index];
+                $porcentajeObsoleto = ($cantidadTotal > 0) ? ($cantidadObsoleta[$index] / $cantidadTotal) * 100 : 0;
+                $class = $porcentajeObsoleto < 50 ? 'low' : ($porcentajeObsoleto < 75 ? 'medium' : 'high');
+                
+                echo "<tr>
+                        <td>$area</td>
+                        <td>
+                            <div class='progress-bar'>
+                                <div class='progress $class' style='width: $porcentajeObsoleto%;'>
+                                    " . round($porcentajeObsoleto, 2) . "%
+                                </div>
+                            </div>
+                        </td>
+                      </tr>";
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
+
 
         </div>
     <footer>
@@ -471,31 +500,55 @@ $conn->close();
         });
 
         // Gráfico 6: Documentos Obsoletos por Área (Polar Area)
-        new Chart(document.getElementById('documentosObsoletosChart'), {
-            type: 'polarArea',
-            data: {
-                labels: <?php echo json_encode($areas6); ?>,
-                datasets: [{
-                    label: 'Cantidad Obsoleta',
-                    data: <?php echo json_encode($cantidadObsoleta); ?>,
-                    backgroundColor: <?php echo json_encode(array_map(function() {
-                        return 'rgba(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ', 0.6)';
-                    }, $cantidadObsoleta)); ?>
-                }]
+// Configuración de un gráfico de barras que muestra porcentajes
+new Chart(document.getElementById('documentosObsoletosChart'), {
+    type: 'bar',
+    data: {
+        labels: <?php echo json_encode($areas6); ?>, // Etiquetas de las áreas
+        datasets: [{
+            label: 'Porcentaje Obsoleto',
+            data: <?php 
+                // Convertimos la cantidad obsoleta a porcentaje respecto a un total ficticio o proporcionado
+                $porcentajesObsoletos = array_map(function($cantidad) {
+                    // Aquí puedes definir la lógica para calcular el porcentaje, por ejemplo:
+                    $total = 100; // Reemplaza con tu lógica de cálculo
+                    return ($cantidad / $total) * 100;
+                }, $cantidadObsoleta);
+                echo json_encode($porcentajesObsoletos);
+            ?>,
+            backgroundColor: <?php echo json_encode(array_map(function() {
+                return 'rgba(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ', 0.7)';
+            }, $cantidadObsoleta)); ?>
+        }]
+    },
+    options: {
+        indexAxis: 'y', // Cambia la orientación a vertical (termómetro)
+        scales: {
+            x: {
+                beginAtZero: true,
+                max: 100 // Establecer el límite máximo a 100 para representar el 100%
+            }
+        },
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Porcentaje de Documentos Obsoletos por Área'
             },
-            options: {
-                responsive: true,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Documentos Obsoletos por Área'
-                    },
-                    legend: {
-                        position: 'top'
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return context.raw.toFixed(2) + '%'; // Mostrar los valores con porcentaje
                     }
                 }
+            },
+            legend: {
+                display: false // Ocultar la leyenda para simplificar el diseño
             }
-        });
+        }
+    }
+});
+
     </script>
     </div>
 </body>
