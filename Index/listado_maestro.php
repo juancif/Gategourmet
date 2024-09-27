@@ -75,8 +75,7 @@ if (!$result) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado Maestro</title>
     <link rel="stylesheet" href="listado_maestro.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
     <header class="header">
@@ -102,7 +101,7 @@ if (!$result) {
 
         <?php if (isset($result) && $result->num_rows > 0): ?>
             <div class="table-wrapper">
-                <table>
+                <table id="listado-maestro-table">
                     <thead>
                         <tr>
                             <?php foreach ($campos as $campo): ?>
@@ -171,39 +170,84 @@ if (!$result) {
             <?php $conn->close(); ?>
         <?php endif; ?>
 
-        <!-- Botón para descargar los primeros 10 datos visibles -->
-        <button id="download-pdf" onclick="downloadPDF()">Descargar PDF</button>
+        <!-- Botón para descargar el Excel -->
+        <button id="download-excel" onclick="downloadExcel()">Descargar Excel</button>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-    async function downloadPDF() {
-        const { jsPDF } = window.jspdf;
+    function downloadExcel() {
+        // Referencia a la tabla HTML
+        let table = document.getElementById("listado-maestro-table");
 
-        // Seleccionamos las primeras 10 filas visibles de la tabla
-        let table = document.querySelector('.table-wrapper table');
-        let rows = table.querySelectorAll('tbody tr');
+        // Crear un nuevo libro de trabajo
+        let workbook = XLSX.utils.book_new();
+        let visibleData = [];
 
-        // Creamos un contenedor temporal que contendrá las filas que queremos capturar
-        let visibleRowsContainer = document.createElement('div');
-        document.body.appendChild(visibleRowsContainer);
+        // Estilos para el Excel
+        const headerStyle = {
+            fill: {
+                fgColor: { rgb: "4F81BD" } // Color de fondo azul para cabeceras
+            },
+            font: {
+                color: { rgb: "FFFFFF" }, // Color de texto blanco
+                bold: true,
+                sz: 12,
+                name: "Arial"
+            },
+            alignment: {
+                horizontal: "center"
+            }
+        };
 
-        // Añadimos las primeras 10 filas (o menos si hay menos de 10) al contenedor
-        for (let i = 0; i < Math.min(10, rows.length); i++) {
-            let clonedRow = rows[i].cloneNode(true);  // Clonamos la fila para no modificar el DOM original
-            visibleRowsContainer.appendChild(clonedRow);
+        const cellStyle = {
+            font: {
+                sz: 11,
+                name: "Arial"
+            },
+            alignment: {
+                horizontal: "left"
+            }
+        };
+
+        // Recorrer las filas de la tabla y solo añadir las visibles
+        let rows = table.querySelectorAll("tbody tr");
+        for (let row of rows) {
+            if (row.style.display !== "none") { // Solo considerar filas visibles
+                let cells = row.querySelectorAll("td");
+                let rowData = [];
+                cells.forEach(cell => {
+                    rowData.push(cell.innerText);
+                });
+                visibleData.push(rowData);
+            }
         }
 
-        // Usamos html2canvas para capturar la tabla como imagen
-        html2canvas(visibleRowsContainer).then(function(canvas) {
-            let imgData = canvas.toDataURL('image/png');  // Convertimos la tabla a imagen
-            let pdf = new jsPDF();  // Creamos un nuevo documento PDF
-
-            // Añadimos la imagen al PDF
-            pdf.addImage(imgData, 'PNG', 10, 10);
-            pdf.save('listado_maestro.pdf');  // Guardamos el PDF con un nombre predeterminado
-            document.body.removeChild(visibleRowsContainer);  // Eliminamos el contenedor temporal
+        // Añadir la cabecera de la tabla
+        let header = [];
+        table.querySelectorAll("thead th").forEach(th => {
+            header.push(th.innerText);
         });
+        visibleData.unshift(header); // Añadir la cabecera como la primera fila
+
+        // Convertir los datos visibles a una hoja de trabajo
+        let ws = XLSX.utils.aoa_to_sheet(visibleData);
+        
+        // Aplicar estilo a las celdas
+        for (let col = 0; col < header.length; col++) {
+            ws['A1'].s = headerStyle; // Estilo para cabecera
+            for (let row = 2; row < visibleData.length; row++) {
+                const cell = ws[XLSX.utils.encode_cell({r: row, c: col})];
+                if (cell) {
+                    cell.s = cellStyle; // Estilo para celdas de datos
+                }
+            }
+        }
+
+        // Añadir la hoja de trabajo al libro
+        XLSX.utils.book_append_sheet(workbook, ws, "Listado Maestro");
+
+        // Guardar el archivo Excel
+        XLSX.writeFile(workbook, "listado_maestro.xlsx");
     }
     </script>
 </body>
