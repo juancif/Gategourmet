@@ -160,9 +160,9 @@ foreach ($messages as $message) {
 
     <div id="abirMenu" class="desplegar">
       <span id="cerrarMenu">X</span>
-      <div class="container">
+      <ddiv class="container">
     <h1>Correos Electrónicos</h1>
-    <div class="aprobaciones">
+    <div class="aprobaciones"><h2>Aprobaciones</h2>
     <div class="email-list">
             <?php if (empty($emailData)) { ?>
                 <p>No hay correos electrónicos disponibles.</p>
@@ -197,7 +197,42 @@ foreach ($messages as $message) {
             <?php } ?>
         </div>
     </div>
-<div class="revisiones">
+<div class="revisiones"><h2>Revisiones</h2>
+    <div class="email-list">
+            <?php if (empty($emailData)) { ?>
+                <p>No hay correos electrónicos disponibles.</p>
+            <?php } else { ?>
+                <?php foreach ($emailData as $email) { ?>
+                    <div class="email-item">
+                        <h2>Asunto: <?php echo htmlspecialchars($email['subject']); ?></h2><br>
+                        <p><strong>De:</strong> <?php echo htmlspecialchars($email['from']); ?></p>
+                        <?php if (!empty($email['to'])) { ?><br>
+                            <p><strong>Para:</strong> <?php echo htmlspecialchars($email['to']); ?></p>
+                        <?php } ?><br>
+                        <?php if (!empty($email['cc'])) { ?><br>
+                            <p><strong>Cc:</strong> <?php echo htmlspecialchars($email['cc']); ?></p>
+                        <?php } ?><br><br>
+                        <p class="date"><strong>Fecha:</strong> <?php echo htmlspecialchars($email['date']); ?></p>
+                        <div class="body">
+                        <strong>Contenido:</strong><br>
+                        <?php if (strpos($email['body'], '<html') !== false) { ?>
+                            <!-- Si el cuerpo del mensaje es HTML -->
+                            <div><?php echo $email['body']; ?></div><br>
+                        <?php } else { ?>
+                            <!-- Si es texto plano -->
+                            <p><?php echo nl2br(htmlspecialchars($email['body'])); ?></p>
+                        <?php } ?>
+                        </div>
+                        <div class="email-actions">
+                            <button>Verificar</button>
+                            <button>Devolver</button>
+                        </div>
+                    </div>
+                <?php } ?>
+            <?php } ?>
+        </div>
+    </div>
+<div class="alarmass"><h2>Alarmas</h2>
     <div class="email-list">
             <?php if (empty($emailData)) { ?>
                 <p>No hay correos electrónicos disponibles.</p>
@@ -232,41 +267,7 @@ foreach ($messages as $message) {
             <?php } ?>
         </div>
     </div>
-<div class="alarmass">
-    <div class="email-list">
-            <?php if (empty($emailData)) { ?>
-                <p>No hay correos electrónicos disponibles.</p>
-            <?php } else { ?>
-                <?php foreach ($emailData as $email) { ?>
-                    <div class="email-item">
-                        <h2>Asunto: <?php echo htmlspecialchars($email['subject']); ?></h2><br>
-                        <p><strong>De:</strong> <?php echo htmlspecialchars($email['from']); ?></p><br>
-                        <?php if (!empty($email['to'])) { ?><br>
-                            <p><strong>Para:</strong> <?php echo htmlspecialchars($email['to']); ?></p><br>
-                        <?php } ?>
-                        <?php if (!empty($email['cc'])) { ?>
-                            <p><strong>Cc:</strong> <?php echo htmlspecialchars($email['cc']); ?></p><br>
-                        <?php } ?><br>
-                        <p class="date"><strong>Fecha:</strong> <?php echo htmlspecialchars($email['date']); ?></p><br>
-                        <div class="body">
-                        <strong>Contenido:</strong><br>
-                        <?php if (strpos($email['body'], '<html') !== false) { ?>
-                            <!-- Si el cuerpo del mensaje es HTML -->
-                            <div><?php echo $email['body']; ?></div><br>
-                        <?php } else { ?>
-                            <!-- Si es texto plano -->
-                            <p><?php echo nl2br(htmlspecialchars($email['body'])); ?></p>
-                        <?php } ?>
-                        </div>
-                        <div class="email-actions">
-                            <button>Verificar</button>
-                            <button>Devolver</button>
-                        </div>
-                    </div>
-                <?php } ?>
-            <?php } ?>
-        </div>
-    </div>
+</div>
 </div>
 </div>
     <script src="script.js"></script>
