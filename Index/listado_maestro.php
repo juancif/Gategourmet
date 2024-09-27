@@ -13,7 +13,7 @@ if ($conn->connect_error) {
     die("La conexión falló: " . $conn->connect_error);
 }
 
-// Inicializar variables para cada campo de filtro (excluyendo 'motivo_del_cambio' hasta 'en_actualizacion')
+// Inicializar variables para cada campo de filtro
 $campos = [
     'proceso', 'codigo', 'titulo_documento', 'tipo', 'version', 'estado', 'fecha_aprobacion', 
     'areas'
@@ -33,7 +33,7 @@ foreach ($campos as $campo) {
     }
 }
 
-// Construir la consulta SQL base (mantener los campos eliminados en el SELECT)
+// Construir la consulta SQL base
 $sql = "SELECT proceso, codigo, titulo_documento, tipo, version, estado, fecha_aprobacion, 
         areas, motivo_del_cambio, tiempo_de_retencion, responsable_de_retencion, 
         lugar_de_almacenamiento_fisico, lugar_de_almacenamiento_magnetico, conservacion, 
@@ -75,6 +75,8 @@ if (!$result) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listado Maestro</title>
     <link rel="stylesheet" href="listado_maestro.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 </head>
 <body>
     <header class="header">
@@ -82,11 +84,9 @@ if (!$result) {
     </header>
 
     <div class="container">
-        <!-- Barra de búsqueda -->
         <div class="search-bar">
             <form method="post">
                 <div class="search-fields">
-                    <!-- Generación dinámica de los campos de búsqueda -->
                     <?php foreach ($campos as $campo): ?>
                         <div class="search-field">
                             <label for="<?php echo htmlspecialchars($campo); ?>"><?php echo ucwords(str_replace('_', ' ', $campo)); ?></label>
@@ -100,7 +100,6 @@ if (!$result) {
             </form>
         </div>
 
-        <!-- Resultados de la búsqueda -->
         <?php if (isset($result) && $result->num_rows > 0): ?>
             <div class="table-wrapper">
                 <table>
@@ -109,7 +108,6 @@ if (!$result) {
                             <?php foreach ($campos as $campo): ?>
                                 <th><?php echo ucwords(str_replace('_', ' ', $campo)); ?></th>
                             <?php endforeach; ?>
-                            <!-- Añadir columnas para los campos eliminados de los filtros -->
                             <th>Motivo del Cambio</th>
                             <th>Tiempo de Retención</th>
                             <th>Responsable de Retención</th>
@@ -130,7 +128,6 @@ if (!$result) {
                         <?php while($row = $result->fetch_assoc()): 
                             $rowClass = '';
 
-                            // Definir la clase de la fila basada en el estado
                             switch (strtolower($row['estado'])) {
                                 case 'vigente':
                                     $rowClass = 'vigente';
@@ -147,7 +144,6 @@ if (!$result) {
                             <?php foreach ($campos as $campo): ?>
                                 <td><?php echo htmlspecialchars($row[$campo]); ?></td>
                             <?php endforeach; ?>
-                            <!-- Mostrar los campos eliminados -->
                             <td><?php echo htmlspecialchars($row['motivo_del_cambio']); ?></td>
                             <td><?php echo htmlspecialchars($row['tiempo_de_retencion']); ?></td>
                             <td><?php echo htmlspecialchars($row['responsable_de_retencion']); ?></td>
@@ -174,62 +170,41 @@ if (!$result) {
         <?php if (isset($conn)): ?>
             <?php $conn->close(); ?>
         <?php endif; ?>
+
+        <!-- Botón para descargar los primeros 10 datos visibles -->
+        <button id="download-pdf" onclick="downloadPDF()">Descargar PDF</button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-    $(document).ready(function() {
-        $('.search-input').on('input', function() {
-            let input = $(this);
-            let query = input.val().trim();
-            let filtro = input.attr('name'); // Usamos el nombre del campo como filtro
+    async function downloadPDF() {
+        const { jsPDF } = window.jspdf;
 
-            if (query.length > 1) {
-                $.ajax({
-                    url: 'autocomplete.php',
-                    method: 'GET',
-                    data: { query: query, filtro: filtro },
-                    success: function(data) {
-                        try {
-                            let suggestions = JSON.parse(data);
-                            let suggestionsList = input.next('.search-dropdown');
+        // Seleccionamos las primeras 10 filas visibles de la tabla
+        let table = document.querySelector('.table-wrapper table');
+        let rows = table.querySelectorAll('tbody tr');
 
-                            suggestionsList.empty(); // Limpiar las sugerencias anteriores
+        // Creamos un contenedor temporal que contendrá las filas que queremos capturar
+        let visibleRowsContainer = document.createElement('div');
+        document.body.appendChild(visibleRowsContainer);
 
-                            if (Array.isArray(suggestions) && suggestions.length > 0) {
-                                suggestions.forEach(function(suggestion) {
-                                    suggestionsList.append(`<div class="suggestion-item" data-value="${suggestion}">${suggestion}</div>`);
-                                });
-                                suggestionsList.show();
-                            } else {
-                                suggestionsList.hide();
-                            }
+        // Añadimos las primeras 10 filas (o menos si hay menos de 10) al contenedor
+        for (let i = 0; i < Math.min(10, rows.length); i++) {
+            let clonedRow = rows[i].cloneNode(true);  // Clonamos la fila para no modificar el DOM original
+            visibleRowsContainer.appendChild(clonedRow);
+        }
 
-                            // Mostrar y manejar el clic en las sugerencias
-                            suggestionsList.find('.suggestion-item').on('click', function() {
-                                input.val($(this).data('value'));
-                                suggestionsList.hide();
-                            });
-                        } catch (e) {
-                            console.error('Error al procesar la respuesta JSON:', e);
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error en la solicitud AJAX:', status, error);
-                    }
-                });
-            } else {
-                input.next('.search-dropdown').hide();
-            }
+        // Usamos html2canvas para capturar la tabla como imagen
+        html2canvas(visibleRowsContainer).then(function(canvas) {
+            let imgData = canvas.toDataURL('image/png');  // Convertimos la tabla a imagen
+            let pdf = new jsPDF();  // Creamos un nuevo documento PDF
+
+            // Añadimos la imagen al PDF
+            pdf.addImage(imgData, 'PNG', 10, 10);
+            pdf.save('listado_maestro.pdf');  // Guardamos el PDF con un nombre predeterminado
+            document.body.removeChild(visibleRowsContainer);  // Eliminamos el contenedor temporal
         });
-
-        // Ocultar sugerencias si se hace clic fuera del campo
-        $(document).on('click', function(e) {
-            if (!$(e.target).closest('.search-input, .search-dropdown').length) {
-                $('.search-dropdown').hide();
-            }
-        });
-    });
+    }
     </script>
 </body>
 </html>

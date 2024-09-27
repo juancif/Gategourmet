@@ -23,22 +23,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $rol = $_POST['rol'];
 
-    // Insertar datos en la base de datos
-    $stmt = $conn->prepare("INSERT INTO procesos (macroproceso, proceso, usuario, cargo, email, rol) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssss", $macroproceso, $proceso, $usuario, $cargo, $email, $rol);
-
-    if ($stmt->execute()) {
-        echo "Nuevo proceso agregado exitosamente.";
+    // Validación de datos
+    if (empty($macroproceso) || empty($proceso) || empty($usuario) || empty($cargo) || empty($email) || empty($rol)) {
+        echo "Todos los campos son obligatorios.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "Formato de correo inválido.";
     } else {
-        echo "Error: " . $stmt->error;
+        // Insertar datos en la base de datos
+        $stmt = $conn->prepare("INSERT INTO procesos (macroproceso, proceso, usuario, cargo, email, rol) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssss", $macroproceso, $proceso, $usuario, $cargo, $email, $rol);
+
+        if ($stmt->execute()) {
+            // Redirigir a la página principal con un parámetro de éxito
+            header("Location: http://localhost/Gategourmet/Index/procesos.php?success=1");
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        // Cerrar la consulta
+        $stmt->close();
     }
 
-    // Cerrar la consulta y la conexión
-    $stmt->close();
+    // Cerrar la conexión
     $conn->close();
-
-    // Redirigir de vuelta a la página principal
-    header("Location: index.php");
-    exit;
 }
 ?>
