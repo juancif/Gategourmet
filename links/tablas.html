@@ -101,6 +101,16 @@ CREATE TABLE listado_maestro (
     en_actualizacion VARCHAR(50)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- Cargar datos en la tabla listado_maestro
+LOAD DATA INFILE 'C:/Users/Administrator/Desktop/listado_maestro.csv'
+INTO TABLE listado_maestro
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(proceso, codigo, titulo_documento, tipo, version, estado, fecha_aprobacion, areas, motivo_del_cambio, tiempo_de_retencion, responsable_de_retencion, lugar_de_almacenamiento_fisico, lugar_de_almacenamiento_magnetico, conservacion, disposicion_final, copias_controladas, fecha_de_vigencia, dias, senal_alerta, obsoleto, anulado, en_actualizacion);
+
+
 -- Crear tabla log_eventos
 CREATE TABLE log_eventos (
     id_evento INT AUTO_INCREMENT PRIMARY KEY,
@@ -139,18 +149,15 @@ CREATE TABLE procesos (
     rol VARCHAR(255)
 );
 
--- Cargar datos en la tabla listado_maestro
-LOAD DATA INFILE 'C:/Users/Administrator/Desktop/listado_maestro.csv'
-INTO TABLE listado_maestro
-FIELDS TERMINATED BY ',' 
+-- Cargar datos en la tabla procesos
+LOAD DATA INFILE 'C:/Users/Administrator/Desktop/procesos.csv'
+INTO TABLE procesos
+FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(proceso, codigo, titulo_documento, tipo, version, estado, fecha_aprobacion, areas, motivo_del_cambio, tiempo_de_retencion, responsable_de_retencion, lugar_de_almacenamiento_fisico, lugar_de_almacenamiento_magnetico, conservacion, disposicion_final, copias_controladas, fecha_de_vigencia, dias, senal_alerta, obsoleto, anulado, en_actualizacion);
-
-
--- Cargar datos en la tabla procesos
-LOAD DATA INFILE 'C:/Users/Administrator/Desktop/Libro6.csv'
+(macroproceso, proceso, usuario, cargo, email, rol);
+<!-- LOAD DATA INFILE 'C:/Users/Administrator/Desktop/procesos.csv'
 INTO TABLE procesos
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
@@ -163,7 +170,7 @@ SET
     usuario = TRIM(BOTH FROM @usuario),
     cargo = TRIM(BOTH FROM @cargo),
     email = TRIM(BOTH FROM @email),
-    rol = TRIM(BOTH FROM @rol);
+    rol = TRIM(BOTH FROM @rol); -->
 
 
 <!-- LOAD DATA INFILE 'C:/Users/Administrator/Desktop/Libro6.csv'  -->    

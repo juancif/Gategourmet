@@ -85,8 +85,8 @@ body{
 body {
     font-family: Arial, sans-serif;
   }
-  
-  #alarmas {
+  /* Estilos de Botón de Alarmas */
+#alarmas {
     padding: 20px 20px;
     border-radius: 20px;
     width: 12vw;
@@ -97,64 +97,67 @@ body {
     margin-left: 86vw;
     margin-top: 1vh;
     font-size: 22px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-#alarmas:hover{
+#alarmas:hover {
     transform: scale(1.05);
     background-color: #222b;
 }
-  
-  #abirMenu {
+
+/* Estilos del Menú Desplegable */
+#abirMenu {
     max-width: 600px; /* Ajusta este valor según el tamaño deseado */
     max-height: 1000px; /* Altura máxima para el contenedor */
     overflow-y: auto; /* Activa el scroll si el contenido excede la altura */
     position: absolute;
     top: 5vh;
-    left: 76vw;
-    width: 22vw;
+    left: 67vw;
+    width: 35vw;
     height: 105vh;
     background: #1117;
-    backdrop-filter: blur(30px); 
+    backdrop-filter: blur(30px);
     border: 1px solid #ddd;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
     z-index: 40;
     margin-top: 5vh;
     color: white;
-  }
-  
-  #abirMenu ul {
+}
+
+#abirMenu ul {
     list-style-type: none;
     padding: 0;
-  }
-  
-  #abirMenu ul li {
+}
+
+#abirMenu ul li {
     padding: 8px;
-  }
-  
-  #abirMenu ul li a {
+}
+
+#abirMenu ul li a {
     text-decoration: none;
     color: white;
-  }
-  
-  #abirMenu ul li a:hover {
-    background-color: #ddd;
-  }
-  
-  #abirMenu #cerrarMenu {
+}
+
+#abirMenu ul li a:hover {
+    background-color: #333; /* Ajuste de color para mejorar el contraste */
+}
+
+#abirMenu #cerrarMenu {
     float: right;
     cursor: pointer;
     font-weight: bold;
-    color: rgb(255, 255, 255);
+    color: white;
     font-size: 30px;
-  }
-  
-  .desplegar {
+}
+
+/* Estilo para los elementos desplegables */
+.desplegar {
     display: none;
     margin-top: 20vh;
-  }
-  
-/* Estilo principal del contenedor */
+}
+
+/* Estilos del Contenedor Principal */
 .container {
     width: 85%;
     margin: 30px auto;
@@ -165,6 +168,18 @@ body {
     font-family: 'Arial', sans-serif;
 }
 
+.aprobaciones{
+background-color: red;
+}
+
+.revisiones{
+    background-color: blue;
+}
+
+.alarmass{
+    background-color: green;
+}
+
 /* Estilo para cada correo electrónico */
 .email-item {
     background-color: #fff;
@@ -172,11 +187,12 @@ body {
     margin-bottom: 20px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .email-item:hover {
     transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añadido para un efecto más pronunciado */
 }
 
 /* Título de cada correo (Asunto) */
@@ -208,13 +224,13 @@ body {
     color: #333;
 }
 
-/* Separador entre los correos */
+/* Lista de correos */
 .email-list {
     display: flex;
     flex-direction: column;
 }
 
-/* Estilo para los botones de acción */
+/* Estilos para los botones de acción */
 .email-item .email-actions {
     margin-top: 20px;
     text-align: right;
@@ -233,6 +249,7 @@ body {
 .email-item .email-actions button:hover {
     background-color: #0056b3;
 }
+
 
 /* Estilo para los títulos de sección */
 h1 {
@@ -370,19 +387,6 @@ h1 {
     position: absolute;
 }
 
-.circulo_user {
-    font-family:Arial, Helvetica, sans-serif ;
-    width: 200px;
-    height: 120px;
-    background-color: #1117;
-    backdrop-filter: blur(10px);
-    margin-left: 200px;
-    margin-top: 20px;
-    border-radius: 50px; /* Crea un círculo perfecto */
-    box-shadow: 0 8px 16px rgba(136, 42, 42, 0.1); /* Añade una sombra suave */
-    transition: all 0.3s ease; /* Agrega una transición suave */
-    position: absolute;
-}
 
 
 p{

@@ -50,6 +50,7 @@
         <div class="circulo_user"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FGESTION%20DOCUMENTAL%2FSEGURIDAD%2Ezip&parent=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FGESTION%20DOCUMENTAL" class="link1"><h3 class="h3__2">Control de riesgos fisicos</h3></a></div>
         <div class="circulo_user2 circulo_user"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?newTargetListUrl=%2Fsites%2FPrueba%2Egg%2FShared%20Documents&viewpath=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FForms%2FAllItems%2Easpx&id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FDocumentos%5F%5Fprueba%2FCompliance&viewid=7e698b00%2D50a8%2D4a9f%2Daf64%2D4414983a1399" class="link1"><h3>Seguridad fisica</h3></a></div>
     </div>
+    
     <!-- <script>
         document.addEventListener("DOMContentLoaded", function () {
             const areaUsuario = "<?php echo $area; ?>"; // Aquí tomamos el área del usuario desde PHP
