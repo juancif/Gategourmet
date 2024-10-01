@@ -77,7 +77,7 @@ function obtenerColor($macroproceso) {
     <main>
         <section class="container">
             <!-- Formulario para agregar nuevo proceso -->
-            <form method="POST" action="agregar_proceso.php" class="form-agregar">
+            <form method="POST" action="procesos.php" class="form-agregar">
                 
                 <div class="form-group">
                     <label for="macroproceso">Macroproceso:</label>
