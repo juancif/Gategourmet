@@ -13,25 +13,43 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Consulta SQL para obtener todos los campos de la tabla 'procesos'
-$sql = "SELECT macroproceso, proceso, usuario, cargo, email, rol FROM procesos";
-$result = $conn->query($sql);
+// Inicializar variables de búsqueda
+$busqueda_proceso = isset($_GET['proceso']) ? $_GET['proceso'] : '';
+$busqueda_usuario = isset($_GET['usuario']) ? $_GET['usuario'] : '';
+$busqueda_cargo = isset($_GET['cargo']) ? $_GET['cargo'] : '';
 
-// Comprobar si la consulta fue exitosa
-if (!$result) {
-    die("Error en la consulta: " . $conn->error);
-}
+// Consulta SQL usando consultas preparadas para evitar inyección SQL
+$stmt = $conn->prepare("SELECT id, macroproceso, proceso, usuario, cargo, email, rol FROM procesos WHERE proceso LIKE ? AND usuario LIKE ? AND cargo LIKE ?");
+$proceso_like = "%$busqueda_proceso%";
+$usuario_like = "%$busqueda_usuario%";
+$cargo_like = "%$busqueda_cargo%";
+$stmt->bind_param("sss", $proceso_like, $usuario_like, $cargo_like);
+$stmt->execute();
+$result = $stmt->get_result();
 
-// Obtener el color según el índice de la fila
-function obtenerColorFila($index) {
-    if ($index >= 1 && $index <= 13) {
-        return 'yellow-background'; // Clase CSS para amarillo
-    } elseif ($index >= 14 && $index <= 44) {
-        return 'red-background'; // Clase CSS para rojo
-    } elseif ($index >= 45 && $index <= 76) {
-        return 'green-background'; // Clase CSS para verde
-    } else {
-        return ''; // Sin color
+// Obtener el color según el macroproceso
+function obtenerColor($macroproceso) {
+    switch ($macroproceso) {
+        case 'GESTION CORPORATIVA':
+        case 'COMPLIANCE':
+            return 'yellow-background'; // Clase CSS para amarillo
+        case 'SUPPLY CHAIN':
+        case 'CULINARY EXCELLENCE':
+        case 'SERVICE DELIVERY':
+        case 'ASSEMBLY':
+        case 'SERVICIOS INSTITUCIONALES':
+            return 'red-background'; // Clase CSS para rojo
+        case 'FINANCIERA':
+        case 'COSTOS':
+        case 'COMUNICACIONES':
+        case 'TECNOLOGÍA DE LA INFORMACIÓN':
+        case 'TALENTO HUMANO':
+        case 'MANTENIMIENTO':
+        case 'SERVICIO AL CLIENTE':
+        case 'SECURITY':
+            return 'green-background'; // Clase CSS para verde
+        default:
+            return ''; // Sin color
     }
 }
 ?>
@@ -44,23 +62,77 @@ function obtenerColorFila($index) {
     <title>Listado de Procesos</title>
     <link rel="stylesheet" href="procesos.css">
     <link rel="icon" href="/ruta/al/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <header>
     <header class="header">
-        MAPEO DE PROCESOS
+        <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
     </header>
     <li class="nav__item__user">
-        <a href="http://localhost/GateGourmet/Index/index_admin.html" class="cerrar__sesion__link">
-            <img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario">
-            <div class="cerrar__sesion">Volver al inicio</div>
-        </a>
-    </li>
+                <a href="http://localhost/GateGourmet/Index/index_admin.php" class="cerrar__sesion__link"><img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
+            </li>
+    </header>
+
     <main>
         <section class="container">
+            <!-- Formulario para agregar nuevo proceso -->
+            <form method="POST" action="agregar_proceso.php" class="form-agregar">
+                
+                <div class="form-group">
+                    <label for="macroproceso">Macroproceso:</label>
+                    <input type="text" id="macroproceso" name="macroproceso" required>
+                </div>
+                <div class="form-group">
+                    <label for="proceso">Proceso:</label>
+                    <input type="text" id="proceso" name="proceso" required>
+                </div>
+                <div class="form-group">
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" required>
+                </div>
+                <div class="form-group">
+                    <label for="cargo">Cargo:</label>
+                    <input type="text" id="cargo" name="cargo" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="rol">Rol:</label>
+                    <input type="text" id="rol" name="rol" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn"><i class="fas fa-plus"></i> Agregar Proceso</button>
+                </div>
+            </form>
+
+            <!-- Formulario de búsqueda -->
+            <form method="GET" action="" class="form-agregar">
+                <div class="form-group">
+                    <label for="proceso">Buscar por Proceso:</label>
+                    <input type="text" id="proceso" name="proceso" value="<?php echo htmlspecialchars($busqueda_proceso); ?>">
+                </div>
+                <div class="form-group">
+                    <label for="usuario">Buscar por Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" value="<?php echo htmlspecialchars($busqueda_usuario); ?>">
+                </div>
+                <div class="form-group">
+                    <label for="cargo">Buscar por Cargo:</label>
+                    <input type="text" id="cargo" name="cargo" value="<?php echo htmlspecialchars($busqueda_cargo); ?>">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn"><i class="fas fa-search"></i> Buscar</button>
+                </div>
+            </form>
+
+            <!-- Tabla de procesos -->
             <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Macroproceso</th>
                             <th>Proceso</th>
                             <th>Usuario</th>
@@ -72,25 +144,22 @@ function obtenerColorFila($index) {
                     <tbody>
                         <?php
                         if ($result->num_rows > 0) {
-                            $rowIndex = 1; // Contador de filas
+                            // Iterar a través de los resultados de la consulta
                             while ($row = $result->fetch_assoc()) {
-                                // Obtener la clase de color según el índice de la fila
-                                $colorClass = obtenerColorFila($rowIndex);
-
-                                // Asignar cada valor a su columna correspondiente
+                                // Obtener el color para la fila de la tabla
+                                $colorClass = obtenerColor($row['macroproceso']);
                                 echo "<tr>";
-                                echo "<td class='$colorClass'>" . htmlspecialchars($row["macroproceso"]) . "</td>";  // Macroproceso
-                                echo "<td class='$colorClass'>" . htmlspecialchars($row["proceso"]) . "</td>";  // Proceso
-                                echo "<td>" . htmlspecialchars($row["usuario"]) . "</td>";  // Usuario
-                                echo "<td>" . htmlspecialchars($row["cargo"]) . "</td>";  // Cargo
-                                echo "<td>" . htmlspecialchars($row["email"]) . "</td>";  // Email
-                                echo "<td>" . htmlspecialchars($row["rol"]) . "</td>";  // Rol
+                                echo "<td>" . htmlspecialchars($row["id"]) . "</td>";
+                                echo "<td class='$colorClass'>" . htmlspecialchars($row["macroproceso"]) . "</td>";
+                                echo "<td class='$colorClass'>" . htmlspecialchars($row["proceso"]) . "</td>";
+                                echo "<td>" . htmlspecialchars($row["usuario"]) . "</td>";
+                                echo "<td>" . htmlspecialchars($row["cargo"]) . "</td>";
+                                echo "<td>" . htmlspecialchars($row["email"]) . "</td>";
+                                echo "<td>" . htmlspecialchars($row["rol"]) . "</td>";
                                 echo "</tr>";
-
-                                $rowIndex++; // Incrementar el contador de filas
                             }
                         } else {
-                            echo "<tr><td colspan='6'>No hay datos disponibles</td></tr>";
+                            echo "<tr><td colspan='7'>No hay datos disponibles</td></tr>";
                         }
                         ?>
                     </tbody>
@@ -99,9 +168,9 @@ function obtenerColorFila($index) {
         </section>
     </main>
 
-<?php
-// Cerrar conexión
-$conn->close();
-?>
+    <?php
+    // Cerrar conexión
+    $conn->close();
+    ?>
 </body>
 </html>
