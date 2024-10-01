@@ -185,8 +185,8 @@ a{
 
 
 .cuadro_titulo{
-    min-width: 92.5vw;
-    max-width: 100%;
+    min-width: 87.5vw;
+    max-width: 900%;
     background: #1117;
     backdrop-filter: blur(10px);
     color: white;
