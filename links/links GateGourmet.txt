@@ -51,7 +51,7 @@ http://localhost/GateGourmet/listado_maestro/listado_maestro.php
 
 
 reestablecer:
-http://localhost/GateGourmet/restablecer/restablecer.php
+http://localhost/GateGourmet/restablecer/reestablecer.php
 http://localhost/GateGourmet/restablecer/restablecer_exitoso.php
 
 Indicadores

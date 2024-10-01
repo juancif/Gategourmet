@@ -140,7 +140,7 @@ $connect->close();
                     <div class="buttons">
                         <input type="submit" value="Ingresar">
                         <a href="http://localhost/GateGourmet/register/register3.php" class="button">Registrarse</a>
-                        <a href="http://localhost/GateGourmet/restablecer/restablecer.php" class="button-reestablecer">Restablecer Contraseña</a>
+                        <a href="http://localhost/GateGourmet/restablecer/reestablecer.php" class="button-reestablecer">Restablecer Contraseña</a>
                     </div>
                 </form>
 
