@@ -169,50 +169,81 @@ body {
     margin-top: 20vh;
 }
 
-/* Estilos del Contenedor Principal */
-.container {
-    background-color: #1e2125;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    font-family: 'Roboto', sans-serif;
-    color: #e4e4e4;
-    height: 30vh; /* Para asegurarte de que ocupa toda la altura de la ventana */
-    overflow-y: auto; /* Agregar una barra de desplazamiento si el contenido es largo */    
+/* Estilo para los encabezados de las opciones */
+/* Encabezado con contador de elementos */
+.nombre-opcion {
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 10px 0;
+    color: white;
+    transition: color 0.3s ease, transform 0.3s ease;
+    position: relative; /* Posicionamos para agregar el contador */
+    padding: 5px;
 }
 
-/* Contenedores con barras de desplazamiento */
+/* Mostramos el total de elementos (contador) */
+.nombre-opcion .contador {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%); /* Para centrar verticalmente el contador */
+    font-size: 20px;
+    color: #000000; /* Texto blanco */
+    background-color: #ffffff; /* Color de fondo rojo elegante */
+    padding: 6px 12px; /* Tamaño ajustado para mayor legibilidad */
+    border-radius: 20px; /* Bordes completamente redondeados */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Sombra sutil */
+    font-weight: bold;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nombre-opcion .contador:hover {
+    background-color: #3498db; /* Cambio de color al pasar el cursor */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Mayor sombra al hacer hover */
+}
+
+/* Estilo para la transición al desplegar contenido */
+.contenido {
+    display: none;
+    padding: 10px;
+    background: rgba(17, 17, 17, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 5px;
+    margin-top: 10px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+/* Mostrar el contenido */
+.contenido.show {
+    display: block;
+    max-height: 500px;
+    opacity: 1;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+/* Contenedores con barra de desplazamiento */
 .aprobaciones,
 .revisiones,
 .alarmass {
-    background-color: #2d2f36;
+    background-color: white;
     width: 100%;
-    height: 80vh;
+    height: 80vh; /* Altura ajustable, barra de desplazamiento automática */
     border: 1px solid #444;
     padding: 15px;
-    overflow: auto;
+    overflow: auto; /* Mantenemos la barra de desplazamiento */
     border-radius: 8px;
     margin-bottom: 4vh;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo para cada correo electrónico */
-.email-item {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background-color: #f3f4f6;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    padding: 20px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-
-.email-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+/* Animación del hover en la opción seleccionada */
+.nombre-opcion:hover {
+    color: #3498db;
+    transform: scale(1.05);
 }
 
 /* Título de cada correo (Asunto) */
@@ -223,7 +254,20 @@ body {
     font-weight: bold;
 }
 
-/* Información del remitente, destinatario y fecha */
+/* Estilos para los correos y los elementos */
+.email-item {
+    background-color: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.email-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
 .email-item p {
     margin: 5px 0;
     font-size: 14px;
@@ -231,58 +275,58 @@ body {
 }
 
 .email-item .date {
-    font-size: 12px;
-    color: #888;
-    margin-top: 10px;
+    font-size: 15px;
+    color: #555;
+    margin-top: -4px;
 }
 
-/* Contenido del correo */
+/* Cuerpo del correo */
 .email-item .body {
-    margin-top: 15px;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #333;
+    margin-top: 20px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #34495e;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
 }
 
-/* Lista de correos */
-.email-list {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Estilos para los botones de acción */
+/* Botones de acción */
 .email-item .email-actions {
     margin-top: 20px;
     text-align: right;
 }
 
+/* Estilo de los botones */
 .email-item .email-actions button {
-    background-color: #4a90e2;
+    background-color: #3498db;
     color: #fff;
     border: none;
     padding: 10px 20px;
-    border-radius: 6px;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .email-item .email-actions button:hover {
-    background-color: #357abd;
+    background-color: #2980b9;
 }
 
-
-/* Estilo para los títulos de sección */
+/* Estilo general para títulos */
 h1 {
     font-size: 30px;
-    color:white;
+    color: white;
     text-align: center;
     margin-bottom: 30px;
-    
 }
 
-h2{
+h2 {
     text-align: center;
+    color: white;
 }
+
+
 .cerrar__sesion__link {
     display: flex; /* Usar flexbox para alinear imagen y texto */
     align-items: center; /* Centrar verticalmente */

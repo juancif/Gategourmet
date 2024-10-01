@@ -62,9 +62,7 @@ function getBody($message) {
     } elseif ($parts) {
         foreach ($parts as $part) {
             // Recorremos las partes para obtener el texto plano o HTML
-            if ($part->getMimeType() == 'text/plain') {
-                $body .= base64url_decode($part->getBody()->getData());
-            } elseif ($part->getMimeType() == 'text/html') {
+            if ($part->getMimeType() == 'text/html') {
                 $body .= base64url_decode($part->getBody()->getData());
             }
         }
@@ -156,120 +154,220 @@ foreach ($messages as $message) {
             </li>
         </ul>
     </nav>
-    <button id="alarmas">Mostrar notificaciones</button>
+ <!-- Botón para mostrar notificaciones -->
+<button id="alarmas">Mostrar notificaciones</button>
 
-    <div id="abirMenu" class="desplegar">
-      <span id="cerrarMenu">X</span>
-      <ddiv class="container">
-    <h1>Correos Electrónicos</h1>
-    <div class="aprobaciones"><h2>Aprobaciones</h2>
-    <div class="email-list">
-            <?php if (empty($emailData)) { ?>
-                <p>No hay correos electrónicos disponibles.</p>
-            <?php } else { ?>
-                <?php foreach ($emailData as $email) { ?>
-                    <div class="email-item">
-                        <h2>Asunto: <?php echo htmlspecialchars($email['subject']); ?></h2><br>
-                        <p><strong>De:</strong> <?php echo htmlspecialchars($email['from']); ?></p><br>
-                        <?php if (!empty($email['to'])) { ?><br>
-                            <p><strong>Para:</strong> <?php echo htmlspecialchars($email['to']); ?></p><br>
-                        <?php } ?>
-                        <?php if (!empty($email['cc'])) { ?>
-                            <p><strong>Cc:</strong> <?php echo htmlspecialchars($email['cc']); ?></p><br>
-                        <?php } ?><br>
-                        <p class="date"><strong>Fecha:</strong> <?php echo htmlspecialchars($email['date']); ?></p><br>
-                        <div class="body">
-                        <strong>Contenido:</strong><br>
-                        <?php if (strpos($email['body'], '<html') !== false) { ?>
-                            <!-- Si el cuerpo del mensaje es HTML -->
-                            <div><?php echo $email['body']; ?></div><br>
-                        <?php } else { ?>
-                            <!-- Si es texto plano -->
-                            <p><?php echo nl2br(htmlspecialchars($email['body'])); ?></p>
-                        <?php } ?>
+<!-- Menú desplegable -->
+<div id="abirMenu" class="desplegar">
+    <span id="cerrarMenu">X</span>
+
+    <!-- Contenedor principal -->
+    <div class="container_not">
+        <h1>Correos Electrónicos</h1>
+
+        <!-- Sección Aprobaciones -->
+        <div class="opcion" id="opcion-aprobaciones">
+    <h2 class="nombre-opcion" onclick="toggleContenido('contenido-aprobaciones')">Aprobaciones
+        <span class="contador"></span> <!-- Contador de elementos -->
+    </h2>
+    <div class="contenido aprobaciones" id="contenido-aprobaciones">
+                <?php if (empty($emailData)) { ?>
+                    <p>No hay correos electrónicos disponibles.</p>
+                <?php } else { ?>
+                    <?php foreach ($emailData as $email) { ?>
+                        <div class="email-item">
+                            <h2>Asunto: <?php echo htmlspecialchars($email['subject']); ?></h2>
+
+                            <!-- Extraer solo el nombre del campo "De:" -->
+                            <p><strong>De:</strong> 
+                                <?php
+                                if (preg_match('/"(.*?)"/', $email['from'], $matches)) {
+                                    echo htmlspecialchars($matches[1]); // Muestra solo el nombre
+                                } else {
+                                    echo htmlspecialchars($email['from']); // En caso de que no se encuentre el nombre
+                                }
+                                ?>
+                            </p>
+
+                            <!-- Extraer solo el nombre del campo "Para:" -->
+                            <?php if (!empty($email['to'])) { ?><br>
+                            <p><strong>Para:</strong> 
+                                <?php
+                                if (preg_match('/"(.*?)"/', $email['to'], $matches)) {
+                                    echo htmlspecialchars($matches[1]); // Muestra solo el nombre
+                                } else {
+                                    echo htmlspecialchars($email['to']); // En caso de que no se encuentre el nombre
+                                }
+                                ?>
+                            </p>
+                            <?php } ?><br>
+
+                            <?php if (!empty($email['cc'])) { ?><br>
+                                <!-- Si quieres aplicar lo mismo para Cc, puedes usar el mismo patrón -->
+                                <p><strong>Cc:</strong> 
+                                    <?php
+                                    if (preg_match('/"(.*?)"/', $email['cc'], $matches)) {
+                                        echo htmlspecialchars($matches[1]); // Muestra solo el nombre
+                                    } else {
+                                        echo htmlspecialchars($email['cc']); // En caso de que no se encuentre el nombre
+                                    }
+                                    ?>
+                                </p>
+                            <?php } ?><br>
+
+                            <p class="date"><strong>Fecha:</strong> <?php echo htmlspecialchars($email['date']); ?></p><br>
+
+                            <!-- Mostrar solo el contenido en HTML dentro del recuadro, no como texto plano -->
+                            <div class="body">
+                                <?php if (strpos($email['body'], '<html') !== false) { ?>
+                                    <!-- Mostrar el cuerpo si contiene HTML -->
+                                    <div><?php echo $email['body']; ?></div>
+                                <?php } ?>
+                            </div>
+
+                            <div class="email-actions">
+                                <button>Verificar</button>
+                                <button>Devolver</button>
+                            </div>
                         </div>
-                        <div class="email-actions">
-                            <button>Verificar</button>
-                            <button>Devolver</button>
-                        </div>
-                    </div>
+                    <?php } ?>
                 <?php } ?>
-            <?php } ?>
+            </div>
         </div>
-    </div>
-<div class="revisiones"><h2>Revisiones</h2>
-    <div class="email-list">
-            <?php if (empty($emailData)) { ?>
-                <p>No hay correos electrónicos disponibles.</p>
-            <?php } else { ?>
-                <?php foreach ($emailData as $email) { ?>
-                    <div class="email-item">
-                        <h2>Asunto: <?php echo htmlspecialchars($email['subject']); ?></h2><br>
-                        <p><strong>De:</strong> <?php echo htmlspecialchars($email['from']); ?></p>
-                        <?php if (!empty($email['to'])) { ?><br>
-                            <p><strong>Para:</strong> <?php echo htmlspecialchars($email['to']); ?></p>
-                        <?php } ?><br>
-                        <?php if (!empty($email['cc'])) { ?><br>
-                            <p><strong>Cc:</strong> <?php echo htmlspecialchars($email['cc']); ?></p>
-                        <?php } ?><br><br>
-                        <p class="date"><strong>Fecha:</strong> <?php echo htmlspecialchars($email['date']); ?></p>
-                        <div class="body">
-                        <strong>Contenido:</strong><br>
-                        <?php if (strpos($email['body'], '<html') !== false) { ?>
-                            <!-- Si el cuerpo del mensaje es HTML -->
-                            <div><?php echo $email['body']; ?></div><br>
-                        <?php } else { ?>
-                            <!-- Si es texto plano -->
-                            <p><?php echo nl2br(htmlspecialchars($email['body'])); ?></p>
-                        <?php } ?>
+
+
+        <!-- Sección Revisiones -->
+        <div class="opcion" id="opcion-revisiones">
+    <h2 class="nombre-opcion" onclick="toggleContenido('contenido-revisiones')">Revisiones
+        <span class="contador"></span> <!-- Contador de elementos -->
+    </h2>
+    <div class="contenido revisiones" id="contenido-revisiones">
+                <?php if (empty($emailData)) { ?>
+                    <p>No hay correos electrónicos disponibles.</p>
+                <?php } else { ?>
+                    <?php foreach ($emailData as $email) { ?>
+                        <div class="email-item">
+                            <h2>Asunto: <?php echo htmlspecialchars($email['subject']); ?></h2>
+                            <p><strong>De:</strong> 
+                        <?php
+                        if (preg_match('/"(.*?)"/', $email['from'], $matches)) {
+                            echo htmlspecialchars($matches[1]); // Muestra solo el nombre
+                        } else {
+                            echo htmlspecialchars($email['from']); // En caso de que no se encuentre el nombre
+                        }
+                        ?>
+                    </p>
+
+                    <!-- Extraer solo el nombre del campo "Para:" -->
+                    <?php if (!empty($email['to'])) { ?><br>
+                    <p><strong>Para:</strong> 
+                        <?php
+                        if (preg_match('/"(.*?)"/', $email['to'], $matches)) {
+                            echo htmlspecialchars($matches[1]); // Muestra solo el nombre
+                        } else {
+                            echo htmlspecialchars($email['to']); // En caso de que no se encuentre el nombre
+                        }
+                        ?>
+                    </p>
+                    <?php } ?><br>
+
+                    <?php if (!empty($email['cc'])) { ?><br>
+                        <!-- Si quieres aplicar lo mismo para Cc, puedes usar el mismo patrón -->
+                        <p><strong>Cc:</strong> 
+                            <?php
+                            if (preg_match('/"(.*?)"/', $email['cc'], $matches)) {
+                                echo htmlspecialchars($matches[1]); // Muestra solo el nombre
+                            } else {
+                                echo htmlspecialchars($email['cc']); // En caso de que no se encuentre el nombre
+                            }
+                            ?>
+                        </p>
+                    <?php } ?><br>
+                            <p class="date"><strong>Fecha:</strong> <?php echo htmlspecialchars($email['date']); ?></p><br>
+                            <div class="body">
+                                <?php if (strpos($email['body'], '<html') !== false) { ?>
+                                    <div><?php echo $email['body']; ?></div>
+                                <?php } else { ?>
+                                    <p><?php echo nl2br(htmlspecialchars($email['body'])); ?></p>
+                                <?php } ?>
+                            </div>
+                            <div class="email-actions">
+                                <button>Verificar</button>
+                                <button>Devolver</button>
+                            </div>
                         </div>
-                        <div class="email-actions">
-                            <button>Verificar</button>
-                            <button>Devolver</button>
-                        </div>
-                    </div>
+                    <?php } ?>
                 <?php } ?>
-            <?php } ?>
+            </div>
         </div>
-    </div>
-<div class="alarmass"><h2>Alarmas</h2>
-    <div class="email-list">
-            <?php if (empty($emailData)) { ?>
-                <p>No hay correos electrónicos disponibles.</p>
-            <?php } else { ?>
-                <?php foreach ($emailData as $email) { ?>
-                    <div class="email-item">
-                        <h2>Asunto: <?php echo htmlspecialchars($email['subject']); ?></h2><br>
-                        <p><strong>De:</strong> <?php echo htmlspecialchars($email['from']); ?></p><br>
-                        <?php if (!empty($email['to'])) { ?><br>
-                            <p><strong>Para:</strong> <?php echo htmlspecialchars($email['to']); ?></p><br>
-                        <?php } ?>
-                        <?php if (!empty($email['cc'])) { ?>
-                            <p><strong>Cc:</strong> <?php echo htmlspecialchars($email['cc']); ?></p><br>
-                        <?php } ?><br>
-                        <p class="date"><strong>Fecha:</strong> <?php echo htmlspecialchars($email['date']); ?></p><br>
-                        <div class="body">
-                        <strong>Contenido:</strong><br>
-                        <?php if (strpos($email['body'], '<html') !== false) { ?>
-                            <!-- Si el cuerpo del mensaje es HTML -->
-                            <div><?php echo $email['body']; ?></div><br>
-                        <?php } else { ?>
-                            <!-- Si es texto plano -->
-                            <p><?php echo nl2br(htmlspecialchars($email['body'])); ?></p>
-                        <?php } ?>
+
+        <!-- Sección Alarmas -->
+        <div class="opcion" id="opcion-alarmass">
+    <h2 class="nombre-opcion" onclick="toggleContenido('contenido-alarmass')">Alarmas
+        <span class="contador"></span> <!-- Contador de elementos -->
+    </h2>
+    <div class="contenido alarmass" id="contenido-alarmass">
+                <?php if (empty($emailData)) { ?><br>
+                    <p>No hay correos electrónicos disponibles.</p>
+                <?php } else { ?>
+                    <?php foreach ($emailData as $email) { ?>
+                        <div class="email-item">
+                            <h2>Asunto: <?php echo htmlspecialchars($email['subject']); ?></h2>
+                            <p><strong>De:</strong> 
+                        <?php
+                        if (preg_match('/"(.*?)"/', $email['from'], $matches)) {
+                            echo htmlspecialchars($matches[1]); // Muestra solo el nombre
+                        } else {
+                            echo htmlspecialchars($email['from']); // En caso de que no se encuentre el nombre
+                        }
+                        ?>
+                    </p>
+
+                    <!-- Extraer solo el nombre del campo "Para:" -->
+                    <?php if (!empty($email['to'])) { ?><br>
+                    <p><strong>Para:</strong> 
+                        <?php
+                        if (preg_match('/"(.*?)"/', $email['to'], $matches)) {
+                            echo htmlspecialchars($matches[1]); // Muestra solo el nombre
+                        } else {
+                            echo htmlspecialchars($email['to']); // En caso de que no se encuentre el nombre
+                        }
+                        ?>
+                    </p>
+                    <?php } ?><br>
+
+                    <?php if (!empty($email['cc'])) { ?><br>
+                        <!-- Si quieres aplicar lo mismo para Cc, puedes usar el mismo patrón -->
+                        <p><strong>Cc:</strong> 
+                            <?php
+                            if (preg_match('/"(.*?)"/', $email['cc'], $matches)) {
+                                echo htmlspecialchars($matches[1]); // Muestra solo el nombre
+                            } else {
+                                echo htmlspecialchars($email['cc']); // En caso de que no se encuentre el nombre
+                            }
+                            ?>
+                        </p>
+                    <?php } ?><br>
+                            <p class="date"><strong>Fecha:</strong> <?php echo htmlspecialchars($email['date']); ?></p><br>
+                            <div class="body">
+                                <?php if (strpos($email['body'], '<html') !== false) { ?>
+                                    <div><?php echo $email['body']; ?></div>
+                                <?php } else { ?>
+                                    <p><?php echo nl2br(htmlspecialchars($email['body'])); ?></p>
+                                <?php } ?>
+                            </div>
+                            <div class="email-actions">
+                                <button>Verificar</button>
+                                <button>Devolver</button>
+                            </div>
                         </div>
-                        <div class="email-actions">
-                            <button>Verificar</button>
-                            <button>Devolver</button>
-                        </div>
-                    </div>
+                    <?php } ?>
                 <?php } ?>
-            <?php } ?>
+            </div>
         </div>
     </div>
 </div>
-</div>
-</div>
+
     <script src="script.js"></script>
     <div class="recuadroimagen"><img src="../Imagenes/Logo_oficial_B-N.png" class="logoindex">
         <img src="../Imagenes/logo__recuadro__gategourmet.png" alt="img4" class="triangulo">
@@ -308,6 +406,41 @@ foreach ($messages as $message) {
             <div class="circulo circulo15"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FGESTION%20DOCUMENTAL%2FTALENTO%20HUMANO%2Ezip&parent=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FGESTION%20DOCUMENTAL" class="link1"><h3 class="h3__2">Talento humano</h3></a></div>
         </div>
 </body>
+<script>
+// Función para alternar el contenido y actualizar el contador
+function toggleContenido(id) {
+    const contenido = document.getElementById(id);
+    const opcion = document.querySelector(`[onclick="toggleContenido('${id}')"]`);
+
+    // Alternar entre mostrar/ocultar el contenido y agregar la clase show
+    if (contenido.classList.contains('show')) {
+        contenido.classList.remove('show');
+    } else {
+        contenido.classList.add('show');
+    }
+}
+
+// Función para contar los correos dentro de cada sección
+function actualizarContadores() {
+    const secciones = ['contenido-aprobaciones', 'contenido-revisiones', 'contenido-alarmass'];
+    
+    secciones.forEach(seccionId => {
+        const seccion = document.getElementById(seccionId);
+        const contador = seccion.querySelectorAll('.email-item').length;
+        const nombreOpcion = document.querySelector(`[onclick="toggleContenido('${seccionId}')"]`);
+        
+        // Mostrar el total de correos en el encabezado
+        if (nombreOpcion) {
+            const contadorElement = nombreOpcion.querySelector('.contador');
+            contadorElement.textContent = contador;
+        }
+    });
+}
+
+// Ejecutamos la función de contar correos al cargar la página
+document.addEventListener('DOMContentLoaded', actualizarContadores);
+
+</script>
 <script src="menu.js"></script>
 <script src="script_alarmas.js"></script>
 </html>
