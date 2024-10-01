@@ -471,29 +471,23 @@ $conn->close();
 
         // Inicializar la gráfica con todas las áreas seleccionadas
         actualizarGrafica("Todas");
-
-        // Gráfico 5: Cantidad de Documentación Desactualizada por Área (Circular)
-        new Chart(document.getElementById('cantidadDesactualizadaChart'), {
-            type: 'doughnut',
+        
+ // Gráfico 5: Cantidad de Documentación Desactualizada por Área (Barras)
+ const ctxCantidad = document.getElementById('cantidadDocumentacionDesactualizadaChart').getContext('2d');
+        const cantidadDocumentacionDesactualizadaChart = new Chart(ctxCantidad, {
+            type: 'bar',
             data: {
                 labels: <?php echo json_encode($areas5); ?>,
                 datasets: [{
-                    label: 'Cantidad Desactualizada',
+                    label: 'Cantidad de Documentación Desactualizada',
                     data: <?php echo json_encode($cantidadDesactualizada); ?>,
-                    backgroundColor: <?php echo json_encode(array_map(function() {
-                        return 'rgba(' . rand(0, 255) . ',' . rand(0, 255) . ',' . rand(0, 255) . ', 0.6)';
-                    }, $cantidadDesactualizada)); ?>
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
                 }]
             },
             options: {
-                responsive: true,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Cantidad de Documentación Desactualizada por Área'
-                    },
-                    legend: {
-                        position: 'top'
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
             }

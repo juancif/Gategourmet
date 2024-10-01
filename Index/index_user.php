@@ -70,7 +70,7 @@ $area = isset($_SESSION['area']) ? $_SESSION['area'] : '';
             <p class="parrafo_soporte">Procesos que abarcan las actividades necesarias para el correcto funcionamiento de los procesos operativos.</p>
         </div>
         <div class="circulo circulo8"><a href="https://1drv.ms/w/s!Aijf4XW5EsnbmQ0kfSuUy3leGNi0?e=M6FAKA" class="link1"><h3>Financiera</h3></a></div>
-        <div class="circulo circulo9"><a href="https://1drv.ms/w/s!Aijf4XW5EsnbmQ0kfSuUy3leGNi0?e=M6FAKAb" class="link1"><h3>Costos</h3></a></div>
+        <div class="circulo circulo9"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/GESTION%20DOCUMENTAL?csf=1&web=1&e=BSXQQx" class="link1"><h3>Costos</h3></a></div>
         <div class="circulo circulo10"><a href="http://localhost/GateGourmet/Index/index_comunicaciones.php" class="link1"><h3 class="h3__3">Comunicaciones</h3></a></div>
         <div class="circulo circulo11"><a href="https://show.zoho.com/show/open/hpbd733318fd8b4834fcebcbc508ace6b9c64" class="link1"><h3>IT</h3></a></div>
         <div class="circulo circulo12"><a href="http://localhost/GateGourmet/Index/vista_usuarios/security.php" class="link1"><h3>Security</h3></a></div>
