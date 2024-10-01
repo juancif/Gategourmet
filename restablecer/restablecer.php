@@ -38,15 +38,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['correo'])) {
 
         // Insertar el token en password_resets solo si el correo existe en una tabla
         $stmt = $connect->prepare("INSERT INTO password_resets (correo, token, token_expiry) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $correo, $token, $token_expiry);
-        $stmt->execute();
+        
+        if ($stmt) {
+            $stmt->bind_param("sss", $correo, $token, $token_expiry);
+            if ($stmt->execute()) {
+                // Enviar el correo electrónico con el enlace de restablecimiento
+                enviarCorreo($correo, $token);
 
-        // Enviar el correo electrónico con el enlace de restablecimiento
-        enviarCorreo($correo, $token);
-
-        // Redirigir a la página de éxito
-        header('Location: reestablecer_exitoso.php');
-        exit();
+                // Redirigir a la página de éxito
+                header('Location: reestablecer_exitoso.php');
+                exit();
+            } else {
+                echo "<script>alert('Error al intentar restablecer la contraseña.');</script>";
+            }
+        } else {
+            echo "<script>alert('Error en la preparación de la consulta.');</script>";
+        }
     } else {
         echo "<script>alert('El correo electrónico no está registrado.');</script>";
     }

@@ -140,17 +140,17 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.371.0",
-            "version_normalized": "0.371.0.0",
+            "version": "v0.375.0",
+            "version_normalized": "0.375.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "2bebce17e419fb69917f8e807dc56298de38ea4e"
+                "reference": "ad8c4fcf925fd10198c20e2d7a3390183dc24bf1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/2bebce17e419fb69917f8e807dc56298de38ea4e",
-                "reference": "2bebce17e419fb69917f8e807dc56298de38ea4e",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/ad8c4fcf925fd10198c20e2d7a3390183dc24bf1",
+                "reference": "ad8c4fcf925fd10198c20e2d7a3390183dc24bf1",
                 "shasum": ""
             },
             "require": {
@@ -159,7 +159,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^9.6"
             },
-            "time": "2024-09-01T00:58:42+00:00",
+            "time": "2024-09-29T01:10:26+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -181,7 +181,7 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
-                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.371.0"
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.375.0"
             },
             "install-path": "../google/apiclient-services"
         },
@@ -853,7 +853,7 @@
             },
             "time": "2023-11-25T22:23:28+00:00",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "PHPMailer\\PHPMailer\\": "src/"
@@ -895,17 +895,17 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.41",
-            "version_normalized": "3.0.41.0",
+            "version": "3.0.42",
+            "version_normalized": "3.0.42.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "621c73f7dcb310b61de34d1da4c4204e8ace6ceb"
+                "reference": "db92f1b1987b12b13f248fe76c3a52cadb67bb98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/621c73f7dcb310b61de34d1da4c4204e8ace6ceb",
-                "reference": "621c73f7dcb310b61de34d1da4c4204e8ace6ceb",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/db92f1b1987b12b13f248fe76c3a52cadb67bb98",
+                "reference": "db92f1b1987b12b13f248fe76c3a52cadb67bb98",
                 "shasum": ""
             },
             "require": {
@@ -923,7 +923,7 @@
                 "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
                 "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations."
             },
-            "time": "2024-08-12T00:13:54+00:00",
+            "time": "2024-09-16T03:06:04+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -988,7 +988,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.41"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.42"
             },
             "funding": [
                 {
@@ -1229,23 +1229,23 @@
         },
         {
             "name": "psr/log",
-            "version": "3.0.1",
-            "version_normalized": "3.0.1.0",
+            "version": "3.0.2",
+            "version_normalized": "3.0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "79dff0b268932c640297f5208d6298f71855c03e"
+                "reference": "f16e1d5863e37f8d8c2a01719f5b34baa2b714d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/79dff0b268932c640297f5208d6298f71855c03e",
-                "reference": "79dff0b268932c640297f5208d6298f71855c03e",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/f16e1d5863e37f8d8c2a01719f5b34baa2b714d3",
+                "reference": "f16e1d5863e37f8d8c2a01719f5b34baa2b714d3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0.0"
             },
-            "time": "2024-08-21T13:31:24+00:00",
+            "time": "2024-09-11T13:17:53+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1276,7 +1276,7 @@
                 "psr-3"
             ],
             "support": {
-                "source": "https://github.com/php-fig/log/tree/3.0.1"
+                "source": "https://github.com/php-fig/log/tree/3.0.2"
             },
             "install-path": "../psr/log"
         },
@@ -1329,43 +1329,43 @@
         },
         {
             "name": "spipu/html2pdf",
-            "version": "v4.6.1",
-            "version_normalized": "4.6.1.0",
+            "version": "v5.2.8",
+            "version_normalized": "5.2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spipu/html2pdf.git",
-                "reference": "4898439e170ebf032513b8d3a83f0f5ffe85fece"
+                "reference": "6c94dcd48c94c6c73f206629839c1ebd81e8c726"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spipu/html2pdf/zipball/4898439e170ebf032513b8d3a83f0f5ffe85fece",
-                "reference": "4898439e170ebf032513b8d3a83f0f5ffe85fece",
+                "url": "https://api.github.com/repos/spipu/html2pdf/zipball/6c94dcd48c94c6c73f206629839c1ebd81e8c726",
+                "reference": "6c94dcd48c94c6c73f206629839c1ebd81e8c726",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2",
-                "tecnickcom/tcpdf": "~6.2.0"
+                "ext-gd": "*",
+                "ext-mbstring": "*",
+                "php": "^5.6 || ^7.0 || ^8.0",
+                "tecnickcom/tcpdf": "^6.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.0 || ^9.0"
             },
             "suggest": {
                 "ext-gd": "Allows to embed images into the PDF",
-                "fagundes/zff-html2pdf": "zff-html2pdf module ~0.1.1, if you need to integrate HTML2PDF with Zend Framework 2 (zf2)"
+                "fagundes/zff-html2pdf": "if you need to integrate Html2Pdf with Zend Framework 2 (zf2)"
             },
-            "time": "2016-04-05T12:25:17+00:00",
+            "time": "2023-07-18T14:52:59+00:00",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
-                "files": [
-                    "html2pdf.class.php",
-                    "_class/exception.class.php",
-                    "_class/locale.class.php",
-                    "_class/myPdf.class.php",
-                    "_class/parsingHtml.class.php",
-                    "_class/parsingCss.class.php"
-                ]
+                "psr-4": {
+                    "Spipu\\Html2Pdf\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL"
+                "OSL-3.0"
             ],
             "authors": [
                 {
@@ -1374,7 +1374,7 @@
                     "role": "Developer"
                 }
             ],
-            "description": "HTML2PDF is a HTML to PDF converter written in PHP5 (it uses TCPDF). OFFICIAL PACKAGE",
+            "description": "Html2Pdf is a HTML to PDF converter written in PHP5 (it uses TCPDF). OFFICIAL PACKAGE",
             "homepage": "http://html2pdf.fr/",
             "keywords": [
                 "html",
@@ -1383,7 +1383,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spipu/html2pdf/issues",
-                "source": "https://github.com/spipu/html2pdf/tree/4.6"
+                "source": "https://github.com/spipu/html2pdf/tree/v5.2.8"
             },
             "install-path": "../spipu/html2pdf"
         },
@@ -1459,25 +1459,25 @@
         },
         {
             "name": "tecnickcom/tcpdf",
-            "version": "6.2.26",
-            "version_normalized": "6.2.26.0",
+            "version": "6.7.5",
+            "version_normalized": "6.7.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tecnickcom/TCPDF.git",
-                "reference": "367241059ca166e3a76490f4448c284e0a161f15"
+                "reference": "951eabf0338ec2522bd0d5d9c79b08a3a3d36b36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/367241059ca166e3a76490f4448c284e0a161f15",
-                "reference": "367241059ca166e3a76490f4448c284e0a161f15",
+                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/951eabf0338ec2522bd0d5d9c79b08a3a3d36b36",
+                "reference": "951eabf0338ec2522bd0d5d9c79b08a3a3d36b36",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=5.5.0"
             },
-            "time": "2018-10-16T17:24:05+00:00",
+            "time": "2024-04-20T17:25:10+00:00",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "classmap": [
                     "config",
@@ -1500,7 +1500,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-3.0"
+                "LGPL-3.0-or-later"
             ],
             "authors": [
                 {
@@ -1521,8 +1521,15 @@
                 "qrcode"
             ],
             "support": {
-                "source": "https://github.com/tecnickcom/TCPDF/tree/master"
+                "issues": "https://github.com/tecnickcom/TCPDF/issues",
+                "source": "https://github.com/tecnickcom/TCPDF/tree/6.7.5"
             },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&currency_code=GBP&business=paypal@tecnick.com&item_name=donation%20for%20tcpdf%20project",
+                    "type": "custom"
+                }
+            ],
             "install-path": "../tecnickcom/tcpdf"
         }
     ],
