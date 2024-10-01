@@ -188,7 +188,7 @@ body {
     right: 10px;
     top: 50%;
     transform: translateY(-50%); /* Para centrar verticalmente el contador */
-    font-size: 20px;
+    font-size: 18px;
     color: #000000; /* Texto blanco */
     background-color: #ffffff; /* Color de fondo rojo elegante */
     padding: 6px 12px; /* Tamaño ajustado para mayor legibilidad */
@@ -300,7 +300,7 @@ body {
 
 /* Estilo de los botones */
 .email-item .email-actions button {
-    background-color: #3498db;
+    background-color: #1a73e8;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -310,7 +310,7 @@ body {
 }
 
 .email-item .email-actions button:hover {
-    background-color: #2980b9;
+    background-color: #0b4da3;
 }
 
 /* Estilo general para títulos */

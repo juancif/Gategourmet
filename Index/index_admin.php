@@ -224,10 +224,10 @@ foreach ($messages as $message) {
                                     <div><?php echo $email['body']; ?></div>
                                 <?php } ?>
                             </div>
-
                             <div class="email-actions">
-                                <button>Verificar</button>
-                                <button>Devolver</button>
+                                <button onclick="confirmAction('aprobar', '<?php echo htmlspecialchars($email['subject']); ?>')">Aprobar</button>
+                                <button onclick="confirmAction('revisar', '<?php echo htmlspecialchars($email['subject']); ?>')">Revisar</button>
+                                <button onclick="confirmAction('no aprobar', '<?php echo htmlspecialchars($email['subject']); ?>')">No aprobar</button>
                             </div>
                         </div>
                     <?php } ?>
@@ -291,9 +291,10 @@ foreach ($messages as $message) {
                                     <p><?php echo nl2br(htmlspecialchars($email['body'])); ?></p>
                                 <?php } ?>
                             </div>
-                            <div class="email-actions">
-                                <button>Verificar</button>
-                                <button>Devolver</button>
+                                <div class="email-actions">
+                                <button onclick="confirmAction('aprobar', '<?php echo htmlspecialchars($email['subject']); ?>')">Aprobar</button>
+                                <button onclick="confirmAction('revisar', '<?php echo htmlspecialchars($email['subject']); ?>')">Revisar</button>
+                                <button onclick="confirmAction('no aprobar', '<?php echo htmlspecialchars($email['subject']); ?>')">No aprobar</button>
                             </div>
                         </div>
                     <?php } ?>
@@ -357,8 +358,9 @@ foreach ($messages as $message) {
                                 <?php } ?>
                             </div>
                             <div class="email-actions">
-                                <button>Verificar</button>
-                                <button>Devolver</button>
+                                <button onclick="confirmAction('aprobar', '<?php echo htmlspecialchars($email['subject']); ?>')">Aprobar</button>
+                                <button onclick="confirmAction('revisar', '<?php echo htmlspecialchars($email['subject']); ?>')">Revisar</button>
+                                <button onclick="confirmAction('no aprobar', '<?php echo htmlspecialchars($email['subject']); ?>')">No aprobar</button>
                             </div>
                         </div>
                     <?php } ?>
@@ -367,7 +369,6 @@ foreach ($messages as $message) {
         </div>
     </div>
 </div>
-
     <script src="script.js"></script>
     <div class="recuadroimagen"><img src="../Imagenes/Logo_oficial_B-N.png" class="logoindex">
         <img src="../Imagenes/logo__recuadro__gategourmet.png" alt="img4" class="triangulo">
@@ -440,6 +441,31 @@ function actualizarContadores() {
 // Ejecutamos la función de contar correos al cargar la página
 document.addEventListener('DOMContentLoaded', actualizarContadores);
 
+</script>
+<script>
+    function confirmAction(action, fileName) {
+        let message = "";
+        switch(action) {
+            case 'aprobar':
+                message = `¿Estás seguro de que quieres aprobar el documento: ${fileName}?`;
+                break;
+            case 'revisar':
+                message = `¿Estás seguro de que quieres revisar el documento: ${fileName}?`;
+                break;
+            case 'no aprobar':
+                message = `¿Estás seguro de que NO quieres aprobar el documento: ${fileName}?`;
+                break;
+        }
+
+        if (confirm(message)) {
+            // Si el usuario confirma, puedes ejecutar la lógica correspondiente para la acción
+            alert(`Acción ${action} confirmada para: ${fileName}`);
+            // Aquí puedes hacer una llamada AJAX o cualquier otro procesamiento
+        } else {
+            // Si el usuario cancela, muestra un mensaje de cancelación
+            alert(`Acción ${action} cancelada para: ${fileName}`);
+        }
+    }
 </script>
 <script src="menu.js"></script>
 <script src="script_alarmas.js"></script>
