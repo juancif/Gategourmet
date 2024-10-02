@@ -166,7 +166,7 @@ foreach ($messages as $message) {
         <h1>Correos Electrónicos</h1>
 
         <!-- Sección Aprobaciones -->
-        <div class="opcion" id="opcion-alarmas">
+  <div class="opcion" id="opcion-alarmas">
     <h2 class="nombre-opcion" onclick="toggleContenido('contenido-alarmas')">Alarmas
         <span class="contador" id="contador-alarmas"></span> <!-- Contador de elementos -->
     </h2>
@@ -195,7 +195,9 @@ foreach ($messages as $message) {
     <h2 class="nombre-opcion" onclick="toggleContenido('contenido-revisiones')">Revisiones
         <span class="contador" id="contador-revisiones"></span> <!-- Contador de elementos -->
     </h2>
-    <div class="contenido revisiones" id="contenido-revisiones"></div>
+    <div class="contenido revisiones" id="contenido-revisiones">
+        <div class="email-list"></div>
+    </div>
 </div>
 
 <!-- Sección Aprobaciones -->
@@ -203,7 +205,9 @@ foreach ($messages as $message) {
     <h2 class="nombre-opcion" onclick="toggleContenido('contenido-aprobaciones')">Aprobaciones
         <span class="contador" id="contador-aprobaciones"></span> <!-- Contador de elementos -->
     </h2>
-    <div class="contenido aprobaciones" id="contenido-aprobaciones"></div>
+    <div class="contenido aprobaciones" id="contenido-aprobaciones">
+        <div class="email-list"></div>
+    </div>
 </div>
 </div>
 </div>

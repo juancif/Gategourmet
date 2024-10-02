@@ -205,6 +205,8 @@ body {
 
 /* Estilo para la transición al desplegar contenido */
 .contenido {
+    max-height: 300px; /* Ajusta la altura máxima según sea necesario */
+    overflow-y: auto;  /* Permite el desplazamiento vertical */
     display: none;
     padding: 10px;
     background: rgba(17, 17, 17, 0.7);
@@ -215,6 +217,22 @@ body {
     overflow: hidden;
     opacity: 0;
     transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+.contenido {
+    max-height: 300px; /* Ajusta la altura máxima según sea necesario */
+    overflow-y: auto;  /* Permite el desplazamiento vertical */
+    border: 1px solid #ccc; /* Añade un borde opcional */
+    padding: 10px; /* Añade un poco de espacio interno */
+    background-color: #f9f9f9; /* Fondo opcional para distinguir el área */
+}
+
+.email-item {
+    border-bottom: 1px solid #e0e0e0; /* Añade una línea entre correos */
+    padding: 10px 0; /* Añade espacio arriba y abajo */
+}
+
+.email-item:last-child {
+    border-bottom: none; /* Quita el borde del último elemento */
 }
 
 /* Mostrar el contenido */
@@ -261,11 +279,17 @@ body {
     margin: 10px 0;
     border-radius: 8px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-bottom: 1px solid #e0e0e0; /* Añade una línea entre correos */
+    padding: 10px 0; /* Añade espacio arriba y abajo */
 }
 
 .email-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.email-item:last-child {
+    border-bottom: none; /* Quita el borde del último elemento */
 }
 
 .email-item p {
