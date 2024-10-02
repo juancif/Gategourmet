@@ -1,16 +1,14 @@
 <?php
-session_start();
-$area = isset($_SESSION['area']) ? $_SESSION['area'] : '';
-?>
-<?php
 require '../vendor/autoload.php';
 session_start();
+$area = isset($_SESSION['area']) ? $_SESSION['area'] : '';
+
 
 // Configuración del cliente de Google
 $client = new Google_Client();
 $client->setAuthConfig('credentials.json');
 $client->addScope(Google_Service_Gmail::GMAIL_READONLY);
-$client->setRedirectUri('http://localhost/GateGourmet/Index/index_admin.php');
+$client->setRedirectUri('http://localhost/GateGourmet/Index/index_user.php');
 $client->setAccessType('offline');
 $client->setPrompt('consent'); // Cambiado a 'consent'
 
@@ -19,7 +17,7 @@ if (isset($_GET['code'])) {
     try {
         $accessToken = $client->fetchAccessTokenWithAuthCode($_GET['code']);
         $_SESSION['access_token'] = $accessToken;
-        header('Location: index_admin.php');
+        header('Location: index_user.php');
         exit();
     } catch (Exception $e) {
         echo 'Error fetching access token: ' . $e->getMessage();
@@ -121,6 +119,7 @@ foreach ($messages as $message) {
     $emailData[] = $emailDetails;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -393,7 +392,7 @@ foreach ($messages as $message) {
         <div class="circulo circulo3"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?newTargetListUrl=%2Fsites%2FPrueba%2Egg%2FShared%20Documents&viewpath=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FForms%2FAllItems%2Easpx&id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FDocumentos%5F%5Fprueba%2FSupply%20Chain&viewid=7e698b00%2D50a8%2D4a9f%2Daf64%2D4414983a1399" class="link1"><h3 class="h3__2">Supply chain</h3></a></div>
         <div class="circulo circulo4"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?newTargetListUrl=%2Fsites%2FPrueba%2Egg%2FShared%20Documents&viewpath=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FForms%2FAllItems%2Easpx&id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FDocumentos%5F%5Fprueba%2FCulinary&viewid=7e698b00%2D50a8%2D4a9f%2Daf64%2D4414983a1399" class="link1"><h3>Culinary</h3></a></div>
         <div class="circulo circulo5"><a href="https://workdrive.zoho.com/file/hpbd780390dcd8e964441a13bc568d214fb30" class="link1"><h3>Assembly</h3></a></div>
-        <div class="circulo circulo6"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=BSXQQx&CID=6459cb21%2D0e1b%2D4c1f%2D8d61%2Db708c969ccf8&FolderCTID=0x012000EBF399EE21698F4F9681B2D3D53A70EB&id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FGESTION%20DOCUMENTAL" class="link1"><h3 class="h3__2">Service delivery</h3></a></div>
+        <div class="circulo circulo6"><a href="http://localhost/GateGourmet/Index/vista_usuarios/security.php" class="link1"><h3 class="h3__2">Service delivery</h3></a></div>
         <div class="circulo circulo7"><a href="https://1drv.ms/f/s!Aijf4XW5EsnbmQqAF01L3lqjcNLc?e=2rZY8S" class="link1"><h3 class="h3__2">Servicios institucionales</h3></a></div>
     </div>
     <div class="cuadro3" id="cuadro3">
@@ -410,29 +409,6 @@ foreach ($messages as $message) {
         <div class="circulo circulo14"><a href="https://show.zoho.com/show/open/hpbd733318fd8b4834fcebcbc508ace6b9c64" class="link1"><h3 class="h3__2">Facilty service</h3></a></div>
         <div class="circulo circulo15"><a href="https://show.zoho.com/show/open/hpbd733318fd8b4834fcebcbc508ace6b9c64" class="link1"><h3 class="h3__2">Talento humano</h3></a></div>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const areaUsuario = "<?php echo $area; ?>"; // Aquí tomamos el área del usuario desde PHP
-
-            console.log("Área del usuario:", areaUsuario); // Para verificar que está llegando correctamente
-
-            const circulos = document.querySelectorAll(".circulo");
-
-            circulos.forEach(circulo => {
-                const h3Text = circulo.querySelector("h3").textContent.trim();
-
-                console.log("Texto del h3:", h3Text); // Para verificar el texto de cada h3
-
-                if (h3Text !== areaUsuario) {
-                    // Deshabilitar la funcionalidad de click
-                    const link = circulo.querySelector("a");
-                    link.removeAttribute("href");
-                    link.style.pointerEvents = "none";
-                    link.style.opacity = "0.5"; // Visualmente deshabilitar
-                }
-            });
-        });
-    </script>
     <script>
 // Función para alternar el contenido y actualizar el contador
 function toggleContenido(id) {
@@ -493,5 +469,28 @@ document.addEventListener('DOMContentLoaded', actualizarContadores);
         }
     }
 </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const areaUsuario = "<?php echo $area; ?>"; // Aquí tomamos el área del usuario desde PHP
+
+            console.log("Área del usuario:", areaUsuario); // Para verificar que está llegando correctamente
+
+            const circulos = document.querySelectorAll(".circulo");
+
+            circulos.forEach(circulo => {
+                const h3Text = circulo.querySelector("h3").textContent.trim();
+
+                console.log("Texto del h3:", h3Text); // Para verificar el texto de cada h3
+
+                if (h3Text !== areaUsuario) {
+                    // Deshabilitar la funcionalidad de click
+                    const link = circulo.querySelector("a");
+                    link.removeAttribute("href");
+                    link.style.pointerEvents = "none";
+                    link.style.opacity = "0.5"; // Visualmente deshabilitar
+                }
+            });
+        });
+    </script>
 </body>
 </html>
