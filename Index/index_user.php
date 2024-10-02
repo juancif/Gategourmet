@@ -492,5 +492,7 @@ document.addEventListener('DOMContentLoaded', actualizarContadores);
             });
         });
     </script>
+    <script src="menu.js"></script>
+    <script src="script_alarmas.js"></script>
 </body>
 </html>
