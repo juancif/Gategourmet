@@ -121,7 +121,17 @@ $conn->close();
                 </div>
                 <div class="input-group">
                     <label for="tipo">Tipo</label>
-                    <input type="text" id="tipo" name="tipo" required>
+                    <select id="tipo" name="tipo" required>
+                        <option value="">Seleccione un tipo</option>
+                        <option value="M">M - Manual</option>
+                        <option value="F">F - Formato</option>
+                        <option value="I">I - Instructivo</option>
+                        <option value="G">G - Programa</option>
+                        <option value="L">L - Layout</option>
+                        <option value="MCV">MCV - Mapa De Cadena Evolutiva</option>
+                        <option value="P">P - Procedimiento</option>
+                        <option value="S">S - Subprograma</option>
+                    </select>
                 </div>
                 <div class="input-group">
                     <label for="fecha_aprobacion">Fecha de Aprobación</label>
