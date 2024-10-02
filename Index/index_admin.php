@@ -166,7 +166,7 @@ foreach ($messages as $message) {
         <h1>Correos Electrónicos</h1>
 
         <!-- Sección Aprobaciones -->
-  <div class="opcion" id="opcion-alarmas">
+        <div class="opcion" id="opcion-alarmas">
     <h2 class="nombre-opcion" onclick="toggleContenido('contenido-alarmas')">Alarmas
         <span class="contador" id="contador-alarmas"></span> <!-- Contador de elementos -->
     </h2>
@@ -183,6 +183,8 @@ foreach ($messages as $message) {
                     <div class="body"><?php echo $email['body']; ?></div>
                     <div class="email-actions">
                         <button class="mover-boton" onclick="moverCorreo(this, 'contenido-revisiones', 'contador-revisiones', 'contador-alarmas')">Mover a Revisiones</button>
+                        <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
+                        <button class="ver-boton" onclick="verCorreo(this)">Ver</button>
                     </div>
                 </div>
             <?php } ?>
@@ -196,7 +198,7 @@ foreach ($messages as $message) {
         <span class="contador" id="contador-revisiones"></span> <!-- Contador de elementos -->
     </h2>
     <div class="contenido revisiones" id="contenido-revisiones">
-        <div class="email-list"></div>
+        <!-- Aquí se agregarían los correos en revisiones -->
     </div>
 </div>
 
@@ -206,10 +208,8 @@ foreach ($messages as $message) {
         <span class="contador" id="contador-aprobaciones"></span> <!-- Contador de elementos -->
     </h2>
     <div class="contenido aprobaciones" id="contenido-aprobaciones">
-        <div class="email-list"></div>
+        <!-- Aquí se agregarían los correos en aprobaciones -->
     </div>
-</div>
-</div>
 </div>
 
 <script>
@@ -228,7 +228,7 @@ function moverCorreo(button, contenedorIdDestino, contadorDestinoId, contadorOri
     
     // Cambiar el texto y acción del botón según el contenedor destino
     if (contenedorIdDestino === 'contenido-revisiones') {
-        button.textContent = "Aprobar";
+        button.textContent = "Enviar a Aprobaciones";
         button.setAttribute('onclick', "moverCorreo(this, 'contenido-aprobaciones', 'contador-aprobaciones', 'contador-revisiones')");
     } else if (contenedorIdDestino === 'contenido-aprobaciones') {
         button.textContent = "Aprobado";
@@ -237,7 +237,7 @@ function moverCorreo(button, contenedorIdDestino, contadorDestinoId, contadorOri
     
     // Actualizar los contadores
     actualizarContador(contadorDestinoId, contenedorDestino);
-    actualizarContador(contadorOrigenId, emailItem.parentElement);
+    actualizarContador(contadorOrigenId, document.getElementById('contenido-alarmas')); // Cambiar a origen correcto
 }
 
 function actualizarContador(contadorId, contenedor) {
@@ -251,9 +251,30 @@ document.addEventListener('DOMContentLoaded', function() {
     actualizarContador('contador-revisiones', document.getElementById('contenido-revisiones'));
     actualizarContador('contador-aprobaciones', document.getElementById('contenido-aprobaciones'));
 });
+
+function toggleContenido(contenidoId) {
+    var contenido = document.getElementById(contenidoId);
+    contenido.style.display = contenido.style.display === 'none' ? 'block' : 'none';
+}
+
+function verCorreo(button) {
+    var emailItem = button.closest('.email-item');
+    var subject = emailItem.querySelector('h2').textContent; // Obtiene el asunto
+    var body = emailItem.querySelector('.body').textContent; // Obtiene el cuerpo
+    // Aquí puedes implementar la lógica para mostrar una vista previa del correo
+    alert('Ver correo:\n\nAsunto: ' + subject + '\n\nCuerpo: ' + body);
+}
+
+function ignorarCorreo(button) {
+    var emailItem = button.closest('.email-item');
+    emailItem.remove(); // Eliminar el correo del contenedor
+    actualizarContador('contador-alarmas', document.getElementById('contenido-alarmas')); // Actualizar el contador de Alarmas
+    actualizarContador('contador-revisiones', document.getElementById('contenido-revisiones')); // Actualizar el contador de Revisiones
+    actualizarContador('contador-aprobaciones', document.getElementById('contenido-aprobaciones')); // Actualizar el contador de Aprobaciones
+}
 </script>
 
-</script>
+
     <script src="script.js"></script>
     <div class="recuadroimagen"><img src="../Imagenes/Logo_oficial_B-N.png" class="logoindex">
         <img src="../Imagenes/logo__recuadro__gategourmet.png" alt="img4" class="triangulo">
