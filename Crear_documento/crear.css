@@ -18,23 +18,22 @@ body {
     box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
 }
 
-.cerrar__sesion__link{
+.cerrar__sesion__link {
     margin: 0;
     margin-left: 150px;
     text-decoration: none;
-    text-decoration:#1117;
-    color:white ;
+    color: white;
     list-style-type: none;
     z-index: 20;
 }
 
-.cerrar__sesion{
+.cerrar__sesion {
     margin-left: 250px;
     list-style-type: none;
     z-index: 20;
 }
 
-.nav__item__user{
+.nav__item__user {
     background-color: transparent;
     position: absolute;
     display: inline-block;
@@ -44,20 +43,22 @@ body {
     z-index: 20;
 }
 
-.img__usuario{
+.img__usuario {
     width: 80px;
     height: 60px;
     margin-left: 100px;
     margin-top: 0px;
-    position:relative;
+    position: relative;
     background-color: transparent;
     list-style-type: none;
     z-index: 20;
 }
+
 .img__usuario:hover {
     transform: scale(1.1);
     filter: brightness(1.2);
 }
+
 .logo {
     max-width: 400px;
 }
@@ -66,6 +67,7 @@ body {
     transform: scale(1.1);
     filter: brightness(1.2);
 }
+
 .main-content {
     flex: 1;
     display: flex;
@@ -83,7 +85,6 @@ body {
     max-width: 400px;
     width: 100%;
     text-align: center;
-    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -105,7 +106,7 @@ body {
     display: block;
     margin-bottom: 5px;
     color: #fff;
-    font-weight: 500px;
+    font-weight: 500;
 }
 
 .input-group input,
@@ -136,19 +137,19 @@ body {
     display: none; /* Ocultamos el mensaje por defecto */
 }
 
-.regresar{
+.regresar {
     background: #3d9970; /* Verde oliva */
     color: white;
     font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
     font-size: 16px; /* Asegurando el mismo tamaño de letra */
-    padding: 15px 15px 1px 20px;
+    padding: 15px 20px; /* Espaciado ajustado */
     border: none;
     border-radius: 50px;
     cursor: pointer;
     text-decoration: none;
     text-align: center;
-    width: 44%;
-    height: 45px;
+    flex: 1; /* Asegura que todos los botones ocupen el mismo ancho */
+    height: 50px; /* Ajuste de altura consistente */
     transition: background 0.3s ease, transform 0.3s ease;
 }
 
@@ -164,43 +165,67 @@ input[type="submit"]:active, .regresar:active {
 .buttons {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 20px;
 }
 
-input[type="submit"], .button {
+.buttons .button, 
+.buttons input[type="submit"], 
+.buttons .regresar {
     background: #3d9970; /* Verde oliva */
     color: white;
-    font-family: 'Poppins', sans-serif; /* Asegurando la misma fuente */
-    font-size: 16px; /* Asegurando el mismo tamaño de letra */
-    padding: 12px 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    padding: 15px 20px; /* Espaciado uniforme */
     border: none;
     border-radius: 50px;
     cursor: pointer;
     text-decoration: none;
     text-align: center;
-    width: 44%;
-    height: 60px;
+    flex: 1; /* Esto asegura que todos los botones ocupen el mismo ancho */
+    margin: 0 10px; /* Espaciado uniforme entre los botones */
     transition: background 0.3s ease, transform 0.3s ease;
+    height: 50px; /* Ajuste de altura consistente */
 }
 
-input[type="submit"]:hover, .button:hover {
+.buttons .button:hover, 
+.buttons input[type="submit"]:hover, 
+.buttons .regresar:hover {
     background: #2d6e50; /* Verde oliva más oscuro */
     transform: scale(1.05);
 }
 
-input[type="submit"]:active, .button:active {
+.buttons .button:active, 
+.buttons input[type="submit"]:active, 
+.buttons .regresar:active {
     transform: scale(1);
+}
+
+/* Para pantallas pequeñas: botones en columna */
+@media (max-width: 600px) {
+    .buttons {
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch; /* Asegura que los botones ocupen todo el ancho */
+    }
+
+    .buttons .button, 
+    .buttons input[type="submit"], 
+    .buttons .regresar {
+        width: 100%; /* Asegura que los botones ocupen el 100% del ancho */
+        margin: 10px 0;
+    }
 }
 
 .footer {
     background: #1117;
     backdrop-filter: blur(10px);
     text-align: center;
-    text-align: center;
     padding: 10px;
     color: #fff;
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
+
 .footer a {
     color: #fff;
     text-decoration: none;
@@ -211,17 +236,91 @@ input[type="submit"]:active, .button:active {
     text-decoration: underline;
 }
 
-@media (max-width: 600px) {
-    .register-container {
-        padding: 20px;
-    }
+/* Estilos del modal */
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
 
-    .buttons {
-        flex-direction: column;
-    }
+.modal-content {
+    background-color: #e74242b6;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-    .buttons .button, .buttons input[type="submit"] {
-        width: 100%;
-        margin-bottom: 10px;
-    }
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-buttons {
+    margin-top: 20px;
+}
+
+.modal-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #3d9970; /* Verde oliva */
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin: 5px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.modal-button:hover {
+    background-color: #2d6e50;
+    transform: scale(1.05);
+}
+
+.modal-button:active {
+    transform: scale(1);
+}
+
+.error-message {
+    background-color: rgba(255, 0, 0, 0.1); /* Fondo rojo suave */
+    color: #721c24; /* Texto rojo oscuro */
+    border: 1px solid rgba(255, 0, 0, 0.3); /* Borde rojo más oscuro */
+    padding: 40px; /* Espaciado interno */
+    border-radius: 10px; /* Bordes redondeados */
+    font-weight: bold; /* Texto en negrita */
+    text-align: center; /* Texto centrado */
+    width: 80%; /* Ancho del mensaje */
+    margin: 20px auto; /* Margen centrado */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    position: relative; /* Para el ícono */
+}
+
+.error-message::before {
+    content: "⚠️"; /* Ícono de advertencia */
+    position: absolute; /* Posición absoluta */
+    left: 10px; /* Margen a la izquierda */
+    top: 90%; /* Centrar verticalmente */
+    transform: translateY(-50%); /* Ajustar posición vertical */
+    font-size: 1.5em; /* Tamaño del ícono */
 }
