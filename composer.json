@@ -2,6 +2,7 @@
     "require": {
       "google/apiclient": "^2.14",
         "phpoffice/phpspreadsheet": "^2.2",
-        "phpmailer/phpmailer": "^6.9"
+        "phpmailer/phpmailer": "^6.9",
+        "setasign/fpdf": "^1.8"
     }
   }
