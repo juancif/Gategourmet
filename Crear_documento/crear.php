@@ -206,8 +206,6 @@ $conn->close();
                 <!-- Botones de acción -->
                 <div class="buttons">
                     <input type="button" id="addDocumentBtn" value="Agregar" class="button">
-                    <a href="http://localhost/GateGourmet/Index/index_admin.php" class="regresar">Regresar</a>
-                </div>
             </form>
 
             <!-- Modal de confirmación -->
