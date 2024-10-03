@@ -183,7 +183,7 @@ foreach ($messages as $message) {
                     <div class="body"><?php echo $email['body']; ?></div>
                     <div class="email-actions">
                         <button class="mover-boton" onclick="moverCorreo(this, 'contenido-revisiones', 'contador-revisiones', 'contador-alarmas')">Mover a Revisiones</button>
-                        <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
+                        <button class="ignorar-boton" onclick="ignorarCorreo(event, this)">Ignorar</button>
                         <button class="ver-boton" onclick="verCorreo(this)">Ver</button>
                     </div>
                 </div>
@@ -211,19 +211,15 @@ foreach ($messages as $message) {
         <!-- Aquí se agregarían los correos en aprobaciones -->
     </div>
 </div>
-
+</div>
+</div>
 <script>
-// Función para mover correos entre contenedores y actualizar contadores
+// Función para mover correos entre contenedores y actualizar contadores en tiempo real
 function moverCorreo(button, contenedorIdDestino, contadorDestinoId, contadorOrigenId) {
-    // Obtener los contenedores
     var contenedorDestino = document.getElementById(contenedorIdDestino);
-    var contadorDestino = document.getElementById(contadorDestinoId);
-    var contadorOrigen = document.getElementById(contadorOrigenId);
-    
-    // Obtener el email-item
     var emailItem = button.closest('.email-item');
     
-    // Mover el email al contenedor destino
+    // Mover el correo al contenedor destino
     contenedorDestino.appendChild(emailItem);
     
     // Cambiar el texto y acción del botón según el contenedor destino
@@ -235,15 +231,34 @@ function moverCorreo(button, contenedorIdDestino, contadorDestinoId, contadorOri
         button.disabled = true; // Deshabilitar el botón cuando llegue a "Aprobaciones"
     }
     
-    // Actualizar los contadores
+    // Actualizar los contadores del origen y destino después de mover el correo
+    actualizarContador(contadorOrigenId, document.getElementById(contadorOrigenId.replace('contador-', 'contenido-')));
     actualizarContador(contadorDestinoId, contenedorDestino);
-    actualizarContador(contadorOrigenId, document.getElementById('contenido-alarmas')); // Cambiar a origen correcto
 }
 
+// Función para actualizar el contador de un contenedor específico
 function actualizarContador(contadorId, contenedor) {
     var contador = document.getElementById(contadorId);
-    contador.textContent = contenedor.children.length;
+    var itemsVisibles = contenedor.querySelectorAll('.email-item').length; // Contar correos
+    contador.textContent = itemsVisibles;
 }
+
+function ignorarCorreo(event, button) {
+    event.preventDefault(); // Prevenir cualquier comportamiento predeterminado
+    event.stopPropagation(); // Prevenir la propagación del evento a otros elementos
+    
+    // Obtener el contenedor del correo (email-item)
+    var emailItem = button.closest('.email-item');
+
+    // Eliminar el correo
+    emailItem.remove();
+
+    // Actualizar los contadores en vivo
+    actualizarContador('contador-alarmas', document.getElementById('contenido-alarmas'));
+    actualizarContador('contador-revisiones', document.getElementById('contenido-revisiones'));
+    actualizarContador('contador-aprobaciones', document.getElementById('contenido-aprobaciones'));
+}
+
 
 // Inicializar los contadores al cargar la página
 document.addEventListener('DOMContentLoaded', function() {
@@ -252,6 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
     actualizarContador('contador-aprobaciones', document.getElementById('contenido-aprobaciones'));
 });
 
+// Función para mostrar u ocultar el contenido de cada sección
 function toggleContenido(contenidoId) {
     var contenido = document.getElementById(contenidoId);
     contenido.style.display = contenido.style.display === 'none' ? 'block' : 'none';
@@ -259,19 +275,12 @@ function toggleContenido(contenidoId) {
 
 function verCorreo(button) {
     var emailItem = button.closest('.email-item');
-    var subject = emailItem.querySelector('h2').textContent; // Obtiene el asunto
-    var body = emailItem.querySelector('.body').textContent; // Obtiene el cuerpo
-    // Aquí puedes implementar la lógica para mostrar una vista previa del correo
+    var subject = emailItem.querySelector('h2').textContent;
+    var body = emailItem.querySelector('.body').textContent;
     alert('Ver correo:\n\nAsunto: ' + subject + '\n\nCuerpo: ' + body);
 }
 
-function ignorarCorreo(button) {
-    var emailItem = button.closest('.email-item');
-    emailItem.remove(); // Eliminar el correo del contenedor
-    actualizarContador('contador-alarmas', document.getElementById('contenido-alarmas')); // Actualizar el contador de Alarmas
-    actualizarContador('contador-revisiones', document.getElementById('contenido-revisiones')); // Actualizar el contador de Revisiones
-    actualizarContador('contador-aprobaciones', document.getElementById('contenido-aprobaciones')); // Actualizar el contador de Aprobaciones
-}
+
 </script>
 
 
