@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $error_message = "Error: El documento que estás intentando crear ya existe con este código, título o proceso.";
+        $error_message = "Error El documento que estás intentando crear ya existe con este código o título.";
     } else {
         // Estado "Vigente" y fecha de vigencia de un año a partir de hoy
         $estado = 'VIGENTE';

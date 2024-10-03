@@ -33,7 +33,7 @@ foreach ($campos as $campo) {
     }
 }
 
-// Construir la consulta SQL base
+// Construir la consulta SQL base y ordenar por el campo 'areas'
 $sql = "SELECT proceso, codigo, titulo_documento, tipo, version, estado, fecha_aprobacion, 
         areas, motivo_del_cambio, tiempo_de_retencion, responsable_de_retencion, 
         lugar_de_almacenamiento_fisico, lugar_de_almacenamiento_magnetico, conservacion, 
@@ -45,6 +45,9 @@ $sql = "SELECT proceso, codigo, titulo_documento, tipo, version, estado, fecha_a
 foreach ($searchValues as $campo => $valor) {
     $sql .= " AND $campo LIKE ?";
 }
+
+// Añadir orden por el campo 'areas'
+$sql .= " ORDER BY areas ASC";
 
 // Preparar la consulta
 $stmt = $conn->prepare($sql);
@@ -83,15 +86,24 @@ if (!$result) {
     </header>
 
     <div class="container">
+        <!-- Barra de búsqueda -->
         <div class="search-bar">
             <form method="post">
                 <div class="search-fields">
                     <?php foreach ($campos as $campo): ?>
                         <div class="search-field">
-                            <label for="<?php echo htmlspecialchars($campo); ?>"><?php echo ucwords(str_replace('_', ' ', $campo)); ?></label>
-                            <input type="text" class="search-input" id="<?php echo htmlspecialchars($campo); ?>" 
-                                   name="<?php echo htmlspecialchars($campo); ?>" autocomplete="off">
-                            <div class="search-dropdown" id="<?php echo htmlspecialchars($campo); ?>-options"></div>
+                            <label for="<?php echo htmlspecialchars($campo); ?>">
+                                <?php echo ucwords(str_replace('_', ' ', $campo)); ?>
+                            </label>
+                            <input 
+                                type="text" 
+                                class="search-input" 
+                                id="<?php echo htmlspecialchars($campo); ?>" 
+                                name="<?php echo htmlspecialchars($campo); ?>" 
+                                value="<?php echo isset($$campo) ? htmlspecialchars($$campo) : ''; ?>" 
+                                autocomplete="off"
+                                placeholder="Buscar <?php echo htmlspecialchars($campo); ?>"
+                            >
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -99,6 +111,7 @@ if (!$result) {
             </form>
         </div>
 
+        <!-- Mostrar tabla de resultados si hay datos -->
         <?php if (isset($result) && $result->num_rows > 0): ?>
             <div class="table-wrapper">
                 <table id="listado-maestro-table">
@@ -127,6 +140,7 @@ if (!$result) {
                         <?php while($row = $result->fetch_assoc()): 
                             $rowClass = '';
 
+                            // Asignar clase CSS según el estado del documento
                             switch (strtolower($row['estado'])) {
                                 case 'vigente':
                                     $rowClass = 'vigente';
