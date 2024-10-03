@@ -176,28 +176,20 @@ foreach ($messages as $message) {
             <p>No hay correos electrónicos disponibles.</p>
         <?php } else { ?>
             <?php foreach ($emailData as $email) { ?>
-    <div class="email-item" data-pdf-url="<?php echo $email['pdf_url']; ?>"> <!-- Añadimos la URL del PDF -->
-        <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
-        <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
-        <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br><br>
-        <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br><br>
-        <div class="body"><?php echo $email['body']; ?></div>
-        <div class="email-actions">
-            <button class="mover-boton" onclick="moverCorreo(this, 'contenido-revisiones', 'contador-revisiones', 'contador-alarmas')">Mover a Revisiones</button>
-            <button class="ignorar-boton" onclick="event.preventDefault(); ignorarCorreo(this)">Ignorar</button>
-            <button class="ver-boton" onclick="verCorreo(this)">Ver</button> <!-- Botón para ver el PDF -->
-        </div>
-    </div>
+                <div class="email-item">
+                    <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
+                    <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
+                    <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br><br>
+                    <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br><br>
+                    <div class="body"><?php echo $email['body']; ?></div>
+                    <div class="email-actions">
+                        <button class="mover-boton" onclick="moverCorreo(this, 'contenido-revisiones', 'contador-revisiones', 'contador-alarmas')">Enviar a revisiones</button>
+                        <button class="ignorar-boton" onclick="ignorarCorreo(event, this)">Ignorar</button>
+                        <button class="ver-boton" onclick="verCorreo(this)">Ver</button>
+                    </div>
+                </div>
             <?php } ?>
         <?php } ?>
-    </div>
-</div>
-<!-- Modal para mostrar el PDF -->
-<div id="pdfModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="cerrarModal()">&times;</span>
-        <iframe id="pdfViewer" src="" width="100%" height="500px"></iframe>
-        <a id="descargarPDF" href="" download>Descargar PDF</a>
     </div>
 </div>
 
@@ -289,38 +281,9 @@ function verCorreo(button) {
     alert('Ver correo:\n\nAsunto: ' + subject + '\n\nCuerpo: ' + body);
 }
 
-// Función para mostrar el PDF en el modal
-function verCorreo(button) {
-    var emailItem = button.closest('.email-item');
-    var pdfUrl = emailItem.getAttribute('data-pdf-url'); // Obtener la URL del PDF del correo
-    var modal = document.getElementById('pdfModal');
-    var pdfViewer = document.getElementById('pdfViewer');
-
-    // Configurar la URL del PDF en el iframe del modal
-    pdfViewer.src = pdfUrl;
-
-    // Mostrar el modal
-    modal.style.display = "block";
-}
-
-// Función para cerrar el modal
-function cerrarModal() {
-    var modal = document.getElementById('pdfModal');
-    modal.style.display = "none";
-}
-
-// Cerrar el modal al hacer clic fuera del contenido del modal
-window.onclick = function(event) {
-    var modal = document.getElementById('pdfModal');
-    if (event.target === modal) {
-        modal.style.display = "none";
-    }
-}
-
-//Descargar PDF
-document.getElementById('descargarPDF').href = pdfUrl;
 
 </script>
+
 
 
     <script src="script.js"></script>
