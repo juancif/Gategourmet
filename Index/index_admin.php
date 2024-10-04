@@ -52,7 +52,7 @@ $service = new Google_Service_Gmail($client);
 
 // Recuperar correos electrónicos
 try {
-    $response = $service->users_messages->listUsersMessages('me', ['maxResults' => 10]);
+    $response = $service->users_messages->listUsersMessages('me', ['maxResults' => 100]);
     $messages = $response->getMessages();
 } catch (Exception $e) {
     echo 'Error retrieving emails: ' . $e->getMessage();
@@ -222,11 +222,11 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
                 <div class="email-item" data-id-correo="<?php echo $email['id']; ?>" data-estado="<?php echo $email['estado']; ?>">
                     <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
                     <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
-                    <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br>
+                    <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br><br>
                     <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
                     <div class="body"><?php echo $email['body']; ?></div>
                     <div class="email-actions">
-                        <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-alarmas')">Mover a revisiones</button>
+                        <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-alarmas')">Enviar</button>
                         <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
                     </div>
                 </div>
@@ -245,11 +245,11 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
             <div class="email-item" data-id-correo="<?php echo $email['id']; ?>">
                 <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
                 <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
-                <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br>
+                <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br><br>
                 <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
                 <div class="body"><?php echo $email['body']; ?></div>
                 <div class="email-actions">
-                    <button class="mover-boton" onclick="moverCorreo(this, 'aprobaciones', 'contador-aprobaciones', 'contador-revisiones')">Mover a aprobaciones</button>
+                    <button class="mover-boton" onclick="moverCorreo(this, 'aprobaciones', 'contador-aprobaciones', 'contador-revisiones')">Enviar</button>
                     <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
                 </div>
             </div>
@@ -267,7 +267,7 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
             <div class="email-item" data-id-correo="<?php echo $email['id']; ?>">
                 <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
                 <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
-                <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br>
+                <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br><br>
                 <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
                 <div class="body"><?php echo $email['body']; ?></div>
                 <div class="email-actions">
