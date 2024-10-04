@@ -212,35 +212,25 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
 <!-- Sección Alarmas -->
 <div class="opcion" id="opcion-alarmas">
     <h2 class="nombre-opcion" onclick="toggleContenido('contenido-alarmas')">Alarmas
-        <span class="contador" id="contador-alarmas"></span> <!-- Contador de elementos -->
+        <span class="contador" id="contador-alarmas"></span>
     </h2>
     <div class="contenido alarmas" id="contenido-alarmas">
         <?php if (empty($emailData)) { ?>
             <p>No hay correos electrónicos disponibles.</p>
         <?php } else { ?>
-            <?php foreach ($emailData as $email) { 
-                if ($email['estado'] == 'alarmas') { ?>
-                    <div class="email-item">
-                        <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
-                        <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
-                        <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br>
-                        <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
-                        <div class="body"><?php echo $email['body']; ?></div>
-                        <div class="email-actions">
-                            <form action="guardar_cambio.php" method="post" style="display:inline;">
-                                <input type="hidden" name="id_correo" value="<?php echo $email['id']; ?>">
-                                <input type="hidden" name="estado" value="revisiones">
-                                <button type="submit" class="mover-boton">Mover a revisiones</button>
-                            </form>
-                            <form action="guardar_cambio.php" method="post" style="display:inline;">
-                                <input type="hidden" name="id_correo" value="<?php echo $email['id']; ?>">
-                                <input type="hidden" name="estado" value="ignorado">
-                                <button type="submit" class="ignorar-boton">Ignorar</button>
-                            </form>
-                        </div>
+            <?php foreach ($emailData as $email) { if ($email['estado'] == 'alarmas') { ?>
+                <div class="email-item" data-id-correo="<?php echo $email['id']; ?>" data-estado="<?php echo $email['estado']; ?>">
+                    <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
+                    <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
+                    <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br>
+                    <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
+                    <div class="body"><?php echo $email['body']; ?></div>
+                    <div class="email-actions">
+                        <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-alarmas')">Mover a revisiones</button>
+                        <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
                     </div>
-                <?php }
-            } ?>
+                </div>
+            <?php } } ?>
         <?php } ?>
     </div>
 </div>
@@ -248,115 +238,116 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
 <!-- Sección Revisiones -->
 <div class="opcion" id="opcion-revisiones">
     <h2 class="nombre-opcion" onclick="toggleContenido('contenido-revisiones')">Revisiones
-        <span class="contador" id="contador-revisiones"></span> <!-- Contador de elementos -->
+        <span class="contador" id="contador-revisiones"></span>
     </h2>
     <div class="contenido revisiones" id="contenido-revisiones">
-        <?php foreach ($emailData as $email) { 
-            if ($email['estado'] == 'revisiones') { ?>
-                <div class="email-item">
-                    <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
-                    <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
-                    <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br>
-                    <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
-                    <div class="body"><?php echo $email['body']; ?></div>
-                    <div class="email-actions">
-                        <form action="guardar_cambio.php" method="post" style="display:inline;">
-                            <input type="hidden" name="id_correo" value="<?php echo $email['id']; ?>">
-                            <input type="hidden" name="estado" value="aprobado">
-                            <button type="submit" class="mover-boton">Aprobar</button>
-                        </form>
-                        <form action="guardar_cambio.php" method="post" style="display:inline;">
-                            <input type="hidden" name="id_correo" value="<?php echo $email['id']; ?>">
-                            <input type="hidden" name="estado" value="ignorado">
-                            <button type="submit" class="ignorar-boton">Ignorar</button>
-                        </form>
-                    </div>
+        <?php foreach ($emailData as $email) { if ($email['estado'] == 'revisiones') { ?>
+            <div class="email-item" data-id-correo="<?php echo $email['id']; ?>">
+                <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
+                <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
+                <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br>
+                <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
+                <div class="body"><?php echo $email['body']; ?></div>
+                <div class="email-actions">
+                    <button class="mover-boton" onclick="moverCorreo(this, 'aprobaciones', 'contador-aprobaciones', 'contador-revisiones')">Mover a aprobaciones</button>
+                    <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
                 </div>
-            <?php }
-        } ?>
+            </div>
+        <?php } } ?>
     </div>
 </div>
 
-<!-- Sección Aprobados -->
-<div class="opcion" id="opcion-aprobados">
-    <h2 class="nombre-opcion" onclick="toggleContenido('contenido-aprobados')">Aprobados
-        <span class="contador" id="contador-aprobados"></span> <!-- Contador de elementos -->
+<!-- Sección Aprobaciones -->
+<div class="opcion" id="opcion-aprobaciones">
+    <h2 class="nombre-opcion" onclick="toggleContenido('contenido-aprobaciones')">Aprobaciones
+        <span class="contador" id="contador-aprobaciones"></span>
     </h2>
-    <div class="contenido aprobados" id="contenido-aprobados">
-        <?php foreach ($emailData as $email) { 
-            if ($email['estado'] == 'aprobado') { ?>
-                <div class="email-item">
-                    <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
-                    <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
-                    <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br>
-                    <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
-                    <div class="body"><?php echo $email['body']; ?></div>
-                    <div class="email-actions">
-                        <form action="guardar_cambio.php" method="post" style="display:inline;">
-                            <input type="hidden" name="id_correo" value="<?php echo $email['id']; ?>">
-                            <input type="hidden" name="estado" value="ignorado">
-                            <button type="submit" class="ignorar-boton">Ignorar</button>
-                        </form>
-                    </div>
+    <div class="contenido aprobaciones" id="contenido-aprobaciones">
+        <?php foreach ($emailData as $email) { if ($email['estado'] == 'aprobaciones') { ?>
+            <div class="email-item" data-id-correo="<?php echo $email['id']; ?>">
+                <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
+                <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
+                <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br>
+                <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
+                <div class="body"><?php echo $email['body']; ?></div>
+                <div class="email-actions">
+                    <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
                 </div>
-            <?php }
-        } ?>
+            </div>
+        <?php } } ?>
     </div>
 </div>
 </div>
 </div>
 
 <script>
-// Función para mover correos entre contenedores y actualizar contadores en tiempo real
-function moverCorreo(button, contenedorIdDestino, contadorDestinoId, contadorOrigenId) {
-    var contenedorDestino = document.getElementById(contenedorIdDestino);
+// Función para mover correos entre contenedores y actualizar el estado en tiempo real
+function moverCorreo(button, nuevoEstado, contadorDestinoId, contadorOrigenId) {
     var emailItem = button.closest('.email-item');
-    
-    // Mover el correo al contenedor destino
-    contenedorDestino.appendChild(emailItem);
-    
-    // Cambiar el texto y acción del botón según el contenedor destino
-    if (contenedorIdDestino === 'contenido-revisiones') {
-        button.textContent = "Enviar a Aprobaciones";
-        button.setAttribute('onclick', "moverCorreo(this, 'contenido-aprobaciones', 'contador-aprobaciones', 'contador-revisiones')");
-    } else if (contenedorIdDestino === 'contenido-aprobaciones') {
-        button.textContent = "Aprobado";
-        button.disabled = true; // Deshabilitar el botón cuando llegue a "Aprobaciones"
-    }
-    
-    // Actualizar los contadores del origen y destino después de mover el correo
-    actualizarContador(contadorOrigenId, document.getElementById(contadorOrigenId.replace('contador-', 'contenido-')));
-    actualizarContador(contadorDestinoId, contenedorDestino);
+    var idCorreo = emailItem.getAttribute('data-id-correo');
+
+    // Llamada AJAX para actualizar el estado del correo en el servidor
+    var formData = new FormData();
+    formData.append('id_correo', idCorreo);
+    formData.append('estado', nuevoEstado);
+
+    fetch('guardar_cambio.php', {
+        method: 'POST',
+        body: formData
+    }).then(response => response.text())
+      .then(data => {
+        // Mover el correo al nuevo contenedor
+        var contenedorDestino = document.getElementById('contenido-' + nuevoEstado);
+        contenedorDestino.appendChild(emailItem);
+
+        // Actualizar los contadores del origen y destino
+        actualizarContador(contadorOrigenId);
+        actualizarContador(contadorDestinoId);
+    }).catch(error => {
+        console.error('Error al mover el correo:', error);
+    });
 }
 
-// Función para actualizar el contador de un contenedor específico
-function actualizarContador(contadorId, contenedor) {
+// Función para ignorar correos
+function ignorarCorreo(button) {
+    var emailItem = button.closest('.email-item');
+    var idCorreo = emailItem.getAttribute('data-id-correo');
+
+    // Llamada AJAX para marcar como ignorado
+    var formData = new FormData();
+    formData.append('id_correo', idCorreo);
+    formData.append('estado', 'ignorado');
+
+    fetch('guardar_cambio.php', {
+        method: 'POST',
+        body: formData
+    }).then(response => response.text())
+      .then(data => {
+        // Eliminar el correo visualmente
+        emailItem.remove();
+
+        // Actualizar los contadores
+        actualizarContador('contador-alarmas');
+        actualizarContador('contador-revisiones');
+        actualizarContador('contador-aprobaciones');
+    }).catch(error => {
+        console.error('Error al ignorar el correo:', error);
+    });
+}
+
+// Función para actualizar el contador de correos en una sección
+function actualizarContador(contadorId) {
+    var contenedor = document.getElementById(contadorId.replace('contador-', 'contenido-'));
     var contador = document.getElementById(contadorId);
-    var itemsVisibles = contenedor.querySelectorAll('.email-item').length; // Contar correos
+    var itemsVisibles = contenedor.querySelectorAll('.email-item').length;
     contador.textContent = itemsVisibles;
-}
-
-function ignorarCorreo(event, button) {
-    event.preventDefault(); // Prevenir cualquier comportamiento predeterminado
-    event.stopPropagation(); // Prevenir la propagación del evento a otros elementos
-    
-    // Obtener el contenedor del correo (email-item)
-    var emailItem = button.closest('.email-item');
-
-    // Eliminar el correo
-    emailItem.remove();
-
-    // Actualizar los contadores en vivo
-    actualizarContador('contador-alarmas', document.getElementById('contenido-alarmas'));
-    actualizarContador('contador-revisiones', document.getElementById('contenido-revisiones'));
-    actualizarContador('contador-aprobaciones', document.getElementById('contenido-aprobaciones'));
 }
 
 // Inicializar los contadores al cargar la página
 document.addEventListener('DOMContentLoaded', function() {
-    actualizarContador('contador-alarmas', document.getElementById('contenido-alarmas'));
-    actualizarContador('contador-revisiones', document.getElementById('contenido-revisiones'));
-    actualizarContador('contador-aprobaciones', document.getElementById('contenido-aprobaciones'));
+    actualizarContador('contador-alarmas');
+    actualizarContador('contador-revisiones');
+    actualizarContador('contador-aprobaciones');
 });
 
 // Función para mostrar u ocultar el contenido de cada sección
@@ -364,36 +355,7 @@ function toggleContenido(contenidoId) {
     var contenido = document.getElementById(contenidoId);
     contenido.style.display = contenido.style.display === 'none' ? 'block' : 'none';
 }
-
-function verCorreo(button) {
-    var emailItem = button.closest('.email-item');
-    var adjuntoUrl = emailItem.getAttribute('data-adjunto-url'); // Obtener la URL del adjunto
-
-    console.log("Adjunto URL:", adjuntoUrl); // Verificación de la URL en consola
-
-    if (adjuntoUrl && adjuntoUrl !== "") {
-        // Cargar la URL del adjunto en el iframe del modal
-        var modal = document.getElementById('adjuntoModal');
-        var visorAdjunto = document.getElementById('visorAdjunto');
-
-        // Verificar si la URL es válida antes de mostrar el modal
-        visorAdjunto.src = adjuntoUrl;
-
-        // Mostrar el modal
-        modal.style.display = "block";
-    } else {
-        alert('No hay adjuntos disponibles para este correo.');
-    }
-}
-
-// Función para cerrar el modal
-function cerrarModal() {
-    var modal = document.getElementById('adjuntoModal');
-    modal.style.display = "none";
-}
-
 </script>
-
 
     <script src="script.js"></script>
     <div class="recuadroimagen"><img src="../Imagenes/Logo_oficial_B-N.png" class="logoindex">
