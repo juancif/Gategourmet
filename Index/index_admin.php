@@ -116,6 +116,8 @@ foreach ($messages as $message) {
 
     // Agregar el correo electrónico al array de correos
     $emailData[] = $emailDetails;
+
+    
 }
 ?>
 <!DOCTYPE html>
@@ -166,8 +168,8 @@ foreach ($messages as $message) {
     <div class="container_not">
         <h1>Correos Electrónicos</h1>
 
-        <!-- Sección Aprobaciones -->
-        <div class="opcion" id="opcion-alarmas">
+<!-- Sección Alarmas -->
+<div class="opcion" id="opcion-alarmas">
     <h2 class="nombre-opcion" onclick="toggleContenido('contenido-alarmas')">Alarmas
         <span class="contador" id="contador-alarmas"></span> <!-- Contador de elementos -->
     </h2>
@@ -176,7 +178,7 @@ foreach ($messages as $message) {
             <p>No hay correos electrónicos disponibles.</p>
         <?php } else { ?>
             <?php foreach ($emailData as $email) { ?>
-                <div class="email-item">
+                <div class="email-item" data-adjunto-url="<?php echo $email['adjunto_url']; ?>"> <!-- URL del adjunto -->
                     <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
                     <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
                     <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br><br>
@@ -185,7 +187,7 @@ foreach ($messages as $message) {
                     <div class="email-actions">
                         <button class="mover-boton" onclick="moverCorreo(this, 'contenido-revisiones', 'contador-revisiones', 'contador-alarmas')">Enviar a revisiones</button>
                         <button class="ignorar-boton" onclick="ignorarCorreo(event, this)">Ignorar</button>
-                        <button class="ver-boton" onclick="verCorreo(this)">Ver</button>
+                        <button class="ver-boton" onclick="verCorreo(this)">Ver</button> <!-- Botón Ver -->
                     </div>
                 </div>
             <?php } ?>
@@ -210,6 +212,18 @@ foreach ($messages as $message) {
     </h2>
     <div class="contenido aprobaciones" id="contenido-aprobaciones">
         <!-- Aquí se agregarían los correos en aprobaciones -->
+    </div>
+</div>
+
+<!-- Modal para mostrar el adjunto -->
+<div id="adjuntoModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrarModal()">&times;</span>
+        <iframe id="visorAdjunto" src="" width="100%" height="500px"></iframe> <!-- Visor del archivo adjunto -->
+        <button class="descargar-boton">
+        <button class="descargar-boton">
+    <a href="<?php echo $email['adjunto_url']; ?>" target="_blank">Descargar adjunto</a>
+</button>
     </div>
 </div>
 </div>
@@ -260,7 +274,6 @@ function ignorarCorreo(event, button) {
     actualizarContador('contador-aprobaciones', document.getElementById('contenido-aprobaciones'));
 }
 
-
 // Inicializar los contadores al cargar la página
 document.addEventListener('DOMContentLoaded', function() {
     actualizarContador('contador-alarmas', document.getElementById('contenido-alarmas'));
@@ -276,13 +289,37 @@ function toggleContenido(contenidoId) {
 
 function verCorreo(button) {
     var emailItem = button.closest('.email-item');
-    var subject = emailItem.querySelector('h2').textContent;
-    var body = emailItem.querySelector('.body').textContent;
-    alert('Ver correo:\n\nAsunto: ' + subject + '\n\nCuerpo: ' + body);
+    var adjuntoUrl = emailItem.getAttribute('data-adjunto-url'); // Obtener la URL del adjunto
+
+    console.log("Adjunto URL:", adjuntoUrl); // Verificación de la URL en consola
+
+    if (adjuntoUrl && adjuntoUrl !== "") {
+        // Cargar la URL del adjunto en el iframe del modal
+        var modal = document.getElementById('adjuntoModal');
+        var visorAdjunto = document.getElementById('visorAdjunto');
+
+        // Verificar si la URL es válida antes de mostrar el modal
+        visorAdjunto.src = adjuntoUrl;
+
+        // Mostrar el modal
+        modal.style.display = "block";
+    } else {
+        alert('No hay adjuntos disponibles para este correo.');
+    }
 }
 
+// Función para cerrar el modal
+function cerrarModal() {
+    var modal = document.getElementById('adjuntoModal');
+    modal.style.display = "none";
+}
 
 </script>
+
+<style>
+/* Estilos básicos para el modal */
+
+</style>
 
 
 
