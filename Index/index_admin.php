@@ -167,6 +167,8 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GateGourmet</title>
     <link rel="stylesheet" href="style_index_admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 </head>
 <body>
     <nav class="nav__principal">
@@ -207,7 +209,6 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
     <!-- Contenedor principal -->
     <div class="container_not">
         <h1>Correos Electrónicos</h1>
-
 
 <!-- Sección Alarmas -->
 <div class="opcion" id="opcion-alarmas">
@@ -251,6 +252,7 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
                 <div class="email-actions">
                     <button class="mover-boton" onclick="moverCorreo(this, 'aprobaciones', 'contador-aprobaciones', 'contador-revisiones')">Enviar</button>
                     <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
+                    <button class="devolver-boton" onclick="devolverCorreo(this, 'alarmas', 'contador-alarmas', 'contador-revisiones')">Devolver</button>
                 </div>
             </div>
         <?php } } ?>
@@ -271,7 +273,9 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
                 <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
                 <div class="body"><?php echo $email['body']; ?></div>
                 <div class="email-actions">
+                    <button class="aprobar-boton" onclick="aprobarCorreo(this)">Aprobar</button>
                     <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
+                    <button class="devolver-boton" onclick="devolverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-aprobaciones')">Devolver</button>
                 </div>
             </div>
         <?php } } ?>
@@ -285,26 +289,59 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
 function moverCorreo(button, nuevoEstado, contadorDestinoId, contadorOrigenId) {
     var emailItem = button.closest('.email-item');
     var idCorreo = emailItem.getAttribute('data-id-correo');
+    var subject = emailItem.querySelector('h2').innerText; // Obtener el asunto del correo
 
-    // Llamada AJAX para actualizar el estado del correo en el servidor
-    var formData = new FormData();
-    formData.append('id_correo', idCorreo);
-    formData.append('estado', nuevoEstado);
+    // Mensaje de confirmación con SweetAlert
+    swal({
+        title: "Confirmar Acción",
+        text: `¿Estás seguro de enviar el correo: "${subject}"?`,
+        icon: "warning",
+        buttons: {
+            cancel: {
+                text: "Cancelar",
+                value: null,
+                visible: true,
+                className: "cancel-button",
+                closeModal: false, // No cerrar el modal al cancelar
+            },
+            confirm: {
+                text: "Confirmar",
+                value: true,
+                visible: true,
+                className: "confirm-button",
+                closeModal: false // No cerrar el modal al confirmar
+            }
+        }
+    }).then((willMove) => {
+        if (willMove) {
+            // Llamada AJAX para actualizar el estado del correo en el servidor
+            var formData = new FormData();
+            formData.append('id_correo', idCorreo);
+            formData.append('estado', nuevoEstado);
 
-    fetch('guardar_cambio.php', {
-        method: 'POST',
-        body: formData
-    }).then(response => response.text())
-      .then(data => {
-        // Mover el correo al nuevo contenedor
-        var contenedorDestino = document.getElementById('contenido-' + nuevoEstado);
-        contenedorDestino.appendChild(emailItem);
+            fetch('guardar_cambio.php', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.text())
+              .then(data => {
+                // Mover el correo al nuevo contenedor
+                var contenedorDestino = document.getElementById('contenido-' + nuevoEstado);
+                contenedorDestino.appendChild(emailItem);
 
-        // Actualizar los contadores del origen y destino
-        actualizarContador(contadorOrigenId);
-        actualizarContador(contadorDestinoId);
-    }).catch(error => {
-        console.error('Error al mover el correo:', error);
+                // Actualizar los botones según el nuevo estado
+                actualizarBotones(emailItem, nuevoEstado);
+
+                // Actualizar los contadores del origen y destino
+                actualizarContador(contadorOrigenId);
+                actualizarContador(contadorDestinoId);
+                swal("¡Éxito!", `Correo enviado a ${nuevoEstado}.`, "success"); // Notificación de éxito
+            }).catch(error => {
+                console.error('Error al mover el correo:', error);
+                swal("Error", "No se pudo mover el correo. Inténtalo de nuevo.", "error");
+            });
+        } else {
+            swal("Acción cancelada", "No se ha realizado ninguna acción.", "info"); // Mensaje de cancelación
+        }
     });
 }
 
@@ -312,48 +349,203 @@ function moverCorreo(button, nuevoEstado, contadorDestinoId, contadorOrigenId) {
 function ignorarCorreo(button) {
     var emailItem = button.closest('.email-item');
     var idCorreo = emailItem.getAttribute('data-id-correo');
+    var subject = emailItem.querySelector('h2').innerText; // Obtener el asunto del correo
 
-    // Llamada AJAX para marcar como ignorado
-    var formData = new FormData();
-    formData.append('id_correo', idCorreo);
-    formData.append('estado', 'ignorado');
+    // Mensaje de confirmación con SweetAlert
+    swal({
+        title: "Confirmar Acción",
+        text: `¿Estás seguro de ignorar el correo: "${subject}"?`,
+        icon: "warning",
+        buttons: {
+            cancel: {
+                text: "Cancelar",
+                value: null,
+                visible: true,
+                className: "cancel-button",
+                closeModal: false, // No cerrar el modal al cancelar
+            },
+            confirm: {
+                text: "Confirmar",
+                value: true,
+                visible: true,
+                className: "confirm-button",
+                closeModal: false // No cerrar el modal al confirmar
+            }
+        }
+    }).then((willIgnore) => {
+        if (willIgnore) {
+            // Llamada AJAX para marcar como ignorado
+            var formData = new FormData();
+            formData.append('id_correo', idCorreo);
+            formData.append('estado', 'ignorado');
 
-    fetch('guardar_cambio.php', {
-        method: 'POST',
-        body: formData
-    }).then(response => response.text())
-      .then(data => {
-        // Eliminar el correo visualmente
-        emailItem.remove();
+            fetch('guardar_cambio.php', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.text())
+              .then(data => {
+                // Eliminar el correo visualmente
+                emailItem.remove();
 
-        // Actualizar los contadores
-        actualizarContador('contador-alarmas');
-        actualizarContador('contador-revisiones');
-        actualizarContador('contador-aprobaciones');
-    }).catch(error => {
-        console.error('Error al ignorar el correo:', error);
+                // Actualizar los contadores
+                actualizarContador('contador-alarmas');
+                actualizarContador('contador-revisiones');
+                actualizarContador('contador-aprobaciones');
+                swal("¡Éxito!", "El correo ha sido ignorado.", "success"); // Notificación de éxito
+            }).catch(error => {
+                console.error('Error al ignorar el correo:', error);
+                swal("Error", "No se pudo ignorar el correo. Inténtalo de nuevo.", "error");
+            });
+        } else {
+            swal("Acción cancelada", "No se ha realizado ninguna acción.", "info"); // Mensaje de cancelación
+        }
     });
 }
 
-// Función para actualizar el contador de correos en una sección
-function actualizarContador(contadorId) {
-    var contenedor = document.getElementById(contadorId.replace('contador-', 'contenido-'));
-    var contador = document.getElementById(contadorId);
-    var itemsVisibles = contenedor.querySelectorAll('.email-item').length;
-    contador.textContent = itemsVisibles;
+// Función para devolver correos
+function devolverCorreo(button, estadoAnterior, contadorDestinoId, contadorOrigenId) {
+    var emailItem = button.closest('.email-item');
+    var idCorreo = emailItem.getAttribute('data-id-correo');
+    var subject = emailItem.querySelector('h2').innerText; // Obtener el asunto del correo
+
+    // Mensaje de confirmación con SweetAlert
+    swal({
+        title: "Confirmar Acción",
+        text: `¿Estás seguro de devolver el correo: "${subject}"?`,
+        icon: "warning",
+        buttons: {
+            cancel: {
+                text: "Cancelar",
+                value: null,
+                visible: true,
+                className: "cancel-button",
+                closeModal: false, // No cerrar el modal al cancelar
+            },
+            confirm: {
+                text: "Confirmar",
+                value: true,
+                visible: true,
+                className: "confirm-button",
+                closeModal: false // No cerrar el modal al confirmar
+            }
+        }
+    }).then((willReturn) => {
+        if (willReturn) {
+            // Llamada AJAX para actualizar el estado del correo
+            var formData = new FormData();
+            formData.append('id_correo', idCorreo);
+            formData.append('estado', estadoAnterior);
+
+            fetch('guardar_cambio.php', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.text())
+              .then(data => {
+                // Mover el correo de vuelta al contenedor anterior
+                var contenedorDestino = document.getElementById('contenido-' + estadoAnterior);
+                contenedorDestino.appendChild(emailItem);
+
+                // Actualizar los botones según el estado al que ha sido devuelto
+                actualizarBotones(emailItem, estadoAnterior);
+
+                // Actualizar los contadores
+                actualizarContador(contadorOrigenId);
+                actualizarContador(contadorDestinoId);
+                swal("¡Éxito!", `Correo devuelto a ${estadoAnterior}.`, "success"); // Notificación de éxito
+            }).catch(error => {
+                console.error('Error al devolver el correo:', error);
+                swal("Error", "No se pudo devolver el correo. Inténtalo de nuevo.", "error");
+            });
+        } else {
+            swal("Acción cancelada", "No se ha realizado ninguna acción.", "info"); // Mensaje de cancelación
+        }
+    });
 }
 
-// Inicializar los contadores al cargar la página
-document.addEventListener('DOMContentLoaded', function() {
-    actualizarContador('contador-alarmas');
-    actualizarContador('contador-revisiones');
-    actualizarContador('contador-aprobaciones');
-});
+// Función para aprobar correos
+function aprobarCorreo(button) {
+    var emailItem = button.closest('.email-item');
+    var idCorreo = emailItem.getAttribute('data-id-correo');
+    var subject = emailItem.querySelector('h2').innerText; // Obtener el asunto del correo
 
-// Función para mostrar u ocultar el contenido de cada sección
-function toggleContenido(contenidoId) {
-    var contenido = document.getElementById(contenidoId);
-    contenido.style.display = contenido.style.display === 'none' ? 'block' : 'none';
+    // Mensaje de confirmación con SweetAlert
+    swal({
+        title: "Confirmar Acción",
+        text: `¿Estás seguro de aprobar el correo: "${subject}"?`,
+        icon: "warning",
+        buttons: {
+            cancel: {
+                text: "Cancelar",
+                value: null,
+                visible: true,
+                className: "cancel-button",
+                closeModal: false, // No cerrar el modal al cancelar
+            },
+            confirm: {
+                text: "Confirmar",
+                value: true,
+                visible: true,
+                className: "confirm-button",
+                closeModal: false // No cerrar el modal al confirmar
+            }
+        }
+    }).then((willApprove) => {
+        if (willApprove) {
+            // Llamada AJAX para marcar el correo como aprobado
+            var formData = new FormData();
+            formData.append('id_correo', idCorreo);
+            formData.append('estado', 'aprobado');
+
+            fetch('guardar_cambio.php', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.text())
+              .then(() => {
+                emailItem.remove(); // Elimina el correo de la vista
+                actualizarContador('contador-aprobaciones'); // Actualiza el contador de aprobaciones
+                swal("¡Éxito!", "El correo ha sido aprobado.", "success"); // Notificación de éxito
+            })
+            .catch(error => {
+                console.error('Error al aprobar el correo:', error);
+                swal("Error", "No se pudo aprobar el correo. Inténtalo de nuevo.", "error");
+            });
+        } else {
+            swal("Acción cancelada", "No se ha realizado ninguna acción.", "info"); // Mensaje de cancelación
+        }
+    });
+}
+
+// Función para actualizar los botones según el estado del correo
+function actualizarBotones(emailItem, nuevoEstado) {
+    var botones = emailItem.querySelectorAll('.boton-accion'); // Seleccionar todos los botones de acción
+
+    botones.forEach(function(boton) {
+        // Deshabilitar todos los botones inicialmente
+        boton.disabled = true;
+    });
+
+    // Habilitar solo los botones correspondientes al nuevo estado
+    switch (nuevoEstado) {
+        case 'revisiones':
+            emailItem.querySelector('.boton-ignorar').disabled = false;
+            emailItem.querySelector('.boton-devolver').disabled = false;
+            break;
+        case 'aprobaciones':
+            emailItem.querySelector('.boton-aprobar').disabled = false;
+            break;
+        case 'alarmas':
+            emailItem.querySelector('.boton-mover').disabled = false;
+            break;
+        default:
+            break;
+    }
+}
+
+// Función para actualizar contadores
+function actualizarContador(contadorId) {
+    var contador = document.getElementById(contadorId);
+    var numItems = document.getElementById('contenido-' + contadorId).children.length;
+    contador.innerText = numItems; // Actualiza el texto del contador
 }
 </script>
 
