@@ -2,6 +2,21 @@
 require '../vendor/autoload.php';
 require('fpdf.php');
 session_start();
+$mysqli = new mysqli("localhost", "root", "", "gategourmet"); // Conexión a la base de datos
+
+if ($mysqli->connect_errno) {
+    echo "Error al conectar a la base de datos: " . $mysqli->connect_error;
+    exit();
+}
+
+// Verifica si el usuario está logueado
+if (!isset($_SESSION['nombre_usuario'])) {
+    // Redirigir a la página de login si no está logueado
+    header('Location: http://localhost/GateGourmet/login/login3.php');
+    exit();
+}
+
+$nombre_usuario = $_SESSION['nombre_usuario']; // El nombre de usuario guardado en la sesión
 
 // Configuración del cliente de Google
 $client = new Google_Client();
@@ -9,7 +24,7 @@ $client->setAuthConfig('credentials.json');
 $client->addScope(Google_Service_Gmail::GMAIL_READONLY);
 $client->setRedirectUri('http://localhost/GateGourmet/Index/index_admin.php');
 $client->setAccessType('offline');
-$client->setPrompt('consent'); // Cambiado a 'consent'
+$client->setPrompt('consent');
 
 // Manejar el código de autorización
 if (isset($_GET['code'])) {
@@ -55,14 +70,12 @@ function getBody($message) {
 
     $body = '';
 
-    // Decodificar el cuerpo del mensaje según su tipo MIME
     if ($payload->getMimeType() == 'text/plain') {
         $body = base64url_decode($payload->getBody()->getData());
     } elseif ($payload->getMimeType() == 'text/html') {
         $body = base64url_decode($payload->getBody()->getData());
     } elseif ($parts) {
         foreach ($parts as $part) {
-            // Recorremos las partes para obtener el texto plano o HTML
             if ($part->getMimeType() == 'text/html') {
                 $body .= base64url_decode($part->getBody()->getData());
             }
@@ -82,10 +95,22 @@ function base64url_decode($data) {
     return base64_decode($data);
 }
 
+// Recuperar el estado previo de los correos guardados por el usuario
+$query = "SELECT * FROM acciones_usuarios WHERE nombre_usuario = '$nombre_usuario'";
+$result = $mysqli->query($query);
+
+$correos_guardados = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $correos_guardados[$row['id_correo']] = $row['estado']; // Guardar el estado de cada correo
+    }
+}
+
 foreach ($messages as $message) {
     $messageDetail = $service->users_messages->get('me', $message->getId());
     $headers = $messageDetail->getPayload()->getHeaders();
     $emailDetails = [];
+    $emailDetails['id'] = $message->getId();
 
     foreach ($headers as $header) {
         switch ($header->getName()) {
@@ -98,27 +123,42 @@ foreach ($messages as $message) {
             case 'To':
                 $emailDetails['to'] = $header->getValue();
                 break;
-            case 'Cc':
-                $emailDetails['cc'] = $header->getValue();
-                break;
-            case 'Bcc':
-                $emailDetails['bcc'] = $header->getValue();
-                break;
             case 'Date':
                 $emailDetails['date'] = date('d M Y H:i:s', strtotime($header->getValue()));
                 break;
         }
     }
 
-
-    // Obtener el cuerpo del mensaje
     $emailDetails['body'] = getBody($messageDetail);
 
-    // Agregar el correo electrónico al array de correos
-    $emailData[] = $emailDetails;
+    // Verificar si el correo ya tiene un estado guardado
+    if (isset($correos_guardados[$emailDetails['id']])) {
+        $emailDetails['estado'] = $correos_guardados[$emailDetails['id']];
+    } else {
+        $emailDetails['estado'] = 'alarmas'; // Estado por defecto
+    }
 
-    
+    $emailData[] = $emailDetails;
 }
+
+// Guardar cambios en la base de datos
+function guardarAccion($nombre_usuario, $id_correo, $estado) {
+    global $mysqli;
+    // Verificar si ya existe una acción previa para este correo
+    $query = "SELECT * FROM acciones_usuarios WHERE nombre_usuario = '$nombre_usuario' AND id_correo = '$id_correo'";
+    $result = $mysqli->query($query);
+
+    if ($result->num_rows > 0) {
+        // Si ya existe, actualizar el estado
+        $query = "UPDATE acciones_usuarios SET estado = '$estado' WHERE nombre_usuario = '$nombre_usuario' AND id_correo = '$id_correo'";
+    } else {
+        // Si no existe, insertar una nueva acción
+        $query = "INSERT INTO acciones_usuarios (nombre_usuario, id_correo, estado) VALUES ('$nombre_usuario', '$id_correo', '$estado')";
+    }
+
+    $mysqli->query($query);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -168,6 +208,7 @@ foreach ($messages as $message) {
     <div class="container_not">
         <h1>Correos Electrónicos</h1>
 
+
 <!-- Sección Alarmas -->
 <div class="opcion" id="opcion-alarmas">
     <h2 class="nombre-opcion" onclick="toggleContenido('contenido-alarmas')">Alarmas
@@ -177,20 +218,29 @@ foreach ($messages as $message) {
         <?php if (empty($emailData)) { ?>
             <p>No hay correos electrónicos disponibles.</p>
         <?php } else { ?>
-            <?php foreach ($emailData as $email) { ?>
-                <div class="email-item" data-adjunto-url="<?php echo $email['adjunto_url']; ?>"> <!-- URL del adjunto -->
-                    <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
-                    <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
-                    <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br><br>
-                    <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br><br>
-                    <div class="body"><?php echo $email['body']; ?></div>
-                    <div class="email-actions">
-                        <button class="mover-boton" onclick="moverCorreo(this, 'contenido-revisiones', 'contador-revisiones', 'contador-alarmas')">Enviar a revisiones</button>
-                        <button class="ignorar-boton" onclick="ignorarCorreo(event, this)">Ignorar</button>
-                        <button class="ver-boton" onclick="verCorreo(this)">Ver</button> <!-- Botón Ver -->
+            <?php foreach ($emailData as $email) { 
+                if ($email['estado'] == 'alarmas') { ?>
+                    <div class="email-item">
+                        <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
+                        <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
+                        <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br>
+                        <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
+                        <div class="body"><?php echo $email['body']; ?></div>
+                        <div class="email-actions">
+                            <form action="guardar_cambio.php" method="post" style="display:inline;">
+                                <input type="hidden" name="id_correo" value="<?php echo $email['id']; ?>">
+                                <input type="hidden" name="estado" value="revisiones">
+                                <button type="submit" class="mover-boton">Mover a revisiones</button>
+                            </form>
+                            <form action="guardar_cambio.php" method="post" style="display:inline;">
+                                <input type="hidden" name="id_correo" value="<?php echo $email['id']; ?>">
+                                <input type="hidden" name="estado" value="ignorado">
+                                <button type="submit" class="ignorar-boton">Ignorar</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            <?php } ?>
+                <?php }
+            } ?>
         <?php } ?>
     </div>
 </div>
@@ -201,33 +251,61 @@ foreach ($messages as $message) {
         <span class="contador" id="contador-revisiones"></span> <!-- Contador de elementos -->
     </h2>
     <div class="contenido revisiones" id="contenido-revisiones">
-        <!-- Aquí se agregarían los correos en revisiones -->
+        <?php foreach ($emailData as $email) { 
+            if ($email['estado'] == 'revisiones') { ?>
+                <div class="email-item">
+                    <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
+                    <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
+                    <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br>
+                    <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
+                    <div class="body"><?php echo $email['body']; ?></div>
+                    <div class="email-actions">
+                        <form action="guardar_cambio.php" method="post" style="display:inline;">
+                            <input type="hidden" name="id_correo" value="<?php echo $email['id']; ?>">
+                            <input type="hidden" name="estado" value="aprobado">
+                            <button type="submit" class="mover-boton">Aprobar</button>
+                        </form>
+                        <form action="guardar_cambio.php" method="post" style="display:inline;">
+                            <input type="hidden" name="id_correo" value="<?php echo $email['id']; ?>">
+                            <input type="hidden" name="estado" value="ignorado">
+                            <button type="submit" class="ignorar-boton">Ignorar</button>
+                        </form>
+                    </div>
+                </div>
+            <?php }
+        } ?>
     </div>
 </div>
 
-<!-- Sección Aprobaciones -->
-<div class="opcion" id="opcion-aprobaciones">
-    <h2 class="nombre-opcion" onclick="toggleContenido('contenido-aprobaciones')">Aprobaciones
-        <span class="contador" id="contador-aprobaciones"></span> <!-- Contador de elementos -->
+<!-- Sección Aprobados -->
+<div class="opcion" id="opcion-aprobados">
+    <h2 class="nombre-opcion" onclick="toggleContenido('contenido-aprobados')">Aprobados
+        <span class="contador" id="contador-aprobados"></span> <!-- Contador de elementos -->
     </h2>
-    <div class="contenido aprobaciones" id="contenido-aprobaciones">
-        <!-- Aquí se agregarían los correos en aprobaciones -->
+    <div class="contenido aprobados" id="contenido-aprobados">
+        <?php foreach ($emailData as $email) { 
+            if ($email['estado'] == 'aprobado') { ?>
+                <div class="email-item">
+                    <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
+                    <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
+                    <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br>
+                    <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
+                    <div class="body"><?php echo $email['body']; ?></div>
+                    <div class="email-actions">
+                        <form action="guardar_cambio.php" method="post" style="display:inline;">
+                            <input type="hidden" name="id_correo" value="<?php echo $email['id']; ?>">
+                            <input type="hidden" name="estado" value="ignorado">
+                            <button type="submit" class="ignorar-boton">Ignorar</button>
+                        </form>
+                    </div>
+                </div>
+            <?php }
+        } ?>
     </div>
+</div>
+</div>
 </div>
 
-<!-- Modal para mostrar el adjunto -->
-<div id="adjuntoModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="cerrarModal()">&times;</span>
-        <iframe id="visorAdjunto" src="" width="100%" height="500px"></iframe> <!-- Visor del archivo adjunto -->
-        <button class="descargar-boton">
-        <button class="descargar-boton">
-    <a href="<?php echo $email['adjunto_url']; ?>" target="_blank">Descargar adjunto</a>
-</button>
-    </div>
-</div>
-</div>
-</div>
 <script>
 // Función para mover correos entre contenedores y actualizar contadores en tiempo real
 function moverCorreo(button, contenedorIdDestino, contadorDestinoId, contadorOrigenId) {
@@ -315,12 +393,6 @@ function cerrarModal() {
 }
 
 </script>
-
-<style>
-/* Estilos básicos para el modal */
-
-</style>
-
 
 
     <script src="script.js"></script>
