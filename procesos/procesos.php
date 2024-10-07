@@ -66,18 +66,13 @@ function obtenerColor($macroproceso) {
 </head>
 <body>
     <header>
-    <header class="header">
-        <img src="../Imagenes/Logo_oficial_B-N.png" alt="Gate Gourmet Logo" class="logo">
-    </header>
-    <li class="nav__item__user">
-                <a href="http://localhost/GateGourmet/Index/index_admin.php" class="cerrar__sesion__link"><img src="../Imagenes/regresar.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Volver al inicio</div></a>
-            </li>
+        <h1>MAPEO DE PROCESOS</h1>
     </header>
 
     <main>
         <section class="container">
             <!-- Formulario para agregar nuevo proceso -->
-            <form method="POST" action="procesos.php" class="form-agregar">
+            <form method="POST" action="agregar_proceso.php" class="form-agregar">
                 
                 <div class="form-group">
                     <label for="macroproceso">Macroproceso:</label>
