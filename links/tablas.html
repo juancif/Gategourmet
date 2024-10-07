@@ -129,6 +129,14 @@ CREATE TABLE movimientos (
     PRIMARY KEY (id)
 );
 
+--Crear tabla correos_usuario
+CREATE TABLE user_emails (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    email_id INT NOT NULL,
+    estado ENUM('alarmas', 'revisiones', 'aprobaciones', 'ignorado') NOT NULL
+);
+
 -- Crear tabla password_resets
 CREATE TABLE password_resets (
     id_password INT(11) NOT NULL AUTO_INCREMENT,
@@ -150,13 +158,13 @@ CREATE TABLE procesos (
 );
 
 -- Cargar datos en la tabla procesos
-LOAD DATA INFILE 'C:\Users\Administrator\Desktop\procesos.csv'
+LOAD DATA INFILE "C:/Users/Administrator/Desktop/procesos.csv"
 INTO TABLE procesos
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(macroproceso, proceso, usuario, cargo, email, rol);
+(macroproceso, proceso, usuario, cargo,email,rol);
 <!-- LOAD DATA INFILE 'C:/Users/Administrator/Desktop/procesos.csv'
 INTO TABLE procesos
 FIELDS TERMINATED BY ';'
