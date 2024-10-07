@@ -650,3 +650,91 @@ h3{
 .h3__3{
     margin-left: -20px
 }
+
+   /* Estilos generales */
+   .vista {
+    display: none;
+}
+
+.vista-activa {
+    display: block;
+}
+
+/* Contenedor general para organizar las opciones */
+.column1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Distribuye las opciones de forma más equilibrada */
+    align-items: center;
+    margin-top: 50px;
+    padding: 20px;
+}
+
+/* Cuadros individuales */
+.opciones {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 220px; /* Ancho ajustado para más consistencia */
+    height: 120px;
+    background-color: #1117;
+    backdrop-filter: blur(10px);
+    margin: 15px; /* Espaciado ligeramente mayor */
+    border-radius: 50px; /* Bordes redondeados como en la segunda imagen */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: all 0.3s ease;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.opcion15{
+    margin-top: 60vh;
+    margin-left: 20px;
+    position: absolute;
+}
+
+.opcion16{
+    margin-left: 250px;
+    position: absolute;
+}
+
+.opcion17{
+    margin-left: 120px;
+    position: absolute;
+}
+
+.opcion18{
+    margin-left: 650px;
+    position: absolute;
+}
+.opciones a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px; /* Tamaño del texto similar al de la segunda imagen */
+}
+
+.opciones:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada en hover */
+}
+
+/* Flechas para cambiar de vista */
+.flecha {
+    margin: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Organización adicional para dar más estructura */
+.container-opciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly; /* Mejor distribución horizontal */
+    max-width: 1200px; /* Limitar el ancho para que se vea más organizado */
+    margin: 0 auto; /* Centra el contenedor */
+}
+
+/* Si se necesita más espaciado entre filas */
+.opciones:nth-child(3n+1) {
+    margin-top: 30px;
+}
