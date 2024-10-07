@@ -1,0 +1,171 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fondo y diseño general */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: url('../Imagenes/fondogg3.webp') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: #fff;
+}
+
+/* Header */
+.header {
+    background: rgba(17, 17, 17, 0.6);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    padding: 20px 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Container */
+.register-container {
+    background: rgba(17, 17, 17, 0.85);
+    backdrop-filter: blur(15px);
+    text-align: center;
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    max-width: 400px;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.register-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+}
+
+/* Heading */
+h2 {
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 20px;
+}
+
+/* Input Group */
+.input-group {
+    position: relative;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.input-group input[type="number"],
+.input-group input[type="text"] {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    background-color: rgba(255, 255, 255, 0.1);
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus Effect */
+.input-group input:focus {
+    border-color: #4cbe50;
+    background-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 10px rgba(81, 218, 86, 0.3);
+    outline: none;
+}
+
+/* Placeholder Styling */
+.input-group input::placeholder {
+    color: #bbb;
+    font-style: italic;
+}
+
+/* Botones */
+.buttons {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background-color: #33966d;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+input[type="submit"]:hover {
+    background-color: #2a472b;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(81, 218, 86, 0.4);
+}
+
+input[type="submit"]:active {
+    transform: scale(1);
+}
+
+/* Return Link */
+a.regresar {
+    margin-top: 15px;
+    display: block;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 30px;
+    background-color: #444444;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+a.regresar:hover {
+    background-color: #2a2a2a;
+    box-shadow: 0 4px 15px rgba(68, 68, 68, 0.5);
+}
+
+/* Responsiveness */
+@media (max-width: 600px) {
+    .register-container {
+        padding: 20px;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    .buttons input[type="submit"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

@@ -10,25 +10,30 @@ if ($conexion->connect_error) {
 // Si se recibe una solicitud POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtenemos los valores del formulario
-    $documento = $_POST['documento'];
+    $nombre_usuario = $_POST['nombre_usuario'];
     $cargo = $_POST['cargo'];
 
     // Validamos que los campos no estén vacíos
-    if (!empty($documento) && !empty($cargo)) {
+    if (!empty($nombre_usuario) && !empty($cargo)) {
         // Preparamos la consulta SQL para actualizar el campo 'cargo'
-        $sql_cargo = "UPDATE administradores SET cargo = ? WHERE documento = ?";
+        $sql_cargo = "UPDATE administradores SET cargo = ? WHERE nombre_usuario = ?";
         $stmt_cargo = $conexion->prepare($sql_cargo);
-        $stmt_cargo->bind_param("si", $cargo, $documento);
 
-        // Ejecutamos la consulta y mostramos el resultado
-        if ($stmt_cargo->execute()) {
-            echo "<p>Cargo actualizado con éxito.</p>";
+        if ($stmt_cargo) {
+            // Vinculamos los parámetros
+            $stmt_cargo->bind_param("ss", $cargo, $nombre_usuario);
+
+            // Ejecutamos la consulta y mostramos el resultado
+            if ($stmt_cargo->execute()) {
+                echo "<p>Cargo actualizado con éxito.</p>";
+            } else {
+                echo "<p>Error al actualizar el cargo: " . $stmt_cargo->error . "</p>";
+            }
+            // Cerramos la consulta
+            $stmt_cargo->close();
         } else {
-            echo "<p>Error al actualizar el cargo: " . $conexion->error . "</p>";
+            echo "<p>Error al preparar la consulta: " . $conexion->error . "</p>";
         }
-
-        // Cerramos la consulta
-        $stmt_cargo->close();
     } else {
         echo "<p>Debes rellenar todos los campos.</p>";
     }
@@ -44,7 +49,7 @@ $conexion->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Añadir Cargo</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Estilo CSS -->
+    <link rel="stylesheet" href="crear_cargo.css"> <!-- Estilo CSS -->
 </head>
 <body>
     <div class="main-content">
@@ -53,12 +58,12 @@ $conexion->close();
             <!-- Formulario para añadir cargo -->
             <form id="addCargoForm" action="" method="POST">
                 <div class="input-group">
-                    <label for="documento">Documento del Administrador:</label>
-                    <input type="number" id="documento" name="documento" required>
+                    <label for="nombre_usuario">Nombre de Usuario del Administrador:</label>
+                    <input type="text" id="nombre_usuario" name="nombre_usuario" required>
                 </div>
                 <div class="input-group">
                     <label for="cargo">Cargo:</label>
-                    <input type="text" id="cargo" name="cargo" maxlength="25" required>
+                    <input type="text" id="cargo" name="cargo" maxlength="50" required>
                 </div>
                 <div class="buttons">
                     <input type="submit" value="Guardar Cargo">
@@ -67,3 +72,5 @@ $conexion->close();
             </form>
         </div>
     </div>
+</body>
+</html>

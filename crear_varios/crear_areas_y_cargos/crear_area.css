@@ -1,0 +1,136 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url('../Imagenes/fondogg3.webp') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #fff;
+}
+
+/* Main Content */
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+/* Container */
+.register-container {
+    background: rgba(17, 17, 17, 0.9);
+    backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+h2 {
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Input Group */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    color: #ccc;
+    font-size: 14px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #4cbe50;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 10px rgba(81, 218, 86, 0.3);
+    outline: none;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+input[type="submit"] {
+    width: 48%;
+    padding: 12px;
+    background-color: #33966d;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+input[type="submit"]:hover {
+    background-color: #2a472b;
+    box-shadow: 0 4px 10px rgba(81, 218, 86, 0.4);
+}
+
+a.regresar {
+    width: 48%;
+    padding: 12px;
+    background-color: #444444;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+a.regresar:hover {
+    background-color: #2a2a2a;
+    box-shadow: 0 4px 10px rgba(68, 68, 68, 0.5);
+}
+
+/* Responsiveness */
+@media (max-width: 600px) {
+    .register-container {
+        padding: 30px;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    input[type="submit"],
+    a.regresar {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
