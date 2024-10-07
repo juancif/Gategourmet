@@ -39,8 +39,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($resultCheckAdmin->num_rows == 0) {
                 $error_message = "Error: El usuario no está registrado en la tabla de administradores. No se puede agregar el macroproceso.";
             } else {
+                // Obtener el color correspondiente al macroproceso
+                $color = "";
+                if ($macroproceso == "GESTION CORPORATIVA") {
+                    $color = "Amarillo"; // Por ejemplo, amarillo para gestión corporativa
+                } 
+                // Aquí puedes añadir más condiciones para otros macroprocesos y colores
+
                 // Insertar macroproceso si el usuario está registrado en ambas tablas
-                $sql = "INSERT INTO procesos (macroproceso, email) VALUES ('$macroproceso', '$email')";
+                $sql = "INSERT INTO procesos (macroproceso, email, color) VALUES ('$macroproceso', '$email', '$color')";
                 
                 if ($conn->query($sql) === TRUE) {
                     echo "<script>alert('Nuevo proceso agregado correctamente');</script>";
@@ -52,17 +59,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Consulta SQL para obtener todos los campos de la tabla 'procesos' ordenados por color y área
-$sql = "SELECT macroproceso, proceso, usuario, cargo, email, rol, area, color FROM procesos 
+// Consulta SQL para obtener todos los campos de la tabla 'procesos' ordenados por macroproceso y color
+$sql = "SELECT macroproceso, proceso, usuario, cargo, email, rol, color FROM procesos 
         ORDER BY 
+            macroproceso ASC, 
             CASE
-                WHEN color = 'Amarillo' AND area IN ('GESTION CORPORATIVA', 'COMPLIANCE') THEN 1
-                WHEN color = 'Rojo' AND area IN ('SUPPLY CHAIN', 'CULINARY EXCELLENCE', 'SERVICE DELIVERY', 'ASSEMBLY', 'SERVICIOS INSTITUCIONALES') THEN 2
-                WHEN color = 'Verde' AND area IN ('FINANCIERA', 'COSTOS', 'COMUNICACIONES', 'TECNOLOGÍA DE LA INFORMACIÓN', 'TALENTO HUMANO', 'MANTENIMIENTO', 'SERVICIO AL CLIENTE', 'SECURITY') THEN 3
+                WHEN color = 'Amarillo' THEN 1
+                WHEN color = 'Rojo' THEN 2
+                WHEN color = 'Verde' THEN 3
                 ELSE 4
-            END, 
-            area ASC,  
-            proceso ASC";
+            END";
 
 $result = $conn->query($sql);
 
@@ -72,7 +78,7 @@ if (!$result) {
 }
 
 // Obtener el color según el índice de la fila
-function obtenerColorFila($index, $color) {
+function obtenerColorFila($color) {
     switch ($color) {
         case 'Amarillo':
             return 'yellow-background'; // Clase CSS para amarillo
@@ -108,7 +114,7 @@ function obtenerColorFila($index, $color) {
     <main>
         <section class="container">
             <!-- Formulario para agregar macroproceso -->
-            <form id="formularioMacroproceso" action="" method="POST" onsubmit="return validarEmail()">
+            <form id="formularioMacroproceso" action="" method="POST">
                 <label for="macroproceso">Macroproceso:</label>
                 <input type="text" id="macroproceso" name="macroproceso" required>
 
@@ -135,10 +141,9 @@ function obtenerColorFila($index, $color) {
                     <tbody>
                         <?php
                         if ($result->num_rows > 0) {
-                            $rowIndex = 1; 
                             while ($row = $result->fetch_assoc()) {
                                 // Obtener la clase de color según el valor del campo 'color'
-                                $colorClass = obtenerColorFila($rowIndex, $row["color"]);
+                                $colorClass = obtenerColorFila($row["color"]);
 
                                 // Asignar cada valor a su columna correspondiente
                                 echo "<tr>";
@@ -149,8 +154,6 @@ function obtenerColorFila($index, $color) {
                                 echo "<td>" . htmlspecialchars($row["email"]) . "</td>";
                                 echo "<td>" . htmlspecialchars($row["rol"]) . "</td>";
                                 echo "</tr>";
-
-                                $rowIndex++;
                             }
                         } else {
                             echo "<tr><td colspan='6'>No hay datos disponibles</td></tr>";
@@ -169,14 +172,17 @@ $conn->close();
 <script>
     function validarEmail() {
         const emailInput = document.getElementById('email').value;
-        const domain = emailInput.split('@')[1];
         const errorDiv = document.getElementById('emailError');
 
-        if (domain !== 'gategroup.com') {
+        // Comprobar si el email tiene el dominio correcto
+        if (!emailInput.endsWith('@gategroup.com')) {
             errorDiv.textContent = 'Error: Solo se permiten correos electrónicos de gategroup.com';
             return false;
+        } else {
+            errorDiv.textContent = ''; // Limpiar el mensaje de error si es válido
         }
-        return true;
+
+        return true; // Si todo está correcto, permitir el envío del formulario
     }
 </script>
 </body>
