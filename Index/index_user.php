@@ -373,41 +373,32 @@ foreach ($messages as $message) {
         </div>
     </div>
 </div>
-    <div class="recuadroimagen"><img src="../Imagenes/Logo_oficial_B-N.png" class="logoindex">
+<div class="recuadroimagen">
+        <img src="../Imagenes/Logo_oficial_B-N.png" class="logoindex">
         <img src="../Imagenes/logo__recuadro__gategourmet.png" alt="img4" class="triangulo">
     </div>
-    <div class="cuadro1" id="cuadro1">
-        <div class="recuadro1">
-            <div><h3 class="title title__estrag">Estrategicos</h3></div>
-            <p class="parrafo_estrategicos">Procesos destinados a definir <br>y controlar las metas de la <br>organizacion, sus politicas y <br>estrategias.</p>
-        </div>
-        <div class="circulo circulo1"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?newTargetListUrl=%2Fsites%2FPrueba%2Egg%2FShared%20Documents&viewpath=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FForms%2FAllItems%2Easpx&id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FDocumentos%5F%5Fprueba%2FGesti%C3%B3n%20Corporativa&viewid=7e698b00%2D50a8%2D4a9f%2Daf64%2D4414983a1399" class="link1"><h3 class="h3__2">Gestión corporativa</h3></a></div>
-        <div class="circulo circulo2"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?newTargetListUrl=%2Fsites%2FPrueba%2Egg%2FShared%20Documents&viewpath=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FForms%2FAllItems%2Easpx&id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FDocumentos%5F%5Fprueba%2FCompliance&viewid=7e698b00%2D50a8%2D4a9f%2Daf64%2D4414983a1399" class="link1"><h3>Compliance</h3></a></div>
-    </div>
-    <div class="cuadro2" id="cuadro2">
-        <div class="recuadro2">
-            <div><h3 class="title_misionales">Misionales</h3></div>
-            <p class="parrafo_misionales">Procesos que permiten generar el producto/servicio que se entregan al cliente. <br>Agregan valor al cliente.</p>
-        </div>
-        <div class="circulo circulo3"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?newTargetListUrl=%2Fsites%2FPrueba%2Egg%2FShared%20Documents&viewpath=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FForms%2FAllItems%2Easpx&id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FDocumentos%5F%5Fprueba%2FSupply%20Chain&viewid=7e698b00%2D50a8%2D4a9f%2Daf64%2D4414983a1399" class="link1"><h3 class="h3__2">Supply chain</h3></a></div>
-        <div class="circulo circulo4"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?newTargetListUrl=%2Fsites%2FPrueba%2Egg%2FShared%20Documents&viewpath=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FForms%2FAllItems%2Easpx&id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FDocumentos%5F%5Fprueba%2FCulinary&viewid=7e698b00%2D50a8%2D4a9f%2Daf64%2D4414983a1399" class="link1"><h3>Culinary</h3></a></div>
-        <div class="circulo circulo5"><a href="https://workdrive.zoho.com/file/hpbd780390dcd8e964441a13bc568d214fb30" class="link1"><h3>Assembly</h3></a></div>
-        <div class="circulo circulo6"><a href="http://localhost/GateGourmet/Index/vista_usuarios/security.php" class="link1"><h3 class="h3__2">Service delivery</h3></a></div>
-        <div class="circulo circulo7"><a href="https://1drv.ms/f/s!Aijf4XW5EsnbmQqAF01L3lqjcNLc?e=2rZY8S" class="link1"><h3 class="h3__2">Servicios institucionales</h3></a></div>
-    </div>
-    <div class="cuadro3" id="cuadro3">
-        <div class="recuadro3">
-            <div><h3 class="title_soporte">Soporte</h3></div>
-            <p class="parrafo_soporte">Procesos que abarcan las actividades necesarias para el correcto funcionamiento de los procesos operativos.</p>
-        </div>
-        <div class="circulo circulo8"><a href="https://1drv.ms/w/s!Aijf4XW5EsnbmQ0kfSuUy3leGNi0?e=M6FAKA" class="link1"><h3>Financiera</h3></a></div>
-        <div class="circulo circulo9"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/GESTION%20DOCUMENTAL?csf=1&web=1&e=BSXQQx" class="link1"><h3>Costos</h3></a></div>
-        <div class="circulo circulo10"><a href="http://localhost/GateGourmet/Index/index_comunicaciones.php" class="link1"><h3 class="h3__3">Comunicaciones</h3></a></div>
-        <div class="circulo circulo11"><a href="https://show.zoho.com/show/open/hpbd733318fd8b4834fcebcbc508ace6b9c64" class="link1"><h3>IT</h3></a></div>
-        <div class="circulo circulo12"><a href="http://localhost/GateGourmet/Index/vista_usuarios/security.php" class="link1"><h3>Security</h3></a></div>
-        <div class="circulo circulo13"><a href="https://workdrive.zoho.com/file/hpbd780390dcd8e964441a13bc568d214fb30" class="link1"><h3 class="h3__2">Servicio al cliente</h3></a></div>
-        <div class="circulo circulo14"><a href="https://show.zoho.com/show/open/hpbd733318fd8b4834fcebcbc508ace6b9c64" class="link1"><h3 class="h3__2">Facilty service</h3></a></div>
-        <div class="circulo circulo15"><a href="https://show.zoho.com/show/open/hpbd733318fd8b4834fcebcbc508ace6b9c64" class="link1"><h3 class="h3__2">Talento humano</h3></a></div>
+    <div class="column1">
+        <div class="opciones opcion1"><a href="#" class="link1"><h3 class="h3__2">ABASTECIMIENTOS</h3></a></div>
+        <div class="opciones opcion2"><a href="#" class="link1"><h3 class="h3__2">CI</h3></a></div>
+        <div class="opciones opcion3"><a href="#" class="link1"><h3 class="h3__2">COMPLIANCE</h3></a></div>
+        <div class="opciones opcion4"><a href="#" class="link1"><h3 class="h3__2">COMPRAS</h3></a></div>
+        <div class="opciones opcion5"><a href="#" class="link1"><h3 class="h3__2">COSTOS</h3></a></div>
+        <div class="opciones opcion6"><a href="#" class="link1"><h3 class="h3__2">CULINARY</h3></a></div>
+        <div class="opciones opcion7"><a href="#" class="link1"><h3 class="h3__2">DESARROLLO</h3></a></div>
+        <div class="opciones opcion8"><a href="#" class="link1"><h3 class="h3__2">FACILITY</h3></a></div>
+        <div class="opciones opcion9"><a href="#" class="link1"><h3 class="h3__2">FINANCIERA</h3></a></div>
+        <div class="opciones opcion10"><a href="#" class="link1"><h3 class="h3__2">IDS</h3></a></div>
+        <div class="opciones opcion11"><a href="#" class="link1"><h3 class="h3__2">KEY ACCOUNT</h3></a></div>
+        <div class="opciones opcion12"><a href="#" class="link1"><h3 class="h3__2">LAUNDRY</h3></a></div>
+        <div class="opciones opcion13"><a href="#" class="link1"><h3 class="h3__2">MAKE & PACK</h3></a></div>
+        <div class="opciones opcion14"><a href="#" class="link1"><h3 class="h3__2">PICK & PACK</h3></a></div>
+        <div class="opciones opcion15"><a href="#" class="link1"><h3 class="h3__2">SALAS</h3></a></div>
+        <div class="opciones opcion16"><a href="#" class="link1"><h3 class="h3__2">SEGURIDAD</h3></a></div>
+        <div class="opciones opcion17"><a href="#" class="link1"><h3 class="h3__2">SERVICE DELIVERY</h3></a></div>
+        <div class="opciones opcion18"><a href="#" class="link1"><h3 class="h3__2">SISTEMAS</h3></a></div>
+        <div class="opciones opcion19"><a href="#" class="link1"><h3 class="h3__2">TALENTO HUMANO</h3></a></div>
+        <div class="opciones opcion20"><a href="#" class="link1"><h3 class="h3__2">WASH & PACK</h3></a></div>
+        <div class="opciones opcion21"><a href="#" class="link1"><h3 class="h3__2">OBSOLETOS</h3></a></div>
     </div>
     <script>
 // Función para alternar el contenido y actualizar el contador

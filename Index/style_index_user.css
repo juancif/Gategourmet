@@ -2,12 +2,13 @@ body{
     background-image: url("../Imagenes/fondogg3.webp");
     margin: 0;
     background-size:2100px ;
+    background-repeat: repeat;
     /*
     background-position: -500px;
-    background-repeat: no-repeat;
     box-sizing: border-box
     */
     margin: 0;
+    
 }
 
 
@@ -313,6 +314,82 @@ body {
     background-color: #0b4da3;
 }
 
+/* Responsividad */
+@media screen and (max-width: 1200px) {
+    .img__usuario {
+        margin-left: 50px;
+    }
+
+    .nav__item {
+        font-size: 22px;
+    }
+
+    #alarmas {
+        margin-left: 80vw;
+        width: 14vw;
+    }
+
+    .aprobaciones, .revisiones, .alarmass {
+        height: 70vh;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .nav__list {
+        flex-direction: column;
+    }
+
+    #alarmas {
+        margin-left: 70vw;
+        width: 16vw;
+    }
+
+    .opciones {
+        width: 180px;
+        height: 100px;
+    }
+
+    .img__usuario {
+        width: 50px;
+        height: 45px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .img__usuario {
+        margin-left: 0;
+    }
+
+    .nav__item {
+        font-size: 20px;
+        margin: 0 8px;
+    }
+
+    #alarmas {
+        width: 20vw;
+        margin-left: 60vw;
+        font-size: 16px;
+    }
+
+    .opciones {
+        width: 150px;
+        height: 90px;
+        font-size: 14px;
+    }
+
+    .aprobaciones, .revisiones, .alarmass {
+        height: 60vh;
+    }
+
+    .nombre-opcion {
+        font-size: 20px;
+    }
+
+    .nombre-opcion .contador {
+        font-size: 16px;
+        padding: 4px 8px;
+    }
+}
 /* Estilo general para títulos */
 h1 {
     font-size: 30px;
@@ -386,258 +463,88 @@ h2 {
 }
 
 
-.cuadro1, .cuadro2, .cuadro3{
-    width: 98.5%;
-    height: 180px;
-    /*background:linear-gradient(#9997, #9997);*/
-    margin-left: 10px ;
-    margin-right: 10px;
-    position: relative;
-    border-radius: 50px;
+/* Contenedor general para organizar las opciones */
+.column1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Distribuye las opciones de forma más equilibrada */
+    align-items: center;
+    margin-top: 0;
+    padding: 20px;
 }
 
-.cuadro1{
-    margin-top: 45px;
-    /*background:linear-gradient(#9999, #9999);*/
-    background-color:transparent;
-    border: 2px solid transparent;
-}
-
-.cuadro2{
-    margin-top: 5px;
-    background-color:transparent;
-
-}
-
-.cuadro3{
-    height: 280px;
-    margin-bottom: 20px;
-    /*background:linear-gradient(#999b, #999b);*/
-    background-color:transparent;
-    margin-top: 5px;
-    border: 2px solid transparent;
-    /*background:linear-gradient(#999b, #999b);*/
-    /*background-color: rgba(94, 119, 64, 0.993);*/
-}
-
-.recuadro1, .recuadro2, .recuadro3{
+/* Cuadros individuales */
+.opciones {
     font-family: Arial, Helvetica, sans-serif;
-    width: 320px;
-    height: 100%;
-    background: linear-gradient(to left, rgba(10, 192, 147, 0.50), rgb(67, 153, 82, 0.50));
-    backdrop-filter: blur(10px);
-    margin: auto;
-    margin-left: 0px;
-    margin-top: 0px;
-    position: absolute;
-    border-radius: 50px;
-}
-
-.recuadro1_perso{
-    font-family: Arial, Helvetica, sans-serif;
-    width: 350px;
-    height: 100%;
-    background: linear-gradient(to left, rgba(10, 192, 147, 0.50), rgb(67, 153, 82, 0.50));
-    backdrop-filter: blur(10px);
-    margin: auto;
-    margin-left: 5vh;
-    margin-top: 0px;
-    position: absolute;
-    border-radius: 50px;
-    position: absolute;
-    font-size: 40px;
-    padding-top: 2vw;
-}
-
-.recuadro1_perso:hover {
-    background-color: transparent;
-    /*background:linear-gradient(#9997, #9997);*//* Cambia el color de fondo al pasar el ratón sobre el círculo */
-    transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el ratón sobre el círculo */
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2); /* Aumenta la intensidad de la sombra */
-}
-
-.recuadro1_perso:hover a{
-
-    background-color: transparent;
-}
-
-.recuadro3{
-    margin-top: 0px;
-}
-
-
-.circulo {
-    font-family:Arial, Helvetica, sans-serif ;
-    width: 200px;
+    width: 220px; /* Ancho ajustado para más consistencia */
     height: 120px;
     background-color: #1117;
     backdrop-filter: blur(10px);
-    margin-left: 200px;
-    margin-top: 20px;
-    border-radius: 50px; /* Crea un círculo perfecto */
-    box-shadow: 0 8px 16px rgba(136, 42, 42, 0.1); /* Añade una sombra suave */
-    transition: all 0.3s ease; /* Agrega una transición suave */
+    margin: 1vh; /* Espaciado ligeramente mayor */
+    margin-top: 4.65vh;
+    border-radius: 50px; /* Bordes redondeados como en la segunda imagen */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: all 0.3s ease;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* .opcion15{
+    margin-top: 50vh;
+    margin-left: -82vw;
     position: absolute;
 }
 
-.circulo_user {
-    font-family:Arial, Helvetica, sans-serif ;
-    width: 200px;
-    height: 120px;
-    background-color: #1117;
-    backdrop-filter: blur(10px);
-    margin-left: 30vw;
-    margin-top: -14vh;
-    border-radius: 50px; /* Crea un círculo perfecto */
-    box-shadow: 0 8px 16px rgba(136, 42, 42, 0.1); /* Añade una sombra suave */
-    transition: all 0.3s ease; /* Agrega una transición suave */
+.opcion16{
+    margin-left: 20vw;
     position: absolute;
 }
 
-.circulo_user2 {
-    margin-left: 44vw;
-}
-
-.circulo_user:hover {
-    background-color: transparent;
-    /*background:linear-gradient(#9997, #9997);*//* Cambia el color de fondo al pasar el ratón sobre el círculo */
-    transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el ratón sobre el círculo */
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2); /* Aumenta la intensidad de la sombra */
-}
-
-.circulo_user:hover a{
-
-    background-color: transparent;
-}
-p{
-    margin-top: -100px;
-    margin-left: 50px;
-    font-size: 20px;
+.opcion17{
+    margin-left: 120vw;
     position: absolute;
-    color: white;
 }
 
-.title__estrag{
-    color: rgb(255, 255, 255);
-    margin-left: 30px;
-    margin-top: -40px;
-    position: relative;
-    font-size: 35px;
-}
-
-.parrafo_estrategicos{
-    white-space:initial;
-    word-break: break-all;
-    color: white;
-    margin-top: -70px;
-    margin-left: 35px;
-}
-
-.title_misionales {
-    margin-top: -40px;
-    margin-left: 50px;
-    font-size: 30px;
+.opcion18{
+    margin-left: 650vw;
     position: absolute;
-    color: #fff;
-}
-
-.parrafo_misionales{
-    margin-top: 60px;
-    margin-left: 40px;
-    font-size: 20px;
-    position: absolute;
-    color: white;
-    
-}
-
-.title_soporte{
-    color: rgb(255, 255, 255);
-    margin-top: -20px;
-    margin-left: 60px;
-    font-size:35px;
-}
+} */
 
 
-.parrafo_soporte{
-    margin-top: -60px;
-    margin-left: 50px;
-    font-size: 22px;
-    position: absolute;
-    color: white;
-}
-
-
-
-.circulo1, .circulo3, .circulo8, .circulo13 {
-    margin-left: 400px;
-    
-}
-
-.circulo:hover {
-    background-color: transparent;
-    /*background:linear-gradient(#9997, #9997);*//* Cambia el color de fondo al pasar el ratón sobre el círculo */
-    transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el ratón sobre el círculo */
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2); /* Aumenta la intensidad de la sombra */
-}
-
-.circulo:hover a{
-
-    background-color: transparent;
-}
-.circulo2, .circulo4, .circulo9, .circulo14{
-    margin-left: 620px;
-}
-
-
-
-.circulo5, .circulo10, .circulo15{
-    margin-left: 850px;
-
-}
-
-.circulo6, .circulo11{
-    margin-left: 1080px;
-}
-
-.circulo7, .circulo12{
-    margin-left: 1300px;
-}
-.circulo13{
-    margin-top: 150px;
-}
-
-.circulo14{
-    margin-top: 150px;
-}
-
-.circulo15{
-    margin-top: 150px;
-}
-
-.link1{
-
+.opciones a {
     text-decoration: none;
-    text-align: center
-}
-
-h3{
-    margin-top: -5px;
-    margin-left: -5px;
-    font-size: z0px;
-    padding-bottom: 50px;
-    padding-top: 50px;
-    padding-left: 40px;
-    padding-right: 40px;
     color: white;
+    font-size: 16px; /* Tamaño del texto similar al de la segunda imagen */
 }
 
-.h3__2{
-    margin-top: 0px;
-    padding-bottom:35px ;
-    padding-top: 38px;
+.opciones:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+    background-color: rgb(49, 49, 49); /* Sombra más pronunciada en hover */
 }
 
-.h3__3{
-    margin-left: -20px
+.opcion21{
+    background-color: rgba(148, 4, 4, 0.467);
+    backdrop-filter: blur(10px);
+}
+.opcion21:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 20px rgba(197, 5, 5, 0.2);
+    background-color: rgb(82, 5, 5); /* Sombra más pronunciada en hover */
 }
 
+/* Organización adicional para dar más estructura */
+.container-opciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly; /* Mejor distribución horizontal */
+    max-width: 10vw; /* Limitar el ancho para que se vea más organizado */
+    margin: 0 auto; /* Centra el contenedor */
+}
+
+/* Si se necesita más espaciado entre filas */
+.opciones:nth-child(3n+1) {
+    margin-top: 30px;
+}
