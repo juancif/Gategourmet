@@ -666,7 +666,7 @@ h3{
     flex-wrap: wrap;
     justify-content: space-around; /* Distribuye las opciones de forma más equilibrada */
     align-items: center;
-    margin-top: 50px;
+    margin-top: 0;
     padding: 20px;
 }
 
@@ -677,7 +677,7 @@ h3{
     height: 120px;
     background-color: #1117;
     backdrop-filter: blur(10px);
-    margin: 15px; /* Espaciado ligeramente mayor */
+    margin: 1vh; /* Espaciado ligeramente mayor */
     border-radius: 50px; /* Bordes redondeados como en la segunda imagen */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
     transition: all 0.3s ease;
@@ -687,26 +687,28 @@ h3{
     justify-content: center;
 }
 
-.opcion15{
-    margin-top: 60vh;
-    margin-left: 20px;
+/* .opcion15{
+    margin-top: 50vh;
+    margin-left: -82vw;
     position: absolute;
 }
 
 .opcion16{
-    margin-left: 250px;
+    margin-left: 20vw;
     position: absolute;
 }
 
 .opcion17{
-    margin-left: 120px;
+    margin-left: 120vw;
     position: absolute;
 }
 
 .opcion18{
-    margin-left: 650px;
+    margin-left: 650vw;
     position: absolute;
-}
+} */
+
+
 .opciones a {
     text-decoration: none;
     color: white;
@@ -715,16 +717,61 @@ h3{
 
 .opciones:hover {
     transform: scale(1.05);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada en hover */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+    background-color: rgb(49, 49, 49); /* Sombra más pronunciada en hover */
+}
+
+.opcion21{
+    background-color: rgba(148, 4, 4, 0.467);
+    backdrop-filter: blur(10px);
+}
+.opcion21:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 20px rgba(197, 5, 5, 0.2);
+    background-color: rgb(82, 5, 5); /* Sombra más pronunciada en hover */
 }
 
 /* Flechas para cambiar de vista */
 .flecha {
     margin: 20px;
+    margin-top: 1vw;
     font-size: 1.5rem;
     cursor: pointer;
+    background-color: #1117;
+    backdrop-filter: blur(10px);
+    width: 12vw;
+    height: 5vh;
+    border-radius: 20px;
+    padding: 10px;
+    color: white;
 }
 
+.flecha:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada en hover */
+}
+
+
+/* Flechas para cambiar de vista */
+.flecha_volver {
+    margin: 20px;
+    margin-top: 0.5vw;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background-color: #1117;
+    backdrop-filter: blur(10px);
+    width: 8vw;
+    height: 5vh;
+    border-radius: 20px;
+    padding: 10px;
+    color: white;
+    position: absolute;
+}
+
+.flecha_volver:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada en hover */
+}
 /* Organización adicional para dar más estructura */
 .container-opciones {
     display: flex;

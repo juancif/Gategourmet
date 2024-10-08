@@ -161,22 +161,27 @@ if (isset($_POST['Submit'])) {
                     <div class="input-group">
                         <label for="area">Área</label>
                         <select name="area" id="area">
-                            <option value="">Seleccione una opción</option>
-                            <option value="Gestión corporativa">Gestión corporativa</option>
+                        <option value="">Seleccione una opción</option>
+                            <option value="Abastecimientos">Abastecimientos</option>
+                            <option value="CI">CI</option>
                             <option value="Compliance">Compliance</option>
-                            <option value="Supply chain">Supply Chain</option>
-                            <option value="Culinary">Culinary</option>
-                            <option value="Assembly">Assembly</option>
-                            <option value="Service delivery">Service Delivery</option>
-                            <option value="Servicios institucionales">Servicios institucionales</option>
-                            <option value="Financiera">Financiera</option>
+                            <option value="Compras">Compras</option>
                             <option value="Costos">Costos</option>
-                            <option value="Comunicaciones">Comunicaciones</option>
-                            <option value="Tecnologia de la información">Tecnologia de la información</option>
-                            <option value="Security">Security</option>
-                            <option value="Servicio al cliente">Servicio al cliente</option>
-                            <option value="Facilty service">Facilty Service</option>
-                            <option value="Talento humano">Talento Humano</option>
+                            <option value="Culinary">Culinary</option>
+                            <option value="Desarrollo">Desarrollo</option>
+                            <option value="Financiera">Financiera</option>
+                            <option value="Facility">Facility</option>
+                            <option value="IDS">IDS</option>
+                            <option value="Key Account">Key Account</option>
+                            <option value="Laundry">Laundry</option>
+                            <option value="Make & Pack">Make & Pack</option>
+                            <option value="Pick & Pack">Pick & Pack</option>
+                            <option value="Salas">Salas</option>
+                            <option value="Seguridad">Seguridad</option>
+                            <option value="Service Delivery">Service Delivery</option>
+                            <option value="Sistemas">Sistemas</option>
+                            <option value="Talento Humano">Talento Humano</option>
+                            <option value="Wash & Pack">Wash & Pack</option>
                         </select>
                     </div>
                     <div class="input-group">

@@ -46,24 +46,28 @@
         <img src="../Imagenes/logo__recuadro__gategourmet.png" alt="img4" class="triangulo">
     </div>
     <div class="column1">
-        <div class="opciones opcion1"><a href="#" class="link1"><h3 class="h3__2">Gestión corporativa</h3></a></div>
-        <div class="opciones opcion2"><a href="#" class="link1"><h3 class="h3__2">Compliance</h3></a></div>
-        <div class="opciones opcion3"><a href="#" class="link1"><h3 class="h3__2">Supply chain</h3></a></div>
-        <div class="opciones opcion4"><a href="#" class="link1"><h3 class="h3__2">Culinary</h3></a></div>
-        <div class="opciones opcion5"><a href="#" class="link1"><h3 class="h3__2">Assembly</h3></a></div>
-        <div class="opciones opcion6"><a href="#" class="link1"><h3 class="h3__2">Service delivery</h3></a></div>
-        <div class="opciones opcion7"><a href="#" class="link1"><h3 class="h3__2">Servicios institucionales</h3></a></div>
-        <div class="opciones opcion8"><a href="#" class="link1"><h3 class="h3__2">Financiera</h3></a></div>
-        <div class="opciones opcion9"><a href="#" class="link1"><h3 class="h3__2">Costos</h3></a></div>
-        <div class="opciones opcion10"><a href="#" class="link1"><h3 class="h3__2">Comunicaciónes</h3></a></div>
-        <div class="opciones opcion11"><a href="#" class="link1"><h3 class="h3__2">IT</h3></a></div>
-        <div class="opciones opcion12"><a href="#" class="link1"><h3 class="h3__2">Security</h3></a></div>
-        <div class="opciones opcion13"><a href="#" class="link1"><h3 class="h3__2">Financiera</h3></a></div>
-        <div class="opciones opcion14"><a href="#" class="link1"><h3 class="h3__2">Costos</h3></a></div>
-        <div class="opciones opcion15"><a href="#" class="link1"><h3 class="h3__2">Comunicaciónes</h3></a></div>
-        <div class="opciones opcion16"><a href="#" class="link1"><h3 class="h3__2">IT</h3></a></div>
-        <div class="opciones opcion17"><a href="#" class="link1"><h3 class="h3__2">Security</h3></a></div>
-        <div class="opciones opcion18"><a href="#" class="link1"><h3 class="h3__2">Security</h3></a></div>
+        <div class="opciones opcion1"><a href="#" class="link1"><h3 class="h3__2">ABASTECIMIENTOS</h3></a></div>
+        <div class="opciones opcion2"><a href="#" class="link1"><h3 class="h3__2">CI</h3></a></div>
+        <div class="opciones opcion3"><a href="#" class="link1"><h3 class="h3__2">COMPLIANCE</h3></a></div>
+        <div class="opciones opcion4"><a href="#" class="link1"><h3 class="h3__2">COMPRAS</h3></a></div>
+        <div class="opciones opcion5"><a href="#" class="link1"><h3 class="h3__2">COSTOS</h3></a></div>
+        <div class="opciones opcion6"><a href="#" class="link1"><h3 class="h3__2">CULINARY</h3></a></div>
+        <div class="opciones opcion7"><a href="#" class="link1"><h3 class="h3__2">DESARROLLO</h3></a></div>
+        <div class="opciones opcion8"><a href="#" class="link1"><h3 class="h3__2">FACILITY</h3></a></div>
+        <div class="opciones opcion9"><a href="#" class="link1"><h3 class="h3__2">FINANCIERA</h3></a></div>
+        <div class="opciones opcion10"><a href="#" class="link1"><h3 class="h3__2">IDS</h3></a></div>
+        <div class="opciones opcion11"><a href="#" class="link1"><h3 class="h3__2">KEY ACCOUNT</h3></a></div>
+        <div class="opciones opcion12"><a href="#" class="link1"><h3 class="h3__2">LAUNDRY</h3></a></div>
+        <div class="opciones opcion13"><a href="#" class="link1"><h3 class="h3__2">MAKE & PACK</h3></a></div>
+        <div class="opciones opcion14"><a href="#" class="link1"><h3 class="h3__2">PICK & PACK</h3></a></div>
+        <div class="opciones opcion15"><a href="#" class="link1"><h3 class="h3__2">SALAS</h3></a></div>
+        <div class="opciones opcion16"><a href="#" class="link1"><h3 class="h3__2">SEGURIDAD</h3></a></div>
+        <div class="opciones opcion17"><a href="#" class="link1"><h3 class="h3__2">SERVICE DELIVERY</h3></a></div>
+        <div class="opciones opcion18"><a href="#" class="link1"><h3 class="h3__2">SISTEMAS</h3></a></div>
+        <div class="opciones opcion19"><a href="#" class="link1"><h3 class="h3__2">TALENTO HUMANO</h3></a></div>
+        <div class="opciones opcion20"><a href="#" class="link1"><h3 class="h3__2">WASH & PACK</h3></a></div>
+        <div class="opciones opcion21"><a href="#" class="link1"><h3 class="h3__2">OBSOLETOS</h3></a></div>
+
     </div>
     <!-- Flecha para cambiar a la segunda vista -->
     <div class="flecha" onclick="mostrarVista('vista2')">➡️ Cambiar de vista</div>
@@ -108,7 +112,7 @@
             <div class="circulo circulo15"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FGESTION%20DOCUMENTAL%2FTALENTO%20HUMANO%2Ezip&parent=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FGESTION%20DOCUMENTAL" class="link1"><h3 class="h3__2">Talento humano</h3></a></div>
         </div>
     <!-- Flecha para volver a la primera vista -->
-    <div class="flecha" onclick="mostrarVista('vista1')">⬅️ Volver</div>
+    <div class="flecha_volver" onclick="mostrarVista('vista1')">⬅️ Volver</div>
 </div>
 
 <script>
