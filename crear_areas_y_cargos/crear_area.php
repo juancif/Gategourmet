@@ -73,7 +73,7 @@ $conexion->close();
                 </div>
                 <div class="buttons">
                     <input type="submit" value="Guardar Área">
-                    <a href="index.html" class="regresar">Regresar</a>
+                    <a href="http://localhost/GateGourmet/Index/index_admin.php" class="regresar">Regresar</a>
                 </div>
             </form>
         </div>

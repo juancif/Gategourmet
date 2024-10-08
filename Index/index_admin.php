@@ -31,6 +31,12 @@
             <li class="nav__item">
                 <a href="http://localhost/GateGourmet/index.php" class="nav__link"><img src="../imagenes/config.png" alt="Indicadores" class="imgs__menu">Reportes</a>
             </li>
+            <li class="nav__item">
+                <a href="http://localhost/GateGourmet/crear_areas_y_cargos/crear_cargo.php" class="nav__link"><img src="../Imagenes/macroprocesos2.png" alt="Procesos" class="imgs__menu">Crear cargo</a>
+            </li>
+            <li class="nav__item">
+                <a href="http://localhost/GateGourmet/crear_areas_y_cargos/crear_area.php" class="nav__link"><img src="../imagenes/config.png" alt="Indicadores" class="imgs__menu">Crear área</a>
+            </li>
             <li class="nav__item__user">
                 <a href="http://localhost/GateGourmet/Movimientos/logout.php" class="cerrar__sesion__link"><img src="../Imagenes/image.png" alt="Usuario" class="img__usuario"><div class="cerrar__sesion">Cerrar Sesión</div></a>
             </li>
