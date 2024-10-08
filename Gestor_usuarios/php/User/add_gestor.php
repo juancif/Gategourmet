@@ -50,6 +50,25 @@ function generarNombreUsuario($nombreCompleto, $dbConn) {
     return $nombre_usuario;
 }
 
+// Función para verificar si el correo ya está en alguna de las tablas (usuarios, administradores o inactivos)
+function verificarCorreoExistente($correo, $dbConn) {
+    // Consultar si el correo existe en las tablas 'usuarios', 'administradores' o 'inactivos'
+    $sql = "
+        SELECT 'usuarios' AS tabla FROM usuarios WHERE correo = :correo
+        UNION 
+        SELECT 'administradores' AS tabla FROM administradores WHERE correo = :correo
+        UNION 
+        SELECT 'inactivos' AS tabla FROM inactivos WHERE correo = :correo
+    ";
+
+    $query = $dbConn->prepare($sql);
+    $query->bindParam(':correo', $correo);
+    $query->execute();
+
+    // Retorna el nombre de la tabla si el correo está registrado, o false si no lo está
+    return $query->fetch(PDO::FETCH_ASSOC);
+}
+
 if (isset($_POST['Submit'])) {
     $correo = $_POST['correo'];
     $nombres_apellidos = $_POST['nombres_apellidos'];
@@ -82,61 +101,73 @@ if (isset($_POST['Submit'])) {
             exit();
         }
 
-        try {
-            // Iniciar la transacción
-            $dbConn->beginTransaction();
+        // Verificar si el correo ya está registrado en alguna de las tablas
+        $resultado = verificarCorreoExistente($correo, $dbConn);
 
-            // Generar un nombre de usuario si no se proporcionó
-            if (is_null($nombre_usuario)) {
-                $nombre_usuario = generarNombreUsuario($nombres_apellidos, $dbConn);
+        if ($resultado) {
+            // El correo ya está registrado en una de las tablas
+            $tabla = $resultado['tabla'];
+            echo "<div style='color: red; border: 2px solid red; padding: 10px; background-color: #f8d7da; font-family: Arial, sans-serif;'>
+                    <strong>Error:</strong> El correo electrónico <em>$correo</em> ya está registrado en la tabla <strong>$tabla</strong>.
+                  </div>";
+            echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
+        } else {
+            try {
+                // Iniciar la transacción
+                $dbConn->beginTransaction();
+
+                // Generar un nombre de usuario si no se proporcionó
+                if (is_null($nombre_usuario)) {
+                    $nombre_usuario = generarNombreUsuario($nombres_apellidos, $dbConn);
+                }
+
+                // Verificar el campo rol y definir la tabla correspondiente
+                if ($rol === 'Administrador') {
+                    $sql = "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol) 
+                            VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol)";
+                } else {
+                    $sql = "INSERT INTO usuarios (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol) 
+                            VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol)";
+                }
+
+                $query = $dbConn->prepare($sql);
+                $query->bindParam(':correo', $correo);
+                $query->bindParam(':nombres_apellidos', $nombres_apellidos);
+                $query->bindParam(':nombre_usuario', $nombre_usuario);
+                $query->bindParam(':contrasena', password_hash($contrasena, PASSWORD_DEFAULT)); // Hash de la contraseña
+                $query->bindParam(':area', $area);
+                $query->bindParam(':cargo', $cargo);
+                $query->bindParam(':rol', $rol);
+                $query->execute();
+
+                // Cometer la transacción
+                $dbConn->commit();
+
+                // Registrar la acción en la tabla movimientos
+                $accion = ($rol === 'Administrador') 
+                    ? "Adición de administrador: $nombre_usuario"
+                    : "Adición de usuario con rol $rol: $nombre_usuario";
+
+                $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (:usuario_logueado, :accion, NOW())";
+                $stmt_movimiento = $dbConn->prepare($sql_movimiento);
+                $stmt_movimiento->bindParam(':usuario_logueado', $usuario_logueado); // Usuario que realizó la acción
+                $stmt_movimiento->bindParam(':accion', $accion);
+                $stmt_movimiento->execute();
+
+                if ($query->rowCount() > 0) {
+                    // Redirigir a la página deseada después del registro exitoso
+                    header("Location: http://localhost/GateGourmet/Gestor_usuarios/php/user/registro_exitoso.php");
+                    exit();
+                } else {
+                    echo "<font color='red'>Error al registrar el usuario o administrador.</font><br/>";
+                }
+            } catch (Exception $e) {
+                // Revertir los cambios si ocurre un error
+                if ($dbConn->inTransaction()) {
+                    $dbConn->rollBack();
+                }
+                echo "<font color='red'>Error: " . $e->getMessage() . "</font><br/>";
             }
-
-            // Verificar el campo rol y definir la tabla correspondiente
-            if ($rol === 'Administrador') {
-                $sql = "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol) 
-                        VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol)";
-            } else {
-                $sql = "INSERT INTO usuarios (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol) 
-                        VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol)";
-            }
-
-            $query = $dbConn->prepare($sql);
-            $query->bindParam(':correo', $correo);
-            $query->bindParam(':nombres_apellidos', $nombres_apellidos);
-            $query->bindParam(':nombre_usuario', $nombre_usuario);
-            $query->bindParam(':contrasena', password_hash($contrasena, PASSWORD_DEFAULT)); // Hash de la contraseña
-            $query->bindParam(':area', $area);
-            $query->bindParam(':cargo', $cargo);
-            $query->bindParam(':rol', $rol);
-            $query->execute();
-
-            // Cometer la transacción
-            $dbConn->commit();
-
-            // Registrar la acción en la tabla movimientos
-            $accion = ($rol === 'Administrador') 
-                ? "Adición de administrador: $nombre_usuario"
-                : "Adición de usuario con rol $rol: $nombre_usuario";
-
-            $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, accion, fecha) VALUES (:usuario_logueado, :accion, NOW())";
-            $stmt_movimiento = $dbConn->prepare($sql_movimiento);
-            $stmt_movimiento->bindParam(':usuario_logueado', $usuario_logueado); // Usuario que realizó la acción
-            $stmt_movimiento->bindParam(':accion', $accion);
-            $stmt_movimiento->execute();
-
-            if ($query->rowCount() > 0) {
-                // Redirigir a la página deseada después del registro exitoso
-                header("Location: http://localhost/GateGourmet/Gestor_usuarios/php/user/registro_exitoso.php");
-                exit();
-            } else {
-                echo "<font color='red'>Error al registrar el usuario o administrador.</font><br/>";
-            }
-        } catch (Exception $e) {
-            // Revertir los cambios si ocurre un error
-            if ($dbConn->inTransaction()) {
-                $dbConn->rollBack();
-            }
-            echo "<font color='red'>Error: " . $e->getMessage() . "</font><br/>";
         }
     }
 }
@@ -196,7 +227,7 @@ if (isset($_POST['Submit'])) {
     <span class="tooltiptext">Confirma tu contraseña.</span>
 </div>
                     <div class="input-group">
-                        <label for="area">Área</label>
+                    <label for="area">Área</label>
                         <select name="area" id="area">
                         <option value="">Seleccione una opción</option>
                             <option value="Abastecimientos">Abastecimientos</option>
@@ -219,6 +250,7 @@ if (isset($_POST['Submit'])) {
                             <option value="Sistemas">Sistemas</option>
                             <option value="Talento Humano">Talento Humano</option>
                             <option value="Wash & Pack">Wash & Pack</option>
+                        </select>
                     </div>
                     <div class="input-group">
                         <label for="cargo">Cargo</label>

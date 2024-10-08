@@ -31,6 +31,23 @@ function generarNombreUsuario($nombre, $apellido, $dbConn) {
     return $nombre_usuario;
 }
 
+// Función para verificar si el correo ya está en alguna de las tablas (usuarios, inactivos)
+function verificarCorreoExistente($correo, $dbConn) {
+    // Consultar si el correo existe en las tablas 'usuarios' o 'inactivos'
+    $sql = "
+        SELECT 'usuarios' AS tabla FROM usuarios WHERE correo = :correo
+        UNION 
+        SELECT 'inactivos' AS tabla FROM inactivos WHERE correo = :correo
+    ";
+
+    $query = $dbConn->prepare($sql);
+    $query->bindParam(':correo', $correo);
+    $query->execute();
+
+    // Retorna el nombre de la tabla si el correo está registrado, o false si no lo está
+    return $query->fetch(PDO::FETCH_ASSOC);
+}
+
 if (isset($_POST['Submit'])) {
     $correo = $_POST['correo'];
     $nombres_apellidos = $_POST['nombres_apellidos'];
@@ -52,49 +69,61 @@ if (isset($_POST['Submit'])) {
         echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
     } else {
         try {
-            // Iniciar la transacción
-            $dbConn->beginTransaction();
+            // Verificar si el correo ya está registrado en las tablas usuarios o inactivos
+            $resultado = verificarCorreoExistente($correo, $dbConn);
 
-            // Generar un nombre de usuario si no se proporcionó
-            if (is_null($nombre_usuario)) {
-                list($nombre, $apellido) = explode(' ', $nombres_apellidos, 2);
-                $nombre_usuario = generarNombreUsuario($nombre, $apellido, $dbConn);
+            if ($resultado) {
+                // El correo ya está registrado en una de las tablas
+                $tabla = $resultado['tabla'];
+                echo "<div style='color: red; border: 2px solid red; padding: 10px; background-color: #f8d7da; font-family: Arial, sans-serif;'>
+                        <strong>Error:</strong> El correo electrónico <em>$correo</em> ya está registrado en la tabla <strong>$tabla</strong>.
+                      </div>";
+                echo "<br/><a href='javascript:self.history.back();'>Volver</a>";
+            } else {
+                // Iniciar la transacción
+                $dbConn->beginTransaction();
+
+                // Generar un nombre de usuario si no se proporcionó
+                if (is_null($nombre_usuario)) {
+                    list($nombre, $apellido) = explode(' ', $nombres_apellidos, 2);
+                    $nombre_usuario = generarNombreUsuario($nombre, $apellido, $dbConn);
+                }
+
+                // Verificar el campo rol y definir la tabla correspondiente
+                $sql = ($rol === 'Administrador')
+                    ? "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol) 
+                       VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol)"
+                    : "INSERT INTO usuarios (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol) 
+                       VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol)";
+
+                $query = $dbConn->prepare($sql);
+                $query->bindParam(':correo', $correo);
+                $query->bindParam(':nombres_apellidos', $nombres_apellidos);
+                $query->bindParam(':nombre_usuario', $nombre_usuario);
+                $query->bindParam(':contrasena', password_hash($contrasena, PASSWORD_BCRYPT)); // Hash de la contraseña
+                $query->bindParam(':area', $area);
+                $query->bindParam(':cargo', $cargo);
+                $query->bindParam(':rol', $rol);
+                $query->execute();
+
+                $accion = ($rol === 'Administrador') 
+                    ? "Adición de administrador: $nombre_usuario"
+                    : "Adición de usuario con rol $rol: $nombre_usuario";
+
+                // Registrar el movimiento en la tabla de movimientos
+                $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, accion) VALUES (:nombre_usuario, :accion)";
+                $stmt_movimiento = $dbConn->prepare($sql_movimiento);
+                $stmt_movimiento->bindParam(':nombre_usuario', $usuario_sesion); // Nombre de usuario que realizó el cambio
+                $stmt_movimiento->bindParam(':accion', $accion);
+                $stmt_movimiento->execute();
+
+                // Cometer la transacción
+                $dbConn->commit();
+
+                // Redirigir a la página deseada después del registro exitoso
+                header("Location: http://localhost/GateGourmet/Gestor_usuarios/php/admin/registro_exitoso_admin.php");
+                exit();
             }
-
-            // Verificar el campo rol y definir la tabla correspondiente
-            $sql = ($rol === 'Administrador')
-                ? "INSERT INTO administradores (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol) 
-                   VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol)"
-                : "INSERT INTO usuarios (correo, nombres_apellidos, nombre_usuario, contrasena, area, cargo, rol) 
-                   VALUES (:correo, :nombres_apellidos, :nombre_usuario, :contrasena, :area, :cargo, :rol)";
-
-            $query = $dbConn->prepare($sql);
-            $query->bindParam(':correo', $correo);
-            $query->bindParam(':nombres_apellidos', $nombres_apellidos);
-            $query->bindParam(':nombre_usuario', $nombre_usuario);
-            $query->bindParam(':contrasena', password_hash($contrasena, PASSWORD_BCRYPT)); // Hash de la contraseña
-            $query->bindParam(':area', $area);
-            $query->bindParam(':cargo', $cargo);
-            $query->bindParam(':rol', $rol);
-            $query->execute();
-
-            $accion = ($rol === 'Administrador') 
-                ? "Adición de administrador: $nombre_usuario"
-                : "Adición de usuario con rol $rol: $nombre_usuario";
-
-            // Registrar el movimiento en la tabla de movimientos
-            $sql_movimiento = "INSERT INTO movimientos (nombre_usuario, accion) VALUES (:nombre_usuario, :accion)";
-            $stmt_movimiento = $dbConn->prepare($sql_movimiento);
-            $stmt_movimiento->bindParam(':nombre_usuario', $usuario_sesion); // Nombre de usuario que realizó el cambio
-            $stmt_movimiento->bindParam(':accion', $accion);
-            $stmt_movimiento->execute();
-
-            // Cometer la transacción
-            $dbConn->commit();
-
-            // Redirigir a la página deseada después del registro exitoso
-            header("Location: http://localhost/GateGourmet/Gestor_usuarios/php/admin/registro_exitoso_admin.php");
-            exit();
         } catch (Exception $e) {
             // Revertir los cambios si ocurre un error
             if ($dbConn->inTransaction()) {
@@ -105,6 +134,7 @@ if (isset($_POST['Submit'])) {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
