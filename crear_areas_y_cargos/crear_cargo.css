@@ -1,5 +1,5 @@
-/* Reset CSS */
-* {
+ /* Reset CSS */
+ * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -10,8 +10,9 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    background: url('../Imagenes/fondogg3.webp') no-repeat center center fixed;
+    background-image: url('../Imagenes/fondogg3.webp');
     background-size: cover;
+    background-position: center;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -20,16 +21,16 @@ body {
 
 /* Header */
 .header {
-    background: rgba(17, 17, 17, 0.6);
+    background: #1117;
     backdrop-filter: blur(10px);
+    padding: 40px;
     text-align: center;
-    padding: 20px 40px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
 }
 
 .logo {
     max-width: 100%;
-    height: auto;
+    height: 8vh;
     margin: 0 auto;
 }
 
@@ -40,24 +41,25 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    background-color: rgba(0, 0, 0, 0); /* Fondo oscuro sutil */
 }
 
 /* Container */
 .register-container {
-    background: rgba(17, 17, 17, 0.85);
+    background: rgba(17, 17, 17, 0.555);
     backdrop-filter: blur(15px);
     text-align: center;
     padding: 50px;
-    border-radius: 15px;
+    border-radius: 20px; /* Bordes más redondeados */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-    max-width: 400px;
+    max-width: 420px; /* Ajuste del tamaño del contenedor */
     width: 100%;
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.3s ease;
 }
 
 .register-container:hover {
-    transform: scale(1.02);
+    transform: scale(1.03);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
 }
 
@@ -65,20 +67,21 @@ body {
 h2 {
     color: #fff;
     font-weight: 700;
-    letter-spacing: 1.2px;
+    letter-spacing: 1.5px;
     font-family: 'Roboto', sans-serif;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    font-size: 24px;
 }
 
 /* Input Group */
 .input-group {
     position: relative;
     width: 100%;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
-.input-group input[type="number"],
-.input-group input[type="text"] {
+.input-group input {
     width: 100%;
     padding: 15px 20px;
     border: 2px solid rgba(255, 255, 255, 0.2);
@@ -91,15 +94,13 @@ h2 {
     box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Focus Effect */
 .input-group input:focus {
     border-color: #4cbe50;
-    background-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 10px rgba(81, 218, 86, 0.3);
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(81, 218, 86, 0.4);
     outline: none;
 }
 
-/* Placeholder Styling */
 .input-group input::placeholder {
     color: #bbb;
     font-style: italic;
@@ -108,15 +109,15 @@ h2 {
 /* Botones */
 .buttons {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 input[type="submit"] {
-    width: 100%;
-    padding: 15px;
-    background-color: #33966d;
+    width: 48%;
+    padding: 12px 0;
+    background-color: #28a745;
     color: #fff;
     border: none;
     border-radius: 30px;
@@ -127,9 +128,9 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #2a472b;
+    background-color: #218838;
     transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(81, 218, 86, 0.4);
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
 }
 
 input[type="submit"]:active {
@@ -138,34 +139,59 @@ input[type="submit"]:active {
 
 /* Return Link */
 a.regresar {
-    margin-top: 15px;
-    display: block;
+    width: 48%;
     text-align: center;
     color: #fff;
     text-decoration: none;
-    padding: 12px;
+    padding: 12px 0;
     border-radius: 30px;
-    background-color: #444444;
+    background-color: #6c757d;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 a.regresar:hover {
-    background-color: #2a2a2a;
-    box-shadow: 0 4px 15px rgba(68, 68, 68, 0.5);
+    background-color: #5a6268;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(92, 92, 92, 0.5);
+}
+
+a.regresar:active {
+    transform: scale(1);
+}
+
+/* Footer */
+.footer {
+    background: #1117;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    padding: 30px;
+    color: #fff;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
 }
 
 /* Responsiveness */
 @media (max-width: 600px) {
     .register-container {
-        padding: 20px;
+        padding: 30px;
     }
 
     .buttons {
         flex-direction: column;
     }
 
-    .buttons input[type="submit"] {
+    .buttons input[type="submit"],
+    .buttons a.regresar {
         width: 100%;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
     }
 }

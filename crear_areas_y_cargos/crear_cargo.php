@@ -50,8 +50,16 @@ $conexion->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Añadir Cargo</title>
     <link rel="stylesheet" href="crear_cargo.css"> <!-- Estilo CSS -->
+    <style>
+    </style>
 </head>
 <body>
+    <!-- Header -->
+    <div class="header">
+        <img src="../Imagenes/logo_oficial_color.png" alt="Logo GateGroup" class="logo">
+    </div>
+
+    <!-- Main Content -->
     <div class="main-content">
         <div class="register-container">
             <h2>Añadir Cargo</h2>
@@ -71,6 +79,11 @@ $conexion->close();
                 </div>
             </form>
         </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>GateGroup &copy; 2024</p>
     </div>
 </body>
 </html>

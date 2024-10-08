@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Ejecutamos la consulta y mostramos el resultado
             if ($stmt_area->execute()) {
-                echo "<p>Área actualizada con éxito.</p>";
+                // echo "<p>Área actualizada con éxito.</p>"; // Mensaje eliminado
             } else {
                 echo "<p>Error al actualizar el área: " . $stmt_area->error . "</p>";
             }
@@ -52,6 +52,12 @@ $conexion->close();
     <link rel="stylesheet" href="crear_area.css"> <!-- Estilo CSS -->
 </head>
 <body>
+    <!-- Header -->
+    <div class="header">
+        <img src="../Imagenes/logo_oficial_color.png" alt="Logo GateGroup" class="logo">
+    </div>
+
+    <!-- Main Content -->
     <div class="main-content">
         <div class="register-container">
             <h2>Añadir Área</h2>
@@ -71,6 +77,11 @@ $conexion->close();
                 </div>
             </form>
         </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>GateGroup &copy; 2024</p>
     </div>
 </body>
 </html>
