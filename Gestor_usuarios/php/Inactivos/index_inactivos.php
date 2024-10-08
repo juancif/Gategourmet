@@ -103,7 +103,9 @@ $result = $dbConn->query($query);
                 echo "<td>" . htmlspecialchars($row['estado']) . "</td>";
                 echo "<td class='acciones'> 
                         <a href='activar_inactivos.php?nombre_usuario=" . htmlspecialchars($row['nombre_usuario']) . "' 
-                           onclick=\"return confirm('¿Está seguro de activar este registro?')\">Activar</a> 
+                           onclick=\"return confirm('¿Está seguro de activar este registro?')\">Activar</a> |
+                        <a href='delete_inactivos.php?nombre_usuario=" . htmlspecialchars($row['nombre_usuario']) . "' 
+                           onclick=\"return confirm('¿Está seguro de eliminar este registro?')\">Eliminar</a>
                       </td>";
                 echo "</tr>";
             }
