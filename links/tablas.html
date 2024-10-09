@@ -146,17 +146,20 @@ CREATE TABLE procesos (
     usuario VARCHAR(255),
     cargo VARCHAR(255),
     email VARCHAR(255),
-    rol VARCHAR(255)
+    rol VARCHAR(50)
 );
 
+
 -- Cargar datos en la tabla procesos
-LOAD DATA INFILE 'C:\Users\Administrator\Desktop\procesos.csv'
+
+LOAD DATA INFILE 'C:/Users/lrodriguezcorrea/Desktop/Libro4_4_cleaned.csv'
 INTO TABLE procesos
 FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(macroproceso, proceso, usuario, cargo, email, rol);
+(macroproceso, proceso, usuario, cargo, email, rol);
+
 <!-- LOAD DATA INFILE 'C:/Users/Administrator/Desktop/procesos.csv'
 INTO TABLE procesos
 FIELDS TERMINATED BY ';'

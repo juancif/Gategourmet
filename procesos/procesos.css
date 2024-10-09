@@ -61,7 +61,8 @@ header h1 {
 
 /* Estilo de campos de entrada */
 .form-agregar input[type="text"],
-.form-agregar input[type="email"] {
+.form-agregar input[type="email"],
+.form-agregar select {
     width: 100%; /* Ancho completo */
     max-width: 200px; /* Reducir ancho máximo */
     padding: 0.5rem; /* Espacio interno menor */
@@ -74,7 +75,8 @@ header h1 {
 }
 
 .form-agregar input[type="text"]:focus,
-.form-agregar input[type="email"]:focus {
+.form-agregar input[type="email"]:focus,
+.form-agregar select:focus {
     border: 2px solid #3d9970;
 }
 
@@ -90,8 +92,8 @@ header h1 {
     cursor: pointer;
     transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
     max-width: 150px; /* Ancho máximo del botón */
-    margin-left: 8PX; /* Centrar botón */
-    margin-top: 9PX;
+    margin-left: 8px; /* Centrar botón */
+    margin-top: 9px;
 }
 
 .form-agregar button:hover {
@@ -136,4 +138,10 @@ th, td {
 
 .red-background {
     background-color: rgba(255, 0, 0, 0.74); /* Fondo rojo */
+}
+
+/* Mensajes de error */
+.alert {
+    color: red;
+    font-weight: bold;
 }

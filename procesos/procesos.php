@@ -19,19 +19,7 @@ $busqueda_usuario = isset($_GET['usuario']) ? $_GET['usuario'] : '';
 $busqueda_cargo = isset($_GET['cargo']) ? $_GET['cargo'] : '';
 
 // Consulta SQL usando consultas preparadas para evitar inyección SQL
-$stmt = $conn->prepare("
-    SELECT id, macroproceso, proceso, usuario, cargo, email, rol
-    FROM procesos
-    WHERE proceso LIKE ? AND usuario LIKE ? AND cargo LIKE ?
-    ORDER BY 
-        CASE 
-            WHEN macroproceso IN ('GESTION CORPORATIVA', 'COMPLIANCE') THEN 1
-            WHEN macroproceso IN ('SUPPLY CHAIN', 'CULINARY EXCELLENCE', 'SERVICE DELIVERY', 'ASSEMBLY', 'SERVICIOS INSTITUCIONALES') THEN 2
-            WHEN macroproceso IN ('FINANCIERA', 'COSTOS', 'COMUNICACIONES', 'TECNOLOGÍA DE LA INFORMACIÓN', 'TALENTO HUMANO', 'MANTENIMIENTO', 'SERVICIO AL CLIENTE', 'SECURITY') THEN 3
-            ELSE 4
-        END, 
-        macroproceso ASC, proceso ASC
-");
+$stmt = $conn->prepare("SELECT id, macroproceso, proceso, usuario, cargo, email, rol FROM procesos WHERE proceso LIKE ? AND usuario LIKE ? AND cargo LIKE ?");
 $proceso_like = "%$busqueda_proceso%";
 $usuario_like = "%$busqueda_usuario%";
 $cargo_like = "%$busqueda_cargo%";
@@ -54,7 +42,7 @@ function obtenerColor($macroproceso) {
         case 'FINANCIERA':
         case 'COSTOS':
         case 'COMUNICACIONES':
-        case 'TECNOLOGÍA DE LA INFORMACIÓN':
+        case 'TECNOLOG?A DE LA INFORMACI?N':
         case 'TALENTO HUMANO':
         case 'MANTENIMIENTO':
         case 'SERVICIO AL CLIENTE':
@@ -64,6 +52,45 @@ function obtenerColor($macroproceso) {
             return ''; // Sin color
     }
 }
+
+// Manejo de formulario de agregado de proceso
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $macroproceso = $_POST['macroproceso'];
+    $proceso = $_POST['proceso'];
+    $usuario = $_POST['usuario'];
+    $cargo = $_POST['cargo'];
+    $email = $_POST['email'];
+    $rol = $_POST['rol'];
+
+    // Validaciones simples
+    if (empty($macroproceso) || empty($proceso) || empty($usuario) || empty($cargo) || empty($email) || empty($rol)) {
+        echo "<script>alert('Todos los campos son obligatorios.');</script>";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "<script>alert('El email ingresado no es válido.');</script>";
+    } else {
+        // Insertar en la base de datos
+        $stmt_insert = $conn->prepare("INSERT INTO procesos (macroproceso, proceso, usuario, cargo, email, rol) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt_insert->bind_param("ssssss", $macroproceso, $proceso, $usuario, $cargo, $email, $rol);
+        if ($stmt_insert->execute()) {
+            echo "<script>alert('Proceso agregado exitosamente.');</script>";
+        } else {
+            echo "<script>alert('Error al agregar el proceso: " . $stmt_insert->error . "');</script>";
+        }
+        $stmt_insert->close();
+    }
+}
+
+// Obtener usuarios para el menú desplegable
+$usuarios = [];
+$sql_usuarios = "SELECT nombre_usuario, cargo, correo, rol FROM usuarios UNION SELECT nombre_usuario, cargo, correo, rol FROM administradores";
+$result_usuarios = $conn->query($sql_usuarios);
+
+if ($result_usuarios->num_rows > 0) {
+    while ($row = $result_usuarios->fetch_assoc()) {
+        $usuarios[] = $row; // Almacenar cada usuario en un array
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -75,20 +102,6 @@ function obtenerColor($macroproceso) {
     <link rel="stylesheet" href="procesos.css">
     <link rel="icon" href="/ruta/al/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script>
-        // Función para filtrar opciones en el select
-        function filterOptions(input) {
-            const select = document.getElementById('macroproceso');
-            const filter = input.value.toUpperCase();
-            const options = select.getElementsByTagName('option');
-
-            for (let i = 0; i < options.length; i++) {
-                const option = options[i];
-                const txtValue = option.textContent || option.innerText;
-                option.style.display = txtValue.toUpperCase().includes(filter) ? '' : 'none';
-            }
-        }
-    </script>
 </head>
 <body>
     <header>
@@ -98,37 +111,89 @@ function obtenerColor($macroproceso) {
     <main>
         <section class="container">
             <!-- Formulario para agregar nuevo proceso -->
-            <form method="POST" action="agregar_proceso.php" class="form-agregar">
+            <form method="POST" action="" class="form-agregar">
                 <div class="form-group">
                     <label for="macroproceso">Macroproceso:</label>
-                    <input type="text" oninput="filterOptions(this)" placeholder="Escriba para filtrar...">
                     <select id="macroproceso" name="macroproceso" required>
-                        <option value="">Seleccione una opción</option>
+                        <option value="">Seleccione un macroproceso</option>
                         <option value="GESTION CORPORATIVA">GESTION CORPORATIVA</option>
                         <option value="COMPLIANCE">COMPLIANCE</option>
-                        <option value="ASSEMBLY">ASSEMBLY</option>
-                        <option value="CULINARY EXCELLENCE">CULINARY EXCELLENCE</option>
                         <option value="SUPPLY CHAIN">SUPPLY CHAIN</option>
-                        <option value="COMUNICACIONES">COMUNICACIONES</option>
+                        <option value="CULINARY EXCELLENCE">CULINARY EXCELLENCE</option>
                         <option value="SERVICE DELIVERY">SERVICE DELIVERY</option>
+                        <option value="ASSEMBLY">ASSEMBLY</option>
                         <option value="SERVICIOS INSTITUCIONALES">SERVICIOS INSTITUCIONALES</option>
-                        <option value="COSTOS">COSTOS</option>
                         <option value="FINANCIERA">FINANCIERA</option>
-                        <option value="MANTENIMIENTO">MANTENIMIENTO</option>
-                        <option value="SECURITY">SECURITY</option>
-                        <option value="SERVICIO AL CLIENTE">SERVICIO AL CLIENTE</option>
-                        <option value="TALENTO HUMANO">TALENTO HUMANO</option>
+                        <option value="COSTOS">COSTOS</option>
+                        <option value="COMUNICACIONES">COMUNICACIONES</option>
                         <option value="TECNOLOGÍA DE LA INFORMACIÓN">TECNOLOGÍA DE LA INFORMACIÓN</option>
+                        <option value="TALENTO HUMANO">TALENTO HUMANO</option>
+                        <option value="MANTENIMIENTO">MANTENIMIENTO</option>
+                        <option value="SERVICIO AL CLIENTE">SERVICIO AL CLIENTE</option>
+                        <option value="SECURITY">SECURITY</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="proceso">Proceso:</label>
-                    <input type="text" id="proceso" name="proceso" required>
+                    <select id="proceso" name="proceso" required>
+                        <option value="">Seleccione un proceso</option>
+                        <option value="DES - DIRECCIONAMIENTO ESTRATÉGICO">DES - DIRECCIONAMIENTO ESTRATÉGICO</option>
+                        <option value="GMC - GESTION DE MEJORA CONTINUA">GMC - GESTION DE MEJORA CONTINUA</option>
+                        <option value="IND - INDUCCIÓN ORGANIZACIONAL">IND - INDUCCIÓN ORGANIZACIONAL</option>
+                        <option value="EYS - EVALUACIÓN Y SEGUIMIENTO">EYS - EVALUACIÓN Y SEGUIMIENTO</option>
+                        <option value="GER - GESTIONAR LAS RELACIONES">GER - GESTIONAR LAS RELACIONES</option>
+                        <option value="ENP - EVALUAR NUEVOS PROYECTOS DE INVERSIÓN Y OPERACIONALES">ENP - EVALUAR NUEVOS PROYECTOS DE INVERSIÓN Y OPERACIONALES</option>
+                        <option value="ALM - SEGURIDAD ALIMENTARIA">ALM - SEGURIDAD ALIMENTARIA</option>
+                        <option value="AMB - MEDIO AMBIENTE">AMB - MEDIO AMBIENTE</option>
+                        <option value="SEO - SEGURIDAD OPERACIONAL - RAMP SAFETY">SEO - SEGURIDAD OPERACIONAL - RAMP SAFETY</option>
+                        <option value="SFI - SEGURIDAD FÍSICA">SFI - SEGURIDAD FÍSICA</option>
+                        <option value="SST - SEGURIDAD Y SALUD EN EL TRABAJO">SST - SEGURIDAD Y SALUD EN EL TRABAJO</option>
+                        <option value="SAG - SAGRILAFT">SAG - SAGRILAFT</option>
+                        <option value="PTE - POLÍTICA Y ÉTICA EMPRESARIAL">PTE - POLÍTICA Y ÉTICA EMPRESARIAL</option>
+                        <option value="COM - COMPRAS">COM - COMPRAS</option>
+                        <option value="ABS - ABASTECIMIENTO">ABS - ABASTECIMIENTO</option>
+                        <option value="IDS - SISTEMAS INTERNOS DE ENTREGA">IDS - SISTEMAS INTERNOS DE ENTREGA</option>
+                        <option value="SIM - SOLICITUD INTERNA DE MATERIALES">SIM - SOLICITUD INTERNA DE MATERIALES</option>
+                        <option value="PDP - PLANEACIÓN DE LA PRODUCCIÓN">PDP - PLANEACIÓN DE LA PRODUCCIÓN</option>
+                        <option value="CRO - CONTROL DE RECURSOS OPERATIVOS">CRO - CONTROL DE RECURSOS OPERATIVOS</option>
+                        <option value="CDM - CONTROL DE MATERIALES">CDM - CONTROL DE MATERIALES</option>
+                        <option value="PCA - CARNICERIA">PCA - CARNICERIA</option>
+                        <option value="PDE - DESINFECCIÓN">PDE - DESINFECCIÓN</option>
+                        <option value="PFV - FRUTAS Y VERDURAS">PFV - FRUTAS Y VERDURAS</option>
+                        <option value="PFI - FRITURAS">PFI - FRITURAS</option>
+                        <option value="PPA - PASTAS">PPA - PASTAS</option>
+                        <option value="PAN - PANADERIA">PAN - PANADERIA</option>
+                        <option value="CBA - CATERING DE BANQUETES">CBA - CATERING DE BANQUETES</option>
+                        <option value="CAO - CATERING DE ALIMENTOS">CAO - CATERING DE ALIMENTOS</option>
+                        <option value="DEC - DECORACIÓN DE PLATOS">DEC - DECORACIÓN DE PLATOS</option>
+                        <option value="PCC - COCINA FRÍA">PCC - COCINA FRÍA</option>
+                        <option value="PCH - COCINA CALIENTE">PCH - COCINA CALIENTE</option>
+                        <option value="TCC - CONTROL DE CALIDAD">TCC - CONTROL DE CALIDAD</option>
+                        <option value="SAA - SOPORTE ALIMENTARIO">SAA - SOPORTE ALIMENTARIO</option>
+                        <option value="SCC - SOPORTE A CLIENTES">SCC - SOPORTE A CLIENTES</option>
+                        <option value="CSD - COMERCIALIZACIÓN Y DISTRIBUCIÓN">CSD - COMERCIALIZACIÓN Y DISTRIBUCIÓN</option>
+                        <option value="SFS - SISTEMAS FINANCIEROS">SFS - SISTEMAS FINANCIEROS</option>
+                        <option value="SEI - SERVICIO EXTERNO INTERNO">SEI - SERVICIO EXTERNO INTERNO</option>
+                        <option value="PIT - PROYECTOS INTEGRADOS DE TERCEROS">PIT - PROYECTOS INTEGRADOS DE TERCEROS</option>
+                        <option value="TTT - CAPACITACIONES">TTT - CAPACITACIONES</option>
+                        <option value="SEG - SEGURIDAD">SEG - SEGURIDAD</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="usuario">Usuario:</label>
-                    <input type="text" id="usuario" name="usuario" required>
+                    <select id="usuario" name="usuario" required>
+                        <option value="">Seleccione un usuario</option>
+                        <?php foreach ($usuarios as $usuario): ?>
+                            <option value="<?php echo htmlspecialchars($usuario['nombre_usuario']); ?>"
+                                    data-cargo="<?php echo htmlspecialchars($usuario['cargo']); ?>"
+                                    data-email="<?php echo htmlspecialchars($usuario['correo']); ?>"
+                                    data-rol="<?php echo htmlspecialchars($usuario['rol']); ?>">
+                                <?php echo htmlspecialchars($usuario['nombre_usuario']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
+
                 <div class="form-group">
                     <label for="cargo">Cargo:</label>
                     <input type="text" id="cargo" name="cargo" required>
@@ -159,28 +224,6 @@ function obtenerColor($macroproceso) {
                 <div class="form-group">
                     <label for="cargo">Buscar por Cargo:</label>
                     <input type="text" id="cargo" name="cargo" value="<?php echo htmlspecialchars($busqueda_cargo); ?>">
-                </div>
-                <div class="form-group">
-                    <label for="macroproceso-buscar">Buscar por Macroproceso:</label>
-                    <input type="text" oninput="filterOptions(this)" placeholder="Escriba para filtrar...">
-                    <select id="macroproceso-buscar" name="macroproceso" required>
-                        <option value="">Seleccione una opción</option>
-                        <option value="GESTION CORPORATIVA">GESTION CORPORATIVA</option>
-                        <option value="COMPLIANCE">COMPLIANCE</option>
-                        <option value="ASSEMBLY">ASSEMBLY</option>
-                        <option value="CULINARY EXCELLENCE">CULINARY EXCELLENCE</option>
-                        <option value="SUPPLY CHAIN">SUPPLY CHAIN</option>
-                        <option value="COMUNICACIONES">COMUNICACIONES</option>
-                        <option value="SERVICE DELIVERY">SERVICE DELIVERY</option>
-                        <option value="SERVICIOS INSTITUCIONALES">SERVICIOS INSTITUCIONALES</option>
-                        <option value="COSTOS">COSTOS</option>
-                        <option value="FINANCIERA">FINANCIERA</option>
-                        <option value="MANTENIMIENTO">MANTENIMIENTO</option>
-                        <option value="SECURITY">SECURITY</option>
-                        <option value="SERVICIO AL CLIENTE">SERVICIO AL CLIENTE</option>
-                        <option value="TALENTO HUMANO">TALENTO HUMANO</option>
-                        <option value="TECNOLOGÍA DE LA INFORMACIÓN">TECNOLOGÍA DE LA INFORMACIÓN</option>
-                    </select>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn"><i class="fas fa-search"></i> Buscar</button>
@@ -228,9 +271,24 @@ function obtenerColor($macroproceso) {
         </section>
     </main>
 
+    <script>
+        const usuarioSelect = document.getElementById('usuario');
+        const cargoInput = document.getElementById('cargo');
+        const emailInput = document.getElementById('email');
+        const rolInput = document.getElementById('rol');
+
+        usuarioSelect.addEventListener('change', function () {
+            const selectedOption = usuarioSelect.options[usuarioSelect.selectedIndex];
+            cargoInput.value = selectedOption.getAttribute('data-cargo') || '';
+            emailInput.value = selectedOption.getAttribute('data-email') || '';
+            rolInput.value = selectedOption.getAttribute('data-rol') || '';
+        });
+    </script>
+
     <?php
     // Cerrar conexión
     $conn->close();
     ?>
 </body>
 </html>
+
