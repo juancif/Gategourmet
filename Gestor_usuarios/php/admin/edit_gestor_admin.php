@@ -208,6 +208,8 @@ if (isset($_GET['nombre_usuario'])) {
                     <label for="area">Área</label>
                 <select name="area" id="area">
                     <option value="">Seleccione una opción</option>
+                    <option value="Supervisor de area" <?php if ($cargo == 'Supervisor de area') echo 'selected'; ?>>Supervisor de área</option>
+                    <option value="Jefe de area" <?php if ($cargo == 'Jefe de area') echo 'selected'; ?>>Jefe de área</option>
                     <option value="Abastecimientos" <?php if ($area == 'Abastecimientos') echo 'selected'; ?>>Abastecimientos</option>
                     <option value="CI" <?php if ($area == 'CI') echo 'selected'; ?>>CI</option>
                     <option value="Compliance" <?php if ($area == 'Compliance') echo 'selected'; ?>>Compliance</option>

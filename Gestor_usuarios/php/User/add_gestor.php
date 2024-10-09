@@ -256,6 +256,8 @@ if (isset($_POST['Submit'])) {
                         <label for="cargo">Cargo</label>
                         <select name="cargo" id="cargo">
                             <option value="">Seleccione una opción</option>
+                            <option value="Supervisor de area">Supervisor de área</option>
+                            <option value="Jefe de area">Jefe de área</option>
                             <option value="Auxiliar Contable">Auxiliar Contable</option>
                             <option value="Continuous Improvement Manager">Continuous Improvement Manager</option>
                             <option value="Coordinador de mejoramiento Continuo">Coordinador de mejoramiento Continuo</option>

@@ -233,6 +233,9 @@ if (isset($_GET['nombre_usuario'])) {
                     <label for="cargo">Cargo</label>
                     <select name="cargo" id="cargo">
                         <option value="">Seleccione una opción</option>
+                        <option value="Supervisor de area" <?php if ($cargo == 'Supervisor de area') echo 'selected'; ?>>Supervisor de área</option>
+                        <option value="Jefe de area" <?php if ($cargo == 'Jefe de area') echo 'selected'; ?>>Jefe de área</option>
+                        <option value="Coordinador de mejoramiento Continuo" <?php if ($cargo == 'Coordinador de mejoramiento Continuo') echo 'selected'; ?>>Coordinador de mejoramiento Continuo</option>
                         <option value="Auxiliar Contable" <?php if ($cargo == 'Auxiliar Contable') echo 'selected'; ?>>Auxiliar Contable</option>
                         <option value="Continuous Improvement Manager" <?php if ($cargo == 'Continuous Improvement Manager') echo 'selected'; ?>>Continuous Improvement Manager</option>
                         <option value="Coordinador de mejoramiento Continuo" <?php if ($cargo == 'Coordinador de mejoramiento Continuo') echo 'selected'; ?>>Coordinador de mejoramiento Continuo</option>

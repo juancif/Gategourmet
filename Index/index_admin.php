@@ -10,12 +10,18 @@ if ($mysqli->connect_errno) {
 
 // Verifica si el usuario está logueado
 if (!isset($_SESSION['nombre_usuario'])) {
-    // Redirigir a la página de login si no está logueado
     header('Location: http://localhost/GateGourmet/login/login3.php');
     exit();
 }
 
 $nombre_usuario = $_SESSION['nombre_usuario']; // El nombre de usuario guardado en la sesión
+
+// Obtener área y cargo del usuario desde la base de datos
+$query_user = "SELECT area, cargo FROM usuarios WHERE nombre_usuario = '$nombre_usuario'";
+$result_user = $mysqli->query($query_user);
+$usuario_data = $result_user->fetch_assoc();
+$area_usuario = $usuario_data['area'];
+$cargo_usuario = $usuario_data['cargo'];
 
 // Configuración del cliente de Google
 $client = new Google_Client();
@@ -61,6 +67,7 @@ try {
 // Obtener detalles de los correos electrónicos
 $emailData = [];
 
+// Función para obtener el cuerpo del correo
 function getBody($message) {
     global $service;
     $message = $service->users_messages->get('me', $message->getId());
@@ -137,15 +144,12 @@ foreach ($messages as $message) {
 // Guardar cambios en la base de datos
 function guardarAccion($nombre_usuario, $id_correo, $estado) {
     global $mysqli;
-    // Verificar si ya existe una acción previa para este correo
     $query = "SELECT * FROM acciones_usuarios WHERE nombre_usuario = '$nombre_usuario' AND id_correo = '$id_correo'";
     $result = $mysqli->query($query);
 
     if ($result->num_rows > 0) {
-        // Si ya existe, actualizar el estado
         $query = "UPDATE acciones_usuarios SET estado = '$estado' WHERE nombre_usuario = '$nombre_usuario' AND id_correo = '$id_correo'";
     } else {
-        // Si no existe, insertar una nueva acción
         $query = "INSERT INTO acciones_usuarios (nombre_usuario, id_correo, estado) VALUES ('$nombre_usuario', '$id_correo', '$estado')";
     }
 
@@ -153,6 +157,7 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -205,7 +210,7 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
 
     <!-- Contenedor principal -->
     <div class="container_not">
-        <h1>Correos Electrónicos</h1>
+        <h1>Notificaciones</h1>
 
 
 <!-- Sección Alarmas -->
@@ -270,7 +275,8 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
         <?php } } ?>
     </div>
 </div>
-
+</div>
+</div>
 <script>
 // Función para mover correos entre contenedores y actualizar el estado en tiempo real
 function moverCorreo(button, nuevoEstado, contadorDestinoId, contadorOrigenId) {
