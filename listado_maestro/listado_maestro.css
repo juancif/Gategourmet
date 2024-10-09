@@ -301,3 +301,9 @@ footer a {
 footer a:hover {
     color: var(--color-azul); /* Cambiar el color de los enlaces al pasar el cursor */
 }
+
+.area-row {
+    font-weight: bold;
+    background-color: #e3f300;
+    text-align: left;
+}
