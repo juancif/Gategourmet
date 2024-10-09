@@ -51,7 +51,7 @@ $service = new Google_Service_Gmail($client);
 
 // Recuperar correos electrónicos
 try {
-    $response = $service->users_messages->listUsersMessages('me', ['maxResults' => 100]);
+    $response = $service->users_messages->listUsersMessages('me', ['maxResults' => 10]);
     $messages = $response->getMessages();
 } catch (Exception $e) {
     echo 'Error retrieving emails: ' . $e->getMessage();
@@ -115,12 +115,6 @@ foreach ($messages as $message) {
         switch ($header->getName()) {
             case 'Subject':
                 $emailDetails['subject'] = $header->getValue();
-                break;
-            case 'From':
-                $emailDetails['from'] = $header->getValue();
-                break;
-            case 'To':
-                $emailDetails['to'] = $header->getValue();
                 break;
             case 'Date':
                 $emailDetails['date'] = date('d M Y H:i:s', strtotime($header->getValue()));
@@ -225,13 +219,11 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
         <?php } else { ?>
             <?php foreach ($emailData as $email) { if ($email['estado'] == 'alarmas') { ?>
                 <div class="email-item" data-id-correo="<?php echo $email['id']; ?>" data-estado="<?php echo $email['estado']; ?>">
-                    <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
-                    <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
-                    <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br><br>
+                    <h2>Asunto: <?php echo $email['subject']; ?></h2><br><br>
                     <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
                     <div class="body"><?php echo $email['body']; ?></div>
                     <div class="email-actions">
-                        <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-alarmas')">Enviar</button>
+                        <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-alarmas')">Mover a revisiones</button>
                         <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
                     </div>
                 </div>
@@ -248,13 +240,11 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
     <div class="contenido revisiones" id="contenido-revisiones">
         <?php foreach ($emailData as $email) { if ($email['estado'] == 'revisiones') { ?>
             <div class="email-item" data-id-correo="<?php echo $email['id']; ?>">
-                <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
-                <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
-                <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br><br>
+                <h2>Asunto: <?php echo $email['subject']; ?></h2><br><br>
                 <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
                 <div class="body"><?php echo $email['body']; ?></div>
                 <div class="email-actions">
-                    <button class="mover-boton" onclick="moverCorreo(this, 'aprobaciones', 'contador-aprobaciones', 'contador-revisiones')">Enviar</button>
+                    <button class="mover-boton" onclick="moverCorreo(this, 'aprobaciones', 'contador-aprobaciones', 'contador-revisiones')">Mover a aprobaciones</button>
                     <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
                 </div>
             </div>
@@ -270,9 +260,7 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
     <div class="contenido aprobaciones" id="contenido-aprobaciones">
         <?php foreach ($emailData as $email) { if ($email['estado'] == 'aprobaciones') { ?>
             <div class="email-item" data-id-correo="<?php echo $email['id']; ?>">
-                <h2>Asunto: <?php echo $email['subject']; ?></h2><br>
-                <p><strong>De:</strong> <?php echo $email['from']; ?></p><br>
-                <p><strong>Para:</strong> <?php echo $email['to']; ?></p><br><br>
+                <h2>Asunto: <?php echo $email['subject']; ?></h2><br><br>
                 <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
                 <div class="body"><?php echo $email['body']; ?></div>
                 <div class="email-actions">
@@ -362,6 +350,7 @@ function toggleContenido(contenidoId) {
 }
 </script>
 
+
     <script src="script.js"></script>
 <!-- Primera vista -->
 <div id="vista1" class="vista-activa">
@@ -370,27 +359,27 @@ function toggleContenido(contenidoId) {
         <img src="../Imagenes/logo__recuadro__gategourmet.png" alt="img4" class="triangulo">
     </div>
     <div class="column1">
-        <div class="opciones opcion1"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FGesti%C3%B3n%5FDocumental%2FABASTECIMIENTOS1&viewid=7e698b00%2D50a8%2D4a9f%2Daf64%2D4414983a1399" class="link1"><h3 class="h3__2">ABASTECIMIENTOS</h3></a></div>
-        <div class="opciones opcion2"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FGesti%C3%B3n%5FDocumental%2FCI1&viewid=7e698b00%2D50a8%2D4a9f%2Daf64%2D4414983a1399" class="link1"><h3 class="h3__2">CI</h3></a></div>
-        <div class="opciones opcion3"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FGesti%C3%B3n%5FDocumental%2FCOMPLIANCE1&viewid=7e698b00%2D50a8%2D4a9f%2Daf64%2D4414983a1399" class="link1"><h3 class="h3__2">COMPLIANCE</h3></a></div>
-        <div class="opciones opcion4"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FGesti%C3%B3n%5FDocumental%2FCOMPRAS1&viewid=7e698b00%2D50a8%2D4a9f%2Daf64%2D4414983a1399" class="link1"><h3 class="h3__2">COMPRAS</h3></a></div>
-        <div class="opciones opcion5"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FGesti%C3%B3n%5FDocumental%2FCOSTOS1&viewid=7e698b00%2D50a8%2D4a9f%2Daf64%2D4414983a1399" class="link1"><h3 class="h3__2">COSTOS</h3></a></div>
-        <div class="opciones opcion6"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FGesti%C3%B3n%5FDocumental%2FCULINARY1&viewid=7e698b00%2D50a8%2D4a9f%2Daf64%2D4414983a1399" class="link1"><h3 class="h3__2">CULINARY</h3></a></div>
-        <div class="opciones opcion7"><a href="https://gategrouphq.sharepoint.com/sites/Prueba.gg/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FPrueba%2Egg%2FShared%20Documents%2FGesti%C3%B3n%5FDocumental%2FDESARROLLO1&viewid=7e698b00%2D50a8%2D4a9f%2Daf64%2D4414983a1399" class="link1"><h3 class="h3__2">DESARROLLO</h3></a></div>
-        <div class="opciones opcion8"><a href="#" class="link1"><h3 class="h3__2">FACILITY</h3></a></div>
-        <div class="opciones opcion9"><a href="#" class="link1"><h3 class="h3__2">FINANCIERA</h3></a></div>
-        <div class="opciones opcion10"><a href="#" class="link1"><h3 class="h3__2">IDS</h3></a></div>
-        <div class="opciones opcion11"><a href="#" class="link1"><h3 class="h3__2">KEY ACCOUNT</h3></a></div>
-        <div class="opciones opcion12"><a href="#" class="link1"><h3 class="h3__2">LAUNDRY</h3></a></div>
-        <div class="opciones opcion13"><a href="#" class="link1"><h3 class="h3__2">MAKE & PACK</h3></a></div>
-        <div class="opciones opcion14"><a href="#" class="link1"><h3 class="h3__2">PICK & PACK</h3></a></div>
-        <div class="opciones opcion15"><a href="#" class="link1"><h3 class="h3__2">SALAS</h3></a></div>
-        <div class="opciones opcion16"><a href="#" class="link1"><h3 class="h3__2">SEGURIDAD</h3></a></div>
-        <div class="opciones opcion17"><a href="#" class="link1"><h3 class="h3__2">SERVICE DELIVERY</h3></a></div>
-        <div class="opciones opcion18"><a href="#" class="link1"><h3 class="h3__2">SISTEMAS</h3></a></div>
-        <div class="opciones opcion19"><a href="#" class="link1"><h3 class="h3__2">TALENTO HUMANO</h3></a></div>
-        <div class="opciones opcion20"><a href="#" class="link1"><h3 class="h3__2">WASH & PACK</h3></a></div>
-        <div class="opciones opcion21"><a href="#" class="link1"><h3 class="h3__2">OBSOLETOS</h3></a></div>
+        <div class="opciones opcion1"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/ABASTECIMIENTOS?csf=1&web=1&e=8qA04K" class="link1"><h3 class="h3__2">ABASTECIMIENTOS</h3></a></div>
+        <div class="opciones opcion2"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/CI?csf=1&web=1&e=yctetA" class="link1"><h3 class="h3__2">CI</h3></a></div>
+        <div class="opciones opcion3"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/COMPLIANCE?csf=1&web=1&e=YHvNaD" class="link1"><h3 class="h3__2">COMPLIANCE</h3></a></div>
+        <div class="opciones opcion4"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/COMPRAS?csf=1&web=1&e=3uqWmg" class="link1"><h3 class="h3__2">COMPRAS</h3></a></div>
+        <div class="opciones opcion5"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/COSTOS?csf=1&web=1&e=g7Z84E" class="link1"><h3 class="h3__2">COSTOS</h3></a></div>
+        <div class="opciones opcion6"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/CULINARY?csf=1&web=1&e=Frn6gA" class="link1"><h3 class="h3__2">CULINARY</h3></a></div>
+        <div class="opciones opcion7"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/DESARROLLO?csf=1&web=1&e=EIfYLA" class="link1"><h3 class="h3__2">DESARROLLO</h3></a></div>
+        <div class="opciones opcion8"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/FACILITY?csf=1&web=1&e=fnhRiV" class="link1"><h3 class="h3__2">FACILITY</h3></a></div>
+        <div class="opciones opcion9"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/FINANCIERA?csf=1&web=1&e=4aCC1r" class="link1"><h3 class="h3__2">FINANCIERA</h3></a></div>
+        <div class="opciones opcion10"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/IDS?csf=1&web=1&e=IZ4k8e" class="link1"><h3 class="h3__2">IDS</h3></a></div>
+        <div class="opciones opcion11"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/KEY%20ACCOUNT?csf=1&web=1&e=sdremj" class="link1"><h3 class="h3__2">KEY ACCOUNT</h3></a></div>
+        <div class="opciones opcion12"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/LAUNDRY?csf=1&web=1&e=AtbvR7" class="link1"><h3 class="h3__2">LAUNDRY</h3></a></div>
+        <div class="opciones opcion13"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/MAKE%20%26%20PACK?csf=1&web=1&e=nYGJ66" class="link1"><h3 class="h3__2">MAKE & PACK</h3></a></div>
+        <div class="opciones opcion14"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/PICK%20%26%20PACK?csf=1&web=1&e=WfWrMR" class="link1"><h3 class="h3__2">PICK & PACK</h3></a></div>
+        <div class="opciones opcion15"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/SALAS?csf=1&web=1&e=X7LOjx" class="link1"><h3 class="h3__2">SALAS</h3></a></div>
+        <div class="opciones opcion16"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/SEGURIDAD?csf=1&web=1&e=v9cqVy" class="link1"><h3 class="h3__2">SEGURIDAD</h3></a></div>
+        <div class="opciones opcion17"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/SERVICE%20DELIVERY?csf=1&web=1&e=JNrYSO" class="link1"><h3 class="h3__2">SERVICE DELIVERY</h3></a></div>
+        <div class="opciones opcion18"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/SISTEMAS?csf=1&web=1&e=cWR2LW" class="link1"><h3 class="h3__2">SISTEMAS</h3></a></div>
+        <div class="opciones opcion19"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/TALENTO%20HUMANO?csf=1&web=1&e=xTPX2y" class="link1"><h3 class="h3__2">TALENTO HUMANO</h3></a></div>
+        <div class="opciones opcion20"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/WASH%20%26%20PACK?csf=1&web=1&e=6HUFGO" class="link1"><h3 class="h3__2">WASH & PACK</h3></a></div>
+        <div class="opciones opcion21"><a href="https://gategrouphq.sharepoint.com/:f:/r/sites/Prueba.gg/Shared%20Documents/Gesti%C3%B3n_Documental/OBSOLETOS?csf=1&web=1&e=kCmKM1" class="link1"><h3 class="h3__2">OBSOLETOS</h3></a></div>
 
     </div>
     <!-- Flecha para cambiar a la segunda vista -->
