@@ -218,12 +218,12 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
             <p>No hay correos electrónicos disponibles.</p>
         <?php } else { ?>
             <?php foreach ($emailData as $email) { if ($email['estado'] == 'alarmas') { ?>
-                <div class="email-item" data-id-correo="<?php echo $email['id']; ?>" data-estado="<?php echo $email['estado']; ?>">
+                <div class="email-item" data-id-correo="<?php echo $email['id']; ?>">
                     <h2>Asunto: <?php echo $email['subject']; ?></h2><br><br>
                     <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
                     <div class="body"><?php echo $email['body']; ?></div>
                     <div class="email-actions">
-                        <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-alarmas')">Mover a revisiones</button>
+                        <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-alarmas')">Enviar a Revisiones</button>
                         <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
                     </div>
                 </div>
@@ -244,8 +244,8 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
                 <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
                 <div class="body"><?php echo $email['body']; ?></div>
                 <div class="email-actions">
-                    <button class="mover-boton" onclick="moverCorreo(this, 'aprobaciones', 'contador-aprobaciones', 'contador-revisiones')">Mover a aprobaciones</button>
-                    <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
+                    <button class="mover-boton" onclick="moverCorreo(this, 'aprobaciones', 'contador-aprobaciones', 'contador-revisiones')">Enviar a Aprobaciones</button>
+                    <button class="mover-boton" onclick="moverCorreo(this, 'alarmas', 'contador-alarmas', 'contador-revisiones')">Devolver a Alarmas</button>
                 </div>
             </div>
         <?php } } ?>
@@ -264,13 +264,11 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
                 <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
                 <div class="body"><?php echo $email['body']; ?></div>
                 <div class="email-actions">
-                    <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
+                    <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-aprobaciones')">Devolver a Revisiones</button>
                 </div>
             </div>
         <?php } } ?>
     </div>
-</div>
-</div>
 </div>
 
 <script>
@@ -296,6 +294,9 @@ function moverCorreo(button, nuevoEstado, contadorDestinoId, contadorOrigenId) {
         // Actualizar los contadores del origen y destino
         actualizarContador(contadorOrigenId);
         actualizarContador(contadorDestinoId);
+
+        // Actualizar los botones según el nuevo estado
+        mostrarBotonesSegunEstado(emailItem, nuevoEstado);
     }).catch(error => {
         console.error('Error al mover el correo:', error);
     });
@@ -334,6 +335,30 @@ function actualizarContador(contadorId) {
     var contador = document.getElementById(contadorId);
     var itemsVisibles = contenedor.querySelectorAll('.email-item').length;
     contador.textContent = itemsVisibles;
+}
+
+// Función para mostrar los botones según el estado actual del correo
+function mostrarBotonesSegunEstado(emailItem, nuevoEstado) {
+    var acciones = emailItem.querySelector('.email-actions');
+
+    if (nuevoEstado === 'alarmas') {
+        // En 'alarmas', mostrar "Enviar a Revisiones" e "Ignorar"
+        acciones.innerHTML = `
+            <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-alarmas')">Enviar a Revisiones</button>
+            <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
+        `;
+    } else if (nuevoEstado === 'revisiones') {
+        // En 'revisiones', mostrar "Enviar a Aprobaciones" y "Devolver a Alarmas"
+        acciones.innerHTML = `
+            <button class="mover-boton" onclick="moverCorreo(this, 'aprobaciones', 'contador-aprobaciones', 'contador-revisiones')">Enviar a Aprobaciones</button>
+            <button class="mover-boton" onclick="moverCorreo(this, 'alarmas', 'contador-alarmas', 'contador-revisiones')">Devolver a Alarmas</button>
+        `;
+    } else if (nuevoEstado === 'aprobaciones') {
+        // En 'aprobaciones', solo mostrar "Devolver a Revisiones"
+        acciones.innerHTML = `
+            <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-aprobaciones')">Devolver a Revisiones</button>
+        `;
+    }
 }
 
 // Inicializar los contadores al cargar la página

@@ -507,3 +507,186 @@ function toggleContenido(contenidoId) {
     contenido.style.display = contenido.style.display === 'none' ? 'block' : 'none';
 }
 </script>
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .content {
+            margin-top: 15px;
+        }
+        .file-link {
+            display: inline-block;
+            background-color: #1a73e8;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        .file-link:hover {
+            background-color: #155cb2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+             @{triggerOutputs()?['body/DeletedByUserName']} ha eliminado el archivo: 
+            <a href="" class="file-link">
+                         @{triggerOutputs()?['body/FileNameWithExtension']}
+            </a>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .content {
+            margin-top: 15px;
+        }
+        .file-link {
+            display: inline-block;
+            background-color: #1a73e8;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        .file-link:hover {
+            background-color: #155cb2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <p>@{triggerOutputs()?['body/Author/DisplayName']} ha agregado el archivo:</p>
+<br>
+            <a href="@{triggerOutputs()?['body/{Link}']}" class="file-link">
+              @{triggerOutputs()?['body/{FilenameWithExtension}']}
+            </a>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .content {
+            margin-top: 15px;
+        }
+        .file-link {
+            display: inline-block;
+            background-color: #1a73e8;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        .file-link:hover {
+            background-color: #155cb2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <p>@{triggerOutputs()?['body/Author/DisplayName']} ha editado el archivo:</p>
+<br><br><br>
+            <a href="@{triggerOutputs()?['body/{Link}']}" class="file-link">
+              @{triggerOutputs()?['body/{FilenameWithExtension}']}
+            </a>
+</div>
+</body>
+</html>
