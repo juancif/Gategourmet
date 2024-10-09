@@ -319,8 +319,44 @@ input[type="submit"]:active, .regresar:active {
 .error-message::before {
     content: "⚠️"; /* Ícono de advertencia */
     position: absolute; /* Posición absoluta */
-    left: 10px; /* Margen a la izquierda */
-    top: 90%; /* Centrar verticalmente */
+    left: 50px; /* Margen a la izquierda */
+    top: 85px; /* Centrar verticalmente */
     transform: translateY(-50%); /* Ajustar posición vertical */
-    font-size: 1.5em; /* Tamaño del ícono */
+    font-size: 30px; /* Tamaño del ícono */
+}
+
+.success-message {
+    background-color: rgba(252, 252, 252, 0.555); /* Fondo gris oscuro */
+    color: #ffffff; /* Texto en blanco */
+    border: 2px solid rgba(76, 175, 80, 0.4); /* Borde verde más oscuro */
+    padding: 20px; /* Espaciado interno ajustado */
+    border-radius: 12px; /* Bordes más redondeados */
+    font-weight: bold; /* Texto en negrita */
+    text-align: center; /* Texto centrado */
+    width: 80%; /* Ancho del mensaje */
+    margin: 20px auto; /* Margen centrado */
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.89); /* Sombra más pronunciada */
+    position: relative; /* Para el ícono */
+    font-size: 1.2em; /* Aumentar tamaño de fuente */
+    animation: fadeIn 0.5s; /* Animación de entrada */
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.success-message::before {
+    content: "✅"; /* Ícono de éxito */
+    position: absolute; /* Posición absoluta */
+    left: -6px; /* Margen a la izquierda */
+    top: 50%; /* Centrar verticalmente */
+    transform: translateY(-50%); /* Ajustar posición vertical */
+    font-size: 1.5em; /* Tamaño del ícono más grande */
+    color: #ffffff; /* Asegurando que el ícono también sea blanco */
 }

@@ -19,7 +19,19 @@ $busqueda_usuario = isset($_GET['usuario']) ? $_GET['usuario'] : '';
 $busqueda_cargo = isset($_GET['cargo']) ? $_GET['cargo'] : '';
 
 // Consulta SQL usando consultas preparadas para evitar inyección SQL
-$stmt = $conn->prepare("SELECT id, macroproceso, proceso, usuario, cargo, email, rol FROM procesos WHERE proceso LIKE ? AND usuario LIKE ? AND cargo LIKE ?");
+$stmt = $conn->prepare("
+    SELECT id, macroproceso, proceso, usuario, cargo, email, rol
+    FROM procesos
+    WHERE proceso LIKE ? AND usuario LIKE ? AND cargo LIKE ?
+    ORDER BY 
+        CASE 
+            WHEN macroproceso IN ('GESTION CORPORATIVA', 'COMPLIANCE') THEN 1
+            WHEN macroproceso IN ('SUPPLY CHAIN', 'CULINARY EXCELLENCE', 'SERVICE DELIVERY', 'ASSEMBLY', 'SERVICIOS INSTITUCIONALES') THEN 2
+            WHEN macroproceso IN ('FINANCIERA', 'COSTOS', 'COMUNICACIONES', 'TECNOLOGÍA DE LA INFORMACIÓN', 'TALENTO HUMANO', 'MANTENIMIENTO', 'SERVICIO AL CLIENTE', 'SECURITY') THEN 3
+            ELSE 4
+        END, 
+        macroproceso ASC, proceso ASC
+");
 $proceso_like = "%$busqueda_proceso%";
 $usuario_like = "%$busqueda_usuario%";
 $cargo_like = "%$busqueda_cargo%";
@@ -63,6 +75,20 @@ function obtenerColor($macroproceso) {
     <link rel="stylesheet" href="procesos.css">
     <link rel="icon" href="/ruta/al/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        // Función para filtrar opciones en el select
+        function filterOptions(input) {
+            const select = document.getElementById('macroproceso');
+            const filter = input.value.toUpperCase();
+            const options = select.getElementsByTagName('option');
+
+            for (let i = 0; i < options.length; i++) {
+                const option = options[i];
+                const txtValue = option.textContent || option.innerText;
+                option.style.display = txtValue.toUpperCase().includes(filter) ? '' : 'none';
+            }
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -73,10 +99,27 @@ function obtenerColor($macroproceso) {
         <section class="container">
             <!-- Formulario para agregar nuevo proceso -->
             <form method="POST" action="agregar_proceso.php" class="form-agregar">
-                
                 <div class="form-group">
                     <label for="macroproceso">Macroproceso:</label>
-                    <input type="text" id="macroproceso" name="macroproceso" required>
+                    <input type="text" oninput="filterOptions(this)" placeholder="Escriba para filtrar...">
+                    <select id="macroproceso" name="macroproceso" required>
+                        <option value="">Seleccione una opción</option>
+                        <option value="GESTION CORPORATIVA">GESTION CORPORATIVA</option>
+                        <option value="COMPLIANCE">COMPLIANCE</option>
+                        <option value="ASSEMBLY">ASSEMBLY</option>
+                        <option value="CULINARY EXCELLENCE">CULINARY EXCELLENCE</option>
+                        <option value="SUPPLY CHAIN">SUPPLY CHAIN</option>
+                        <option value="COMUNICACIONES">COMUNICACIONES</option>
+                        <option value="SERVICE DELIVERY">SERVICE DELIVERY</option>
+                        <option value="SERVICIOS INSTITUCIONALES">SERVICIOS INSTITUCIONALES</option>
+                        <option value="COSTOS">COSTOS</option>
+                        <option value="FINANCIERA">FINANCIERA</option>
+                        <option value="MANTENIMIENTO">MANTENIMIENTO</option>
+                        <option value="SECURITY">SECURITY</option>
+                        <option value="SERVICIO AL CLIENTE">SERVICIO AL CLIENTE</option>
+                        <option value="TALENTO HUMANO">TALENTO HUMANO</option>
+                        <option value="TECNOLOGÍA DE LA INFORMACIÓN">TECNOLOGÍA DE LA INFORMACIÓN</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="proceso">Proceso:</label>
@@ -116,6 +159,28 @@ function obtenerColor($macroproceso) {
                 <div class="form-group">
                     <label for="cargo">Buscar por Cargo:</label>
                     <input type="text" id="cargo" name="cargo" value="<?php echo htmlspecialchars($busqueda_cargo); ?>">
+                </div>
+                <div class="form-group">
+                    <label for="macroproceso-buscar">Buscar por Macroproceso:</label>
+                    <input type="text" oninput="filterOptions(this)" placeholder="Escriba para filtrar...">
+                    <select id="macroproceso-buscar" name="macroproceso" required>
+                        <option value="">Seleccione una opción</option>
+                        <option value="GESTION CORPORATIVA">GESTION CORPORATIVA</option>
+                        <option value="COMPLIANCE">COMPLIANCE</option>
+                        <option value="ASSEMBLY">ASSEMBLY</option>
+                        <option value="CULINARY EXCELLENCE">CULINARY EXCELLENCE</option>
+                        <option value="SUPPLY CHAIN">SUPPLY CHAIN</option>
+                        <option value="COMUNICACIONES">COMUNICACIONES</option>
+                        <option value="SERVICE DELIVERY">SERVICE DELIVERY</option>
+                        <option value="SERVICIOS INSTITUCIONALES">SERVICIOS INSTITUCIONALES</option>
+                        <option value="COSTOS">COSTOS</option>
+                        <option value="FINANCIERA">FINANCIERA</option>
+                        <option value="MANTENIMIENTO">MANTENIMIENTO</option>
+                        <option value="SECURITY">SECURITY</option>
+                        <option value="SERVICIO AL CLIENTE">SERVICIO AL CLIENTE</option>
+                        <option value="TALENTO HUMANO">TALENTO HUMANO</option>
+                        <option value="TECNOLOGÍA DE LA INFORMACIÓN">TECNOLOGÍA DE LA INFORMACIÓN</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn"><i class="fas fa-search"></i> Buscar</button>

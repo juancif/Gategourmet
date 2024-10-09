@@ -32,17 +32,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $error_message = "Error El documento que estás intentando crear ya existe con este código o título.";
+        $error_message = "Error: El documento que estás intentando crear ya existe con este código o título.";
     } else {
-        // Estado "Vigente" y fecha de vigencia de un año a partir de hoy
-        $estado = 'VIGENTE';
-        $fecha_vigencia = date('Y-m-d'); // Fecha de vigencia es la fecha actual
-        $fecha_caducidad = date('Y-m-d', strtotime('+1 year', strtotime($fecha_vigencia))); // Un año después de la creación
+        // Lógica para determinar el estado del documento
+        $fecha_vigencia = date('Y-m-d', strtotime($fecha_aprobacion)); // La fecha de vigencia es la fecha de aprobación
+        $fecha_caducidad = date('Y-m-d', strtotime('+1 year', strtotime($fecha_vigencia))); // Un año después de la fecha de aprobación
+        
+        // Verificar si el documento es vigente o desactualizado
+        $currentDate = date('Y-m-d'); // Fecha actual
+        if ($currentDate >= $fecha_caducidad) {
+            $estado = 'DESACTUALIZADO'; // Cambiar a desactualizado si ha pasado un año
+        } else {
+            $estado = 'VIGENTE'; // Mantener como vigente si no ha pasado un año
+        }
 
         // Insertar el nuevo documento en la base de datos
         $sql_insert = "INSERT INTO listado_maestro (proceso, codigo, titulo_documento, tipo, estado, fecha_aprobacion, fecha_de_vigencia, areas)
                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
         $stmt_insert = $conn->prepare($sql_insert);
         $stmt_insert->bind_param("ssssssss", $proceso, $codigo, $titulo_documento, $tipo, $estado, $fecha_aprobacion, $fecha_caducidad, $areas);
 
@@ -57,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $conn->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -151,7 +158,8 @@ $conn->close();
                     <input type="date" id="fecha_aprobacion" name="fecha_aprobacion" required>
                 </div>
                 <div class="input-group">
-    <label for="areas">Áreas</label>
+                    
+                <label for="areas">Áreas</label>
     <select name="areas" id="areas" required>
         <option value="">Seleccione una opción</option>
         <option value="SERVICE_DELIVERY">SERVICE DELIVERY</option>
@@ -272,6 +280,12 @@ closeModal.addEventListener('click', function() {
     modal.style.display = "none";
 });
 
+confirmCreate.addEventListener('click', function() {
+    confirmCreate.disabled = true; // Deshabilita el botón para evitar clics múltiples
+    document.getElementById("documentForm").submit(); // Enviar el formulario
+});
+
+
 // Cerrar el modal si el usuario hace click fuera del modal
 window.addEventListener('click', function(event) {
     if (event.target == modal) {
@@ -279,6 +293,5 @@ window.addEventListener('click', function(event) {
     }
 });
 </script>
-
 </body>
 </html>
