@@ -1,80 +1,23 @@
 <?php
 require '../vendor/autoload.php';
 session_start();
+$area = isset($_SESSION['area']) ? $_SESSION['area'] : '';
 
-// Conexión a la base de datos con manejo de excepciones
-try {
-    $mysqli = new mysqli("localhost", "root", "", "gategourmet");
-    if ($mysqli->connect_error) {
-        throw new Exception("Error al conectar a la base de datos: " . $mysqli->connect_error);
-    }
-} catch (Exception $e) {
-    echo $e->getMessage();
-    exit();
-}
-
-// Verificar si el usuario está logueado
-if (!isset($_SESSION['nombre_usuario'])) {
-    header('Location: http://localhost/GateGourmet/login/login3.php');
-    exit();
-}
-
-$nombre_usuario = $_SESSION['nombre_usuario']; // Nombre de usuario logueado
-$id_correo = filter_input(INPUT_POST, 'id_correo', FILTER_SANITIZE_STRING);
-$nuevo_estado = filter_input(INPUT_POST, 'estado', FILTER_SANITIZE_STRING);
-
-// Obtener detalles del usuario
-$query_user = $mysqli->prepare("SELECT * FROM usuarios WHERE nombre_usuario = ?");
-$query_user->bind_param("s", $nombre_usuario);
-$query_user->execute();
-$result_user = $query_user->get_result();
-
-if ($result_user->num_rows > 0) {
-    $user = $result_user->fetch_assoc();
-    $area = $user['area'];
-    $cargo = $user['cargo'];
-    $rol = $user['rol'];
-
-    // Verificar flujo de trabajo según el rol
-    if ($rol == 'digitador' && $nuevo_estado == 'revisiones') {
-        // Buscar aprobador en la misma área
-        $query_responsable = $mysqli->prepare("SELECT nombre_usuario FROM usuarios WHERE area = ? AND rol = 'aprobador' LIMIT 1");
-        $query_responsable->bind_param("s", $area);
-        $query_responsable->execute();
-        $result_responsable = $query_responsable->get_result();
-
-        if ($result_responsable->num_rows > 0) {
-            $responsable = $result_responsable->fetch_assoc();
-            $nuevo_destinatario = $responsable['nombre_usuario'];
-        } else {
-            $nuevo_destinatario = 'dramirez'; // A falta de aprobador, se envía al administrador
-        }
-    } elseif ($rol == 'aprobador' && $nuevo_estado == 'aprobaciones') {
-        $nuevo_destinatario = 'dramirez'; // Aprobador envía al administrador
-    } else {
-        $nuevo_destinatario = $nombre_usuario; // Otros casos mantienen el mismo usuario
-    }
-
-    // Guardar acción del usuario
-    $query = $mysqli->prepare("UPDATE acciones_usuarios SET estado = ?, destinatario = ? WHERE id_correo = ?");
-    $query->bind_param("sss", $nuevo_estado, $nuevo_destinatario, $id_correo);
-    $query->execute();
-}
 
 // Configuración del cliente de Google
 $client = new Google_Client();
 $client->setAuthConfig('credentials.json');
 $client->addScope(Google_Service_Gmail::GMAIL_READONLY);
-$client->setRedirectUri('http://localhost/GateGourmet/Index/index_admin.php');
+$client->setRedirectUri('http://localhost/GateGourmet/Index/index_user.php');
 $client->setAccessType('offline');
-$client->setPrompt('consent');
+$client->setPrompt('consent'); // Cambiado a 'consent'
 
-// Manejar código de autorización
+// Manejar el código de autorización
 if (isset($_GET['code'])) {
     try {
         $accessToken = $client->fetchAccessTokenWithAuthCode($_GET['code']);
         $_SESSION['access_token'] = $accessToken;
-        header('Location: index_admin.php');
+        header('Location: index_user.php');
         exit();
     } catch (Exception $e) {
         echo 'Error fetching access token: ' . $e->getMessage();
@@ -89,11 +32,11 @@ if (!isset($_SESSION['access_token']) || $_SESSION['access_token'] === null) {
     exit();
 }
 
-// Configurar servicio de Gmail
+// Configurar el servicio de Gmail con el token de acceso
 $client->setAccessToken($_SESSION['access_token']);
 $service = new Google_Service_Gmail($client);
 
-// Obtener correos
+// Recuperar correos electrónicos
 try {
     $response = $service->users_messages->listUsersMessages('me', ['maxResults' => 10]);
     $messages = $response->getMessages();
@@ -102,28 +45,25 @@ try {
     exit();
 }
 
-// Decodificación de base64url
-function base64url_decode($data) {
-    $data = str_replace(['-', '_'], ['+', '/'], $data);
-    $mod4 = strlen($data) % 4;
-    if ($mod4) {
-        $data .= substr('====', $mod4);
-    }
-    return base64_decode($data);
-}
+// Obtener detalles de los correos electrónicos
+$emailData = [];
 
-// Función para obtener el cuerpo del mensaje
 function getBody($message) {
     global $service;
     $message = $service->users_messages->get('me', $message->getId());
     $payload = $message->getPayload();
     $parts = $payload->getParts();
+
     $body = '';
 
-    if ($payload->getMimeType() == 'text/plain' || $payload->getMimeType() == 'text/html') {
+    // Decodificar el cuerpo del mensaje según su tipo MIME
+    if ($payload->getMimeType() == 'text/plain') {
+        $body = base64url_decode($payload->getBody()->getData());
+    } elseif ($payload->getMimeType() == 'text/html') {
         $body = base64url_decode($payload->getBody()->getData());
     } elseif ($parts) {
         foreach ($parts as $part) {
+            // Recorremos las partes para obtener el texto plano o HTML
             if ($part->getMimeType() == 'text/html') {
                 $body .= base64url_decode($part->getBody()->getData());
             }
@@ -133,59 +73,52 @@ function getBody($message) {
     return $body;
 }
 
-// Obtener estado de correos guardados por el usuario
-$query = $mysqli->prepare("SELECT * FROM acciones_usuarios WHERE nombre_usuario = ?");
-$query->bind_param("s", $nombre_usuario);
-$query->execute();
-$result = $query->get_result();
-
-$correos_guardados = [];
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $correos_guardados[$row['id_correo']] = $row['estado']; // Guardar estado por id
+// Función para decodificar base64url
+function base64url_decode($data) {
+    $data = str_replace(['-', '_'], ['+', '/'], $data);
+    $mod4 = strlen($data) % 4;
+    if ($mod4) {
+        $data .= substr('====', $mod4);
     }
+    return base64_decode($data);
 }
 
-// Preparar datos de correos electrónicos
-$emailData = [];
 foreach ($messages as $message) {
     $messageDetail = $service->users_messages->get('me', $message->getId());
     $headers = $messageDetail->getPayload()->getHeaders();
-    $emailDetails = ['id' => $message->getId()];
+    $emailDetails = [];
 
     foreach ($headers as $header) {
-        if ($header->getName() == 'Subject') {
-            $emailDetails['subject'] = $header->getValue();
-        } elseif ($header->getName() == 'Date') {
-            $emailDetails['date'] = date('d M Y H:i:s', strtotime($header->getValue()));
+        switch ($header->getName()) {
+            case 'Subject':
+                $emailDetails['subject'] = $header->getValue();
+                break;
+            case 'From':
+                $emailDetails['from'] = $header->getValue();
+                break;
+            case 'To':
+                $emailDetails['to'] = $header->getValue();
+                break;
+            case 'Cc':
+                $emailDetails['cc'] = $header->getValue();
+                break;
+            case 'Bcc':
+                $emailDetails['bcc'] = $header->getValue();
+                break;
+            case 'Date':
+                $emailDetails['date'] = date('d M Y H:i:s', strtotime($header->getValue()));
+                break;
         }
     }
 
-    $emailDetails['body'] = getBody($messageDetail);
-    $emailDetails['estado'] = isset($correos_guardados[$emailDetails['id']]) ? $correos_guardados[$emailDetails['id']] : 'alarmas';
 
+    // Obtener el cuerpo del mensaje
+    $emailDetails['body'] = getBody($messageDetail);
+
+    // Agregar el correo electrónico al array de correos
     $emailData[] = $emailDetails;
 }
-
-// Guardar acciones de correos electrónicos
-function guardarAccion($nombre_usuario, $id_correo, $estado) {
-    global $mysqli;
-    $query = $mysqli->prepare("SELECT * FROM acciones_usuarios WHERE nombre_usuario = ? AND id_correo = ?");
-    $query->bind_param("ss", $nombre_usuario, $id_correo);
-    $query->execute();
-    $result = $query->get_result();
-
-    if ($result->num_rows > 0) {
-        $query = $mysqli->prepare("UPDATE acciones_usuarios SET estado = ? WHERE nombre_usuario = ? AND id_correo = ?");
-        $query->bind_param("sss", $estado, $nombre_usuario, $id_correo);
-    } else {
-        $query = $mysqli->prepare("INSERT INTO acciones_usuarios (nombre_usuario, id_correo, estado) VALUES (?, ?, ?)");
-        $query->bind_param("sss", $nombre_usuario, $id_correo, $estado);
-    }
-    $query->execute();
-}
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -250,17 +183,18 @@ function guardarAccion($nombre_usuario, $id_correo, $estado) {
         <?php if (empty($emailData)) { ?>
             <p>No hay correos electrónicos disponibles.</p>
         <?php } else { ?>
-            <?php foreach ($emailData as $email) { if ($email['estado'] == 'alarmas') { ?>
-                <div class="email-item" data-id-correo="<?php echo $email['id']; ?>">
-                    <h2>Asunto: <?php echo $email['subject']; ?></h2><br><br>
-                    <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
-                    <div class="body"><?php echo $email['body']; ?></div>
-                    <div class="email-actions">
-                        <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-alarmas')">Enviar a Revisiones</button>
-                        <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
-                    </div>
-                </div>
-            <?php } } ?>
+            <?php foreach ($emailData as $email) { 
+    if (isset($email['estado']) && $email['estado'] == 'alarmas') { ?>
+        <div class="email-item" data-id-correo="<?php echo $email['id']; ?>">
+            <h2>Asunto: <?php echo $email['subject']; ?></h2><br><br>
+            <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
+            <div class="body"><?php echo $email['body']; ?></div>
+            <div class="email-actions">
+                <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-alarmas')">Enviar a Revisiones</button>
+                <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
+            </div>
+        </div>
+<?php } } ?>
         <?php } ?>
     </div>
 </div>
@@ -499,6 +433,7 @@ function toggleContenido(contenidoId) {
     // Mostrar la primera vista por defecto
     mostrarVista('vista1');
 </script>
+
 
 </body>
 <script>

@@ -218,17 +218,19 @@ foreach ($messages as $message) {
         <?php if (empty($emailData)) { ?>
             <p>No hay correos electrónicos disponibles.</p>
         <?php } else { ?>
-            <?php foreach ($emailData as $email) { if ($email['estado'] == 'alarmas') { ?>
-                <div class="email-item" data-id-correo="<?php echo $email['id']; ?>">
-                    <h2>Asunto: <?php echo $email['subject']; ?></h2><br><br>
-                    <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
-                    <div class="body"><?php echo $email['body']; ?></div>
-                    <div class="email-actions">
-                        <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-alarmas')">Enviar a Revisiones</button>
-                        <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
-                    </div>
-                </div>
-            <?php } } ?>
+            <?php foreach ($emailData as $email) { 
+    if (isset($email['estado']) && $email['estado'] == 'alarmas') { ?>
+        <div class="email-item" data-id-correo="<?php echo $email['id']; ?>">
+            <h2>Asunto: <?php echo $email['subject']; ?></h2><br><br>
+            <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
+            <div class="body"><?php echo $email['body']; ?></div>
+            <div class="email-actions">
+                <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-alarmas')">Enviar a Revisiones</button>
+                <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
+            </div>
+        </div>
+<?php } } ?>
+
         <?php } ?>
     </div>
 </div>
@@ -465,6 +467,29 @@ document.addEventListener('DOMContentLoaded', actualizarContadores);
         }
     }
 </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const areaUsuario = "<?php echo $area; ?>"; // Aquí tomamos el área del usuario desde PHP
+
+            console.log("Área del usuario:", areaUsuario); // Para verificar que está llegando correctamente
+
+            const circulos = document.querySelectorAll(".circulo");
+
+            circulos.forEach(circulo => {
+                const h3Text = circulo.querySelector("h3").textContent.trim();
+
+                console.log("Texto del h3:", h3Text); // Para verificar el texto de cada h3
+
+                if (h3Text !== areaUsuario) {
+                    // Deshabilitar la funcionalidad de click
+                    const link = circulo.querySelector("a");
+                    link.removeAttribute("href");
+                    link.style.pointerEvents = "none";
+                    link.style.opacity = "0.5"; // Visualmente deshabilitar
+                }
+            });
+        });
+    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const areaUsuario = "<?php echo $area; ?>"; // Aquí tomamos el área del usuario desde PHP
