@@ -1,27 +1,65 @@
 <?php
 require '../vendor/autoload.php';
 session_start();
-$mysqli = new mysqli("localhost", "root", "", "gategourmet"); // Conexión a la base de datos
 
-if ($mysqli->connect_errno) {
-    echo "Error al conectar a la base de datos: " . $mysqli->connect_error;
+// Conexión a la base de datos con manejo de excepciones
+try {
+    $mysqli = new mysqli("localhost", "root", "", "gategourmet");
+    if ($mysqli->connect_error) {
+        throw new Exception("Error al conectar a la base de datos: " . $mysqli->connect_error);
+    }
+} catch (Exception $e) {
+    echo $e->getMessage();
     exit();
 }
 
-// Verifica si el usuario está logueado
+// Verificar si el usuario está logueado
 if (!isset($_SESSION['nombre_usuario'])) {
     header('Location: http://localhost/GateGourmet/login/login3.php');
     exit();
 }
 
-$nombre_usuario = $_SESSION['nombre_usuario']; // El nombre de usuario guardado en la sesión
+$nombre_usuario = $_SESSION['nombre_usuario']; // Nombre de usuario logueado
+$id_correo = filter_input(INPUT_POST, 'id_correo', FILTER_SANITIZE_STRING);
+$nuevo_estado = filter_input(INPUT_POST, 'estado', FILTER_SANITIZE_STRING);
 
-// Obtener área y cargo del usuario desde la base de datos
-$query_user = "SELECT area, cargo FROM usuarios WHERE nombre_usuario = '$nombre_usuario'";
-$result_user = $mysqli->query($query_user);
-$usuario_data = $result_user->fetch_assoc();
-$area_usuario = $usuario_data['area'];
-$cargo_usuario = $usuario_data['cargo'];
+// Obtener detalles del usuario
+$query_user = $mysqli->prepare("SELECT * FROM usuarios WHERE nombre_usuario = ?");
+$query_user->bind_param("s", $nombre_usuario);
+$query_user->execute();
+$result_user = $query_user->get_result();
+
+if ($result_user->num_rows > 0) {
+    $user = $result_user->fetch_assoc();
+    $area = $user['area'];
+    $cargo = $user['cargo'];
+    $rol = $user['rol'];
+
+    // Verificar flujo de trabajo según el rol
+    if ($rol == 'digitador' && $nuevo_estado == 'revisiones') {
+        // Buscar aprobador en la misma área
+        $query_responsable = $mysqli->prepare("SELECT nombre_usuario FROM usuarios WHERE area = ? AND rol = 'aprobador' LIMIT 1");
+        $query_responsable->bind_param("s", $area);
+        $query_responsable->execute();
+        $result_responsable = $query_responsable->get_result();
+
+        if ($result_responsable->num_rows > 0) {
+            $responsable = $result_responsable->fetch_assoc();
+            $nuevo_destinatario = $responsable['nombre_usuario'];
+        } else {
+            $nuevo_destinatario = 'dramirez'; // A falta de aprobador, se envía al administrador
+        }
+    } elseif ($rol == 'aprobador' && $nuevo_estado == 'aprobaciones') {
+        $nuevo_destinatario = 'dramirez'; // Aprobador envía al administrador
+    } else {
+        $nuevo_destinatario = $nombre_usuario; // Otros casos mantienen el mismo usuario
+    }
+
+    // Guardar acción del usuario
+    $query = $mysqli->prepare("UPDATE acciones_usuarios SET estado = ?, destinatario = ? WHERE id_correo = ?");
+    $query->bind_param("sss", $nuevo_estado, $nuevo_destinatario, $id_correo);
+    $query->execute();
+}
 
 // Configuración del cliente de Google
 $client = new Google_Client();
@@ -31,7 +69,7 @@ $client->setRedirectUri('http://localhost/GateGourmet/Index/index_admin.php');
 $client->setAccessType('offline');
 $client->setPrompt('consent');
 
-// Manejar el código de autorización
+// Manejar código de autorización
 if (isset($_GET['code'])) {
     try {
         $accessToken = $client->fetchAccessTokenWithAuthCode($_GET['code']);
@@ -51,11 +89,11 @@ if (!isset($_SESSION['access_token']) || $_SESSION['access_token'] === null) {
     exit();
 }
 
-// Configurar el servicio de Gmail con el token de acceso
+// Configurar servicio de Gmail
 $client->setAccessToken($_SESSION['access_token']);
 $service = new Google_Service_Gmail($client);
 
-// Recuperar correos electrónicos
+// Obtener correos
 try {
     $response = $service->users_messages->listUsersMessages('me', ['maxResults' => 10]);
     $messages = $response->getMessages();
@@ -64,21 +102,25 @@ try {
     exit();
 }
 
-// Obtener detalles de los correos electrónicos
-$emailData = [];
+// Decodificación de base64url
+function base64url_decode($data) {
+    $data = str_replace(['-', '_'], ['+', '/'], $data);
+    $mod4 = strlen($data) % 4;
+    if ($mod4) {
+        $data .= substr('====', $mod4);
+    }
+    return base64_decode($data);
+}
 
-// Función para obtener el cuerpo del correo
+// Función para obtener el cuerpo del mensaje
 function getBody($message) {
     global $service;
     $message = $service->users_messages->get('me', $message->getId());
     $payload = $message->getPayload();
     $parts = $payload->getParts();
-
     $body = '';
 
-    if ($payload->getMimeType() == 'text/plain') {
-        $body = base64url_decode($payload->getBody()->getData());
-    } elseif ($payload->getMimeType() == 'text/html') {
+    if ($payload->getMimeType() == 'text/plain' || $payload->getMimeType() == 'text/html') {
         $body = base64url_decode($payload->getBody()->getData());
     } elseif ($parts) {
         foreach ($parts as $part) {
@@ -91,71 +133,57 @@ function getBody($message) {
     return $body;
 }
 
-// Función para decodificar base64url
-function base64url_decode($data) {
-    $data = str_replace(['-', '_'], ['+', '/'], $data);
-    $mod4 = strlen($data) % 4;
-    if ($mod4) {
-        $data .= substr('====', $mod4);
-    }
-    return base64_decode($data);
-}
-
-// Recuperar el estado previo de los correos guardados por el usuario
-$query = "SELECT * FROM acciones_usuarios WHERE nombre_usuario = '$nombre_usuario'";
-$result = $mysqli->query($query);
+// Obtener estado de correos guardados por el usuario
+$query = $mysqli->prepare("SELECT * FROM acciones_usuarios WHERE nombre_usuario = ?");
+$query->bind_param("s", $nombre_usuario);
+$query->execute();
+$result = $query->get_result();
 
 $correos_guardados = [];
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $correos_guardados[$row['id_correo']] = $row['estado']; // Guardar el estado de cada correo
+        $correos_guardados[$row['id_correo']] = $row['estado']; // Guardar estado por id
     }
 }
 
+// Preparar datos de correos electrónicos
+$emailData = [];
 foreach ($messages as $message) {
     $messageDetail = $service->users_messages->get('me', $message->getId());
     $headers = $messageDetail->getPayload()->getHeaders();
-    $emailDetails = [];
-    $emailDetails['id'] = $message->getId();
+    $emailDetails = ['id' => $message->getId()];
 
     foreach ($headers as $header) {
-        switch ($header->getName()) {
-            case 'Subject':
-                $emailDetails['subject'] = $header->getValue();
-                break;
-            case 'Date':
-                $emailDetails['date'] = date('d M Y H:i:s', strtotime($header->getValue()));
-                break;
+        if ($header->getName() == 'Subject') {
+            $emailDetails['subject'] = $header->getValue();
+        } elseif ($header->getName() == 'Date') {
+            $emailDetails['date'] = date('d M Y H:i:s', strtotime($header->getValue()));
         }
     }
 
     $emailDetails['body'] = getBody($messageDetail);
-
-    // Verificar si el correo ya tiene un estado guardado
-    if (isset($correos_guardados[$emailDetails['id']])) {
-        $emailDetails['estado'] = $correos_guardados[$emailDetails['id']];
-    } else {
-        $emailDetails['estado'] = 'alarmas'; // Estado por defecto
-    }
+    $emailDetails['estado'] = isset($correos_guardados[$emailDetails['id']]) ? $correos_guardados[$emailDetails['id']] : 'alarmas';
 
     $emailData[] = $emailDetails;
 }
 
-// Guardar cambios en la base de datos
+// Guardar acciones de correos electrónicos
 function guardarAccion($nombre_usuario, $id_correo, $estado) {
     global $mysqli;
-    $query = "SELECT * FROM acciones_usuarios WHERE nombre_usuario = '$nombre_usuario' AND id_correo = '$id_correo'";
-    $result = $mysqli->query($query);
+    $query = $mysqli->prepare("SELECT * FROM acciones_usuarios WHERE nombre_usuario = ? AND id_correo = ?");
+    $query->bind_param("ss", $nombre_usuario, $id_correo);
+    $query->execute();
+    $result = $query->get_result();
 
     if ($result->num_rows > 0) {
-        $query = "UPDATE acciones_usuarios SET estado = '$estado' WHERE nombre_usuario = '$nombre_usuario' AND id_correo = '$id_correo'";
+        $query = $mysqli->prepare("UPDATE acciones_usuarios SET estado = ? WHERE nombre_usuario = ? AND id_correo = ?");
+        $query->bind_param("sss", $estado, $nombre_usuario, $id_correo);
     } else {
-        $query = "INSERT INTO acciones_usuarios (nombre_usuario, id_correo, estado) VALUES ('$nombre_usuario', '$id_correo', '$estado')";
+        $query = $mysqli->prepare("INSERT INTO acciones_usuarios (nombre_usuario, id_correo, estado) VALUES (?, ?, ?)");
+        $query->bind_param("sss", $nombre_usuario, $id_correo, $estado);
     }
-
-    $mysqli->query($query);
+    $query->execute();
 }
-
 ?>
 
 <!DOCTYPE html>
