@@ -1,3 +1,4 @@
+/* Estilos generales */
 body {
     margin: 0;
     padding: 0;
@@ -9,8 +10,9 @@ body {
     min-height: 100vh;
 }
 
+/* Header */
 header {
-    background: rgba(17, 17, 17, 0.7); /* Fondo semi-transparente */
+    background: rgba(17, 17, 17, 0.7);
     backdrop-filter: blur(10px);
     text-align: center;
     padding: 20px 40px;
@@ -29,6 +31,7 @@ header h1 {
     margin: 0;
 }
 
+/* Contenedor principal */
 .container {
     width: 90%;
     max-width: 1800px;
@@ -39,92 +42,135 @@ header h1 {
     box-shadow: 0 4px 6px rgba(143, 187, 138, 0.1);
 }
 
-/* Formulario - Ajuste para los formularios de agregar nuevo proceso */
+/* Formulario principal */
 .form-agregar {
-    display: flex; /* Alinear horizontalmente */
-    gap: 1rem; /* Espacio entre formularios */
-    justify-content: center; /* Centrar formularios */
+    display: flex;
+    flex-wrap: wrap; /* Alineación fluida */
+    gap: 1rem;
+    justify-content: space-between; /* Espacio entre campos */
     margin-bottom: 2rem;
-    padding: 2rem; /* Aumentar padding para más espacio */
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 8px;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilo de etiquetas */
 .form-agregar label {
-    font-size: 1rem; /* Tamaño de fuente más pequeño */
+    font-size: 1rem;
     color: #0b8b0f;
     font-weight: bold;
-    margin-bottom: 0.5rem; /* Espaciado entre label y input */
+    margin-bottom: 0.5rem;
+    display: block;
 }
 
-/* Estilo de campos de entrada */
 .form-agregar input[type="text"],
 .form-agregar input[type="email"],
 .form-agregar select {
     width: 100%; /* Ancho completo */
-    max-width: 200px; /* Reducir ancho máximo */
-    padding: 0.5rem; /* Espacio interno menor */
-    font-size: 0.9rem; /* Tamaño de fuente más pequeño */
-    border: 2px solid #0b8b0f;
-    border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: border 0.3s ease-in-out;
+    max-width: 250px; /* Limitar ancho máximo */
+    padding: 0.75rem; /* Espaciado interno */
+    font-size: 1rem; /* Tamaño de fuente */
+    border: 2px solid #0b8b0f; /* Borde verde */
+    border-radius: 8px; /* Bordes redondeados */
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
+    transition: border 0.3s ease-in-out; /* Transición suave */
+    margin-bottom: 1rem; /* Espacio inferior entre campos */
 }
 
 .form-agregar input[type="text"]:focus,
 .form-agregar input[type="email"]:focus,
 .form-agregar select:focus {
-    border: 2px solid #3d9970;
+    border-color: #3d9970; /* Color del borde al enfocar */
 }
 
-/* Estilo del botón */
+/* Botón de agregar proceso */
 .form-agregar button {
-    padding: 5px; /* Ajustar el tamaño del botón */
-    font-size: 1rem; /* Tamaño de fuente más pequeño */
+    padding: 10px 20px; /* Espaciado del botón */
+    font-size: 1rem; /* Tamaño de fuente */
     font-weight: bold;
-    color: white;
-    background-color: #3d9970;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    color: white; /* Color de texto */
+    background-color: #3d9970; /* Fondo verde del botón */
+    border: none; /* Sin borde */
+    border-radius: 8px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Transición al pasar el mouse */
     max-width: 150px; /* Ancho máximo del botón */
-    margin-left: 8px; /* Centrar botón */
-    margin-top: 9px;
+    margin-top: auto; /* Alineación automática */
 }
 
 .form-agregar button:hover {
-    background-color: #2c7d5e;
-    transform: scale(1.05);
+    background-color: #2c7d5e; /* Color del botón al pasar el mouse */
+    transform: scale(1.05); /* Efecto de crecimiento al pasar el mouse */
 }
 
-/* Tabla */
+/* Formulario de búsqueda */
+.form-buscar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    margin-bottom: 2rem; /* Espacio inferior */
+}
+
+.form-buscar label {
+    font-size: 1rem; /* Tamaño de fuente */
+    color: #0b8b0f; /* Color de texto */
+    font-weight: 600; /* Peso de la fuente */
+}
+
+.form-buscar select,
+.form-buscar input {
+    padding: 0.75rem; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    border: 2px solid #0b8b0f; /* Borde verde */
+    font-size: 1rem; /* Tamaño de fuente */
+    transition: border-color 0.3s; /* Transición al enfocar */
+    max-width: 250px; /* Ancho máximo */
+}
+
+.form-buscar button {
+    padding: 10px 20px; /* Espaciado del botón */
+    font-size: 1rem; /* Tamaño de fuente */
+    background-color: #3d9970; /* Fondo verde del botón */
+    color: white; /* Color de texto */
+    border: none; /* Sin borde */
+    border-radius: 8px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s ease-in-out; /* Transición al pasar el mouse */
+}
+
+.form-buscar button:hover {
+    background-color: #2c7d5e; /* Color del botón al pasar el mouse */
+}
+
+/* Tabla de datos */
 .table-wrapper {
-    overflow-y: auto;
-    max-height: 400px; /* Ajusta la altura según sea necesario */
-    border: 2px solid #000;
-    padding-bottom: 1rem;
-    border-radius: 8px;
-    background-color: rgba(255, 249, 249, 0.9);
+    overflow-y: auto; /* Permitir desplazamiento vertical */
+    max-height: 400px; /* Altura máxima */
+    border: 2px solid #000; /* Borde de la tabla */
+    padding-bottom: 1rem; /* Espacio inferior */
+    border-radius: 8px; /* Bordes redondeados */
+    background-color: rgba(255, 249, 249, 0.9); /* Fondo de la tabla */
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0;
+    width: 100%; /* Ancho completo */
+    border-collapse: collapse; /* Colapsar bordes */
+    margin: 0; /* Margen cero */
 }
 
 table, th, td {
-    border: 2px solid #ddd; /* Bordes más suaves */
-    background: rgba(255, 255, 255, 0.9); /* Fondo más claro */
+    border: 2px solid #ddd; /* Bordes de las celdas */
+    background: rgba(255, 255, 255, 0.9); /* Fondo blanco */
 }
 
 th, td {
-    padding: 10px;
-    text-align: left;
+    padding: 10px; /* Espaciado interno */
+    text-align: left; /* Alineación izquierda */
 }
 
 /* Colores de las filas */
@@ -142,6 +188,6 @@ th, td {
 
 /* Mensajes de error */
 .alert {
-    color: red;
-    font-weight: bold;
+    color: red; /* Color rojo para errores */
+    font-weight: bold; /* Peso de la fuente */
 }

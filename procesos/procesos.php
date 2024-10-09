@@ -213,23 +213,96 @@ if ($result_usuarios->num_rows > 0) {
 
             <!-- Formulario de búsqueda -->
             <form method="GET" action="" class="form-agregar">
-                <div class="form-group">
-                    <label for="proceso">Buscar por Proceso:</label>
-                    <input type="text" id="proceso" name="proceso" value="<?php echo htmlspecialchars($busqueda_proceso); ?>">
-                </div>
-                <div class="form-group">
-                    <label for="usuario">Buscar por Usuario:</label>
-                    <input type="text" id="usuario" name="usuario" value="<?php echo htmlspecialchars($busqueda_usuario); ?>">
-                </div>
-                <div class="form-group">
-                    <label for="cargo">Buscar por Cargo:</label>
-                    <input type="text" id="cargo" name="cargo" value="<?php echo htmlspecialchars($busqueda_cargo); ?>">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn"><i class="fas fa-search"></i> Buscar</button>
-                </div>
-            </form>
+    <div class="form-group">
+        <label for="macroproceso">Buscar por Macroproceso:</label>
+        <select id="macroproceso" name="macroproceso">
+            <option value="">Seleccione un macroproceso</option>
+            <option value="GESTION CORPORATIVA">GESTION CORPORATIVA</option>
+            <option value="COMPLIANCE">COMPLIANCE</option>
+            <option value="SUPPLY CHAIN">SUPPLY CHAIN</option>
+            <option value="CULINARY EXCELLENCE">CULINARY EXCELLENCE</option>
+            <option value="SERVICE DELIVERY">SERVICE DELIVERY</option>
+            <option value="ASSEMBLY">ASSEMBLY</option>
+            <option value="SERVICIOS INSTITUCIONALES">SERVICIOS INSTITUCIONALES</option>
+            <option value="FINANCIERA">FINANCIERA</option>
+            <option value="COSTOS">COSTOS</option>
+            <option value="COMUNICACIONES">COMUNICACIONES</option>
+            <option value="TECNOLOGÍA DE LA INFORMACIÓN">TECNOLOGÍA DE LA INFORMACIÓN</option>
+            <option value="TALENTO HUMANO">TALENTO HUMANO</option>
+            <option value="MANTENIMIENTO">MANTENIMIENTO</option>
+            <option value="SERVICIO AL CLIENTE">SERVICIO AL CLIENTE</option>
+            <option value="SECURITY">SECURITY</option>
+        </select>
+    </div>
 
+    <div class="form-group">
+        <label for="proceso">Buscar por Proceso:</label>
+        <select id="proceso" name="proceso">
+            <option value="">Seleccione un proceso</option>
+            <option value="DES - DIRECCIONAMIENTO ESTRATÉGICO">DES - DIRECCIONAMIENTO ESTRATÉGICO</option>
+                        <option value="GMC - GESTION DE MEJORA CONTINUA">GMC - GESTION DE MEJORA CONTINUA</option>
+                        <option value="IND - INDUCCIÓN ORGANIZACIONAL">IND - INDUCCIÓN ORGANIZACIONAL</option>
+                        <option value="EYS - EVALUACIÓN Y SEGUIMIENTO">EYS - EVALUACIÓN Y SEGUIMIENTO</option>
+                        <option value="GER - GESTIONAR LAS RELACIONES">GER - GESTIONAR LAS RELACIONES</option>
+                        <option value="ENP - EVALUAR NUEVOS PROYECTOS DE INVERSIÓN Y OPERACIONALES">ENP - EVALUAR NUEVOS PROYECTOS DE INVERSIÓN Y OPERACIONALES</option>
+                        <option value="ALM - SEGURIDAD ALIMENTARIA">ALM - SEGURIDAD ALIMENTARIA</option>
+                        <option value="AMB - MEDIO AMBIENTE">AMB - MEDIO AMBIENTE</option>
+                        <option value="SEO - SEGURIDAD OPERACIONAL - RAMP SAFETY">SEO - SEGURIDAD OPERACIONAL - RAMP SAFETY</option>
+                        <option value="SFI - SEGURIDAD FÍSICA">SFI - SEGURIDAD FÍSICA</option>
+                        <option value="SST - SEGURIDAD Y SALUD EN EL TRABAJO">SST - SEGURIDAD Y SALUD EN EL TRABAJO</option>
+                        <option value="SAG - SAGRILAFT">SAG - SAGRILAFT</option>
+                        <option value="PTE - POLÍTICA Y ÉTICA EMPRESARIAL">PTE - POLÍTICA Y ÉTICA EMPRESARIAL</option>
+                        <option value="COM - COMPRAS">COM - COMPRAS</option>
+                        <option value="ABS - ABASTECIMIENTO">ABS - ABASTECIMIENTO</option>
+                        <option value="IDS - SISTEMAS INTERNOS DE ENTREGA">IDS - SISTEMAS INTERNOS DE ENTREGA</option>
+                        <option value="SIM - SOLICITUD INTERNA DE MATERIALES">SIM - SOLICITUD INTERNA DE MATERIALES</option>
+                        <option value="PDP - PLANEACIÓN DE LA PRODUCCIÓN">PDP - PLANEACIÓN DE LA PRODUCCIÓN</option>
+                        <option value="CRO - CONTROL DE RECURSOS OPERATIVOS">CRO - CONTROL DE RECURSOS OPERATIVOS</option>
+                        <option value="CDM - CONTROL DE MATERIALES">CDM - CONTROL DE MATERIALES</option>
+                        <option value="PCA - CARNICERIA">PCA - CARNICERIA</option>
+                        <option value="PDE - DESINFECCIÓN">PDE - DESINFECCIÓN</option>
+                        <option value="PFV - FRUTAS Y VERDURAS">PFV - FRUTAS Y VERDURAS</option>
+                        <option value="PFI - FRITURAS">PFI - FRITURAS</option>
+                        <option value="PPA - PASTAS">PPA - PASTAS</option>
+                        <option value="PAN - PANADERIA">PAN - PANADERIA</option>
+                        <option value="CBA - CATERING DE BANQUETES">CBA - CATERING DE BANQUETES</option>
+                        <option value="CAO - CATERING DE ALIMENTOS">CAO - CATERING DE ALIMENTOS</option>
+                        <option value="DEC - DECORACIÓN DE PLATOS">DEC - DECORACIÓN DE PLATOS</option>
+                        <option value="PCC - COCINA FRÍA">PCC - COCINA FRÍA</option>
+                        <option value="PCH - COCINA CALIENTE">PCH - COCINA CALIENTE</option>
+                        <option value="TCC - CONTROL DE CALIDAD">TCC - CONTROL DE CALIDAD</option>
+                        <option value="SAA - SOPORTE ALIMENTARIO">SAA - SOPORTE ALIMENTARIO</option>
+                        <option value="SCC - SOPORTE A CLIENTES">SCC - SOPORTE A CLIENTES</option>
+                        <option value="CSD - COMERCIALIZACIÓN Y DISTRIBUCIÓN">CSD - COMERCIALIZACIÓN Y DISTRIBUCIÓN</option>
+                        <option value="SFS - SISTEMAS FINANCIEROS">SFS - SISTEMAS FINANCIEROS</option>
+                        <option value="SEI - SERVICIO EXTERNO INTERNO">SEI - SERVICIO EXTERNO INTERNO</option>
+                        <option value="PIT - PROYECTOS INTEGRADOS DE TERCEROS">PIT - PROYECTOS INTEGRADOS DE TERCEROS</option>
+                        <option value="TTT - CAPACITACIONES">TTT - CAPACITACIONES</option>
+                        <option value="SEG - SEGURIDAD">SEG - SEGURIDAD</option>
+            <!-- Añade aquí más opciones según tus necesidades -->
+        </select>
+    </div>
+
+    <form method="GET" action="" class="form-buscar">
+    <div class="form-group">
+        <label for="usuario">Buscar por Usuario:</label>
+        <select id="usuario" name="usuario">
+            <option value="">Seleccione un usuario</option>
+            <?php foreach ($usuarios as $usuario): ?>
+                <option value="<?php echo htmlspecialchars($usuario['nombre_usuario']); ?>"
+                        data-cargo="<?php echo htmlspecialchars($usuario['cargo']); ?>"
+                        data-email="<?php echo htmlspecialchars($usuario['correo']); ?>"
+                        data-rol="<?php echo htmlspecialchars($usuario['rol']); ?>">
+                    <?php echo htmlspecialchars($usuario['nombre_usuario']); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </div>
+</form>
             <!-- Tabla de procesos -->
             <div class="table-wrapper">
                 <table>
