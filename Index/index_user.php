@@ -167,7 +167,7 @@ foreach ($messages as $message) {
 
     <!-- Contenedor principal -->
     <div class="container_not">
-        <h1>Correos Electrónicos</h1>
+        <h1>Notificaciónes</h1>
 
         <!-- Sección Aprobaciones -->
         <div class="opcion" id="opcion-aprobaciones">
