@@ -1,23 +1,36 @@
 <?php
 require '../vendor/autoload.php';
 session_start();
-$area = isset($_SESSION['area']) ? $_SESSION['area'] : '';
+$mysqli = new mysqli("localhost", "root", "", "gategourmet"); // Conexión a la base de datos
 
+if ($mysqli->connect_errno) {
+    echo "Error al conectar a la base de datos: " . $mysqli->connect_error;
+    exit();
+}
+
+// Verifica si el usuario está logueado
+if (!isset($_SESSION['nombre_usuario'])) {
+    // Redirigir a la página de login si no está logueado
+    header('Location: http://localhost/GateGourmet/login/login3.php');
+    exit();
+}
+
+$nombre_usuario = $_SESSION['nombre_usuario']; // El nombre de usuario guardado en la sesión
 
 // Configuración del cliente de Google
 $client = new Google_Client();
 $client->setAuthConfig('credentials.json');
 $client->addScope(Google_Service_Gmail::GMAIL_READONLY);
-$client->setRedirectUri('http://localhost/GateGourmet/Index/index_user.php');
+$client->setRedirectUri('http://localhost/GateGourmet/Index/index_admin.php');
 $client->setAccessType('offline');
-$client->setPrompt('consent'); // Cambiado a 'consent'
+$client->setPrompt('consent');
 
 // Manejar el código de autorización
 if (isset($_GET['code'])) {
     try {
         $accessToken = $client->fetchAccessTokenWithAuthCode($_GET['code']);
         $_SESSION['access_token'] = $accessToken;
-        header('Location: index_user.php');
+        header('Location: index_admin.php');
         exit();
     } catch (Exception $e) {
         echo 'Error fetching access token: ' . $e->getMessage();
@@ -56,14 +69,12 @@ function getBody($message) {
 
     $body = '';
 
-    // Decodificar el cuerpo del mensaje según su tipo MIME
     if ($payload->getMimeType() == 'text/plain') {
         $body = base64url_decode($payload->getBody()->getData());
     } elseif ($payload->getMimeType() == 'text/html') {
         $body = base64url_decode($payload->getBody()->getData());
     } elseif ($parts) {
         foreach ($parts as $part) {
-            // Recorremos las partes para obtener el texto plano o HTML
             if ($part->getMimeType() == 'text/html') {
                 $body .= base64url_decode($part->getBody()->getData());
             }
@@ -83,27 +94,27 @@ function base64url_decode($data) {
     return base64_decode($data);
 }
 
+// Recuperar el estado previo de los correos guardados por el usuario
+$query = "SELECT * FROM acciones_usuarios WHERE nombre_usuario = '$nombre_usuario'";
+$result = $mysqli->query($query);
+
+$correos_guardados = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $correos_guardados[$row['id_correo']] = $row['estado']; // Guardar el estado de cada correo
+    }
+}
+
 foreach ($messages as $message) {
     $messageDetail = $service->users_messages->get('me', $message->getId());
     $headers = $messageDetail->getPayload()->getHeaders();
     $emailDetails = [];
+    $emailDetails['id'] = $message->getId();
 
     foreach ($headers as $header) {
         switch ($header->getName()) {
             case 'Subject':
                 $emailDetails['subject'] = $header->getValue();
-                break;
-            case 'From':
-                $emailDetails['from'] = $header->getValue();
-                break;
-            case 'To':
-                $emailDetails['to'] = $header->getValue();
-                break;
-            case 'Cc':
-                $emailDetails['cc'] = $header->getValue();
-                break;
-            case 'Bcc':
-                $emailDetails['bcc'] = $header->getValue();
                 break;
             case 'Date':
                 $emailDetails['date'] = date('d M Y H:i:s', strtotime($header->getValue()));
@@ -111,13 +122,36 @@ foreach ($messages as $message) {
         }
     }
 
-
-    // Obtener el cuerpo del mensaje
     $emailDetails['body'] = getBody($messageDetail);
 
-    // Agregar el correo electrónico al array de correos
+    // Verificar si el correo ya tiene un estado guardado
+    if (isset($correos_guardados[$emailDetails['id']])) {
+        $emailDetails['estado'] = $correos_guardados[$emailDetails['id']];
+    } else {
+        $emailDetails['estado'] = 'alarmas'; // Estado por defecto
+    }
+
     $emailData[] = $emailDetails;
 }
+
+// Guardar cambios en la base de datos
+function guardarAccion($nombre_usuario, $id_correo, $estado) {
+    global $mysqli;
+    // Verificar si ya existe una acción previa para este correo
+    $query = "SELECT * FROM acciones_usuarios WHERE nombre_usuario = '$nombre_usuario' AND id_correo = '$id_correo'";
+    $result = $mysqli->query($query);
+
+    if ($result->num_rows > 0) {
+        // Si ya existe, actualizar el estado
+        $query = "UPDATE acciones_usuarios SET estado = '$estado' WHERE nombre_usuario = '$nombre_usuario' AND id_correo = '$id_correo'";
+    } else {
+        // Si no existe, insertar una nueva acción
+        $query = "INSERT INTO acciones_usuarios (nombre_usuario, id_correo, estado) VALUES ('$nombre_usuario', '$id_correo', '$estado')";
+    }
+
+    $mysqli->query($query);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -171,7 +205,7 @@ foreach ($messages as $message) {
 
     <!-- Contenedor principal -->
     <div class="container_not">
-        <h1>Notificaciones</h1>
+        <h1>Correos Electrónicos</h1>
 
 
 <!-- Sección Alarmas -->
@@ -183,18 +217,17 @@ foreach ($messages as $message) {
         <?php if (empty($emailData)) { ?>
             <p>No hay correos electrónicos disponibles.</p>
         <?php } else { ?>
-            <?php foreach ($emailData as $email) { 
-    if (isset($email['estado']) && $email['estado'] == 'alarmas') { ?>
-        <div class="email-item" data-id-correo="<?php echo $email['id']; ?>">
-            <h2>Asunto: <?php echo $email['subject']; ?></h2><br><br>
-            <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
-            <div class="body"><?php echo $email['body']; ?></div>
-            <div class="email-actions">
-                <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-alarmas')">Enviar a Revisiones</button>
-                <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
-            </div>
-        </div>
-<?php } } ?>
+            <?php foreach ($emailData as $email) { if ($email['estado'] == 'alarmas') { ?>
+                <div class="email-item" data-id-correo="<?php echo $email['id']; ?>" data-estado="<?php echo $email['estado']; ?>">
+                    <h2>Asunto: <?php echo $email['subject']; ?></h2><br><br>
+                    <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
+                    <div class="body"><?php echo $email['body']; ?></div>
+                    <div class="email-actions">
+                        <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-alarmas')">Mover a revisiones</button>
+                        <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
+                    </div>
+                </div>
+            <?php } } ?>
         <?php } ?>
     </div>
 </div>
@@ -211,8 +244,8 @@ foreach ($messages as $message) {
                 <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
                 <div class="body"><?php echo $email['body']; ?></div>
                 <div class="email-actions">
-                    <button class="mover-boton" onclick="moverCorreo(this, 'aprobaciones', 'contador-aprobaciones', 'contador-revisiones')">Enviar a Aprobaciones</button>
-                    <button class="mover-boton" onclick="moverCorreo(this, 'alarmas', 'contador-alarmas', 'contador-revisiones')">Devolver a Alarmas</button>
+                    <button class="mover-boton" onclick="moverCorreo(this, 'aprobaciones', 'contador-aprobaciones', 'contador-revisiones')">Mover a aprobaciones</button>
+                    <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
                 </div>
             </div>
         <?php } } ?>
@@ -231,7 +264,7 @@ foreach ($messages as $message) {
                 <p class="date"><strong>Fecha:</strong> <?php echo $email['date']; ?></p><br>
                 <div class="body"><?php echo $email['body']; ?></div>
                 <div class="email-actions">
-                    <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-aprobaciones')">Devolver a Revisiones</button>
+                    <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
                 </div>
             </div>
         <?php } } ?>
@@ -239,6 +272,7 @@ foreach ($messages as $message) {
 </div>
 </div>
 </div>
+
 <script>
 // Función para mover correos entre contenedores y actualizar el estado en tiempo real
 function moverCorreo(button, nuevoEstado, contadorDestinoId, contadorOrigenId) {
@@ -262,9 +296,6 @@ function moverCorreo(button, nuevoEstado, contadorDestinoId, contadorOrigenId) {
         // Actualizar los contadores del origen y destino
         actualizarContador(contadorOrigenId);
         actualizarContador(contadorDestinoId);
-
-        // Actualizar los botones según el nuevo estado
-        mostrarBotonesSegunEstado(emailItem, nuevoEstado);
     }).catch(error => {
         console.error('Error al mover el correo:', error);
     });
@@ -303,30 +334,6 @@ function actualizarContador(contadorId) {
     var contador = document.getElementById(contadorId);
     var itemsVisibles = contenedor.querySelectorAll('.email-item').length;
     contador.textContent = itemsVisibles;
-}
-
-// Función para mostrar los botones según el estado actual del correo
-function mostrarBotonesSegunEstado(emailItem, nuevoEstado) {
-    var acciones = emailItem.querySelector('.email-actions');
-
-    if (nuevoEstado === 'alarmas') {
-        // En 'alarmas', mostrar "Enviar a Revisiones" e "Ignorar"
-        acciones.innerHTML = `
-            <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-alarmas')">Enviar a Revisiones</button>
-            <button class="ignorar-boton" onclick="ignorarCorreo(this)">Ignorar</button>
-        `;
-    } else if (nuevoEstado === 'revisiones') {
-        // En 'revisiones', mostrar "Enviar a Aprobaciones" y "Devolver a Alarmas"
-        acciones.innerHTML = `
-            <button class="mover-boton" onclick="moverCorreo(this, 'aprobaciones', 'contador-aprobaciones', 'contador-revisiones')">Enviar a Aprobaciones</button>
-            <button class="mover-boton" onclick="moverCorreo(this, 'alarmas', 'contador-alarmas', 'contador-revisiones')">Devolver a Alarmas</button>
-        `;
-    } else if (nuevoEstado === 'aprobaciones') {
-        // En 'aprobaciones', solo mostrar "Devolver a Revisiones"
-        acciones.innerHTML = `
-            <button class="mover-boton" onclick="moverCorreo(this, 'revisiones', 'contador-revisiones', 'contador-aprobaciones')">Devolver a Revisiones</button>
-        `;
-    }
 }
 
 // Inicializar los contadores al cargar la página
@@ -433,7 +440,6 @@ function toggleContenido(contenidoId) {
     // Mostrar la primera vista por defecto
     mostrarVista('vista1');
 </script>
-
 
 </body>
 <script>
