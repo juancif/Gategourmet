@@ -126,7 +126,7 @@ if ($result_usuarios->num_rows > 0) {
                         <option value="FINANCIERA">FINANCIERA</option>
                         <option value="COSTOS">COSTOS</option>
                         <option value="COMUNICACIONES">COMUNICACIONES</option>
-                        <option value="TECNOLOGÍA DE LA INFORMACIÓN">TECNOLOGÍA DE LA INFORMACIÓN</option>
+                        <option value="TECNOLOG?A DE LA INFORMACI?N">TECNOLOG?A DE LA INFORMACI?N</option>
                         <option value="TALENTO HUMANO">TALENTO HUMANO</option>
                         <option value="MANTENIMIENTO">MANTENIMIENTO</option>
                         <option value="SERVICIO AL CLIENTE">SERVICIO AL CLIENTE</option>
